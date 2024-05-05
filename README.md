@@ -1,7 +1,5 @@
 # CMSC23-Group1-Final_Project
 
-# CMSC23-Group1-Final-Project
-
 Elbi Donation System
 
 General Guidelines
