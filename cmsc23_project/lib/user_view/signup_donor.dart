@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class LogInOrgPage extends StatefulWidget {
-  const LogInOrgPage({Key? key}) : super(key: key);
+class SignUpDonorPage extends StatefulWidget {
+  const SignUpDonorPage({Key? key}) : super(key: key);
 
   @override
-  State<LogInOrgPage> createState() => _LogInOrgPageState();
+  State<SignUpDonorPage> createState() => _SignUpDonorPageState();
 }
 
-class _LogInOrgPageState extends State<LogInOrgPage> {
+class _SignUpDonorPageState extends State<SignUpDonorPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +29,7 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.06,
+            top: MediaQuery.of(context).size.height * 0.045,
             left: 0,
             child: TextButton.icon(
               onPressed: () {
@@ -58,25 +58,25 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.165, 
+            top: MediaQuery.of(context).size.height * 0.12, 
             left: 0,
             right: 0,
             child: Container(
               child: Image.asset(
                 'lib/user_view/assets/cmsc23_logo1.png',
-                width: 150,
-                height: 150,
+                width: 100,
+                height: 100,
               ),
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.345, 
+            top: MediaQuery.of(context).size.height * 0.24, 
             left: 0,
             right: 0,
             child: const Text(
               "ELBIDrive",
               style: TextStyle(
-                fontSize: 50,
+                fontSize: 40,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'CaveatBrush',
                 color: Color(0xFF373D66),
@@ -86,13 +86,13 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.43, 
+            top: MediaQuery.of(context).size.height * 0.31, 
             left: 0,
             right: 0,
             child: Padding(
               padding: const EdgeInsets.only(left: 16, right: 16),
               child: Text(
-                "Log in your organization's account.",
+                "Create a donor account.",
                 style: TextStyle(
                   fontSize: 12,
                   fontFamily: 'Poppins',
@@ -104,7 +104,7 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.515, 
+            top: MediaQuery.of(context).size.height * 0.37, 
             left: 0,
             right: 0,
             child: Center(
@@ -116,6 +116,50 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                     children: [
                       Padding(
                         padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 6),
+                        child: Text(
+                          "Name",
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF373D66),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    width: 320, 
+                    height: 34,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(32),
+                      color: Color(0xFFFFFFFF).withOpacity(0.7), 
+                    ),
+                    child: TextField(
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'Poppins',
+                        color: Color(0xFF373D66)
+                      ),
+                      decoration: InputDecoration(
+                        hintText: 'Enter your name',
+                        hintStyle: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Poppins',
+                          color: Color(0xFF373D66).withOpacity(0.9),
+                        ),
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(vertical: 10.5, horizontal: 16),
+                      ),
+                    ),
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 3, top: 6),
                         child: Text(
                           "Username",
                           style: TextStyle(
@@ -129,8 +173,8 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                     ],
                   ),
                   Container(
-                    width: 300, 
-                    height: 40,
+                    width: 320, 
+                    height: 34,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(32),
                       color: Color(0xFFFFFFFF).withOpacity(0.7), 
@@ -151,7 +195,7 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                           color: Color(0xFF373D66).withOpacity(0.9),
                         ),
                         border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(vertical: 11.5, horizontal: 16),
+                        contentPadding: EdgeInsets.symmetric(vertical: 10.5, horizontal: 16),
                       ),
                     ),
                   ),
@@ -159,7 +203,7 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 6, top: 20),
+                        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 6, top: 6),
                         child: Text(
                           "Password",
                           style: TextStyle(
@@ -173,8 +217,8 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                     ],
                   ),
                   Container(
-                    width: 300, 
-                    height: 40,
+                    width: 320, 
+                    height: 34,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(32),
                       color: Color(0xFFFFFFFF).withOpacity(0.7), 
@@ -187,7 +231,7 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                         color: Color(0xFF373D66)
                       ),
                       decoration: InputDecoration(
-                        hintText: 'Enter your password',
+                        hintText: 'Minimum of 6 characters',
                         hintStyle: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
@@ -195,15 +239,116 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                           color: Color(0xFF373D66).withOpacity(0.9),
                         ),
                         border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(vertical: 11.5, horizontal: 16),
+                        contentPadding: EdgeInsets.symmetric(vertical: 10.5, horizontal: 16),
                       ),
                     ),
                   ),
-                  SizedBox(height: 50),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 3, top: 6),
+                        child: Text(
+                          "Address/es",
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF373D66),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1, bottom: 3, top: 6),
+                        child: Text(
+                          "separate with commas",
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontFamily: 'Poppins',
+                            color: Color(0xFF373D66),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    width: 320, 
+                    height: 34,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(32),
+                      color: Color(0xFFFFFFFF).withOpacity(0.7), 
+                    ),
+                    child: TextField(
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'Poppins',
+                        color: Color(0xFF373D66)
+                      ),
+                      decoration: InputDecoration(
+                        hintText: 'Address 1, Address 2',
+                        hintStyle: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Poppins',
+                          color: Color(0xFF373D66).withOpacity(0.9),
+                        ),
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(vertical: 10.5, horizontal: 16),
+                      ),
+                    ),
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 6, top: 6),
+                        child: Text(
+                          "Contact number",
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF373D66),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    width: 320, 
+                    height: 34,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(32),
+                      color: Color(0xFFFFFFFF).withOpacity(0.7), 
+                    ),
+                    child: TextField(
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'Poppins',
+                        color: Color(0xFF373D66)
+                      ),
+                      decoration: InputDecoration(
+                        hintText: 'Enter your contact number',
+                        hintStyle: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Poppins',
+                          color: Color(0xFF373D66).withOpacity(0.9),
+                        ),
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(vertical: 10.5, horizontal: 16),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 42),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+
+                    },
                     style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(300, 40),
+                      minimumSize: const Size(320, 40),
                       foregroundColor:  Color(0xFFFCBE4F),
                       textStyle: const TextStyle(
                         fontSize: 14,
@@ -212,14 +357,14 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                       ),
                       backgroundColor: Color(0xFF373D66),
                     ),
-                    child: const Text('Log in'),
+                    child: const Text('Sign up as a Donor'),
                   ),
                   Center (
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Don't have an org account?",
+                          "Already have an account?",
                           style: TextStyle(
                             fontSize: 14,
                             fontFamily: 'Poppins',
@@ -228,14 +373,14 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                           ),
                         ),
                         SizedBox(
-                          height: 40,
+                          height: 34,
                           child: TextButton(
                             onPressed: () {
                               Navigator.pop(context);
-                              Navigator.pushNamed(context, "/signupOrg");
+                              Navigator.pushNamed(context, "/loginDonor");
                             },
                             child: Text(
-                              "Sign up",
+                              "Log in",
                               style: TextStyle(
                                 fontSize: 14,
                                 fontFamily: 'Poppins',

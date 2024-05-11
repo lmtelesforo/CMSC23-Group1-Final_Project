@@ -28,13 +28,13 @@ class _LandingPageState extends State<LandingPage> {
             child: Container(
               child: Image.asset(
                 'lib/user_view/assets/cmsc23_logo1.png',
-                width: 240,
-                height: 240,
+                width: 220,
+                height: 220,
               ),
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.40, 
+            top: MediaQuery.of(context).size.height * 0.38, 
             left: 0,
             right: 0,
             child: const Text(
@@ -50,7 +50,7 @@ class _LandingPageState extends State<LandingPage> {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.55, 
+            top: MediaQuery.of(context).size.height * 0.53, 
             left: 0,
             right: 0,
             child: Center(
@@ -88,7 +88,10 @@ class _LandingPageState extends State<LandingPage> {
                     child: const Text('Log In'),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, "/signupDonor");
+                    },
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(300, 35),
                       foregroundColor: Color(0xFFFCBE4F),
@@ -132,7 +135,10 @@ class _LandingPageState extends State<LandingPage> {
                     child: const Text('Log in as an Organization'),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, "/signupOrg");
+                    },
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(300, 35),
                       foregroundColor: Color(0xFF373D66),
@@ -144,6 +150,24 @@ class _LandingPageState extends State<LandingPage> {
                       backgroundColor: Color(0xFFFCBE4F).withOpacity(0.65),
                     ),
                     child: const Text('Sign up as an Organization'),
+                  ),
+                  SizedBox(
+                    height: 34,
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.pushNamed(context, "/loginOrg");
+                      },
+                      child: Text(
+                        "Log in as Admin",
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w900,
+                          color: Color(0xFF373D66),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
