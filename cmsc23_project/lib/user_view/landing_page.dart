@@ -116,6 +116,8 @@ class _LandingPageState extends State<LandingPage> {
                   ),
                   ElevatedButton(
                     onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, "/loginOrg");
                     },
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(320, 35),

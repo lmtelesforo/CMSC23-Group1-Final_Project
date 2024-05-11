@@ -1,5 +1,6 @@
 import 'package:cmsc23_project/user_view/landing_page.dart';
 import 'package:cmsc23_project/user_view/login_donor.dart';
+import 'package:cmsc23_project/user_view/login_org.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,9 +17,7 @@ class RootWidget extends StatelessWidget {
       routes: {
         "/": (context) => const LandingPage(),
         "/loginDonor": (context) => LogInDonorPage(),
-        // "/logindonor": (context) => LogInDonorPage(),
-        // "/cart": (context) => CartPage(),
-        // "/checkout": (context) => CheckoutPage(),
+        "/loginOrg": (context) => LogInOrgPage(),
       },
     );
   }
