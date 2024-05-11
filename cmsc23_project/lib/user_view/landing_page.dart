@@ -58,9 +58,9 @@ class _LandingPageState extends State<LandingPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 16, right: 16, bottom: 5),
+                    padding: const EdgeInsets.only(left: 16, right: 16, bottom: 12),
                     child: Text(
-                      "For the People, by the People",
+                      "For the People, by the People.",
                       style: TextStyle(
                         fontSize: 13,
                         fontFamily: 'Poppins',
@@ -76,7 +76,7 @@ class _LandingPageState extends State<LandingPage> {
                       Navigator.pushNamed(context, "/loginDonor");
                     },
                     style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(320, 35),
+                      minimumSize: const Size(300, 35),
                       foregroundColor: Color(0xFFFCBE4F),
                       textStyle: const TextStyle(
                         fontSize: 14,
@@ -90,7 +90,7 @@ class _LandingPageState extends State<LandingPage> {
                   ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(320, 35),
+                      minimumSize: const Size(300, 35),
                       foregroundColor: Color(0xFFFCBE4F),
                       textStyle: const TextStyle(
                         fontSize: 14,
@@ -102,7 +102,7 @@ class _LandingPageState extends State<LandingPage> {
                     child: const Text('Sign Up'),
                   ),
                   const Padding(
-                    padding: EdgeInsets.only(left: 16, right: 16, top: 7, bottom: 5),
+                    padding: EdgeInsets.only(left: 16, right: 16, top: 17, bottom: 5),
                     child: Text(
                       "Accepting donations?",
                       style: TextStyle(
@@ -120,7 +120,7 @@ class _LandingPageState extends State<LandingPage> {
                       Navigator.pushNamed(context, "/loginOrg");
                     },
                     style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(320, 35),
+                      minimumSize: const Size(300, 35),
                       foregroundColor: Color(0xFF373D66),
                       textStyle: const TextStyle(
                         fontSize: 14,
@@ -134,7 +134,7 @@ class _LandingPageState extends State<LandingPage> {
                   ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(320, 35),
+                      minimumSize: const Size(300, 35),
                       foregroundColor: Color(0xFF373D66),
                       textStyle: const TextStyle(
                         fontSize: 14,
@@ -146,24 +146,6 @@ class _LandingPageState extends State<LandingPage> {
                     child: const Text('Sign up as an Organization'),
                   ),
                 ],
-              ),
-            ),
-          ),
-          Positioned(
-            top: MediaQuery.of(context).size.height * 0.907, 
-            left: 0,
-            right: 0,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                "© 2024 ELBIDrive. All Rights Reserved.",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 12,
-                  fontFamily: 'Poppins',
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF373D66),
-                ),
               ),
             ),
           ),

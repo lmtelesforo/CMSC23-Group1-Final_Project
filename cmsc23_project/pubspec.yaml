@@ -59,6 +59,7 @@ flutter:
   assets:
     - lib/user_view/assets/cmsc23_logo1.png
     - lib/user_view/assets/cmsc23_background.png
+    - lib/user_view/assets/back.png
   
   fonts:
     - family: DM-Sans

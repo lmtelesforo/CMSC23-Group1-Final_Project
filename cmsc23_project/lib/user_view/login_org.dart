@@ -29,6 +29,35 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
             ),
           ),
           Positioned(
+            top: MediaQuery.of(context).size.height * 0.06,
+            left: 0,
+            child: TextButton.icon(
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, "/");
+              },
+              icon: Image.asset(
+                'lib/user_view/assets/back.png', 
+                width: 34, 
+                height: 34, 
+              ),
+              label: Text(
+                'Back',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Poppins',
+                ),
+              ),
+              style: TextButton.styleFrom(
+                foregroundColor: Color(0xFF373D66),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(32), 
+                ),
+              ),
+            ),
+          ),
+          Positioned(
             top: MediaQuery.of(context).size.height * 0.165, 
             left: 0,
             right: 0,
