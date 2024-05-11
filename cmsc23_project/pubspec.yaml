@@ -57,7 +57,6 @@ flutter:
   uses-material-design: true
 
   assets:
-    - lib/user_view/assets/cmsc23_logo.png
     - lib/user_view/assets/cmsc23_logo1.png
     - lib/user_view/assets/cmsc23_background.png
   

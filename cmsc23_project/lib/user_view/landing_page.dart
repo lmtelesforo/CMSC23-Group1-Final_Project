@@ -71,7 +71,10 @@ class _LandingPageState extends State<LandingPage> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, "/loginDonor");
+                    },
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(320, 35),
                       foregroundColor: Color(0xFFFCBE4F),
@@ -112,7 +115,8 @@ class _LandingPageState extends State<LandingPage> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                    },
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(320, 35),
                       foregroundColor: Color(0xFF373D66),
