@@ -1,11 +1,13 @@
 import 'package:cmsc23_project/models/donation_drive.dart';
 import 'package:cmsc23_project/models/organization.dart';
-import 'package:cmsc23_project/org-view/base_view.dart';
-import 'package:cmsc23_project/org-view/donation_drives.dart';
+import 'package:cmsc23_project/org-view/base_screen.dart';
+import 'package:cmsc23_project/org-view/donation_drive_page.dart';
+import 'package:cmsc23_project/org-view/manage_donation_drives.dart';
 import 'package:cmsc23_project/org-view/org_view_styles.dart';
 import 'package:flutter/material.dart';
 
 class OrgHomePage extends StatelessWidget {
+  // Main homepage for the organization
   const OrgHomePage({super.key});
 
   @override
@@ -25,7 +27,7 @@ class OrgHomePage extends StatelessWidget {
     );
     org.favorite(org.donationDrives[0]);
 
-    return BaseView(
+    return BaseScreen(
       body: Column(
         children: [
           MainAction(org.donationDrives),
@@ -37,6 +39,7 @@ class OrgHomePage extends StatelessWidget {
 }
 
 class MainAction extends StatelessWidget {
+  // The main/leading card on the org homepage
   final List<DonationDrive> donationDrives;
   const MainAction(this.donationDrives, {super.key});
 
@@ -52,15 +55,15 @@ class MainAction extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => DonationDrives(
+                  builder: (context) => ManageDonationDrives(
                     donationDrives: donationDrives,
                   ),
                 ),
               );
             },
-            child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-              child: Row(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Flexible(
@@ -85,6 +88,7 @@ class MainAction extends StatelessWidget {
 }
 
 class Favorites extends StatelessWidget {
+  // List of favorited donation drives
   final List<DonationDrive> favorites;
   const Favorites(this.favorites, {super.key});
 
@@ -99,11 +103,7 @@ class Favorites extends StatelessWidget {
             Wrap(
               children: [
                 for (final donationDrive in favorites)
-                  DonationDriveCard(
-                    onTap: () {},
-                    image: donationDrive.image,
-                    name: donationDrive.name,
-                  ),
+                  DonationDriveCard(donationDrive: donationDrive),
               ],
             ),
           ],
@@ -114,15 +114,12 @@ class Favorites extends StatelessWidget {
 }
 
 class DonationDriveCard extends StatelessWidget {
-  final Function() onTap;
-  final ImageProvider image;
-  final String name;
+  // Represents a donation drive card on the homepage and donation drive list
+  final DonationDrive donationDrive;
 
   const DonationDriveCard({
     super.key,
-    required this.onTap,
-    required this.image,
-    required this.name,
+    required this.donationDrive,
   });
 
   @override
@@ -132,14 +129,23 @@ class DonationDriveCard extends StatelessWidget {
       width: 180,
       child: Card(
         child: InkWell(
-          onTap: onTap,
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DonationDriveScreen(
+                  donationDrive: donationDrive,
+                ),
+              ),
+            );
+          },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image(
-                  image: image,
+                  image: donationDrive.image,
                   height: 90,
                   width: 150,
                   fit: BoxFit.cover,
@@ -147,7 +153,7 @@ class DonationDriveCard extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 10),
-                child: Text(name, style: CustomTextStyle.body),
+                child: Text(donationDrive.name, style: CustomTextStyle.body),
               ),
             ],
           ),

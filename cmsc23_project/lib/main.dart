@@ -1,4 +1,4 @@
-import 'package:cmsc23_project/org-view/org_view.dart';
+import 'package:cmsc23_project/org-view/org_homepage.dart';
 import 'package:flutter/material.dart';
 
 void main() {

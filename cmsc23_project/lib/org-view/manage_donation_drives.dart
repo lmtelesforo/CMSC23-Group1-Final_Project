@@ -1,16 +1,16 @@
 import 'package:cmsc23_project/models/donation_drive.dart';
-import 'package:cmsc23_project/org-view/base_view.dart';
-import 'package:cmsc23_project/org-view/org_view.dart';
+import 'package:cmsc23_project/org-view/base_screen.dart';
+import 'package:cmsc23_project/org-view/org_homepage.dart';
 import 'package:cmsc23_project/org-view/org_view_styles.dart';
 import 'package:flutter/material.dart';
 
-class DonationDrives extends StatelessWidget {
+class ManageDonationDrives extends StatelessWidget {
   final List<DonationDrive> donationDrives;
-  const DonationDrives({super.key, required this.donationDrives});
+  const ManageDonationDrives({super.key, required this.donationDrives});
 
   @override
   Widget build(BuildContext context) {
-    return BaseView(
+    return BaseScreen(
       body: Center(
         child: Column(
           children: [
@@ -26,11 +26,7 @@ class DonationDrives extends StatelessWidget {
                 const AddDonationDrive(),
                 ...donationDrives.map(
                   (donationDrive) {
-                    return DonationDriveCard(
-                      onTap: () {},
-                      image: donationDrive.image,
-                      name: donationDrive.name,
-                    );
+                    return DonationDriveCard(donationDrive: donationDrive);
                   },
                 ),
               ],

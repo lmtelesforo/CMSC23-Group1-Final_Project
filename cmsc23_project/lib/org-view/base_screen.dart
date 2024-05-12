@@ -1,8 +1,9 @@
 import 'package:cmsc23_project/models/user.dart';
 import 'package:flutter/material.dart';
 
-class BaseView extends StatelessWidget {
-  const BaseView({super.key, required this.body});
+class BaseScreen extends StatelessWidget {
+  // Represents the base screen for the org view (background + header/appbar)
+  const BaseScreen({super.key, required this.body});
 
   final Widget body;
 
