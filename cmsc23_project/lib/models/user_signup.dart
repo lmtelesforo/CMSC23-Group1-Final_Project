@@ -6,7 +6,7 @@ class User {
   String password;
   List addresses;
   String contactNumber;
-  String? proofs;
+  List? proofs;
   String? id;
 
   User ({

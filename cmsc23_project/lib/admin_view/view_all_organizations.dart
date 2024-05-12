@@ -4,44 +4,30 @@ import 'package:provider/provider.dart';
 
 import '../models/user_signup.dart';
 import '../providers/textfield_providers.dart';
+import 'indiv_view_all_orgs.dart';
 
-class ApproveOrgSignups extends StatefulWidget {
-  const ApproveOrgSignups({Key? key}) : super(key: key);
+class AdminViewAllOrgs extends StatefulWidget {
+  const AdminViewAllOrgs({Key? key}) : super(key: key);
 
   @override
-  State<ApproveOrgSignups> createState() => _ApproveOrgSignupsState();
+  State<AdminViewAllOrgs> createState() => _AdminViewAllOrgsState();
 }
 
-class _ApproveOrgSignupsState extends State<ApproveOrgSignups> {
+class _AdminViewAllOrgsState extends State<AdminViewAllOrgs> {
   final _formKey = GlobalKey<FormState>(); 
 
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<TextfieldProviders>();
-    List<User> requests = [
+
+    List<User> organizations = [
       User(
         name: 'Org 1',
         username: 'org1_username',
         password: 'password1',
         addresses: ['Address 1', 'Address 2'],
         contactNumber: '1234567890',
-        proofs: ['Proofs for Organization 1'],
-      ),
-      User(
-        name: 'Org 3',
-        username: 'org3_username',
-        password: 'password3',
-        addresses: ['Address 5', 'Address 6'],
-        contactNumber: '9876543210',
-        proofs: ['Proofs for Organization 3'],
-      ),
-      User(
-        name: 'Org 3',
-        username: 'org3_username',
-        password: 'password3',
-        addresses: ['Address 5', 'Address 6'],
-        contactNumber: '9876543210',
-        proofs: ['Proofs for Organization 3', '456456'],
+        proofs: ['Proofs for Organization 1', 'More'],
       ),
       User(
         name: 'Org 3',
@@ -131,13 +117,13 @@ class _ApproveOrgSignupsState extends State<ApproveOrgSignups> {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.12, 
+              top: MediaQuery.of(context).size.height * 0.13, 
               left: 0,
               right: 0,
               child: Padding(
                 padding: EdgeInsets.all(17),
                 child: Text(
-                  "Pending Organization Sign ups",
+                  "All Organizations",
                   style: TextStyle(
                     fontSize: 26,
                     fontFamily: 'Poppins-Bold',
@@ -148,7 +134,7 @@ class _ApproveOrgSignupsState extends State<ApproveOrgSignups> {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.26,
+              top: MediaQuery.of(context).size.height * 0.23,
               left: 0,
               right: 0,
               bottom: MediaQuery.of(context).size.height * 0.057,
@@ -160,9 +146,9 @@ class _ApproveOrgSignupsState extends State<ApproveOrgSignups> {
                       padding: EdgeInsets.zero,
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
-                      itemCount: requests.length,
+                      itemCount: organizations.length,
                       itemBuilder: (context, index) {
-                        User request = requests[index];
+                        User request = organizations[index];
                         return Container(
                           decoration: BoxDecoration(
                             color: Color(0xFFFFFFFF),
@@ -192,7 +178,7 @@ class _ApproveOrgSignupsState extends State<ApproveOrgSignups> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => OrgRequestPage(index: index),
+                                    builder: (context) => IndivViewAllOrgs(index: index),
                                   ),
                                 );
                               },
@@ -208,7 +194,7 @@ class _ApproveOrgSignupsState extends State<ApproveOrgSignups> {
                                   borderRadius: BorderRadius.circular(15), 
                                 ),
                               ),
-                              child: const Text('View Request'),
+                              child: const Text('View Details'),
                             ),
                           ),
                         );

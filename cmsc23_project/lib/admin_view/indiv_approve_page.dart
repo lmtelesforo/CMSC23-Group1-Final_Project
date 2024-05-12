@@ -14,101 +14,45 @@ class OrgRequestPage extends StatefulWidget {
 }
 
 class _OrgRequestPageState extends State<OrgRequestPage> {
+  List<User> requests = [
+    User(
+      name: 'Org 1',
+      username: 'org1_username',
+      password: 'password1',
+      addresses: ['Address 1', 'Address 2'],
+      contactNumber: '1234567890',
+      proofs: ['Proofs for Organization 1'],
+    ),
+    User(
+      name: 'Org 2',
+      username: 'org2_username',
+      password: 'password2',
+      addresses: ['Address 3', 'Address 4'],
+      contactNumber: '0987654321',
+      proofs: ['gfgdf', '7979'],
+    ),
+    User(
+      name: 'Org 3',
+      username: 'org3_username',
+      password: 'password3',
+      addresses: ['Address 5', 'Address 6'],
+      contactNumber: '9876543210',
+      proofs: ['Proofs for Organization 3'],
+    ),
+    User(
+      name: 'Org 3',
+      username: 'org3_username',
+      password: 'password3',
+      addresses: ['Address 5', 'Address 6'],
+      contactNumber: '9876543210',
+      proofs: ['Proofs for Organization 3'],
+    ),
+  ];
+  
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<TextfieldProviders>();
     final int index;
-
-    List<User> requests = [
-      User(
-        name: 'Org 1',
-        username: 'org1_username',
-        password: 'password1',
-        addresses: ['Address 1', 'Address 2'],
-        contactNumber: '1234567890',
-        proofs: 'Proofs for Organization 1',
-      ),
-      User(
-        name: 'Org 2',
-        username: 'org2_username',
-        password: 'password2',
-        addresses: ['Address 3', 'Address 4'],
-        contactNumber: '0987654321',
-        proofs: 'gfgdf',
-      ),
-      User(
-        name: 'Org 3',
-        username: 'org3_username',
-        password: 'password3',
-        addresses: ['Address 5', 'Address 6'],
-        contactNumber: '9876543210',
-        proofs: 'Proofs for Organization 3',
-      ),
-      User(
-        name: 'Org 3',
-        username: 'org3_username',
-        password: 'password3',
-        addresses: ['Address 5', 'Address 6'],
-        contactNumber: '9876543210',
-        proofs: 'Proofs for Organization 3',
-      ),
-      User(
-        name: 'Org 3',
-        username: 'org3_username',
-        password: 'password3',
-        addresses: ['Address 5', 'Address 6'],
-        contactNumber: '9876543210',
-        proofs: 'Proofs for Organization 3',
-      ),
-      User(
-        name: 'Org 3',
-        username: 'org3_username',
-        password: 'password3',
-        addresses: ['Address 5', 'Address 6'],
-        contactNumber: '9876543210',
-        proofs: 'Proofs for Organization 3',
-      ),
-      User(
-        name: 'Org 3',
-        username: 'org3_username',
-        password: 'password3',
-        addresses: ['Address 5', 'Address 6'],
-        contactNumber: '9876543210',
-        proofs: 'Proofs for Organization 3',
-      ),
-      User(
-        name: 'Org 3',
-        username: 'org3_username',
-        password: 'password3',
-        addresses: ['Address 5', 'Address 6'],
-        contactNumber: '9876543210',
-        proofs: 'Proofs for Organization 3',
-      ),
-      User(
-        name: 'Org 3',
-        username: 'org3_username',
-        password: 'password3',
-        addresses: ['Address 5', 'Address 6'],
-        contactNumber: '9876543210',
-        proofs: 'Proofs for Organization 3',
-      ),
-      User(
-        name: 'Org 3',
-        username: 'org3_username',
-        password: 'password3',
-        addresses: ['Address 5', 'Address 6'],
-        contactNumber: '9876543210',
-        proofs: 'Proofs for Organization 3',
-      ),
-      User(
-        name: 'Org 4',
-        username: 'org3_username',
-        password: 'password3',
-        addresses: ['Address 5', 'Address 6'],
-        contactNumber: '9876543210',
-        proofs: 'Proofs for Organization 3',
-      ),
-    ];
 
     return Scaffold(
       body: Stack(
@@ -251,27 +195,35 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                             ],
                           ),
                           SizedBox(height: 7),
-                          Row(
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Address/es:',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: 'Poppins-Bold',
-                                  color: Color(0xFF373D66),
-                                ),
-                              ),
-                              SizedBox(width: 5),
-                              Expanded(
-                                child: Text(
-                                  requests[widget.index].addresses[0],
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontFamily: 'Poppins',
-                                    color: Color(0xFF373D66),
+                              Row(
+                                children: [
+                                  Text(
+                                    'Address/es:',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontFamily: 'Poppins-Bold',
+                                      color: Color(0xFF373D66),
+                                    ),
                                   ),
-                                ),
+                                  SizedBox(width: 5),
+                                  Expanded(
+                                    child: Text(
+                                      requests[widget.index].addresses.first,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontFamily: 'Poppins',
+                                        color: Color(0xFF373D66),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
+                              (requests[widget.index].addresses.length > 1)
+                              ? newAddressLine() // if true
+                              : SizedBox.shrink(), // if false
                             ],
                           ),
                           SizedBox(height: 7),
@@ -299,27 +251,35 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                             ],
                           ),
                           SizedBox(height: 7),
-                          Row(
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Proof/s:',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: 'Poppins-Bold',
-                                  color: Color(0xFF373D66),
-                                ),
-                              ),
-                              SizedBox(width: 5),
-                              Expanded(
-                                child: Text(
-                                  requests[widget.index].proofs!,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontFamily: 'Poppins',
-                                    color: Color(0xFF373D66),
+                              Row(
+                                children: [
+                                  Text(
+                                    'Proof/s:',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontFamily: 'Poppins-Bold',
+                                      color: Color(0xFF373D66),
+                                    ),
                                   ),
-                                ),
+                                  SizedBox(width: 5),
+                                  Expanded(
+                                    child: Text(
+                                      requests[widget.index].proofs?.first,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontFamily: 'Poppins',
+                                        color: Color(0xFF373D66),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
+                              (requests[widget.index].proofs!.length > 1)
+                              ? newLine() // if true
+                              : SizedBox.shrink(), // if false
                             ],
                           ),
                         ],
@@ -396,6 +356,50 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget newAddressLine() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: List.generate(
+        requests[widget.index].addresses.length - 1,
+        (index) {
+          return Padding(
+            padding: EdgeInsets.only(left: 106), 
+            child: Text(
+              requests[widget.index].addresses[index + 1],
+              style: TextStyle(
+                fontSize: 16,
+                fontFamily: 'Poppins',
+                color: Color(0xFF373D66),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget newLine() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: List.generate(
+        requests[widget.index].proofs!.length - 1,
+        (index) {
+          return Padding(
+            padding: EdgeInsets.only(left: 70), 
+            child: Text(
+              requests[widget.index].proofs![index + 1],
+              style: TextStyle(
+                fontSize: 16,
+                fontFamily: 'Poppins',
+                color: Color(0xFF373D66),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
