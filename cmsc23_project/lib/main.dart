@@ -1,4 +1,5 @@
 import 'package:cmsc23_project/admin_view/approve_signups.dart';
+import 'package:cmsc23_project/admin_view/view_all_donors.dart';
 import 'package:cmsc23_project/admin_view/view_all_organizations.dart';
 import 'package:cmsc23_project/user_view/landing_page.dart';
 import 'package:cmsc23_project/admin_view/login_admin.dart';
@@ -30,7 +31,7 @@ class RootWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: "/viewAllDonations",
+      initialRoute: "/viewAllDonors",
       routes: {
         "/": (context) => const LandingPage(),
         "/loginDonor": (context) => LogInDonorPage(),
@@ -40,7 +41,8 @@ class RootWidget extends StatelessWidget {
         "/signupOrg": (context) => SignUpOrgPage(),
         "/adminApprove": (context) => ApproveOrgSignups(),
         "/viewAllOrgs": (context) => AdminViewAllOrgs(),
-        "/viewAllDonations": (context) => AdminViewAllDonations()
+        "/viewAllDonations": (context) => AdminViewAllDonations(),
+        "/viewAllDonors": (context) => AdminViewAllDonors(),
       },
     );
   }
