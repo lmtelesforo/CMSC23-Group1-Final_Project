@@ -5,9 +5,20 @@ import 'package:cmsc23_project/user_view/login_org.dart';
 import 'package:cmsc23_project/user_view/signup_donor.dart';
 import 'package:cmsc23_project/user_view/signup_org.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'providers/textfield_providers.dart';
 
 void main() {
-  runApp(const RootWidget());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => TextfieldProviders(),
+        )
+      ],
+      child: const RootWidget(),
+    ),
+  );
 }
 
 class RootWidget extends StatelessWidget {
