@@ -8,6 +8,7 @@ import 'package:cmsc23_project/user_view/signup_donor.dart';
 import 'package:cmsc23_project/user_view/signup_org.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'admin_view/view_all_donations.dart';
 import 'providers/textfield_providers.dart';
 
 void main() {
@@ -29,7 +30,7 @@ class RootWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: "/viewAllOrgs",
+      initialRoute: "/viewAllDonations",
       routes: {
         "/": (context) => const LandingPage(),
         "/loginDonor": (context) => LogInDonorPage(),
@@ -38,7 +39,8 @@ class RootWidget extends StatelessWidget {
         "/signupDonor": (context) => SignUpDonorPage(),
         "/signupOrg": (context) => SignUpOrgPage(),
         "/adminApprove": (context) => ApproveOrgSignups(),
-        "/viewAllOrgs": (context) => AdminViewAllOrgs()
+        "/viewAllOrgs": (context) => AdminViewAllOrgs(),
+        "/viewAllDonations": (context) => AdminViewAllDonations()
       },
     );
   }
