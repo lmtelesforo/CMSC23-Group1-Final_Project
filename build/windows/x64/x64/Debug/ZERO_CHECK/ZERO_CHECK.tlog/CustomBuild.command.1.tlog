@@ -1,0 +1,10 @@
+^C:\USERS\WINNA\DESKTOP\DONOR_APP\BUILD\WINDOWS\X64\CMAKEFILES\AD32A0645148EFAF6D5F2AC77841CB15\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/winna/Desktop/donor_app/windows -BC:/Users/winna/Desktop/donor_app/build/windows/x64 --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/winna/Desktop/donor_app/build/windows/x64/donor_app.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
