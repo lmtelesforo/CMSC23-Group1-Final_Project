@@ -89,7 +89,7 @@ class _AdminViewAllDonationsState extends State<AdminViewAllDonations> {
               child: TextButton.icon(
                 onPressed: () {
                   Navigator.pop(context);
-                  Navigator.pushNamed(context, "/");
+                  Navigator.pushNamed(context, "/adminDashboard");
                 },
                 icon: Image.asset(
                   'lib/user_view/assets/back.png', 
@@ -97,7 +97,7 @@ class _AdminViewAllDonationsState extends State<AdminViewAllDonations> {
                   height: 34, 
                 ),
                 label: Text(
-                  'Log out',
+                  'Back',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
