@@ -1,3 +1,4 @@
+import 'package:cmsc23_project/models/user.dart';
 import 'package:flutter/material.dart';
 
 class BaseView extends StatelessWidget {
@@ -7,9 +8,13 @@ class BaseView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    User sampleUser = User(
+      profilePic: const AssetImage('assets/images/profile_pic.jpg'),
+    );
+
     return Scaffold(
       extendBodyBehindAppBar: true,
-      drawer: const Drawer(),
+      drawer: !Navigator.canPop(context) ? const Drawer() : null,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         title: const Image(
@@ -18,9 +23,9 @@ class BaseView extends StatelessWidget {
           width: 50,
         ),
         centerTitle: true,
-        actions: const [
+        actions: [
           CircleAvatar(
-            backgroundImage: AssetImage('assets/images/profile_pic.jpg'),
+            backgroundImage: sampleUser.profilePic,
             backgroundColor: Colors.white,
             radius: 20,
           )

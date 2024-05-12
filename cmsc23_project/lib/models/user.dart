@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class User {
-  final Image profilePic;
+  final ImageProvider profilePic;
 
   User({required this.profilePic});
 }
