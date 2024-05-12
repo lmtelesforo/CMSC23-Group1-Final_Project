@@ -163,10 +163,10 @@ class _LogInAdminPageState extends State<LogInAdminPage> {
                               return null;
                             },
                             style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: 'Poppins',
-                                color: Color(0xFF373D66)
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'Poppins',
+                              color: Color(0xFF373D66)
                             ),
                             decoration: InputDecoration(
                               hintText: 'Enter your username',
@@ -251,34 +251,6 @@ class _LogInAdminPageState extends State<LogInAdminPage> {
                       ),
                     ),
                     SizedBox(height: 40),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          String username = provider.controller1.text;
-                          String password = provider.controller2.text;
-
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Logged in!'),
-                            ),
-                          );
-                        } 
-                        else {
-                          
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(320, 40),
-                        foregroundColor: Color(0xFFFCBE4F),
-                        textStyle: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w900,
-                          fontFamily: 'Poppins',
-                        ),
-                        backgroundColor: Color(0xFF373D66),
-                      ),
-                      child: const Text('Log in as Admin'),
-                    ),
                     SizedBox(
                       height: 34,
                       child: TextButton(
@@ -295,6 +267,36 @@ class _LogInAdminPageState extends State<LogInAdminPage> {
                           ),
                         ),
                       ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          String username = provider.controller1.text;
+                          String password = provider.controller2.text;
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Logged in!'),
+                            ),
+                          );
+                          provider.resetLogIn();
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, "/adminApprove");
+                        } 
+                        else {
+                          
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(320, 40),
+                        foregroundColor: Color(0xFFFCBE4F),
+                        textStyle: const TextStyle(
+                          fontSize: 14,
+                          fontFamily: 'Poppins-Bold',
+                        ),
+                        backgroundColor: Color(0xFF373D66),
+                      ),
+                      child: const Text('Log in as Admin'),
                     ),
                   ],
                 ),

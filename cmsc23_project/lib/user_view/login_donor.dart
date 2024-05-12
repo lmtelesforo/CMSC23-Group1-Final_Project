@@ -55,8 +55,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                   'Back',
                   style: TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Poppins',
+                    fontFamily: 'Poppins-Bold',
                   ),
                 ),
                 style: TextButton.styleFrom(
@@ -290,8 +289,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                         foregroundColor:  Color(0xFFFCBE4F),
                         textStyle: const TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.w900,
-                          fontFamily: 'Poppins',
+                          fontFamily: 'Poppins-Bold',
                         ),
                         backgroundColor: Color(0xFF373D66),
                       ),
@@ -322,8 +320,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                                 "Sign up",
                                 style: TextStyle(
                                   fontSize: 14,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w900,
+                                  fontFamily: 'Poppins-Bold',
                                   color: Color(0xFF373D66),
                                 ),
                               ),

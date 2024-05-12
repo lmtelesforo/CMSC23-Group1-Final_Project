@@ -55,8 +55,7 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                   'Back',
                   style: TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Poppins',
+                    fontFamily: 'Poppins-Bold',
                   ),
                 ),
                 style: TextButton.styleFrom(
@@ -290,8 +289,7 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                         foregroundColor:  Color(0xFFFCBE4F),
                         textStyle: const TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.w900,
-                          fontFamily: 'Poppins',
+                          fontFamily: 'Poppins-Bold',
                         ),
                         backgroundColor: Color(0xFF373D66),
                       ),

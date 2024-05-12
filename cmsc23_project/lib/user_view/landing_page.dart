@@ -80,8 +80,7 @@ class _LandingPageState extends State<LandingPage> {
                       foregroundColor: Color(0xFFFCBE4F),
                       textStyle: const TextStyle(
                         fontSize: 14,
-                        fontWeight: FontWeight.w900,
-                        fontFamily: 'Poppins',
+                        fontFamily: 'Poppins-Bold',
                       ),
                       backgroundColor: Color(0xFF373D66),
                     ),
@@ -97,8 +96,7 @@ class _LandingPageState extends State<LandingPage> {
                       foregroundColor: Color(0xFFFCBE4F),
                       textStyle: const TextStyle(
                         fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Poppins',
+                        fontFamily: 'Poppins-Bold',
                       ),
                       backgroundColor: Color(0xFF373D66),
                     ),
@@ -127,8 +125,7 @@ class _LandingPageState extends State<LandingPage> {
                       foregroundColor: Color(0xFF373D66),
                       textStyle: const TextStyle(
                         fontSize: 14,
-                        fontWeight: FontWeight.w900,
-                        fontFamily: 'Poppins',
+                        fontFamily: 'Poppins-Bold',
                       ),
                       backgroundColor: Color(0xFFFCBE4F).withOpacity(0.65),
                     ),
@@ -144,8 +141,7 @@ class _LandingPageState extends State<LandingPage> {
                       foregroundColor: Color(0xFF373D66),
                       textStyle: const TextStyle(
                         fontSize: 14,
-                        fontWeight: FontWeight.w900,
-                        fontFamily: 'Poppins',
+                        fontFamily: 'Poppins-Bold',
                       ),
                       backgroundColor: Color(0xFFFCBE4F).withOpacity(0.65),
                     ),
@@ -162,8 +158,7 @@ class _LandingPageState extends State<LandingPage> {
                         "Log in as Admin",
                         style: TextStyle(
                           fontSize: 14,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w900,
+                          fontFamily: 'Poppins-Bold',
                           color: Color(0xFF373D66),
                         ),
                       ),

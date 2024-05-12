@@ -329,7 +329,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1, bottom: 3, top: 6),
+                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1, bottom: 3),
                           child: Text(
                             "separate with commas",
                             style: TextStyle(
@@ -491,8 +491,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                         foregroundColor:  Color(0xFFFCBE4F),
                         textStyle: const TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.w900,
-                          fontFamily: 'Poppins',
+                          fontFamily: 'Poppins-Bold',
                         ),
                         backgroundColor: Color(0xFF373D66),
                       ),
@@ -523,8 +522,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                                 "Log in",
                                 style: TextStyle(
                                   fontSize: 14,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w900,
+                                  fontFamily: 'Poppins-Bold',
                                   color: Color(0xFF373D66),
                                 ),
                               ),

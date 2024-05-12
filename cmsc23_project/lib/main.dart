@@ -1,5 +1,6 @@
+import 'package:cmsc23_project/admin_view/approve_signups.dart';
 import 'package:cmsc23_project/user_view/landing_page.dart';
-import 'package:cmsc23_project/user_view/login_admin.dart';
+import 'package:cmsc23_project/admin_view/login_admin.dart';
 import 'package:cmsc23_project/user_view/login_donor.dart';
 import 'package:cmsc23_project/user_view/login_org.dart';
 import 'package:cmsc23_project/user_view/signup_donor.dart';
@@ -35,6 +36,7 @@ class RootWidget extends StatelessWidget {
         "/loginAdmin": (context) => LogInAdminPage(),
         "/signupDonor": (context) => SignUpDonorPage(),
         "/signupOrg": (context) => SignUpOrgPage(),
+        "/adminApprove": (context) => ApproveOrgSignups(),
       },
     );
   }
