@@ -5,7 +5,11 @@ class Organization extends User {
   List<DonationDrive> donationDrives;
   List<DonationDrive> favorites = [];
 
-  Organization({required super.profilePic, this.donationDrives = const []});
+  Organization({
+    required super.profilePic,
+    required super.name,
+    this.donationDrives = const [],
+  });
 
   void favorite(DonationDrive drive) {
     favorites.add(drive);

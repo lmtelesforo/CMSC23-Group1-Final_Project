@@ -1,5 +1,7 @@
+import 'package:cmsc23_project/models/donation.dart';
 import 'package:cmsc23_project/models/donation_drive.dart';
 import 'package:cmsc23_project/models/organization.dart';
+import 'package:cmsc23_project/models/user.dart';
 import 'package:cmsc23_project/org-view/base_screen.dart';
 import 'package:cmsc23_project/org-view/donation_drive_page.dart';
 import 'package:cmsc23_project/org-view/manage_donation_drives.dart';
@@ -12,7 +14,9 @@ class OrgHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Test data
     final Organization org = Organization(
+      name: 'Organization 1',
       profilePic: const AssetImage('assets/images/org_profile.png'),
       donationDrives: [
         DonationDrive(
@@ -27,11 +31,40 @@ class OrgHomePage extends StatelessWidget {
     );
     org.favorite(org.donationDrives[0]);
 
+    User abra = User(
+        name: 'Abra Abra',
+        profilePic: const AssetImage(
+          'assets/images/profile_pic.jpg',
+        ));
+    org.donations.add(Donation(
+      user: abra,
+      organization: org,
+      status: Status.confirmed,
+    ));
+    org.donations.add(Donation(user: abra, organization: org));
+    org.donations.add(Donation(user: abra, organization: org));
+    org.donations.add(Donation(user: abra, organization: org));
+    org.donations.add(Donation(user: abra, organization: org));
+    org.donations.add(Donation(user: abra, organization: org));
+
+    User cadabra = User(
+        name: 'Cababra Cadabra',
+        profilePic: const AssetImage(
+          'assets/images/profile_pic.jpg',
+        ));
+    org.donations.add(Donation(
+      user: cadabra,
+      organization: org,
+      status: Status.scheduledForPickup,
+    ));
+    org.donations.add(Donation(user: cadabra, organization: org));
+
     return BaseScreen(
       body: Column(
         children: [
           MainAction(org.donationDrives),
           Favorites(org.favorites),
+          DonationList(org.donations),
         ],
       ),
     );
@@ -102,8 +135,9 @@ class Favorites extends StatelessWidget {
           children: [
             Wrap(
               children: [
-                for (final donationDrive in favorites)
-                  DonationDriveCard(donationDrive: donationDrive),
+                ...favorites.map((donationDrive) {
+                  return DonationDriveCard(donationDrive: donationDrive);
+                }),
               ],
             ),
           ],
@@ -161,4 +195,59 @@ class DonationDriveCard extends StatelessWidget {
       ),
     );
   }
+}
+
+class DonationList extends StatelessWidget {
+  // Lists all donations made to the organization
+  final List<Donation> donations;
+
+  const DonationList(this.donations, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: SizedBox(
+        height: 400,
+        child: Card(
+          child: Container(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              children: [
+                searchBar,
+                donationTiles,
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget get searchBar => Container(
+        padding: const EdgeInsets.all(8),
+        child: const SearchBar(
+          hintText: 'Search for a donation',
+          trailing: [Icon(Icons.search)],
+        ),
+      );
+
+  Widget get donationTiles => Expanded(
+        child: Container(
+          padding: const EdgeInsets.only(top: 8),
+          child: ListView.builder(
+            itemCount: donations.length,
+            itemBuilder: (context, index) {
+              return Card(
+                color: const Color(0xFFFCBE4F),
+                child: ListTile(
+                  leading: donations[index].statusIcon,
+                  title: Text(donations[index].user.name),
+                  trailing: Text(donations[index].status.name),
+                ),
+              );
+            },
+          ),
+        ),
+      );
 }

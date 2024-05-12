@@ -10,6 +10,7 @@ class BaseScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     User sampleUser = User(
+      name: 'Donator Name 1',
       profilePic: const AssetImage('assets/images/profile_pic.jpg'),
     );
 
@@ -17,6 +18,8 @@ class BaseScreen extends StatelessWidget {
       extendBodyBehindAppBar: true,
       drawer: !Navigator.canPop(context) ? const Drawer() : null,
       appBar: AppBar(
+        iconTheme: const IconThemeData(
+            color: Color(0xFF373D66)), // Change color of back button (if any
         backgroundColor: Colors.transparent,
         title: const Image(
           image: AssetImage('assets/images/cmsc23_logo1.png'),
