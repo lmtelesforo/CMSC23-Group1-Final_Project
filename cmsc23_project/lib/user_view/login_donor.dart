@@ -129,7 +129,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                     ],
                   ),
                   Container(
-                    width: 300, 
+                    width: 320, 
                     height: 40,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(32),
@@ -173,7 +173,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                     ],
                   ),
                   Container(
-                    width: 300, 
+                    width: 320, 
                     height: 40,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(32),
@@ -203,7 +203,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                   ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(300, 40),
+                      minimumSize: const Size(320, 40),
                       foregroundColor:  Color(0xFFFCBE4F),
                       textStyle: const TextStyle(
                         fontSize: 14,

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class LogInOrgPage extends StatefulWidget {
-  const LogInOrgPage({Key? key}) : super(key: key);
+class LogInAdminPage extends StatefulWidget {
+  const LogInAdminPage({Key? key}) : super(key: key);
 
   @override
-  State<LogInOrgPage> createState() => _LogInOrgPageState();
+  State<LogInAdminPage> createState() => _LogInAdminPageState();
 }
 
-class _LogInOrgPageState extends State<LogInOrgPage> {
+class _LogInAdminPageState extends State<LogInAdminPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,7 +92,7 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
             child: Padding(
               padding: const EdgeInsets.only(left: 16, right: 16),
               child: Text(
-                "Log in your organization's account.",
+                "For admin access only!",
                 style: TextStyle(
                   fontSize: 12,
                   fontFamily: 'Poppins',
@@ -212,41 +212,7 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                       ),
                       backgroundColor: Color(0xFF373D66),
                     ),
-                    child: const Text('Log in'),
-                  ),
-                  Center (
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Don't have an org account?",
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xFF373D66),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 40,
-                          child: TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                              Navigator.pushNamed(context, "/signupOrg");
-                            },
-                            child: Text(
-                              "Sign up",
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w900,
-                                color: Color(0xFF373D66),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                    child: const Text('Log in as Admin'),
                   ),
                 ],
               ),

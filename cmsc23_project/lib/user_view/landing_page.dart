@@ -156,7 +156,7 @@ class _LandingPageState extends State<LandingPage> {
                     child: TextButton(
                       onPressed: () {
                         Navigator.pop(context);
-                        Navigator.pushNamed(context, "/loginOrg");
+                        Navigator.pushNamed(context, "/loginAdmin");
                       },
                       child: Text(
                         "Log in as Admin",
