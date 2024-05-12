@@ -15,6 +15,7 @@ class BaseScreen extends StatelessWidget {
     );
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
       drawer: !Navigator.canPop(context) ? const Drawer() : null,
       appBar: AppBar(
