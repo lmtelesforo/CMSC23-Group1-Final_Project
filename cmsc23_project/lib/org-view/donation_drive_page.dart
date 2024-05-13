@@ -29,26 +29,62 @@ class ExpandedDriveCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      child: Card(
-        child: Column(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image(
-                image: donationDrive.image,
-                fit: BoxFit.cover,
-              ),
+    return Stack(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(20),
+          child: Card(
+            child: Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image(
+                      image: donationDrive.image,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                Text(donationDrive.name, style: CustomTextStyle.h1),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    _status,
+                  ],
+                ),
+              ],
             ),
-            Container(
-              padding: const EdgeInsets.only(top: 10),
-              child: Text(donationDrive.name, style: CustomTextStyle.body),
-            ),
-            Row(children: [Text('Date: ${donationDrive.date}')]),
-          ],
+          ),
         ),
-      ),
+        if (donationDrive.isFavorite) _favoriteIcon,
+      ],
     );
   }
+
+  Widget get _status => Row(
+        children: [
+          const Icon(Icons.schedule, color: CustomColors.secondary),
+          Container(
+            padding: const EdgeInsets.only(left: 10),
+            child: Text(
+              donationDrive.status,
+              style: CustomTextStyle.body,
+            ),
+          ),
+        ],
+      );
+
+  Widget get _favoriteIcon => Positioned(
+        top: 25,
+        right: 25,
+        child: Container(
+          padding: const EdgeInsets.all(5),
+          decoration: const BoxDecoration(
+            color: CustomColors.primary,
+            shape: BoxShape.circle,
+          ),
+          child: const Icon(Icons.favorite, color: CustomColors.secondary),
+        ),
+      );
 }

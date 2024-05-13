@@ -5,19 +5,31 @@ class CustomTextStyle {
     fontFamily: 'Poppins',
     fontSize: 20,
     fontWeight: FontWeight.bold,
-    color: Color(0xFF373D66),
+    color: CustomColors.primary,
   );
 
   static const h1 = TextStyle(
     fontFamily: 'Poppins',
     fontSize: 24,
     fontWeight: FontWeight.bold,
-    color: Color(0xFF373D66),
+    color: CustomColors.primary,
   );
 
   static const body = TextStyle(
     fontFamily: 'Poppins',
     fontSize: 16,
-    color: Color(0xFF373D66),
+    color: CustomColors.primary,
   );
+
+  static const prompt = TextStyle(
+    fontFamily: 'Poppins',
+    fontSize: 24,
+    color: CustomColors.prompt,
+  );
+}
+
+class CustomColors {
+  static const primary = Color(0xFF373D66);
+  static const secondary = Color(0xFFFCBE4F);
+  static const prompt = Color(0xFFd3d3d3);
 }

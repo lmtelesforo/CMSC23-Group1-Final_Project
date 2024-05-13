@@ -31,16 +31,16 @@ class DonationDriveCard extends StatelessWidget {
                   ),
                 );
               },
-              child: cardContent,
+              child: _cardContent,
             ),
           ),
         ),
-        if (donationDrive.isFavorite) favoriteIcon,
+        if (donationDrive.isFavorite) _favoriteIcon,
       ],
     );
   }
 
-  Widget get cardContent => Column(
+  Widget get _cardContent => Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ClipRRect(
@@ -59,18 +59,18 @@ class DonationDriveCard extends StatelessWidget {
         ],
       );
 
-  Widget get favoriteIcon => Positioned(
+  Widget get _favoriteIcon => Positioned(
         top: 5,
         right: 5,
         child: Container(
           padding: const EdgeInsets.all(2),
           decoration: const BoxDecoration(
-            color: Color(0xFF373D66),
+            color: CustomColors.primary,
             shape: BoxShape.circle,
           ),
           child: const Icon(
             Icons.favorite,
-            color: Color(0xFFFCBE4F),
+            color: CustomColors.secondary,
           ),
         ),
       );

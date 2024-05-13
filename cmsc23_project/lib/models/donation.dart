@@ -29,10 +29,4 @@ class Donation {
   }
 }
 
-enum Status {
-  pending,
-  confirmed,
-  scheduledForPickup,
-  complete,
-  cancelled,
-}
+enum Status { pending, confirmed, scheduledForPickup, complete, cancelled }

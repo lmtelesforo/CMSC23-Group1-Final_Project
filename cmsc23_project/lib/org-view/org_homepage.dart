@@ -21,22 +21,20 @@ class OrgHomePage extends StatelessWidget {
       donationDrives: [
         DonationDrive(
           name: 'Donation Drive 1',
-          date: DateTime.now(),
           image: const AssetImage('assets/images/donation_drive.jpg'),
         ),
         DonationDrive(
           name: 'Donation Drive 2',
-          date: DateTime.now(),
           image: const AssetImage('assets/images/donation_drive.jpg'),
         ),
         DonationDrive(
           name: 'Donation Drive 3',
-          date: DateTime.now(),
           image: const AssetImage('assets/images/donation_drive.jpg'),
         ),
       ],
     );
     org.favorite(org.donationDrives[0]);
+    org.donationDrives[2].end();
 
     User abra = User(
         name: 'Abra Abra',
@@ -107,20 +105,11 @@ class MainAction extends StatelessWidget {
             },
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Flexible(
-                    child: Text(
-                      'Organize your donation drives',
-                      style: CustomTextStyle.mainAction,
-                    ),
-                  ),
-                  Image(
-                    image: AssetImage('assets/images/xmas_box.png'),
-                    height: 80,
-                    width: 80,
-                  ),
+                  _text,
+                  _image,
                 ],
               ),
             ),
@@ -129,6 +118,19 @@ class MainAction extends StatelessWidget {
       ),
     );
   }
+
+  Widget get _text => const Flexible(
+        child: Text(
+          'Organize your donation drives',
+          style: CustomTextStyle.mainAction,
+        ),
+      );
+
+  Widget get _image => const Image(
+        image: AssetImage('assets/images/xmas_box.png'),
+        height: 80,
+        width: 80,
+      );
 }
 
 class Favorites extends StatelessWidget {
@@ -194,8 +196,8 @@ class _DonationListState extends State<DonationList> {
             padding: const EdgeInsets.all(10),
             child: Column(
               children: [
-                searchBar,
-                donationTiles,
+                _searchBar,
+                _donationTiles,
               ],
             ),
           ),
@@ -204,7 +206,7 @@ class _DonationListState extends State<DonationList> {
     );
   }
 
-  Widget get searchBar => Container(
+  Widget get _searchBar => Container(
         padding: const EdgeInsets.all(8),
         child: SearchBar(
           onChanged: (value) {
@@ -217,7 +219,7 @@ class _DonationListState extends State<DonationList> {
         ),
       );
 
-  Widget get donationTiles => Expanded(
+  Widget get _donationTiles => Expanded(
         child: Container(
           padding: const EdgeInsets.only(top: 8),
           child: ListView.builder(
@@ -227,7 +229,7 @@ class _DonationListState extends State<DonationList> {
                   .toLowerCase()
                   .contains(_searchQuery.toLowerCase())) {
                 return Card(
-                  color: const Color(0xFFFCBE4F),
+                  color: CustomColors.secondary,
                   child: ListTile(
                     leading: widget.donations[index].statusIcon,
                     title: Text(widget.donations[index].user.name),

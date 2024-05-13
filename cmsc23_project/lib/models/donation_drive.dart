@@ -2,9 +2,24 @@ import 'package:flutter/material.dart';
 
 class DonationDrive {
   final String name;
-  final DateTime date;
   final ImageProvider image;
+  _Status _status = _Status.ongoing;
   bool isFavorite = false;
 
-  DonationDrive({required this.name, required this.date, required this.image});
+  DonationDrive({required this.name, required this.image});
+
+  String get status {
+    switch (_status) {
+      case _Status.ongoing:
+        return 'Ongoing';
+      case _Status.completed:
+        return 'Completed';
+    }
+  }
+
+  void end() {
+    _status = _Status.completed;
+  }
 }
+
+enum _Status { ongoing, completed }

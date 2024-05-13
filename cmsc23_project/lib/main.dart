@@ -1,3 +1,4 @@
+import 'package:cmsc23_project/org-view/add_a_drive.dart';
 import 'package:cmsc23_project/org-view/org_homepage.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +15,7 @@ class RootWidget extends StatelessWidget {
       initialRoute: "/",
       routes: {
         "/": (context) => const OrgHomePage(),
+        "/add-a-drive": (context) => const AddADrive(),
       },
     );
   }

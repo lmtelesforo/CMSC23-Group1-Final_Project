@@ -1,4 +1,5 @@
 import 'package:cmsc23_project/models/user.dart';
+import 'package:cmsc23_project/org-view/org_view_styles.dart';
 import 'package:flutter/material.dart';
 
 class BaseScreen extends StatelessWidget {
@@ -20,7 +21,7 @@ class BaseScreen extends StatelessWidget {
       drawer: !Navigator.canPop(context) ? const Drawer() : null,
       appBar: AppBar(
         iconTheme: const IconThemeData(
-            color: Color(0xFF373D66)), // Change color of back button (if any
+            color: CustomColors.primary), // Change color of back button (if any
         backgroundColor: Colors.transparent,
         title: const Image(
           image: AssetImage('assets/images/cmsc23_logo1.png'),
