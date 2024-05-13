@@ -1,6 +1,7 @@
 import 'package:cmsc23_project/models/donation.dart';
 import 'package:cmsc23_project/models/donation_drive.dart';
-import 'package:cmsc23_project/org-view/donation_drive_page.dart';
+import 'package:cmsc23_project/org-view/donation_details.dart';
+import 'package:cmsc23_project/org-view/donation_drive/donation_drive_page.dart';
 import 'package:cmsc23_project/org-view/org_view_styles.dart';
 import 'package:flutter/material.dart';
 
@@ -124,28 +125,42 @@ class _DonationListState extends State<DonationList> {
         ),
       );
 
-  Widget get _donationTiles => Expanded(
-        child: Container(
-          padding: const EdgeInsets.only(top: 8),
-          child: ListView.builder(
-            itemCount: widget.donations.length,
-            itemBuilder: (context, index) {
-              if (widget.donations[index].user.name
-                  .toLowerCase()
-                  .contains(_searchQuery.toLowerCase())) {
-                return Card(
-                  color: CustomColors.secondary,
-                  child: ListTile(
-                    leading: widget.donations[index].statusIcon,
-                    title: Text(widget.donations[index].user.name),
-                    trailing: Text(widget.donations[index].status.name),
-                  ),
-                );
-              } else {
-                return Container();
-              }
-            },
-          ),
+  Widget get _donationTiles {
+    List<Donation> filteredDonations = widget.donations.where((donation) {
+      return donation.user.name
+          .toLowerCase()
+          .contains(_searchQuery.toLowerCase());
+    }).toList();
+
+    return Expanded(
+      child: Container(
+        padding: const EdgeInsets.only(top: 8),
+        child: ListView.builder(
+          itemCount: filteredDonations.length,
+          itemBuilder: (context, index) {
+            return Card(
+              color: CustomColors.secondary,
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DonationDetails(
+                        donation: filteredDonations[index],
+                      ),
+                    ),
+                  );
+                },
+                child: ListTile(
+                  leading: filteredDonations[index].statusIcon,
+                  title: Text(filteredDonations[index].user.name),
+                  trailing: Text(filteredDonations[index].status.name),
+                ),
+              ),
+            );
+          },
         ),
-      );
+      ),
+    );
+  }
 }
