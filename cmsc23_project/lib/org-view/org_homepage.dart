@@ -208,18 +208,25 @@ class DonationDriveCard extends StatelessWidget {
   }
 }
 
-class DonationList extends StatelessWidget {
+class DonationList extends StatefulWidget {
   // Lists all donations made to the organization
   final List<Donation> donations;
 
   const DonationList(this.donations, {super.key});
 
   @override
+  State<DonationList> createState() => _DonationListState();
+}
+
+class _DonationListState extends State<DonationList> {
+  String _searchQuery = '';
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
-        height: 600,
+        height: 300,
         child: Card(
           child: Container(
             padding: const EdgeInsets.all(10),
@@ -237,9 +244,14 @@ class DonationList extends StatelessWidget {
 
   Widget get searchBar => Container(
         padding: const EdgeInsets.all(8),
-        child: const SearchBar(
+        child: SearchBar(
+          onChanged: (value) {
+            setState(() {
+              _searchQuery = value;
+            });
+          },
           hintText: 'Search for a donation',
-          trailing: [Icon(Icons.search)],
+          trailing: const [Icon(Icons.search)],
         ),
       );
 
@@ -247,16 +259,22 @@ class DonationList extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.only(top: 8),
           child: ListView.builder(
-            itemCount: donations.length,
+            itemCount: widget.donations.length,
             itemBuilder: (context, index) {
-              return Card(
-                color: const Color(0xFFFCBE4F),
-                child: ListTile(
-                  leading: donations[index].statusIcon,
-                  title: Text(donations[index].user.name),
-                  trailing: Text(donations[index].status.name),
-                ),
-              );
+              if (widget.donations[index].user.name
+                  .toLowerCase()
+                  .contains(_searchQuery.toLowerCase())) {
+                return Card(
+                  color: const Color(0xFFFCBE4F),
+                  child: ListTile(
+                    leading: widget.donations[index].statusIcon,
+                    title: Text(widget.donations[index].user.name),
+                    trailing: Text(widget.donations[index].status.name),
+                  ),
+                );
+              } else {
+                return Container();
+              }
             },
           ),
         ),
