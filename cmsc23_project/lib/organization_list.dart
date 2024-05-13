@@ -4,7 +4,7 @@ List<String> organizations = [
   "Disaster Relief Organizations",
   "Education Foundations",
   "Environmental Organizations",
-  "Health Organizations",
+  "Health Organization",
   "Human Rights Groups",
   "Religious Organizations",
   "Research Institutions",
