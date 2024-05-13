@@ -1,3 +1,4 @@
+import 'package:cmsc23_project/donor_page.dart';
 import 'package:cmsc23_project/organization_list.dart';
 import 'package:flutter/material.dart';
 
@@ -214,11 +215,11 @@ class _DonorHomepageState extends State<DonorHomepage> {
                         for (String org in filteredOrganizations)
                           GestureDetector(
                             onTap: () {
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(builder: (context) => DonorPage(organization: org),
-                              //   ),
-                              // );
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => DonorPage(organization: org),
+                                ),
+                              );
                             },
                             child: Stack(
                               children: [
