@@ -1,5 +1,6 @@
 import 'package:cmsc23_project/models/donation_drive.dart';
 import 'package:cmsc23_project/org-view/base_screen.dart';
+import 'package:cmsc23_project/org-view/donation_drive_card.dart';
 import 'package:cmsc23_project/org-view/org_view_styles.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,7 @@ class DonationDriveScreen extends StatelessWidget {
       body: Column(
         children: [
           ExpandedDriveCard(donationDrive: donationDrive),
+          DonationList(donationDrive.donations),
         ],
       ),
     );
@@ -47,11 +49,14 @@ class ExpandedDriveCard extends StatelessWidget {
                   ),
                 ),
                 Text(donationDrive.name, style: CustomTextStyle.h1),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    _status,
-                  ],
+                Container(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _status,
+                    ],
+                  ),
                 ),
               ],
             ),

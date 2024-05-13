@@ -41,32 +41,22 @@ class OrgHomePage extends StatelessWidget {
         profilePic: const AssetImage(
           'assets/images/profile_pic.jpg',
         ));
-    org.donations.add(Donation(
-      user: abra,
-      organization: org,
-      status: Status.confirmed,
-    ));
-    org.donations.add(Donation(user: abra, organization: org));
-    org.donations.add(Donation(user: abra, organization: org));
-    org.donations.add(Donation(user: abra, organization: org));
-    org.donations.add(Donation(user: abra, organization: org));
-    org.donations.add(Donation(user: abra, organization: org));
+    abra.donate(org);
+    abra.donate(org);
+    abra.donate(org);
+    abra.donate(org);
+    abra.donate(org);
+    abra.donations[0].status = Status.confirmed;
+    abra.donations[1].status = Status.scheduledForPickup;
+    abra.donations[0].associateWith(org.donationDrives[0]);
 
     User cadabra = User(
       name: 'Cababra Cadabra',
       profilePic: const AssetImage('assets/images/profile_pic.jpg'),
     );
-
-    org.donations.add(
-      Donation(
-        user: cadabra,
-        organization: org,
-        status: Status.scheduledForPickup,
-      ),
-    );
-    org.donations.add(
-      Donation(user: cadabra, organization: org),
-    );
+    cadabra.donate(org);
+    cadabra.donate(org);
+    cadabra.donations[0].associateWith(org.donationDrives[0]);
 
     return BaseScreen(
       body: Column(
@@ -170,77 +160,4 @@ class Favorites extends StatelessWidget {
       },
     );
   }
-}
-
-class DonationList extends StatefulWidget {
-  // Lists all donations made to the organization
-  final List<Donation> donations;
-
-  const DonationList(this.donations, {super.key});
-
-  @override
-  State<DonationList> createState() => _DonationListState();
-}
-
-class _DonationListState extends State<DonationList> {
-  String _searchQuery = '';
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: SizedBox(
-        height: 300,
-        child: Card(
-          child: Container(
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              children: [
-                _searchBar,
-                _donationTiles,
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget get _searchBar => Container(
-        padding: const EdgeInsets.all(8),
-        child: SearchBar(
-          onChanged: (value) {
-            setState(() {
-              _searchQuery = value;
-            });
-          },
-          hintText: 'Search for a donation',
-          trailing: const [Icon(Icons.search)],
-        ),
-      );
-
-  Widget get _donationTiles => Expanded(
-        child: Container(
-          padding: const EdgeInsets.only(top: 8),
-          child: ListView.builder(
-            itemCount: widget.donations.length,
-            itemBuilder: (context, index) {
-              if (widget.donations[index].user.name
-                  .toLowerCase()
-                  .contains(_searchQuery.toLowerCase())) {
-                return Card(
-                  color: CustomColors.secondary,
-                  child: ListTile(
-                    leading: widget.donations[index].statusIcon,
-                    title: Text(widget.donations[index].user.name),
-                    trailing: Text(widget.donations[index].status.name),
-                  ),
-                );
-              } else {
-                return Container();
-              }
-            },
-          ),
-        ),
-      );
 }
