@@ -27,9 +27,23 @@ class OrgHomePage extends StatelessWidget {
           name: 'Donation Drive 2',
           image: const AssetImage('assets/images/donation_drive.jpg'),
         ),
+        DonationDrive(
+          name: 'Donation Drive 3',
+          image: const AssetImage('assets/images/donation_drive.jpg'),
+        ),
+        DonationDrive(
+          name: 'Donation Drive 4',
+          image: const AssetImage('assets/images/donation_drive.jpg'),
+        ),
+        DonationDrive(
+          name: 'Donation Drive 5',
+          image: const AssetImage('assets/images/donation_drive.jpg'),
+        ),
       ],
     );
     org.favorite(org.donationDrives[0]);
+    org.favorite(org.donationDrives[1]);
+    org.favorite(org.donationDrives[2]);
 
     User abra = User(
         name: 'Abra Abra',
@@ -128,20 +142,17 @@ class Favorites extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(8),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          children: [
-            Wrap(
-              children: [
-                ...favorites.map((donationDrive) {
-                  return DonationDriveCard(donationDrive: donationDrive);
-                }),
-              ],
-            ),
-          ],
-        ),
+      height: 200,
+      padding: const EdgeInsets.only(bottom: 10),
+      child: ListView.builder(
+        itemCount: favorites.length,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: DonationDriveCard(donationDrive: favorites[index]),
+          );
+        },
       ),
     );
   }
@@ -208,7 +219,7 @@ class DonationList extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
-        height: 400,
+        height: 600,
         child: Card(
           child: Container(
             padding: const EdgeInsets.all(10),
