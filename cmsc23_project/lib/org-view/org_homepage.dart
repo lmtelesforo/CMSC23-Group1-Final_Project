@@ -3,7 +3,7 @@ import 'package:cmsc23_project/models/donation_drive.dart';
 import 'package:cmsc23_project/models/organization.dart';
 import 'package:cmsc23_project/models/user.dart';
 import 'package:cmsc23_project/org-view/base_screen.dart';
-import 'package:cmsc23_project/org-view/donation_drive_page.dart';
+import 'package:cmsc23_project/org-view/donation_drive_card.dart';
 import 'package:cmsc23_project/org-view/manage_donation_drives.dart';
 import 'package:cmsc23_project/org-view/org_view_styles.dart';
 import 'package:flutter/material.dart';
@@ -21,29 +21,22 @@ class OrgHomePage extends StatelessWidget {
       donationDrives: [
         DonationDrive(
           name: 'Donation Drive 1',
+          date: DateTime.now(),
           image: const AssetImage('assets/images/donation_drive.jpg'),
         ),
         DonationDrive(
           name: 'Donation Drive 2',
+          date: DateTime.now(),
           image: const AssetImage('assets/images/donation_drive.jpg'),
         ),
         DonationDrive(
           name: 'Donation Drive 3',
-          image: const AssetImage('assets/images/donation_drive.jpg'),
-        ),
-        DonationDrive(
-          name: 'Donation Drive 4',
-          image: const AssetImage('assets/images/donation_drive.jpg'),
-        ),
-        DonationDrive(
-          name: 'Donation Drive 5',
+          date: DateTime.now(),
           image: const AssetImage('assets/images/donation_drive.jpg'),
         ),
       ],
     );
     org.favorite(org.donationDrives[0]);
-    org.favorite(org.donationDrives[1]);
-    org.favorite(org.donationDrives[2]);
 
     User abra = User(
         name: 'Abra Abra',
@@ -62,16 +55,20 @@ class OrgHomePage extends StatelessWidget {
     org.donations.add(Donation(user: abra, organization: org));
 
     User cadabra = User(
-        name: 'Cababra Cadabra',
-        profilePic: const AssetImage(
-          'assets/images/profile_pic.jpg',
-        ));
-    org.donations.add(Donation(
-      user: cadabra,
-      organization: org,
-      status: Status.scheduledForPickup,
-    ));
-    org.donations.add(Donation(user: cadabra, organization: org));
+      name: 'Cababra Cadabra',
+      profilePic: const AssetImage('assets/images/profile_pic.jpg'),
+    );
+
+    org.donations.add(
+      Donation(
+        user: cadabra,
+        organization: org,
+        status: Status.scheduledForPickup,
+      ),
+    );
+    org.donations.add(
+      Donation(user: cadabra, organization: org),
+    );
 
     return BaseScreen(
       body: Column(
@@ -141,69 +138,34 @@ class Favorites extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 200,
-      padding: const EdgeInsets.only(bottom: 10),
-      child: ListView.builder(
-        itemCount: favorites.length,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: DonationDriveCard(donationDrive: favorites[index]),
-          );
-        },
-      ),
-    );
-  }
-}
+    // Favorites are centered using row if they can fit in the parent container
+    // Otherwise, they are built with a horizontal, scrollable listview
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        final totalWidth = favorites.length * (200);
 
-class DonationDriveCard extends StatelessWidget {
-  // Represents a donation drive card on the homepage and donation drive list
-  final DonationDrive donationDrive;
-
-  const DonationDriveCard({
-    super.key,
-    required this.donationDrive,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 150,
-      width: 180,
-      child: Card(
-        child: InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => DonationDriveScreen(
-                  donationDrive: donationDrive,
+        return Container(
+          height: 200,
+          padding: const EdgeInsets.only(bottom: 10),
+          child: totalWidth < constraints.maxWidth
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: favorites.map((favorite) {
+                    return DonationDriveCard(donationDrive: favorite);
+                  }).toList(),
+                )
+              : ListView.builder(
+                  itemCount: favorites.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: DonationDriveCard(donationDrive: favorites[index]),
+                    );
+                  },
                 ),
-              ),
-            );
-          },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Image(
-                  image: donationDrive.image,
-                  height: 90,
-                  width: 150,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: Text(donationDrive.name, style: CustomTextStyle.body),
-              ),
-            ],
-          ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

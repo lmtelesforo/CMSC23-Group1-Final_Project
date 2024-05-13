@@ -45,6 +45,7 @@ class ExpandedDriveCard extends StatelessWidget {
               padding: const EdgeInsets.only(top: 10),
               child: Text(donationDrive.name, style: CustomTextStyle.body),
             ),
+            Row(children: [Text('Date: ${donationDrive.date}')]),
           ],
         ),
       ),

@@ -12,6 +12,7 @@ class Organization extends User {
   });
 
   void favorite(DonationDrive drive) {
+    drive.isFavorite = true;
     favorites.add(drive);
   }
 }
