@@ -1,5 +1,5 @@
-import 'package:cmsc23_project/donor_page.dart';
-import 'package:cmsc23_project/organization_list.dart';
+import 'package:cmsc23_project/donation_page/donor_page.dart';
+import 'package:cmsc23_project/donor_items/organization_list.dart';
 import 'package:flutter/material.dart';
 
 class DonorHomepage extends StatefulWidget {
@@ -111,7 +111,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
             top: AppBar().preferredSize.height + 80,
             left: 16,
             right: 16,
-            bottom: 0,
+            bottom: 16,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
