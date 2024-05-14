@@ -15,6 +15,13 @@ class CustomTextStyle {
     color: CustomColors.primary,
   );
 
+  static const h2 = TextStyle(
+    fontFamily: 'Poppins',
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: CustomColors.primary,
+  );
+
   static const body = TextStyle(
     fontFamily: 'Poppins',
     fontSize: 16,

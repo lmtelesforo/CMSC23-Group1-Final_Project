@@ -3,56 +3,91 @@ import 'package:cmsc23_project/org-view/org_view_styles.dart';
 import 'package:flutter/material.dart';
 
 class BaseScreen extends StatelessWidget {
-  // Represents the base screen for the org view (background + header/appbar)
-  const BaseScreen({super.key, required this.body});
+  // Represents the base screen of the org view (appbar + background image)
 
+  final User sampleUser = User(
+    name: 'Sample User',
+    profilePic: const AssetImage('assets/images/profile_pic.jpg'),
+  );
   final Widget body;
+  final FloatingActionButton? floatingActionButton;
+
+  BaseScreen({super.key, required this.body, this.floatingActionButton});
 
   @override
   Widget build(BuildContext context) {
-    User sampleUser = User(
-      name: 'Donator Name 1',
-      profilePic: const AssetImage('assets/images/profile_pic.jpg'),
-    );
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
       drawer: !Navigator.canPop(context) ? const Drawer() : null,
       appBar: AppBar(
         iconTheme: const IconThemeData(
-            color: CustomColors.primary), // Change color of back button (if any
-        backgroundColor: Colors.transparent,
-        title: const Image(
-          image: AssetImage('assets/images/cmsc23_logo1.png'),
-          height: 50,
-          width: 50,
+          color: CustomColors.primary,
         ),
+        backgroundColor: Colors.transparent,
+        title: _logo,
         centerTitle: true,
-        actions: [
-          CircleAvatar(
-            backgroundImage: sampleUser.profilePic,
-            backgroundColor: Colors.white,
-            radius: 20,
-          )
-        ],
+        actions: [_Avatar(sampleUser: sampleUser)],
       ),
+      floatingActionButton: floatingActionButton,
       body: Stack(
         children: [
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/cmsc23_background.png'),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+          _backgroundImage,
           SingleChildScrollView(
             child: SafeArea(
               child: body,
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget get _logo => const Image(
+        image: AssetImage('assets/images/cmsc23_logo1.png'),
+        height: 50,
+        width: 50,
+      );
+
+  Widget get _backgroundImage => Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/home_background.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+      );
+}
+
+class _Avatar extends StatelessWidget {
+  const _Avatar({
+    required this.sampleUser,
+  });
+
+  final User sampleUser;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        // Don't push the profile screen if it's already open
+        if (ModalRoute.of(context)!.settings.name != "/profile") {
+          Navigator.pushNamed(context, "/profile");
+        }
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(
+            color: Colors.white,
+            width: 2,
+          ),
+        ),
+        child: CircleAvatar(
+          backgroundImage: sampleUser.profilePic,
+          backgroundColor: Colors.white,
+          radius: 20,
+        ),
       ),
     );
   }

@@ -7,7 +7,11 @@ class Donation {
   final User user;
   final Organization organization;
   DonationDrive? associatedDrive;
+
+  final List<String> items = ['Food', 'Clothes'];
+  final double weight = 67;
   Status status;
+  final bool forPickup = true;
 
   Donation({
     this.status = Status.pending,
