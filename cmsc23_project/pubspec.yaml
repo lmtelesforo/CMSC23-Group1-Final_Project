@@ -85,7 +85,7 @@ flutter:
     - family: DM-Sans
       fonts:
         - asset: lib/user_view/assets/DM_Sans.ttf
-    - family: Poppins
+    - family: Poppins-Reg
       fonts:
         - asset: lib/user_view/assets/Poppins-Regular.ttf
     - family: CaveatBrush

@@ -72,7 +72,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  fontFamily: 'Poppins',
+                  fontFamily: 'Poppins-Reg',
                 ),
               ),
               style: TextButton.styleFrom(

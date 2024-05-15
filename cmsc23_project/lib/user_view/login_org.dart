@@ -104,7 +104,7 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                   "Log in your org account.",
                   style: TextStyle(
                     fontSize: 12,
-                    fontFamily: 'Poppins',
+                    fontFamily: 'Poppins-Reg',
                     fontWeight: FontWeight.w500,
                     color: Color(0xFF373D66),
                   ),
@@ -129,7 +129,7 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                             "Username",
                             style: TextStyle(
                               fontSize: 15,
-                              fontFamily: 'Poppins',
+                              fontFamily: 'Poppins-Reg',
                               fontWeight: FontWeight.bold,
                               color: Color(0xFF373D66),
                             ),
@@ -165,7 +165,7 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
-                              fontFamily: 'Poppins',
+                              fontFamily: 'Poppins-Reg',
                               color: Color(0xFF373D66)
                             ),
                             decoration: InputDecoration(
@@ -173,7 +173,7 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                               hintStyle: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
-                                fontFamily: 'Poppins',
+                                fontFamily: 'Poppins-Reg',
                                 color: Color(0xFF373D66).withOpacity(0.9),
                               ),
                               border: InputBorder.none,
@@ -193,7 +193,7 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                             "Password",
                             style: TextStyle(
                               fontSize: 15,
-                              fontFamily: 'Poppins',
+                              fontFamily: 'Poppins-Reg',
                               fontWeight: FontWeight.bold,
                               color: Color(0xFF373D66),
                             ),
@@ -232,7 +232,7 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                             style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
-                                fontFamily: 'Poppins',
+                                fontFamily: 'Poppins-Reg',
                                 color: Color(0xFF373D66)
                             ),
                             decoration: InputDecoration(
@@ -240,7 +240,7 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                               hintStyle: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
-                                fontFamily: 'Poppins',
+                                fontFamily: 'Poppins-Reg',
                                 color: Color(0xFF373D66).withOpacity(0.9),
                               ),
                               border: InputBorder.none,
@@ -261,7 +261,7 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                           "Reset",
                           style: TextStyle(
                             fontSize: 14,
-                            fontFamily: 'Poppins',
+                            fontFamily: 'Poppins-Reg',
                             fontWeight: FontWeight.w900,
                             color: Color(0xFF373D66),
                           ),
@@ -276,7 +276,7 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
 
                           provider.resetLogIn();
                           Navigator.pop(context);
-                          Navigator.pushNamed(context, "/donorHomepage");
+                          Navigator.pushNamed(context, "/orgHomepage");
 
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
@@ -307,7 +307,7 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                           "Don't have an org account?",
                           style: TextStyle(
                             fontSize: 14,
-                            fontFamily: 'Poppins',
+                            fontFamily: 'Poppins-Reg',
                             fontWeight: FontWeight.w500,
                             color: Color(0xFF373D66),
                           ),
@@ -324,7 +324,7 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                               "Sign up",
                               style: TextStyle(
                                 fontSize: 14,
-                                fontFamily: 'Poppins',
+                                fontFamily: 'Poppins-Reg',
                                 fontWeight: FontWeight.w900,
                                 color: Color(0xFF373D66),
                               ),

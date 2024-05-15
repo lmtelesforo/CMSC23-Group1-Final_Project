@@ -98,7 +98,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  fontFamily: 'Poppins',
+                  fontFamily: 'Poppins-Reg',
                 ),
               ),
               style: TextButton.styleFrom(
@@ -159,7 +159,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                                 donations[widget.index].category,
                                 style: TextStyle(
                                   fontSize: 16,
-                                  fontFamily: 'Poppins',
+                                  fontFamily: 'Poppins-Reg',
                                   color: Color(0xFF373D66),
                                 ),
                               ),
@@ -183,7 +183,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                                 donations[widget.index].shipping,
                                 style: TextStyle(
                                   fontSize: 16,
-                                  fontFamily: 'Poppins',
+                                  fontFamily: 'Poppins-Reg',
                                   color: Color(0xFF373D66),
                                 ),
                               ),
@@ -207,7 +207,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                                 donations[widget.index].weight,
                                 style: TextStyle(
                                   fontSize: 16,
-                                  fontFamily: 'Poppins',
+                                  fontFamily: 'Poppins-Reg',
                                   color: Color(0xFF373D66),
                                 ),
                               ),
@@ -231,7 +231,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                                 donations[widget.index].date,
                                 style: TextStyle(
                                   fontSize: 16,
-                                  fontFamily: 'Poppins',
+                                  fontFamily: 'Poppins-Reg',
                                   color: Color(0xFF373D66),
                                 ),
                               ),
@@ -255,7 +255,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                                 donations[widget.index].time,
                                 style: TextStyle(
                                   fontSize: 16,
-                                  fontFamily: 'Poppins',
+                                  fontFamily: 'Poppins-Reg',
                                   color: Color(0xFF373D66),
                                 ),
                               ),
@@ -282,7 +282,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                                     donations[widget.index].addresses.first,
                                     style: TextStyle(
                                       fontSize: 16,
-                                      fontFamily: 'Poppins',
+                                      fontFamily: 'Poppins-Reg',
                                       color: Color(0xFF373D66),
                                     ),
                                   ),
@@ -311,7 +311,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                                 donations[widget.index].contactNumber,
                                 style: TextStyle(
                                   fontSize: 16,
-                                  fontFamily: 'Poppins',
+                                  fontFamily: 'Poppins-Reg',
                                   color: Color(0xFF373D66),
                                 ),
                               ),
@@ -342,7 +342,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
               donations[widget.index].addresses[index + 1],
               style: TextStyle(
                 fontSize: 16,
-                fontFamily: 'Poppins',
+                fontFamily: 'Poppins-Reg',
                 color: Color(0xFF373D66),
               ),
             ),

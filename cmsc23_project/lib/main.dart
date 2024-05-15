@@ -32,8 +32,6 @@ void main() {
 
 class RootWidget extends StatelessWidget {
   const RootWidget({super.key});
-class RootWidget extends StatelessWidget {
-  const RootWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +49,10 @@ class RootWidget extends StatelessWidget {
         "/viewAllDonations": (context) => AdminViewAllDonations(),
         "/viewAllDonors": (context) => AdminViewAllDonors(),
         "/adminDashboard": (context) => AdminDashboard(),
-        "/donorHomepage": (context) => DonorHomepage()
+        "/donorHomepage": (context) => DonorHomepage(),
+        "/orgHomepage": (context) => const OrgHomePage(),
+        "/add-a-drive": (context) => const AddADrive(),
+        "/orgProfile": (context) => Profile(),
       },
       debugShowCheckedModeBanner: false,
     );

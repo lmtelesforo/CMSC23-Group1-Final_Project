@@ -71,8 +71,8 @@ class _Avatar extends StatelessWidget {
     return InkWell(
       onTap: () {
         // Don't push the profile screen if it's already open
-        if (ModalRoute.of(context)!.settings.name != "/profile") {
-          Navigator.pushNamed(context, "/profile");
+        if (ModalRoute.of(context)!.settings.name != "/orgProfile") {
+          Navigator.pushNamed(context, "/orgProfile");
         }
       },
       child: Container(
