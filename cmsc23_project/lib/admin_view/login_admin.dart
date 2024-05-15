@@ -274,14 +274,24 @@ class _LogInAdminPageState extends State<LogInAdminPage> {
                           String username = provider.controller1.text;
                           String password = provider.controller2.text;
 
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Logged in!'),
-                            ),
-                          );
-                          provider.resetLogIn();
-                          Navigator.pop(context);
-                          Navigator.pushNamed(context, "/adminApprove");
+                          if (username == "admin" && password == "adminPass") {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Logged in!'),
+                              ),
+                            );
+                            provider.resetLogIn();
+                            Navigator.pop(context);
+                            Navigator.pushNamed(context, "/adminDashboard");
+                          }
+
+                          else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Invalid admin credentials!'),
+                              ),
+                            );
+                          }
                         } 
                         else {
                           
