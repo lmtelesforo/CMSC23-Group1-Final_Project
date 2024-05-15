@@ -76,24 +76,31 @@ class _DonationDetailsState extends State<DonationDetails> {
         ],
       );
 
-  Widget get _setStatus => DropdownMenu(
-        inputDecorationTheme: const InputDecorationTheme(
-          fillColor: Colors.white,
-          filled: true,
-        ),
-        initialSelection: widget.donation.status,
-        onSelected: (status) {
-          setState(() {
-            widget.donation.status = status as Status;
-          });
-        },
-        dropdownMenuEntries: Status.values.map((status) {
-          return DropdownMenuEntry<Status>(
-            value: status,
-            label: status.toString().split('.').last,
-          );
-        }).toList(),
-      );
+  Widget get _setStatus {
+    List<Status> _validStatuses = widget.donation.forPickup
+        ? Status.values
+        : Status.values
+            .where((status) => status != Status.scheduledForPickup)
+            .toList();
+    return DropdownMenu(
+      inputDecorationTheme: const InputDecorationTheme(
+        fillColor: Colors.white,
+        filled: true,
+      ),
+      initialSelection: widget.donation.status,
+      onSelected: (status) {
+        setState(() {
+          widget.donation.status = status as Status;
+        });
+      },
+      dropdownMenuEntries: _validStatuses.map((status) {
+        return DropdownMenuEntry<Status>(
+          value: status,
+          label: status.toString().split('.').last,
+        );
+      }).toList(),
+    );
+  }
 
   Widget get _setDrive => DropdownMenu(
         inputDecorationTheme: const InputDecorationTheme(
@@ -145,16 +152,20 @@ class _DonationDetailsState extends State<DonationDetails> {
                     ),
                   ],
                 ),
-                TableRow(children: [
-                  const Icon(Icons.local_shipping, color: CustomColors.primary),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 30),
-                    child: Text(
-                      widget.donation.status.toString().split('.').last,
-                      style: CustomTextStyle.body,
+                TableRow(
+                  children: [
+                    const Icon(Icons.local_shipping,
+                        color: CustomColors.primary),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 30),
+                      child: widget.donation.forPickup
+                          ? const Text('For Pickup',
+                              style: CustomTextStyle.body)
+                          : const Text('For Drop-off',
+                              style: CustomTextStyle.body),
                     ),
-                  ),
-                ])
+                  ],
+                )
               ],
             ),
           ),
