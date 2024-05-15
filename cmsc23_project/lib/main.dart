@@ -8,6 +8,7 @@ import 'package:cmsc23_project/user_view/login_donor.dart';
 import 'package:cmsc23_project/user_view/login_org.dart';
 import 'package:cmsc23_project/user_view/signup_donor.dart';
 import 'package:cmsc23_project/user_view/signup_org.dart';
+import 'package:cmsc23_project/donation_page/donor_homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'admin_view/view_all_donations.dart';
@@ -45,7 +46,9 @@ class RootWidget extends StatelessWidget {
         "/viewAllDonations": (context) => AdminViewAllDonations(),
         "/viewAllDonors": (context) => AdminViewAllDonors(),
         "/adminDashboard": (context) => AdminDashboard(),
+        "/donorHomepage": (context) => DonorHomepage()
       },
+      debugShowCheckedModeBanner: false,
     );
   }
 }
