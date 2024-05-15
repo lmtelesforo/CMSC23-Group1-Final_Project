@@ -9,6 +9,9 @@ import 'package:cmsc23_project/user_view/login_org.dart';
 import 'package:cmsc23_project/user_view/signup_donor.dart';
 import 'package:cmsc23_project/user_view/signup_org.dart';
 import 'package:cmsc23_project/donation_page/donor_homepage.dart';
+import 'package:cmsc23_project/org-view/donation_drive/add_a_drive.dart';
+import 'package:cmsc23_project/org-view/org_homepage.dart';
+import 'package:cmsc23_project/org-view/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'admin_view/view_all_donations.dart';
@@ -27,6 +30,8 @@ void main() {
   );
 }
 
+class RootWidget extends StatelessWidget {
+  const RootWidget({super.key});
 class RootWidget extends StatelessWidget {
   const RootWidget({super.key});
 

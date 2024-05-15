@@ -58,6 +58,7 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/images/
     - lib/user_view/assets/cmsc23_logo1.png
     - lib/user_view/assets/cmsc23_background.png
     - lib/user_view/assets/back.png
@@ -93,6 +94,10 @@ flutter:
     - family: Poppins-Bold
       fonts:
         - asset: lib/user_view/assets/Poppins-Bold.ttf
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Regular.ttf
+        - asset: assets/fonts/Poppins-ExtraBold.ttf
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
