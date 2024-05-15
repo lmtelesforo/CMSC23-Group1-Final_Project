@@ -23,12 +23,17 @@ class DonationDriveScreen extends StatelessWidget {
   }
 }
 
-class ExpandedDriveCard extends StatelessWidget {
+class ExpandedDriveCard extends StatefulWidget {
   // Represents a single donation drive card
   final DonationDrive donationDrive;
 
   const ExpandedDriveCard({super.key, required this.donationDrive});
 
+  @override
+  State<ExpandedDriveCard> createState() => _ExpandedDriveCardState();
+}
+
+class _ExpandedDriveCardState extends State<ExpandedDriveCard> {
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -43,12 +48,12 @@ class ExpandedDriveCard extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: Image(
-                      image: donationDrive.image,
+                      image: widget.donationDrive.image,
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
-                Text(donationDrive.name, style: CustomTextStyle.h1),
+                Text(widget.donationDrive.name, style: CustomTextStyle.h1),
                 Container(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: Row(
@@ -62,7 +67,7 @@ class ExpandedDriveCard extends StatelessWidget {
             ),
           ),
         ),
-        if (donationDrive.isFavorite) _favoriteIcon,
+        _favoriteIcon,
       ],
     );
   }
@@ -73,7 +78,7 @@ class ExpandedDriveCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.only(left: 10),
             child: Text(
-              donationDrive.status,
+              widget.donationDrive.status,
               style: CustomTextStyle.body,
             ),
           ),
@@ -89,7 +94,19 @@ class ExpandedDriveCard extends StatelessWidget {
             color: CustomColors.primary,
             shape: BoxShape.circle,
           ),
-          child: const Icon(Icons.favorite, color: CustomColors.secondary),
+          child: InkWell(
+            onTap: () {
+              setState(() {
+                widget.donationDrive.isFavorite
+                    ? widget.donationDrive.isFavorite = false
+                    : widget.donationDrive.isFavorite = true;
+              });
+            },
+            child: widget.donationDrive.isFavorite
+                ? const Icon(Icons.favorite, color: CustomColors.secondary)
+                : const Icon(Icons.favorite_border,
+                    color: CustomColors.secondary),
+          ),
         ),
       );
 }
