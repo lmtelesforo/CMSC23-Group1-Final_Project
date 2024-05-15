@@ -274,6 +274,10 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                           String username = provider.controller1.text;
                           String password = provider.controller2.text;
 
+                          provider.resetLogIn();
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, "/donorHomepage");
+
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text('Logged in!'),

@@ -539,6 +539,10 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                           String contactnumber = provider.controller5.text;
                           String proofs = provider.controller6.text;
 
+                          provider.resetSignUp();
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, "/donorHomepage");
+
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text('Signed up!'),

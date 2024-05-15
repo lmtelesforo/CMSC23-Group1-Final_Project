@@ -476,6 +476,10 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                           String addresses = provider.controller4.text;
                           String contactnumber = provider.controller5.text;
 
+                          provider.resetSignUp();
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, "/donorHomepage");
+
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text('Signed up!'),

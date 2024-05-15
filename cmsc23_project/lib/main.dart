@@ -33,7 +33,7 @@ class RootWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: "/adminDashboard",
+      initialRoute: "/",
       routes: {
         "/": (context) => const LandingPage(),
         "/loginDonor": (context) => LogInDonorPage(),
