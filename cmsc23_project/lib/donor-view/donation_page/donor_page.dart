@@ -1,7 +1,7 @@
-import 'package:cmsc23_project/donation_buttons/donation_dropdown.dart';
+import 'package:cmsc23_project/donor-view/donation_buttons/donation_dropdown.dart';
 import 'package:flutter/material.dart';
-import 'package:cmsc23_project/donor_items/donation_item.dart';
-import 'package:cmsc23_project/donation_buttons/donation_checkbox.dart'; // Import the new widget
+import 'package:cmsc23_project/donor-view/donor_items/donation_item.dart';
+import 'package:cmsc23_project/donor-view/donation_buttons/donation_checkbox.dart'; // Import the new widget
 
 class DonorPage extends StatefulWidget {
   final String organization;

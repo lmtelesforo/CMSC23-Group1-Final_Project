@@ -1,5 +1,5 @@
-import 'package:cmsc23_project/donation_page/donor_page.dart';
-import 'package:cmsc23_project/donor_items/organization_list.dart';
+import 'package:cmsc23_project/donor-view/donation_page/donor_page.dart';
+import 'package:cmsc23_project/donor-view/donor_items/organization_list.dart';
 import 'package:flutter/material.dart';
 
 class DonorHomepage extends StatefulWidget {
@@ -91,6 +91,22 @@ class _DonorHomepageState extends State<DonorHomepage> {
               ),
               onTap: () {
                 Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text(
+                "Log Out",
+                style: TextStyle(fontSize: 20),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, "/");
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('User logged out!'),
+                  ),
+                );
               },
             ),
           ],

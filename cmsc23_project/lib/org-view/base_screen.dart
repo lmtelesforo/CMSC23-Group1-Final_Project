@@ -22,7 +22,7 @@ class BaseScreen extends StatelessWidget {
       drawer: !Navigator.canPop(context) ? const Drawer() : null,
       appBar: AppBar(
         iconTheme: const IconThemeData(
-          color: CustomColors.primary,
+          color: Color.fromARGB(255, 7, 30, 176),
         ),
         backgroundColor: Colors.transparent,
         title: _logo,

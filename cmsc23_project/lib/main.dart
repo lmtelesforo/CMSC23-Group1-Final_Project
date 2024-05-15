@@ -8,7 +8,7 @@ import 'package:cmsc23_project/user_view/login_donor.dart';
 import 'package:cmsc23_project/user_view/login_org.dart';
 import 'package:cmsc23_project/user_view/signup_donor.dart';
 import 'package:cmsc23_project/user_view/signup_org.dart';
-import 'package:cmsc23_project/donation_page/donor_homepage.dart';
+import 'package:cmsc23_project/donor-view/donation_page/donor_homepage.dart';
 import 'package:cmsc23_project/org-view/donation_drive/add_a_drive.dart';
 import 'package:cmsc23_project/org-view/org_homepage.dart';
 import 'package:cmsc23_project/org-view/profile.dart';
