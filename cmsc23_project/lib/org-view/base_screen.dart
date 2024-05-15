@@ -1,4 +1,5 @@
 import 'package:cmsc23_project/models/user.dart';
+import 'package:cmsc23_project/org-view/drawer.dart';
 import 'package:cmsc23_project/org-view/org_view_styles.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +20,7 @@ class BaseScreen extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
-      drawer: !Navigator.canPop(context) ? const Drawer() : null,
+      drawer: !Navigator.canPop(context) ? const OrgDrawer() : null,
       appBar: AppBar(
         iconTheme: const IconThemeData(
           color: Color.fromARGB(255, 7, 30, 176),
