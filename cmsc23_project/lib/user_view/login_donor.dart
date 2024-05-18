@@ -1,3 +1,5 @@
+import 'package:cmsc23_project/providers/auth_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,7 +14,8 @@ class LogInDonorPage extends StatefulWidget {
 
 class _LogInDonorPageState extends State<LogInDonorPage> {
   final _formKey = GlobalKey<FormState>(); 
-
+  bool showSignInErrorMessage = false;
+  
   @override
   Widget build(BuildContext context) {    
     final provider = context.watch<TextfieldProviders>();
@@ -126,7 +129,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                         Padding(
                           padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 4),
                           child: Text(
-                            "Username",
+                            "Email",
                             style: TextStyle(
                               fontSize: 15,
                               fontFamily: 'Poppins-Reg',
@@ -169,7 +172,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                                 color: Color(0xFF373D66)
                             ),
                             decoration: InputDecoration(
-                              hintText: 'Enter your username',
+                              hintText: 'Enter your email',
                               hintStyle: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
@@ -269,10 +272,26 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          String username = provider.controller1.text;
+                          String email = provider.controller1.text;
                           String password = provider.controller2.text;
+
+                          String? message = await context
+                          .read<UserAuthProvider>()
+                          .authService
+                          .signIn(email!, password!);
+
+                          print(message);
+                          print(showSignInErrorMessage);
+
+                          setState(() {
+                            if (message != null && message.isNotEmpty) {
+                              showSignInErrorMessage = true;
+                            } else {
+                              showSignInErrorMessage = false;
+                            }
+                          });
 
                           provider.resetLogIn();
                           Navigator.pop(context);

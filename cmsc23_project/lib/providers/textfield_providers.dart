@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class TextfieldProviders extends ChangeNotifier {
   // initiate all common variables from forms to avoid redundancy
   String name = '';
-  String username = '';
+  String email = '';
   String password = '';
   String addresses = '';
   List addressesSpliced = [];
@@ -22,8 +22,8 @@ class TextfieldProviders extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateUsername(String value) {
-    username = value;
+  void updateEmail(String value) {
+    email = value;
     notifyListeners();
   }
 
@@ -49,7 +49,7 @@ class TextfieldProviders extends ChangeNotifier {
 
   void resetSignUp() {
     name = '';
-    username = '';
+    email = '';
     password = '';
     addresses = '';
     addressesSpliced = [];
@@ -66,7 +66,7 @@ class TextfieldProviders extends ChangeNotifier {
   }
 
   void resetLogIn() {
-    username = '';
+    email = '';
     password = '';
     controller1.clear(); // clears form field
     controller2.clear();

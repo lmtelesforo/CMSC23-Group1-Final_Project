@@ -215,7 +215,7 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                             ),
                           TextFormField(
                             controller: provider.controller2, 
-                            onChanged: provider.updateUsername,
+                            onChanged: provider.updateEmail,
                             validator: (val) {
                               if (val!.isEmpty) {
                                 return "Please enter your username";
