@@ -20,6 +20,13 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
   Widget build(BuildContext context) {
     final provider = context.watch<TextfieldProviders>();
 
+    bool isNumeric(String str) { // check if input is a contact number
+      if(str == null) {
+        return false;
+      }
+      return double.tryParse(str) != null;
+    }
+
     return Scaffold(
       body: Form(
         key: _formKey, 
@@ -432,6 +439,9 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                               }
                               if (val.trim().isEmpty) {
                                 return "Please enter your contact number";
+                              }
+                              if (isNumeric(val) != true) {
+                                return "Please enter a valid contact number";
                               }
                               return null;
                             },

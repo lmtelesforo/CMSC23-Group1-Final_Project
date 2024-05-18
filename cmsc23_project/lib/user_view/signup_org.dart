@@ -2,6 +2,8 @@ import 'package:cmsc23_project/providers/textfield_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/auth_provider.dart';
+
 class SignUpOrgPage extends StatefulWidget {
   const SignUpOrgPage({Key? key}) : super(key: key);
 
@@ -10,7 +12,15 @@ class SignUpOrgPage extends StatefulWidget {
 }
 
 class _SignUpOrgPageState extends State<SignUpOrgPage> {
-  final _formKey = GlobalKey<FormState>(); 
+  final _formKey = GlobalKey<FormState>();
+  late String signUpResult;
+
+  bool isNumeric(String str) { // check if input is a contact number
+    if(str == null) {
+      return false;
+    }
+    return double.tryParse(str) != null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -189,7 +199,7 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                         Padding(
                           padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 4),
                           child: Text(
-                            "Username",
+                            "Email",
                             style: TextStyle(
                               fontSize: 15,
                               fontFamily: 'Poppins-Reg',
@@ -218,10 +228,10 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                             onChanged: provider.updateEmail,
                             validator: (val) {
                               if (val!.isEmpty) {
-                                return "Please enter your username";
+                                return "Please enter your email";
                               }
                               if (val.trim().isEmpty) {
-                                return "Please enter your username";
+                                return "Please enter your email";
                               }
                               return null;
                             },
@@ -232,7 +242,7 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                                 color: Color(0xFF373D66)
                             ),
                             decoration: InputDecoration(
-                              hintText: 'Enter your username',
+                              hintText: 'Enter your email',
                               hintStyle: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
@@ -426,6 +436,9 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                               if (val.trim().isEmpty) {
                                 return "Please enter your contact number";
                               }
+                              if (isNumeric(val) != true) {
+                                return "Please enter a valid contact number";
+                              }
                               return null;
                             },
                             style: const TextStyle(
@@ -530,28 +543,36 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          String name = provider.controller1.text;
-                          String username = provider.controller2.text;
-                          String password = provider.controller3.text;
-                          String addresses = provider.controller4.text;
-                          String contactnumber = provider.controller5.text;
-                          String proofs = provider.controller6.text;
+                          _formKey.currentState!.save();
+                          final name = provider.controller1.text;
+                          final email = provider.controller2.text;
+                          final password = provider.controller3.text;
+                          final addresses = provider.controller4.text;
+                          final contactnumber = provider.controller5.text;
 
-                          provider.resetSignUp();
-                          Navigator.pop(context);
-                          Navigator.pushNamed(context, "/orgHomepage");
+                          final authService = Provider.of<UserAuthProvider>(context, listen: false).authService;
 
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Signed up!'),
-                            ),
-                          );
+                          signUpResult = (await authService.signUp(email, password))!;
+
+                          if (signUpResult == 'The account already exists for that email.') { // match error message
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Account already exists!')),
+                            );
+                          }
+                          else {
+                            provider.resetSignUp();
+                            Navigator.pop(context);
+                            Navigator.pushNamed(context, "/donorHomepage");
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Welcome to ElbiDrive, $name!'),
+                              ),
+                            );  
+                          }
                         } 
-                        else {
-                          
-                        }
                       },
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(320, 40),

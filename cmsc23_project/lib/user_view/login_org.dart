@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/auth_provider.dart';
 import '../providers/textfield_providers.dart';
 
 class LogInOrgPage extends StatefulWidget {
@@ -12,6 +13,7 @@ class LogInOrgPage extends StatefulWidget {
 
 class _LogInOrgPageState extends State<LogInOrgPage> {
   final _formKey = GlobalKey<FormState>(); 
+  bool showSignInErrorMessage = false;
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +128,7 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                         Padding(
                           padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 4),
                           child: Text(
-                            "Username",
+                            "Email",
                             style: TextStyle(
                               fontSize: 15,
                               fontFamily: 'Poppins-Reg',
@@ -169,7 +171,7 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                               color: Color(0xFF373D66)
                             ),
                             decoration: InputDecoration(
-                              hintText: 'Enter your username',
+                              hintText: 'Enter your email',
                               hintStyle: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
@@ -269,20 +271,41 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          String username = provider.controller1.text;
+                          String email = provider.controller1.text;
                           String password = provider.controller2.text;
 
-                          provider.resetLogIn();
-                          Navigator.pop(context);
-                          Navigator.pushNamed(context, "/orgHomepage");
+                          String? message = await context
+                          .read<UserAuthProvider>()
+                          .authService
+                          .signIn(email!, password!);
 
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Logged in!'),
-                            ),
-                          );
+                          print(message);
+                          print(showSignInErrorMessage);
+
+                          setState(() {
+                            if (message != null && message.isNotEmpty) {
+                              showSignInErrorMessage = true;
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Invalid email or password'),
+                                ),
+                              );
+                            } 
+                            else {
+                              showSignInErrorMessage = false;
+                              provider.resetLogIn();
+                              Navigator.pop(context);
+                              Navigator.pushNamed(context, "/donorHomepage");
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Logged in!'),
+                                ),
+                              );
+                            }
+                          });
                         } 
                         else {
                           
@@ -343,4 +366,14 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
     ),
     );
   }
+  Widget get signInErrorMessage => const Padding(
+    padding: EdgeInsets.only(bottom: 30),
+    child: Text(
+      "Invalid email or password",
+      style: TextStyle(
+        color: Color.fromARGB(255, 179, 42, 32),
+        fontFamily: 'Poppins',
+        fontSize: 15),
+    ),
+  );
 }
