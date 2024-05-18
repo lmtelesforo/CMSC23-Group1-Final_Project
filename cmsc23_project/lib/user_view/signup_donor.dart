@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -225,6 +226,9 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                               }
                               if (val.trim().isEmpty) {
                                 return "Please enter your email";
+                              }
+                              if (EmailValidator.validate(val) != true) {
+                                return "Invalid email";
                               }
                               return null;
                             },
@@ -472,15 +476,12 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                     ElevatedButton(
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          String name = provider.controller1.text;
-                          String email = provider.controller2.text;
-                          String password = provider.controller3.text;
-                          String addresses = provider.controller4.text;
-                          String contactnumber = provider.controller5.text;
-
-                          await context
-                            .read<UserAuthProvider>()
-                            .signUp(email, password);
+                          _formKey.currentState!.save();
+                          final name = provider.controller1.text;
+                          final email = provider.controller2.text;
+                          final password = provider.controller3.text;
+                          final addresses = provider.controller4.text;
+                          final contactnumber = provider.controller5.text;
 
                           final authService = Provider.of<UserAuthProvider>(context, listen: false).authService;
 
@@ -498,7 +499,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
 
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text('Signed up!'),
+                                content: Text('Welcome to ElbiDrive, $name!'),
                               ),
                             );  
                           }
