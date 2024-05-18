@@ -99,8 +99,8 @@ class _DonorHomepageState extends State<DonorHomepage> {
                 style: TextStyle(fontSize: 20),
               ),
               onTap: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(context, "/");
+                Navigator.pushNamedAndRemoveUntil(
+                    context, "/", (route) => false);
 
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
@@ -197,7 +197,8 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                       style: TextStyle(
                                         fontSize: 38,
                                         fontWeight: FontWeight.bold,
-                                        color: const Color.fromRGBO(74, 66, 155, 1),
+                                        color: const Color.fromRGBO(
+                                            74, 66, 155, 1),
                                         fontFamily: "Montserrat",
                                       ),
                                     ),
@@ -207,7 +208,8 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                       style: TextStyle(
                                         fontSize: 38,
                                         fontWeight: FontWeight.bold,
-                                        color: const Color.fromRGBO(74, 66, 155, 1),
+                                        color: const Color.fromRGBO(
+                                            74, 66, 155, 1),
                                         fontFamily: "Montserrat",
                                       ),
                                     ),
@@ -233,7 +235,9 @@ class _DonorHomepageState extends State<DonorHomepage> {
                             onTap: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => DonorPage(organization: org),
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      DonorPage(organization: org),
                                 ),
                               );
                             },
@@ -257,11 +261,14 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
                                         ClipRRect(
-                                          borderRadius: BorderRadius.circular(25),
+                                          borderRadius:
+                                              BorderRadius.circular(25),
                                           child: Image.asset(
                                             "images/$org.jpg",
                                             width: 161,
@@ -271,8 +278,10 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                         ),
                                         SizedBox(height: 10),
                                         Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
                                           children: [
                                             Text(
                                               org.split(" ")[0],
@@ -303,7 +312,8 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                     width: 35,
                                     height: 35,
                                     decoration: BoxDecoration(
-                                      color: const Color.fromRGBO(31, 39, 78, 1),
+                                      color:
+                                          const Color.fromRGBO(31, 39, 78, 1),
                                       shape: BoxShape.circle,
                                     ),
                                     child: Icon(

@@ -44,8 +44,7 @@ class OrgDrawer extends StatelessWidget {
         ListTile(
           title: const Text('Log Out'),
           onTap: () {
-            Navigator.pop(context);
-            Navigator.pushNamed(context, '/');
+            Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
           },
         ),
       ],
