@@ -1,4 +1,5 @@
 import 'package:cmsc23_project/providers/auth_provider.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +16,7 @@ class LogInDonorPage extends StatefulWidget {
 class _LogInDonorPageState extends State<LogInDonorPage> {
   final _formKey = GlobalKey<FormState>(); 
   bool showSignInErrorMessage = false;
-  
+
   @override
   Widget build(BuildContext context) {    
     final provider = context.watch<TextfieldProviders>();
@@ -163,6 +164,9 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                               if (val.trim().isEmpty) {
                                 return "Please enter your name";
                               }
+                              if (EmailValidator.validate(val) != true) {
+                                return "Invalid email";
+                              }
                               return null;
                             },
                             style: const TextStyle(
@@ -288,20 +292,25 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                           setState(() {
                             if (message != null && message.isNotEmpty) {
                               showSignInErrorMessage = true;
-                            } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Invalid email or password'),
+                                ),
+                              );
+                            } 
+                            else {
                               showSignInErrorMessage = false;
+                              provider.resetLogIn();
+                              Navigator.pop(context);
+                              Navigator.pushNamed(context, "/donorHomepage");
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Logged in!'),
+                                ),
+                              );
                             }
                           });
-
-                          provider.resetLogIn();
-                          Navigator.pop(context);
-                          Navigator.pushNamed(context, "/donorHomepage");
-
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Logged in!'),
-                            ),
-                          );
                         } 
                         else {
                           
@@ -356,9 +365,27 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                 ),
               ),
             ),
+            Positioned (
+              bottom: MediaQuery.of(context).size.height * 0.035,
+              left: 0,
+              right: 0,
+              child: Center (
+                child: showSignInErrorMessage ? signInErrorMessage : Container(),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
+  Widget get signInErrorMessage => const Padding(
+    padding: EdgeInsets.only(bottom: 30),
+    child: Text(
+      "Invalid email or password",
+      style: TextStyle(
+        color: Color.fromARGB(255, 179, 42, 32),
+        fontFamily: 'Poppins',
+        fontSize: 15),
+    ),
+  );
 }
