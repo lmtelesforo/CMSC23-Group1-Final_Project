@@ -102,7 +102,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    fontFamily: 'Poppins',
+                    fontFamily: 'Poppins-Reg',
                   ),
                 ),
                 style: TextButton.styleFrom(
@@ -163,7 +163,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                                   requests[widget.index].name,
                                   style: TextStyle(
                                     fontSize: 16,
-                                    fontFamily: 'Poppins',
+                                    fontFamily: 'Poppins-Reg',
                                     color: Color(0xFF373D66),
                                   ),
                                 ),
@@ -187,7 +187,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                                   requests[widget.index].username,
                                   style: TextStyle(
                                     fontSize: 16,
-                                    fontFamily: 'Poppins',
+                                    fontFamily: 'Poppins-Reg',
                                     color: Color(0xFF373D66),
                                   ),
                                 ),
@@ -214,7 +214,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                                       requests[widget.index].addresses.first,
                                       style: TextStyle(
                                         fontSize: 16,
-                                        fontFamily: 'Poppins',
+                                        fontFamily: 'Poppins-Reg',
                                         color: Color(0xFF373D66),
                                       ),
                                     ),
@@ -243,7 +243,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                                   requests[widget.index].contactNumber,
                                   style: TextStyle(
                                     fontSize: 16,
-                                    fontFamily: 'Poppins',
+                                    fontFamily: 'Poppins-Reg',
                                     color: Color(0xFF373D66),
                                   ),
                                 ),
@@ -270,7 +270,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                                       requests[widget.index].proofs?.first,
                                       style: TextStyle(
                                         fontSize: 16,
-                                        fontFamily: 'Poppins',
+                                        fontFamily: 'Poppins-Reg',
                                         color: Color(0xFF373D66),
                                       ),
                                     ),
@@ -372,7 +372,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
               requests[widget.index].addresses[index + 1],
               style: TextStyle(
                 fontSize: 16,
-                fontFamily: 'Poppins',
+                fontFamily: 'Poppins-Reg',
                 color: Color(0xFF373D66),
               ),
             ),
@@ -394,7 +394,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
               requests[widget.index].proofs![index + 1],
               style: TextStyle(
                 fontSize: 16,
-                fontFamily: 'Poppins',
+                fontFamily: 'Poppins-Reg',
                 color: Color(0xFF373D66),
               ),
             ),

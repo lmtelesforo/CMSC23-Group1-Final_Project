@@ -104,7 +104,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                   "Log in your donor account.",
                   style: TextStyle(
                     fontSize: 12,
-                    fontFamily: 'Poppins',
+                    fontFamily: 'Poppins-Reg',
                     fontWeight: FontWeight.w500,
                     color: Color(0xFF373D66),
                   ),
@@ -129,7 +129,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                             "Username",
                             style: TextStyle(
                               fontSize: 15,
-                              fontFamily: 'Poppins',
+                              fontFamily: 'Poppins-Reg',
                               fontWeight: FontWeight.bold,
                               color: Color(0xFF373D66),
                             ),
@@ -165,7 +165,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                             style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
-                                fontFamily: 'Poppins',
+                                fontFamily: 'Poppins-Reg',
                                 color: Color(0xFF373D66)
                             ),
                             decoration: InputDecoration(
@@ -173,7 +173,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                               hintStyle: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
-                                fontFamily: 'Poppins',
+                                fontFamily: 'Poppins-Reg',
                                 color: Color(0xFF373D66).withOpacity(0.9),
                               ),
                               border: InputBorder.none,
@@ -193,7 +193,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                             "Password",
                             style: TextStyle(
                               fontSize: 15,
-                              fontFamily: 'Poppins',
+                              fontFamily: 'Poppins-Reg',
                               fontWeight: FontWeight.bold,
                               color: Color(0xFF373D66),
                             ),
@@ -232,7 +232,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                             style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
-                                fontFamily: 'Poppins',
+                                fontFamily: 'Poppins-Reg',
                                 color: Color(0xFF373D66)
                             ),
                             decoration: InputDecoration(
@@ -240,7 +240,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                               hintStyle: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
-                                fontFamily: 'Poppins',
+                                fontFamily: 'Poppins-Reg',
                                 color: Color(0xFF373D66).withOpacity(0.9),
                               ),
                               border: InputBorder.none,
@@ -261,7 +261,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                           "Reset",
                           style: TextStyle(
                             fontSize: 14,
-                            fontFamily: 'Poppins',
+                            fontFamily: 'Poppins-Reg',
                             fontWeight: FontWeight.w900,
                             color: Color(0xFF373D66),
                           ),
@@ -273,6 +273,10 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                         if (_formKey.currentState!.validate()) {
                           String username = provider.controller1.text;
                           String password = provider.controller2.text;
+
+                          provider.resetLogIn();
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, "/donorHomepage");
 
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
@@ -303,7 +307,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                             "Don't have an account?",
                             style: TextStyle(
                               fontSize: 14,
-                              fontFamily: 'Poppins',
+                              fontFamily: 'Poppins-Reg',
                               fontWeight: FontWeight.w500,
                               color: Color(0xFF373D66),
                             ),

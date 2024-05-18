@@ -98,7 +98,7 @@ class _IndivViewAllDonorsState extends State<IndivViewAllDonors> {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  fontFamily: 'Poppins',
+                  fontFamily: 'Poppins-Reg',
                 ),
               ),
               style: TextButton.styleFrom(
@@ -159,7 +159,7 @@ class _IndivViewAllDonorsState extends State<IndivViewAllDonors> {
                                 donors[widget.index].name,
                                 style: TextStyle(
                                   fontSize: 16,
-                                  fontFamily: 'Poppins',
+                                  fontFamily: 'Poppins-Reg',
                                   color: Color(0xFF373D66),
                                 ),
                               ),
@@ -183,7 +183,7 @@ class _IndivViewAllDonorsState extends State<IndivViewAllDonors> {
                                 donors[widget.index].username,
                                 style: TextStyle(
                                   fontSize: 16,
-                                  fontFamily: 'Poppins',
+                                  fontFamily: 'Poppins-Reg',
                                   color: Color(0xFF373D66),
                                 ),
                               ),
@@ -210,7 +210,7 @@ class _IndivViewAllDonorsState extends State<IndivViewAllDonors> {
                                     donors[widget.index].addresses.first,
                                     style: TextStyle(
                                       fontSize: 16,
-                                      fontFamily: 'Poppins',
+                                      fontFamily: 'Poppins-Reg',
                                       color: Color(0xFF373D66),
                                     ),
                                   ),
@@ -239,7 +239,7 @@ class _IndivViewAllDonorsState extends State<IndivViewAllDonors> {
                                 donors[widget.index].contactNumber,
                                 style: TextStyle(
                                   fontSize: 16,
-                                  fontFamily: 'Poppins',
+                                  fontFamily: 'Poppins-Reg',
                                   color: Color(0xFF373D66),
                                 ),
                               ),
@@ -270,7 +270,7 @@ class _IndivViewAllDonorsState extends State<IndivViewAllDonors> {
               donors[widget.index].addresses[index + 1],
               style: TextStyle(
                 fontSize: 16,
-                fontFamily: 'Poppins',
+                fontFamily: 'Poppins-Reg',
                 color: Color(0xFF373D66),
               ),
             ),

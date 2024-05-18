@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.3.0 <4.0.0'
+  sdk: '>=3.3.0-147.0.dev <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -46,7 +46,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^3.0.0
+  flutter_lints: ^4.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -59,6 +59,7 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/images/
     - lib/user_view/assets/cmsc23_logo1.png
     - lib/user_view/assets/cmsc23_background.png
     - lib/user_view/assets/back.png
@@ -66,12 +67,26 @@ flutter:
     - lib/user_view/assets/donors.png
     - lib/user_view/assets/orgs.png
     - lib/user_view/assets/signup.png
+    - images/Animal Welfare Organizations.jpg
+    - images/Charitable Organizations.jpg
+    - images/Disaster Relief Organizations.jpg
+    - images/Education Foundations.jpg
+    - images/Environmental Organizations.jpg
+    - images/Human Rights Groups.jpg
+    - images/Religious Organizations.jpg
+    - images/Research Institutions.jpg
+    - images/Social Justice and Advocacy Groups.jpg
+    - images/Health Organization.jpg
+    - images/profile.jpg
+    - images/icon.jpg
+    - images/logo.png
+    - images/wallpaper.jpg
   
   fonts:
     - family: DM-Sans
       fonts:
         - asset: lib/user_view/assets/DM_Sans.ttf
-    - family: Poppins
+    - family: Poppins-Reg
       fonts:
         - asset: lib/user_view/assets/Poppins-Regular.ttf
     - family: CaveatBrush
@@ -80,6 +95,10 @@ flutter:
     - family: Poppins-Bold
       fonts:
         - asset: lib/user_view/assets/Poppins-Bold.ttf
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Regular.ttf
+        - asset: assets/fonts/Poppins-ExtraBold.ttf
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

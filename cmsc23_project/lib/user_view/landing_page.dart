@@ -63,7 +63,7 @@ class _LandingPageState extends State<LandingPage> {
                       "For the People, by the People.",
                       style: TextStyle(
                         fontSize: 13,
-                        fontFamily: 'Poppins',
+                        fontFamily: 'Poppins-Reg',
                         fontWeight: FontWeight.bold,
                         color: Color(0xFF373D66),
                       ),
@@ -108,7 +108,7 @@ class _LandingPageState extends State<LandingPage> {
                       "Accepting donations?",
                       style: TextStyle(
                         fontSize: 13,
-                        fontFamily: 'Poppins',
+                        fontFamily: 'Poppins-Reg',
                         fontWeight: FontWeight.bold,
                         color: Color(0xFF373D66), 
                       ),

@@ -102,7 +102,7 @@ class _AdminViewAllDonorsState extends State<AdminViewAllDonors> {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    fontFamily: 'Poppins',
+                    fontFamily: 'Poppins-Reg',
                   ),
                 ),
                 style: TextButton.styleFrom(
@@ -167,7 +167,7 @@ class _AdminViewAllDonorsState extends State<AdminViewAllDonors> {
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.grey,
-                                fontFamily: 'Poppins',
+                                fontFamily: 'Poppins-Reg',
                               ),
                             ),
                             trailing: ElevatedButton(

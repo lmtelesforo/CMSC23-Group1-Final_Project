@@ -56,7 +56,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    fontFamily: 'Poppins',
+                    fontFamily: 'Poppins-Reg',
                   ),
                 ),
                 style: TextButton.styleFrom(
@@ -105,7 +105,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                   "Create a donor account.",
                   style: TextStyle(
                     fontSize: 12,
-                    fontFamily: 'Poppins',
+                    fontFamily: 'Poppins-Reg',
                     fontWeight: FontWeight.w500,
                     color: Color(0xFF373D66),
                   ),
@@ -130,7 +130,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                             "Name",
                             style: TextStyle(
                               fontSize: 15,
-                              fontFamily: 'Poppins',
+                              fontFamily: 'Poppins-Reg',
                               fontWeight: FontWeight.bold,
                               color: Color(0xFF373D66),
                             ),
@@ -166,7 +166,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                             style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
-                                fontFamily: 'Poppins',
+                                fontFamily: 'Poppins-Reg',
                                 color: Color(0xFF373D66)
                             ),
                             decoration: InputDecoration(
@@ -174,7 +174,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                               hintStyle: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
-                                fontFamily: 'Poppins',
+                                fontFamily: 'Poppins-Reg',
                                 color: Color(0xFF373D66).withOpacity(0.9),
                               ),
                               border: InputBorder.none,
@@ -193,7 +193,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                             "Username",
                             style: TextStyle(
                               fontSize: 15,
-                              fontFamily: 'Poppins',
+                              fontFamily: 'Poppins-Reg',
                               fontWeight: FontWeight.bold,
                               color: Color(0xFF373D66),
                             ),
@@ -229,7 +229,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                             style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
-                                fontFamily: 'Poppins',
+                                fontFamily: 'Poppins-Reg',
                                 color: Color(0xFF373D66)
                             ),
                             decoration: InputDecoration(
@@ -237,7 +237,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                               hintStyle: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
-                                fontFamily: 'Poppins',
+                                fontFamily: 'Poppins-Reg',
                                 color: Color(0xFF373D66).withOpacity(0.9),
                               ),
                               border: InputBorder.none,
@@ -256,7 +256,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                             "Password",
                             style: TextStyle(
                               fontSize: 15,
-                              fontFamily: 'Poppins',
+                              fontFamily: 'Poppins-Reg',
                               fontWeight: FontWeight.bold,
                               color: Color(0xFF373D66),
                             ),
@@ -295,7 +295,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                             style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
-                                fontFamily: 'Poppins',
+                                fontFamily: 'Poppins-Reg',
                                 color: Color(0xFF373D66)
                             ),
                             decoration: InputDecoration(
@@ -303,7 +303,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                               hintStyle: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
-                                fontFamily: 'Poppins',
+                                fontFamily: 'Poppins-Reg',
                                 color: Color(0xFF373D66).withOpacity(0.9),
                               ),
                               border: InputBorder.none,
@@ -322,7 +322,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                             "Address/es",
                             style: TextStyle(
                               fontSize: 15,
-                              fontFamily: 'Poppins',
+                              fontFamily: 'Poppins-Reg',
                               fontWeight: FontWeight.bold,
                               color: Color(0xFF373D66),
                             ),
@@ -334,7 +334,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                             "separate with commas",
                             style: TextStyle(
                               fontSize: 13,
-                              fontFamily: 'Poppins',
+                              fontFamily: 'Poppins-Reg',
                               color: Color(0xFF373D66),
                             ),
                           ),
@@ -369,7 +369,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                             style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
-                                fontFamily: 'Poppins',
+                                fontFamily: 'Poppins-Reg',
                                 color: Color(0xFF373D66)
                             ),
                             decoration: InputDecoration(
@@ -377,7 +377,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                               hintStyle: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
-                                fontFamily: 'Poppins',
+                                fontFamily: 'Poppins-Reg',
                                 color: Color(0xFF373D66).withOpacity(0.9),
                               ),
                               border: InputBorder.none,
@@ -396,7 +396,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                             "Contact number",
                             style: TextStyle(
                               fontSize: 15,
-                              fontFamily: 'Poppins',
+                              fontFamily: 'Poppins-Reg',
                               fontWeight: FontWeight.bold,
                               color: Color(0xFF373D66),
                             ),
@@ -432,7 +432,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                             style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
-                                fontFamily: 'Poppins',
+                                fontFamily: 'Poppins-Reg',
                                 color: Color(0xFF373D66)
                             ),
                             decoration: InputDecoration(
@@ -440,7 +440,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                               hintStyle: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
-                                fontFamily: 'Poppins',
+                                fontFamily: 'Poppins-Reg',
                                 color: Color(0xFF373D66).withOpacity(0.9),
                               ),
                               border: InputBorder.none,
@@ -460,7 +460,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                           "Reset",
                           style: TextStyle(
                             fontSize: 14,
-                            fontFamily: 'Poppins',
+                            fontFamily: 'Poppins-Reg',
                             fontWeight: FontWeight.w900,
                             color: Color(0xFF373D66),
                           ),
@@ -475,6 +475,10 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                           String password = provider.controller3.text;
                           String addresses = provider.controller4.text;
                           String contactnumber = provider.controller5.text;
+
+                          provider.resetSignUp();
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, "/donorHomepage");
 
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
@@ -505,7 +509,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                             "Already have an account?",
                             style: TextStyle(
                               fontSize: 14,
-                              fontFamily: 'Poppins',
+                              fontFamily: 'Poppins-Reg',
                               fontWeight: FontWeight.w500,
                               color: Color(0xFF373D66),
                             ),
