@@ -77,7 +77,7 @@ class Favorites extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<DonationDrive> favorites =
-        context.read<CurrentOrgProvider>().favorites;
+        context.watch<CurrentOrgProvider>().favorites;
 
     // Favorites are centered using row if they can fit in the parent container
     // Otherwise, they are built with a horizontal, scrollable listview

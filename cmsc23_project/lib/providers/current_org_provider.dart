@@ -40,4 +40,13 @@ class CurrentOrgProvider with ChangeNotifier {
   }
 
   bool isFavorite(String driveId) => _currentOrg.favorites!.contains(driveId);
+  void toggleFavorite(String driveId) {
+    if (_currentOrg.favorites!.contains(driveId)) {
+      _currentOrg.favorites!.remove(driveId);
+    } else {
+      _currentOrg.favorites!.add(driveId);
+    }
+    _firebaseOrgAPI.update(_currentOrg);
+    notifyListeners();
+  }
 }

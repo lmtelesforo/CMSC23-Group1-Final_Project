@@ -98,7 +98,11 @@ class _ExpandedDriveCardState extends State<ExpandedDriveCard> {
           ),
           child: InkWell(
             onTap: () {
-              setState(() {});
+              setState(() {
+                context
+                    .read<CurrentOrgProvider>()
+                    .toggleFavorite(widget.drive.id);
+              });
             },
             child:
                 context.read<CurrentOrgProvider>().isFavorite(widget.drive.id)

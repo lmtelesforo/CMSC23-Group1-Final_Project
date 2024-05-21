@@ -30,4 +30,10 @@ class FirebaseOrgAPI {
   ];
 
   List<Organization> get orgs => _orgs;
+
+  void update(Organization org) {
+    final index =
+        _orgs.indexWhere((element) => element.username == org.username);
+    _orgs[index] = org;
+  }
 }

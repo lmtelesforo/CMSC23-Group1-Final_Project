@@ -12,7 +12,7 @@ class ManageDonationDrives extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<DonationDrive> donationDrives =
-        context.read<CurrentOrgProvider>().drives;
+        context.watch<CurrentOrgProvider>().drives;
 
     return BaseScreen(
       body: Center(
