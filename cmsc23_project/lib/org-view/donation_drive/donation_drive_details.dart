@@ -43,29 +43,46 @@ class _ExpandedDriveCardState extends State<ExpandedDriveCard> {
         Container(
           padding: const EdgeInsets.all(20),
           child: Card(
-            child: Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image(
-                      image: widget.drive.image,
-                      fit: BoxFit.cover,
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.only(
+                      left: 10,
+                      right: 10,
+                      bottom: 10,
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image(
+                        image: widget.drive.image,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
-                Text(widget.drive.name, style: CustomTextStyle.h1),
-                Container(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      _status,
-                    ],
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(widget.drive.name, style: CustomTextStyle.h1),
                   ),
-                ),
-              ],
+                  Container(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        _status,
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      widget.drive.description,
+                      style: CustomTextStyle.body,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
