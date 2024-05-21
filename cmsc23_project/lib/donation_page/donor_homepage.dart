@@ -1,8 +1,8 @@
 import 'package:cmsc23_project/donation_page/favorite_page.dart';
+import 'package:cmsc23_project/donation_page/org_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../provider/donation_provider.dart';
-import 'donor_page.dart';
 
 class DonorHomepage extends StatefulWidget {
   @override
@@ -233,10 +233,15 @@ class _DonorHomepageState extends State<DonorHomepage> {
                           GestureDetector(
                             onTap: () {
                               context.read<DonationProvider>().setOrganization(org);
+                              Map<String, List<String>> organizationDetails = context.read<DonationProvider>().organizationDetails;
+                              String details = organizationDetails[org]?.join('\n') ?? '';
+                              Map<String, String> detailsMap = {'Details': details};
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => DonorPage(organization: org),
+                                  builder: (context) => OrgDetailsPage(
+                                    organization: org,
+                                    organizationDetails: detailsMap,),
                                 ),
                               );
                             },
@@ -297,7 +302,6 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                   right: 5,
                                   child: GestureDetector(
                                     onTap: () {
-                                      // Toggle favorite status using provider
                                       Provider.of<DonationProvider>(context, listen: false).toggleFavorite(org);
                                     },
                                     child: Container(

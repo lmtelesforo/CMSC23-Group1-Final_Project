@@ -20,12 +20,30 @@ class DonationProvider with ChangeNotifier {
   // New map to track favorite organizations
   Map<String, bool> _favoriteOrganizations = {};
 
+  // New map to store organization details
+  final Map<String, List<String>> _organizationDetails = {
+    "Animal Welfare Organizations": ["Details for Animal Welfare Organizations"],
+    "Charitable Organizations": ["Details for Charitable Organizations"],
+    "Disaster Relief Organizations": ["Details for Disaster Relief Organizations"],
+    "Education Foundations": ["Details for Education Foundations"],
+    "Environmental Organizations": ["Details for Environmental Organizations"],
+    "Health Organization": ["Details for Health Organization"],
+    "Human Rights Groups": ["Details for Human Rights Groups"],
+    "Religious Organizations": ["Details for Religious Organizations"],
+    "Research Institutions": ["Details for Research Institutions"],
+    "Social Justice and Advocacy Groups": ["Details for Social Justice and Advocacy Groups"],
+  };
+
   List<DonationItem> get donationItems => _donationItems;
   String get selectedOrganization => _selectedOrganization;
 
   // Getter for favorite organizations
   Map<String, bool> get favoriteOrganizations => _favoriteOrganizations;
 
+  // Getter for organization details
+  Map<String, List<String>> get organizationDetails => _organizationDetails;
+
+  // Convert the organization details into a list
   final Map<String, List<String>> organizationDonations = {
     "Animal Welfare Organizations": ["Food", "Clothes", "Cash", "Necessities", "Others"],
     "Charitable Organizations": ["Food", "Clothes", "Cash", "Necessities", "Others"],
@@ -54,6 +72,10 @@ class DonationProvider with ChangeNotifier {
     return organizationDonations[organization]!
         .map((itemName) => DonationItem(itemName: itemName, isChecked: false))
         .toList();
+  }
+
+  List<String> _getOrganizationDetails(String organization) {
+    return organizationDetails[organization] ?? [];
   }
 
   // Method to toggle favorite status of an organization
