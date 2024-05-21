@@ -2,21 +2,23 @@ import 'package:cmsc23_project/models/donation_drive.dart';
 import 'package:cmsc23_project/org-view/base_elements/base_screen.dart';
 import 'package:cmsc23_project/org-view/donations/donation_list.dart';
 import 'package:cmsc23_project/org-view/base_elements/org_view_styles.dart';
+import 'package:cmsc23_project/providers/current_org_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class DonationDriveScreen extends StatelessWidget {
+class DonationDriveDetails extends StatelessWidget {
   // The screen for a single donation drive
-  final DonationDrive donationDrive;
+  final DonationDrive drive;
 
-  const DonationDriveScreen({super.key, required this.donationDrive});
+  const DonationDriveDetails({super.key, required this.drive});
 
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
       body: Column(
         children: [
-          ExpandedDriveCard(donationDrive),
-          const DonationList(),
+          ExpandedDriveCard(drive),
+          DonationList(driveId: drive.id),
         ],
       ),
     );
@@ -25,9 +27,9 @@ class DonationDriveScreen extends StatelessWidget {
 
 class ExpandedDriveCard extends StatefulWidget {
   // Represents a single donation drive card
-  final DonationDrive donationDrive;
+  final DonationDrive drive;
 
-  const ExpandedDriveCard(this.donationDrive, {super.key});
+  const ExpandedDriveCard(this.drive, {super.key});
 
   @override
   State<ExpandedDriveCard> createState() => _ExpandedDriveCardState();
@@ -48,12 +50,12 @@ class _ExpandedDriveCardState extends State<ExpandedDriveCard> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: Image(
-                      image: widget.donationDrive.image,
+                      image: widget.drive.image,
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
-                Text(widget.donationDrive.name, style: CustomTextStyle.h1),
+                Text(widget.drive.name, style: CustomTextStyle.h1),
                 Container(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: Row(
@@ -78,7 +80,7 @@ class _ExpandedDriveCardState extends State<ExpandedDriveCard> {
           Container(
             padding: const EdgeInsets.only(left: 10),
             child: Text(
-              widget.donationDrive.isOngoing ? 'Ongoing' : 'Ended',
+              widget.drive.isOngoing ? 'Ongoing' : 'Ended',
               style: CustomTextStyle.body,
             ),
           ),
@@ -98,8 +100,11 @@ class _ExpandedDriveCardState extends State<ExpandedDriveCard> {
             onTap: () {
               setState(() {});
             },
-            child: const Icon(Icons.favorite_border,
-                color: CustomColors.secondary),
+            child:
+                context.read<CurrentOrgProvider>().isFavorite(widget.drive.id)
+                    ? const Icon(Icons.favorite, color: CustomColors.secondary)
+                    : const Icon(Icons.favorite_border,
+                        color: CustomColors.secondary),
           ),
         ),
       );

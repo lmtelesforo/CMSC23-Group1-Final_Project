@@ -5,7 +5,7 @@ class FirebaseDonationAPI {
     Donation(
       donorUsername: 'johndoe',
       orgUsername: 'redcross',
-      driveId: '123456',
+      driveId: '1',
       address: '123 Main St., Makati City',
       contactNo: '09123456789',
       categories: ['Clothes', 'Food'],
@@ -17,7 +17,7 @@ class FirebaseDonationAPI {
     Donation(
       donorUsername: 'janedoe',
       orgUsername: 'redcross',
-      driveId: '654321',
+      driveId: '1',
       address: '789 3rd St., Pasig City',
       contactNo: '09876543210',
       categories: ['Toys', 'Books'],

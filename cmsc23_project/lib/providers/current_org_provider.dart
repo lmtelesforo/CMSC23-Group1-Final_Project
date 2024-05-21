@@ -24,9 +24,20 @@ class CurrentOrgProvider with ChangeNotifier {
   }
 
   Organization get currentOrg => _currentOrg;
-  List<Donation> get donations => _donations;
   List<DonationDrive> get drives => _drives;
   List<DonationDrive> get favorites => _drives
       .where((drive) => _currentOrg.favorites!.contains(drive.id))
       .toList();
+
+  List<Donation> donations({String? driveId}) {
+    if (driveId == null) {
+      return _donations;
+    } else {
+      return _donations
+          .where((donation) => donation.driveId == driveId)
+          .toList();
+    }
+  }
+
+  bool isFavorite(String driveId) => _currentOrg.favorites!.contains(driveId);
 }

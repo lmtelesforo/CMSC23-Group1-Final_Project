@@ -30,7 +30,7 @@ class ManageDonationDrives extends StatelessWidget {
                 const AddDonationDrive(),
                 ...donationDrives.map(
                   (donationDrive) {
-                    return DonationDriveCard(donationDrive: donationDrive);
+                    return DonationDriveCard(drive: donationDrive);
                   },
                 ),
               ],

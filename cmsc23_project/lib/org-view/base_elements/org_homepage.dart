@@ -94,7 +94,7 @@ class Favorites extends StatelessWidget {
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: favorites.map((favorite) {
-                      return DonationDriveCard(donationDrive: favorite);
+                      return DonationDriveCard(drive: favorite);
                     }).toList(),
                   )
                 : ListView.builder(
@@ -103,8 +103,7 @@ class Favorites extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.only(left: 10),
-                        child:
-                            DonationDriveCard(donationDrive: favorites[index]),
+                        child: DonationDriveCard(drive: favorites[index]),
                       );
                     },
                   ),

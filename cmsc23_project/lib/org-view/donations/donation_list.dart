@@ -7,7 +7,8 @@ import 'package:provider/provider.dart';
 
 class DonationList extends StatefulWidget {
   // Lists all donations made to the organization
-  const DonationList({super.key});
+  final String? driveId;
+  const DonationList({this.driveId, super.key});
 
   @override
   State<DonationList> createState() => _DonationListState();
@@ -51,7 +52,8 @@ class _DonationListState extends State<DonationList> {
       );
 
   Widget get _donationTiles {
-    List<Donation> donations = context.read<CurrentOrgProvider>().donations;
+    List<Donation> donations =
+        context.read<CurrentOrgProvider>().donations(driveId: widget.driveId);
 
     List<Donation> filteredDonations = donations.where((donation) {
       return (donation.donorUsername + donation.status.name)
@@ -92,19 +94,23 @@ class _DonationListState extends State<DonationList> {
   }
 
   Widget _statusIcon(status) {
+    IconData icon;
+
     switch (status) {
       case Status.pending:
-        return const Icon(Icons.schedule, color: CustomColors.primary);
+        icon = Icons.schedule;
       case Status.confirmed:
-        return const Icon(Icons.check, color: CustomColors.primary);
+        icon = Icons.check;
       case Status.scheduledForPickup:
-        return const Icon(Icons.schedule_send, color: CustomColors.primary);
+        icon = Icons.schedule_send;
       case Status.complete:
-        return const Icon(Icons.done, color: CustomColors.primary);
+        icon = Icons.done;
       case Status.cancelled:
-        return const Icon(Icons.cancel, color: CustomColors.primary);
+        icon = Icons.cancel;
       default:
-        return const Icon(Icons.error, color: CustomColors.primary);
+        icon = Icons.error;
     }
+
+    return Icon(icon, color: CustomColors.primary);
   }
 }
