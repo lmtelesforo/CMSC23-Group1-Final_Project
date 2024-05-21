@@ -2,6 +2,7 @@ import 'package:cmsc23_project/admin_view/indiv_approve_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/org_signup.dart';
 import '../models/user_signup.dart';
 import '../providers/textfield_providers.dart';
 
@@ -18,8 +19,8 @@ class _ApproveOrgSignupsState extends State<ApproveOrgSignups> {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<TextfieldProviders>();
-    List<User> requests = [
-      User(
+    List<Org> requests = [
+      Org(
         name: 'Org 1',
         username: 'org1_username',
         password: 'password1',
@@ -124,7 +125,7 @@ class _ApproveOrgSignupsState extends State<ApproveOrgSignups> {
                       physics: NeverScrollableScrollPhysics(),
                       itemCount: requests.length,
                       itemBuilder: (context, index) {
-                        User request = requests[index];
+                        Org request = requests[index];
                         return Container(
                           decoration: BoxDecoration(
                             color: Color(0xFFFFFFFF),

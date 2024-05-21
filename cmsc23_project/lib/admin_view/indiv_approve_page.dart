@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/org_signup.dart';
 import '../models/user_signup.dart';
 import '../providers/textfield_providers.dart';
 
@@ -14,8 +15,8 @@ class OrgRequestPage extends StatefulWidget {
 }
 
 class _OrgRequestPageState extends State<OrgRequestPage> {
-  List<User> requests = [
-    User(
+  List<Org> requests = [
+    Org(
       name: 'Org 1',
       username: 'org1_username',
       password: 'password1',
@@ -152,7 +153,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                           Row(
                             children: [
                               Text(
-                                'Username:',
+                                'Orgname:',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontFamily: 'Poppins-Bold',

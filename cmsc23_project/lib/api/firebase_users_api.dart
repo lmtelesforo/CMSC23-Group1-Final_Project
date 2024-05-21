@@ -28,6 +28,10 @@ class FirebaseUserAPI {
     return db.collection("users").snapshots();
   }
 
+  Stream<QuerySnapshot> getAllSignUpReqs() {
+    return db.collection("orgsignup_requests").snapshots();
+  }
+
   Stream<QuerySnapshot> getUsersByEmail(String email) {
     return db
     .collection("users")

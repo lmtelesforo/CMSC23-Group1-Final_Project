@@ -294,9 +294,6 @@ class _LogInAdminPageState extends State<LogInAdminPage> {
                             );
                           }
                         } 
-                        else {
-                          
-                        }
                       },
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(320, 40),

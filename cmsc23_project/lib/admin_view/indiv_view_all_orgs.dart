@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/org_signup.dart';
 import '../models/user_signup.dart';
 import '../providers/textfield_providers.dart';
 
@@ -14,8 +15,8 @@ class IndivViewAllOrgs extends StatefulWidget {
 }
 
 class _IndivViewAllOrgsState extends State<IndivViewAllOrgs> {
-  List<User> organizations = [
-    User(
+  List<Org> organizations = [
+    Org(
       name: 'Org 1',
       username: 'org1_username',
       password: 'password1',
@@ -152,7 +153,7 @@ class _IndivViewAllOrgsState extends State<IndivViewAllOrgs> {
                         Row(
                           children: [
                             Text(
-                              'Username:',
+                              'Orgname:',
                               style: TextStyle(
                                 fontSize: 16,
                                 fontFamily: 'Poppins-Bold',
