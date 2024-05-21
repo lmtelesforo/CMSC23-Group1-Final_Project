@@ -54,7 +54,7 @@ class _DonationListState extends State<DonationList> {
     List<Donation> donations = context.read<CurrentOrgProvider>().donations;
 
     List<Donation> filteredDonations = donations.where((donation) {
-      return donation.donorUsername
+      return (donation.donorUsername + donation.status.name)
           .toLowerCase()
           .contains(_searchQuery.toLowerCase());
     }).toList();
