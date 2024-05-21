@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/auth_provider.dart';
+import '../providers/firebase_provider.dart';
 
 class SignUpOrgPage extends StatefulWidget {
   const SignUpOrgPage({Key? key}) : super(key: key);
@@ -25,6 +26,8 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<TextfieldProviders>();
+    List<String> addressesList = [];
+    List<String> proofsList = [];
 
     return Scaffold(
       body: Form(
@@ -595,12 +598,29 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                           final nickname = provider.controller2.text;
                           final email = provider.controller3.text;
                           final password = provider.controller4.text;
-                          final addresses = provider.controller5.text;
+                          final addressesUnsplit = provider.controller5.text;
                           final contactnumber = provider.controller6.text;
-                          final proofs = provider.controller7.text;
+                          final proofsUnsplit = provider.controller7.text;
                           final userType = 'organization';
+                          bool multipleAddresses = addressesUnsplit.contains(',');
+                          bool multipleProofs = proofsUnsplit.contains(',');
 
+                          if (multipleAddresses == true) {
+                            addressesList = addressesUnsplit.split(',').map((address) => address.trim()).toList();
+                          }
+                          else {
+                            addressesList = [addressesUnsplit];
+                          }
+
+                          if (multipleProofs == true) {
+                            proofsList = proofsUnsplit.split(',').map((proof) => proof.trim()).toList();
+                          }
+                          else {
+                            proofsList = [proofsUnsplit];
+                          }
+                          
                           final authService = Provider.of<UserAuthProvider>(context, listen: false).authService;
+                          final userService = Provider.of<UserInfosProvider>(context, listen: false).firebaseService;
 
                           signUpResult = (await authService.signUp(email, password))!;
 
@@ -610,6 +630,10 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                             );
                           }
                           else {
+                            final user = UserInfosProvider().orgData(name, nickname, email, password, addressesList, contactnumber, proofsList, userType);
+                            
+                            userService.addUser(user); // add to firebase
+
                             provider.resetSignUp();
                             Navigator.pop(context);
                             Navigator.pushNamed(context, "/donorHomepage");

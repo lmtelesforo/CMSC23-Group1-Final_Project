@@ -579,7 +579,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                             );
                           }
                           else {
-                            final user = UserInfosProvider().userData(name, nickname, email, password, addressesList, contactnumber, userType);
+                            final user = UserInfosProvider().donorData(name, nickname, email, password, addressesList, contactnumber, userType);
                             
                             userService.addUser(user); // add to firebase
 

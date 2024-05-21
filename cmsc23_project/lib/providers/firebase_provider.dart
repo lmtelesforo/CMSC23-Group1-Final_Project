@@ -42,7 +42,7 @@ class UserInfosProvider with ChangeNotifier {
     notifyListeners(); 
   }
   
-  Map<String, dynamic> userData(String name, String nickname, String email, String password, List addresses, String contactnumber, String userType){ // created a structure for easier storing
+  Map<String, dynamic> donorData(String name, String nickname, String email, String password, List addresses, String contactnumber, String userType){ // created a structure for easier storing
     Map<String, dynamic> newData = {
       'name': name,
       'nickname': nickname,
@@ -50,6 +50,20 @@ class UserInfosProvider with ChangeNotifier {
       'password': password,
       'addresses': addresses,
       'contactNumber': contactnumber,
+      'userType': userType // with required fields
+    };
+    return newData;
+  }
+
+  Map<String, dynamic> orgData(String name, String nickname, String email, String password, List addresses, String contactnumber, List proofs, String userType){ // created a structure for easier storing
+    Map<String, dynamic> newData = {
+      'name': name,
+      'nickname': nickname,
+      'email': email,
+      'password': password,
+      'addresses': addresses,
+      'contactNumber': contactnumber,
+      'proofs': proofs,
       'userType': userType // with required fields
     };
     return newData;
