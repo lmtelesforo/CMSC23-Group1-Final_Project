@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 class Profile extends StatelessWidget {
   final Organization org = Organization(
     name: 'Sample Org',
+    username: 'sample_org',
+    addresses: ['Sample Address'],
+    contactNo: '1234567890',
     profilePic: const AssetImage('assets/images/profile_pic.jpg'),
   );
 

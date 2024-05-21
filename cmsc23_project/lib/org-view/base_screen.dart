@@ -8,6 +8,9 @@ class BaseScreen extends StatelessWidget {
 
   final Donor sampleUser = Donor(
     name: 'Sample User',
+    username: 'sample_user',
+    addresses: ['Sample Address'],
+    contactNo: '1234567890',
     profilePic: const AssetImage('assets/images/profile_pic.jpg'),
   );
   final Widget body;

@@ -1,7 +1,5 @@
-import 'package:cmsc23_project/models/donation.dart';
 import 'package:cmsc23_project/models/donation_drive.dart';
 import 'package:cmsc23_project/models/organization.dart';
-import 'package:cmsc23_project/models/donor.dart';
 import 'package:cmsc23_project/org-view/base_screen.dart';
 import 'package:cmsc23_project/org-view/donations/donation_drive_card.dart';
 import 'package:cmsc23_project/org-view/donation_drive/manage_donation_drives.dart';
@@ -17,6 +15,9 @@ class OrgHomePage extends StatelessWidget {
     // Test data
     final Organization org = Organization(
       name: 'Organization 1',
+      username: 'org1',
+      addresses: ['Address 1'],
+      contactNo: '1234567890',
       profilePic: const AssetImage('assets/images/org_profile.png'),
       donationDrives: [
         DonationDrive(
@@ -33,30 +34,14 @@ class OrgHomePage extends StatelessWidget {
         ),
       ],
     );
-    org.favorite(org.donationDrives[0]);
     org.donationDrives[2].end();
-
-    Donor abra = Donor(
-        name: 'Abra Abra',
-        profilePic: const AssetImage(
-          'assets/images/profile_pic.jpg',
-        ));
-    abra.donations[0].status = Status.confirmed;
-    abra.donations[1].status = Status.scheduledForPickup;
-    abra.donations[0].associateWith(org.donationDrives[0]);
-
-    Donor cadabra = Donor(
-      name: 'Cababra Cadabra',
-      profilePic: const AssetImage('assets/images/profile_pic.jpg'),
-    );
-    cadabra.donations[0].associateWith(org.donationDrives[0]);
 
     return BaseScreen(
       body: Column(
         children: [
           MainAction(org.donationDrives),
-          Favorites(org.favorites),
-          DonationList(org.donations),
+          const Favorites([]),
+          const DonationList([]),
         ],
       ),
     );
