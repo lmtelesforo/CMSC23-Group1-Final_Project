@@ -632,7 +632,7 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                           else {
                             final user = UserInfosProvider().orgData(name, nickname, email, password, addressesList, contactnumber, proofsList, userType);
                             
-                            userService.addUser(user); // add to firebase
+                            userService.addOrgSignUpReq(user); // add to firebase
 
                             provider.resetSignUp();
                             Navigator.pop(context);

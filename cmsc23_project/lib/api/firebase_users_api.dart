@@ -14,6 +14,16 @@ class FirebaseUserAPI {
     }
   }
 
+  Future<String> addOrgSignUpReq(Map<String, dynamic> user) async {
+    try {
+      await db.collection("orgsignup_requests").add(user);
+
+      return "Successfully added organization to sign up request!";
+    } on FirebaseException catch (e) {
+      return "Error in ${e.code}: ${e.message}";
+    }
+  }
+
   Stream<QuerySnapshot> getAllUsers() {
     return db.collection("users").snapshots();
   }
