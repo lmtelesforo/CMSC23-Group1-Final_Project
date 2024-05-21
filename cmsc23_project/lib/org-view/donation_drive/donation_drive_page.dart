@@ -15,8 +15,8 @@ class DonationDriveScreen extends StatelessWidget {
     return BaseScreen(
       body: Column(
         children: [
-          ExpandedDriveCard(donationDrive: donationDrive),
-          DonationList(donationDrive.donations),
+          ExpandedDriveCard(donationDrive),
+          const DonationList([]),
         ],
       ),
     );
@@ -27,7 +27,7 @@ class ExpandedDriveCard extends StatefulWidget {
   // Represents a single donation drive card
   final DonationDrive donationDrive;
 
-  const ExpandedDriveCard({super.key, required this.donationDrive});
+  const ExpandedDriveCard(this.donationDrive, {super.key});
 
   @override
   State<ExpandedDriveCard> createState() => _ExpandedDriveCardState();
@@ -78,7 +78,7 @@ class _ExpandedDriveCardState extends State<ExpandedDriveCard> {
           Container(
             padding: const EdgeInsets.only(left: 10),
             child: Text(
-              widget.donationDrive.status,
+              widget.donationDrive.isOngoing ? 'Ongoing' : 'Ended',
               style: CustomTextStyle.body,
             ),
           ),
@@ -96,16 +96,10 @@ class _ExpandedDriveCardState extends State<ExpandedDriveCard> {
           ),
           child: InkWell(
             onTap: () {
-              setState(() {
-                widget.donationDrive.isFavorite
-                    ? widget.donationDrive.isFavorite = false
-                    : widget.donationDrive.isFavorite = true;
-              });
+              setState(() {});
             },
-            child: widget.donationDrive.isFavorite
-                ? const Icon(Icons.favorite, color: CustomColors.secondary)
-                : const Icon(Icons.favorite_border,
-                    color: CustomColors.secondary),
+            child: const Icon(Icons.favorite_border,
+                color: CustomColors.secondary),
           ),
         ),
       );

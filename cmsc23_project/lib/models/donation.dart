@@ -33,11 +33,6 @@ class Donation {
         return const Icon(Icons.cancel);
     }
   }
-
-  void associateWith(DonationDrive drive) {
-    associatedDrive = drive;
-    drive.donations.add(this);
-  }
 }
 
 enum Status { pending, confirmed, scheduledForPickup, complete, cancelled }

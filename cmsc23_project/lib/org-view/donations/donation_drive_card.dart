@@ -37,7 +37,7 @@ class DonationDriveCard extends StatelessWidget {
             ),
           ),
         ),
-        if (donationDrive.isFavorite) _favoriteIcon,
+        if (true) _favoriteIcon,
       ],
     );
   }

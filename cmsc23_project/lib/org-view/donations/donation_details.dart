@@ -8,16 +8,11 @@ class DonationDetails extends StatefulWidget {
   final Donation donation;
   final List<DonationDrive> donationDrives = [
     DonationDrive(
+      orgId: '1',
       name: 'Donation Drive 1',
+      description: 'This is a donation drive.',
       image: const AssetImage('assets/images/donation_drive.jpg'),
-    ),
-    DonationDrive(
-      name: 'Donation Drive 2',
-      image: const AssetImage('assets/images/donation_drive.jpg'),
-    ),
-    DonationDrive(
-      name: 'Donation Drive 3',
-      image: const AssetImage('assets/images/donation_drive.jpg'),
+      isOngoing: true,
     ),
   ];
 
