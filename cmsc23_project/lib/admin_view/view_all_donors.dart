@@ -188,7 +188,7 @@ class _AdminViewAllDonorsState extends State<AdminViewAllDonors> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => IndivViewAllDonors(index: index),
+                                        builder: (context) => IndivViewAllDonors(userDetails: userDetails[index]),
                                       ),
                                     );
                                   },

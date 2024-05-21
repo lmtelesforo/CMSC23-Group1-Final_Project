@@ -1,32 +1,32 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/org_signup.dart';
 import '../models/user_signup.dart';
+import '../providers/firebase_provider.dart';
 import '../providers/textfield_providers.dart';
 
 class OrgRequestPage extends StatefulWidget {
-  final int index;
+  final DocumentSnapshot orgDetails;
 
-  const OrgRequestPage({Key? key, required this.index}) : super(key: key);
+  const OrgRequestPage({Key? key, required this.orgDetails}) : super(key: key);
 
   @override
   State<OrgRequestPage> createState() => _OrgRequestPageState();
 }
 
 class _OrgRequestPageState extends State<OrgRequestPage> {
-  List<Org> requests = [
-    Org(
-      name: 'Org 1',
-      username: 'org1_username',
-      password: 'password1',
-      email: 'laira@gmail.com',
-      addresses: ['Address 1', 'Address 2'],
-      contactNumber: '1234567890',
-      proofs: ['Proofs for Organization 1'],
-      userType: 'user'
-    ),
-  ];
+  late Org org; 
+  late Map<String, dynamic> orgMap;
+
+  @override
+  void initState() {
+    super.initState();
+    org = Org.fromJson(widget.orgDetails.data() as Map<String, dynamic>);
+    orgMap = org.toJson(org);
+    org.id = widget.orgDetails.id;
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -139,7 +139,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                               SizedBox(width: 5),
                               Expanded(
                                 child: Text(
-                                  requests[widget.index].name,
+                                  org.name,
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontFamily: 'Poppins-Reg',
@@ -153,7 +153,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                           Row(
                             children: [
                               Text(
-                                'Orgname:',
+                                'Username:',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontFamily: 'Poppins-Bold',
@@ -163,7 +163,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                               SizedBox(width: 5),
                               Expanded(
                                 child: Text(
-                                  requests[widget.index].username,
+                                  org.username,
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontFamily: 'Poppins-Reg',
@@ -190,7 +190,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                                   SizedBox(width: 5),
                                   Expanded(
                                     child: Text(
-                                      requests[widget.index].addresses.first,
+                                      org.addresses.first,
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontFamily: 'Poppins-Reg',
@@ -200,7 +200,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                                   ),
                                 ],
                               ),
-                              (requests[widget.index].addresses.length > 1)
+                              (org.addresses.length > 1)
                               ? newAddressLine() // if true
                               : SizedBox.shrink(), // if false
                             ],
@@ -219,7 +219,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                               SizedBox(width: 5),
                               Expanded(
                                 child: Text(
-                                  requests[widget.index].contactNumber,
+                                  org.contactNumber,
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontFamily: 'Poppins-Reg',
@@ -246,7 +246,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                                   SizedBox(width: 5),
                                   Expanded(
                                     child: Text(
-                                      requests[widget.index].proofs?.first,
+                                      org.proofs?.first,
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontFamily: 'Poppins-Reg',
@@ -256,7 +256,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                                   ),
                                 ],
                               ),
-                              (requests[widget.index].proofs!.length > 1)
+                              (org.proofs!.length > 1)
                               ? newLine() // if true
                               : SizedBox.shrink(), // if false
                             ],
@@ -279,6 +279,10 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                 children: [
                   ElevatedButton.icon(
                     onPressed: () {
+                      final userService = Provider.of<UserInfosProvider>(context, listen: false).firebaseService;
+                      userService.addOrg(orgMap);
+
+                      userService.deleteSignUpReq(org.id);
                       Navigator.pop(context);
                       Navigator.pushNamed(context, "/adminApprove");
                     },
@@ -343,12 +347,12 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: List.generate(
-        requests[widget.index].addresses.length - 1,
+        org.addresses.length - 1,
         (index) {
           return Padding(
             padding: EdgeInsets.only(left: 106), 
             child: Text(
-              requests[widget.index].addresses[index + 1],
+              org.addresses[index + 1],
               style: TextStyle(
                 fontSize: 16,
                 fontFamily: 'Poppins-Reg',
@@ -365,12 +369,12 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: List.generate(
-        requests[widget.index].proofs!.length - 1,
+        org.proofs!.length - 1,
         (index) {
           return Padding(
             padding: EdgeInsets.only(left: 70), 
             child: Text(
-              requests[widget.index].proofs![index + 1],
+              org.proofs![index + 1],
               style: TextStyle(
                 fontSize: 16,
                 fontFamily: 'Poppins-Reg',

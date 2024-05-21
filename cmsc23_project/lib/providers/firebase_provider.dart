@@ -9,15 +9,23 @@ import '../models/user_signup.dart';
 class UserInfosProvider with ChangeNotifier {
   FirebaseUserAPI firebaseService = FirebaseUserAPI();
   late Stream<QuerySnapshot> _userStream;
+  late Stream<QuerySnapshot> _orgSignUpStream;
 
   UserInfosProvider() {
     fetchUsers();
+    fetchSignUpRequests();
   }
 
   Stream<QuerySnapshot> get allUsers => _userStream;
+  Stream<QuerySnapshot> get allSignUpReqs => _orgSignUpStream;
   
   void fetchUsers() {
     _userStream = firebaseService.getAllUsers();
+    notifyListeners();
+  }
+
+  void fetchSignUpRequests() {
+    _orgSignUpStream = firebaseService.getAllSignUpReqs(); // FirebaseUserAPI get org sign up requests
     notifyListeners();
   }
 
@@ -41,11 +49,22 @@ class UserInfosProvider with ChangeNotifier {
     print(message); 
     notifyListeners(); 
   }
+
+  void addOrg(Map<String, dynamic> org) async { // add user to firebase
+    String? message = await firebaseService.addOrg(org);
+    print(message); 
+    notifyListeners(); 
+  }
+
+  void deleteSignUpReq(String id) async { // delete data and reflect on firebase
+    await firebaseService.deleteSignUpReq(id);
+    notifyListeners();
+  }
   
-  Map<String, dynamic> donorData(String name, String nickname, String email, String password, List addresses, String contactnumber, String userType){ // created a structure for easier storing
+  Map<String, dynamic> donorData(String name, String username, String email, String password, List addresses, String contactnumber, String userType){ // created a structure for easier storing
     Map<String, dynamic> newData = {
       'name': name,
-      'nickname': nickname,
+      'username': username,
       'email': email,
       'password': password,
       'addresses': addresses,
@@ -55,10 +74,10 @@ class UserInfosProvider with ChangeNotifier {
     return newData;
   }
 
-  Map<String, dynamic> orgData(String name, String nickname, String email, String password, List addresses, String contactnumber, List proofs, String userType){ // created a structure for easier storing
+  Map<String, dynamic> orgData(String name, String username, String email, String password, List addresses, String contactnumber, List proofs, String userType){ // created a structure for easier storing
     Map<String, dynamic> newData = {
       'name': name,
-      'nickname': nickname,
+      'username': username,
       'email': email,
       'password': password,
       'addresses': addresses,

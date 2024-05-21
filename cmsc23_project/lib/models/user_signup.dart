@@ -39,16 +39,15 @@ class User {
     return data.map<User>((dynamic d) => User.fromJson(d)).toList();
   }
 
-  Map<String, dynamic> toJson(User User) {
-    return {
-      'id': User.id,
-      'name': User.name,
-      'username': User.username,
-      'password': User.password,
-      'email': User.email,
-      'addresses': User.addresses,
-      'contactNumber': User.contactNumber,
-      'userType': User.userType,
+  Map<String, dynamic> toJson(User user) {
+    return { // removed id mapping 
+      'name': user.name,
+      'username': user.username,
+      'password': user.password,
+      'email': user.email,
+      'addresses': user.addresses,
+      'contactNumber': user.contactNumber,
+      'userType': user.userType,
     };
   }
 }

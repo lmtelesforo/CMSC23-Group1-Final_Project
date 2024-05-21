@@ -14,9 +14,39 @@ class FirebaseUserAPI {
     }
   }
 
-  Future<String> addOrgSignUpReq(Map<String, dynamic> user) async {
+  Future<String> addOrg(Map<String, dynamic> org) async {
     try {
-      await db.collection("orgsignup_requests").add(user);
+      await db.collection("users").add(org);
+
+      return "Successfully added user!";
+    } on FirebaseException catch (e) {
+      return "Error in ${e.code}: ${e.message}";
+    }
+  }
+
+  Future<String> delete(String? id) async {
+    try {
+      await db.collection("users").doc(id).delete();
+
+      return "Successfully deleted!";
+    } on FirebaseException catch (e) {
+      return "Error in ${e.code}: ${e.message}";
+    }
+  }
+
+  Future<String> deleteSignUpReq(String? id) async {
+    try {
+      await db.collection("orgsignupreq").doc(id).delete();
+
+      return "Successfully deleted!";
+    } on FirebaseException catch (e) {
+      return "Error in ${e.code}: ${e.message}";
+    }
+  }
+
+  Future<String> addOrgSignUpReq(Map<String, dynamic> org) async {
+    try {
+      await db.collection("orgsignupreq").add(org);
 
       return "Successfully added organization to sign up request!";
     } on FirebaseException catch (e) {
@@ -29,7 +59,7 @@ class FirebaseUserAPI {
   }
 
   Stream<QuerySnapshot> getAllSignUpReqs() {
-    return db.collection("orgsignup_requests").snapshots();
+    return db.collection("orgsignupreq").snapshots();
   }
 
   Stream<QuerySnapshot> getUsersByEmail(String email) {

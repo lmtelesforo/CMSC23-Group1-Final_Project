@@ -188,7 +188,7 @@ class _AdminViewAllOrgsState extends State<AdminViewAllOrgs> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => IndivViewAllOrgs(index: index),
+                                        builder: (context) => IndivViewAllOrgs(orgDetails: orgDetails[index]),
                                       ),
                                     );
                                   },

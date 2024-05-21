@@ -184,7 +184,7 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                         Padding(
                           padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 4),
                           child: Text(
-                            "Nickname",
+                            "Username",
                             style: TextStyle(
                               fontSize: 15,
                               fontFamily: 'Poppins-Reg',
@@ -210,13 +210,13 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                             ),
                           TextFormField(
                             controller: provider.controller2, 
-                            onChanged: provider.updateNickname,
+                            onChanged: provider.updateUsername,
                             validator: (val) {
                               if (val!.isEmpty) {
-                                return "Please enter your nickname";
+                                return "Please enter your username";
                               }
                               if (val.trim().isEmpty) {
-                                return "Please enter your nickname";
+                                return "Please enter your username";
                               }
                               return null;
                             },
@@ -227,7 +227,7 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                                 color: Color(0xFF373D66)
                             ),
                             decoration: InputDecoration(
-                              hintText: 'Enter your nickname',
+                              hintText: 'Enter your username',
                               hintStyle: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
@@ -595,7 +595,7 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
                           final name = provider.controller1.text;
-                          final nickname = provider.controller2.text;
+                          final username = provider.controller2.text;
                           final email = provider.controller3.text;
                           final password = provider.controller4.text;
                           final addressesUnsplit = provider.controller5.text;
@@ -630,7 +630,7 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                             );
                           }
                           else {
-                            final user = UserInfosProvider().orgData(name, nickname, email, password, addressesList, contactnumber, proofsList, userType);
+                            final user = UserInfosProvider().orgData(name, username, email, password, addressesList, contactnumber, proofsList, userType);
                             
                             userService.addOrgSignUpReq(user); // add to firebase
 
@@ -655,7 +655,7 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                         ),
                         backgroundColor: Color(0xFF373D66),
                       ),
-                      child: const Text('Sign up as a Donor'),
+                      child: const Text('Sign up as an Org'),
                     ),
                     Center (
                       child: Row(

@@ -228,7 +228,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                             ),
                           TextFormField(
                             controller: provider.controller2, 
-                            onChanged: provider.updateNickname,
+                            onChanged: provider.updateUsername,
                             validator: (val) {
                               if (val!.isEmpty) {
                                 return "Please enter your username";
@@ -553,7 +553,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
                           final name = provider.controller1.text;
-                          final nickname = provider.controller2.text;
+                          final username = provider.controller2.text;
                           final email = provider.controller3.text;
                           final password = provider.controller4.text;
                           final addressesUnsplit = provider.controller5.text;
@@ -579,7 +579,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                             );
                           }
                           else {
-                            final user = UserInfosProvider().donorData(name, nickname, email, password, addressesList, contactnumber, userType);
+                            final user = UserInfosProvider().donorData(name, username, email, password, addressesList, contactnumber, userType);
                             
                             userService.addUser(user); // add to firebase
 

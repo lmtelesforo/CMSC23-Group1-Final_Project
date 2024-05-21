@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -6,28 +7,24 @@ import '../models/user_signup.dart';
 import '../providers/textfield_providers.dart';
 
 class IndivViewAllOrgs extends StatefulWidget {
-  final int index;
+  final DocumentSnapshot orgDetails;
 
-  const IndivViewAllOrgs({Key? key, required this.index}) : super(key: key);
+  const IndivViewAllOrgs({Key? key, required this.orgDetails}) : super(key: key);
 
   @override
   State<IndivViewAllOrgs> createState() => _IndivViewAllOrgsState();
 }
 
 class _IndivViewAllOrgsState extends State<IndivViewAllOrgs> {
-  List<Org> organizations = [
-    Org(
-      name: 'Org 1',
-      username: 'org1_username',
-      password: 'password1',
-      email: 'laira@gmail.com',
-      addresses: ['Address 1', 'Address 2'],
-      contactNumber: '1234567890',
-      proofs: ['Proofs for Organization 1', 'More'],
-      userType: 'organization'
-    ),
-  ];
+  late Org org; 
 
+  @override
+  void initState() {
+    super.initState();
+    org = Org.fromJson(widget.orgDetails.data() as Map<String, dynamic>);
+    org.id = widget.orgDetails.id;
+  }
+  
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<TextfieldProviders>();
@@ -139,7 +136,7 @@ class _IndivViewAllOrgsState extends State<IndivViewAllOrgs> {
                             SizedBox(width: 5),
                             Expanded(
                               child: Text(
-                                organizations[widget.index].name,
+                                org.name,
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontFamily: 'Poppins-Reg',
@@ -163,7 +160,7 @@ class _IndivViewAllOrgsState extends State<IndivViewAllOrgs> {
                             SizedBox(width: 5),
                             Expanded(
                               child: Text(
-                                organizations[widget.index].username,
+                                org.username,
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontFamily: 'Poppins-Reg',
@@ -190,7 +187,7 @@ class _IndivViewAllOrgsState extends State<IndivViewAllOrgs> {
                                 SizedBox(width: 5),
                                 Expanded(
                                   child: Text(
-                                    organizations[widget.index].addresses.first,
+                                    org.addresses.first,
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontFamily: 'Poppins-Reg',
@@ -200,7 +197,7 @@ class _IndivViewAllOrgsState extends State<IndivViewAllOrgs> {
                                 ),
                               ],
                             ),
-                            (organizations[widget.index].addresses.length > 1)
+                            (org.addresses.length > 1)
                             ? newAddressLine() // if true
                             : SizedBox.shrink(), // if false
                           ],
@@ -219,7 +216,7 @@ class _IndivViewAllOrgsState extends State<IndivViewAllOrgs> {
                             SizedBox(width: 5),
                             Expanded(
                               child: Text(
-                                organizations[widget.index].contactNumber,
+                                org.contactNumber,
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontFamily: 'Poppins-Reg',
@@ -246,7 +243,7 @@ class _IndivViewAllOrgsState extends State<IndivViewAllOrgs> {
                                 SizedBox(width: 5),
                                 Expanded(
                                   child: Text(
-                                    organizations[widget.index].proofs?.first,
+                                    org.proofs?.first,
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontFamily: 'Poppins-Reg',
@@ -256,7 +253,7 @@ class _IndivViewAllOrgsState extends State<IndivViewAllOrgs> {
                                 ),
                               ],
                             ),
-                            (organizations[widget.index].proofs!.length > 1)
+                            (org.proofs!.length > 1)
                             ? newLine() // if true
                             : SizedBox.shrink(), // if false
                           ],
@@ -277,12 +274,12 @@ class _IndivViewAllOrgsState extends State<IndivViewAllOrgs> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: List.generate(
-        organizations[widget.index].addresses.length - 1,
+        org.addresses.length - 1,
         (index) {
           return Padding(
             padding: EdgeInsets.only(left: 106), 
             child: Text(
-              organizations[widget.index].addresses[index + 1],
+              org.addresses[index + 1],
               style: TextStyle(
                 fontSize: 16,
                 fontFamily: 'Poppins-Reg',
@@ -299,12 +296,12 @@ class _IndivViewAllOrgsState extends State<IndivViewAllOrgs> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: List.generate(
-        organizations[widget.index].proofs!.length - 1,
+        org.proofs!.length - 1,
         (index) {
           return Padding(
             padding: EdgeInsets.only(left: 70), 
             child: Text(
-              organizations[widget.index].proofs![index + 1],
+              org.proofs![index + 1],
               style: TextStyle(
                 fontSize: 16,
                 fontFamily: 'Poppins-Reg',

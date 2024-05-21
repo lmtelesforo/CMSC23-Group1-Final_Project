@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -5,31 +6,27 @@ import '../models/user_signup.dart';
 import '../providers/textfield_providers.dart';
 
 class IndivViewAllDonors extends StatefulWidget {
-  final int index;
+  final DocumentSnapshot userDetails;
 
-  const IndivViewAllDonors({Key? key, required this.index}) : super(key: key);
+  const IndivViewAllDonors({Key? key, required this.userDetails}) : super(key: key);
 
   @override
   State<IndivViewAllDonors> createState() => _IndivViewAllDonorsState();
 }
 
 class _IndivViewAllDonorsState extends State<IndivViewAllDonors> {
-  List<User> donors = [
-    User(
-      name: 'User1',
-      username: 'org1_username',
-      password: 'password1',
-      email: 'laira@gmail.com',
-      addresses: ['Address 1', 'Address 2'],
-      contactNumber: '1234567890',
-      userType: 'user'
-    ),
-  ];
+  late User user; 
+
+  @override
+  void initState() {
+    super.initState();
+    user = User.fromJson(widget.userDetails.data() as Map<String, dynamic>);
+    user.id = widget.userDetails.id;
+  }
 
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<TextfieldProviders>();
-    final int index;
 
     return Scaffold(
       body: Stack(
@@ -137,7 +134,7 @@ class _IndivViewAllDonorsState extends State<IndivViewAllDonors> {
                             SizedBox(width: 5),
                             Expanded(
                               child: Text(
-                                donors[widget.index].name,
+                                user.name,
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontFamily: 'Poppins-Reg',
@@ -161,7 +158,7 @@ class _IndivViewAllDonorsState extends State<IndivViewAllDonors> {
                             SizedBox(width: 5),
                             Expanded(
                               child: Text(
-                                donors[widget.index].username,
+                                user.username,
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontFamily: 'Poppins-Reg',
@@ -188,7 +185,7 @@ class _IndivViewAllDonorsState extends State<IndivViewAllDonors> {
                                 SizedBox(width: 5),
                                 Expanded(
                                   child: Text(
-                                    donors[widget.index].addresses.first,
+                                    user.addresses.first,
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontFamily: 'Poppins-Reg',
@@ -198,7 +195,7 @@ class _IndivViewAllDonorsState extends State<IndivViewAllDonors> {
                                 ),
                               ],
                             ),
-                            (donors[widget.index].addresses.length > 1)
+                            (user.addresses.length > 1)
                             ? newAddressLine() // if true
                             : SizedBox.shrink(), // if false
                           ],
@@ -217,7 +214,7 @@ class _IndivViewAllDonorsState extends State<IndivViewAllDonors> {
                             SizedBox(width: 5),
                             Expanded(
                               child: Text(
-                                donors[widget.index].contactNumber,
+                                user.contactNumber,
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontFamily: 'Poppins-Reg',
@@ -243,12 +240,12 @@ class _IndivViewAllDonorsState extends State<IndivViewAllDonors> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: List.generate(
-        donors[widget.index].addresses.length - 1,
+        user.addresses.length - 1,
         (index) {
           return Padding(
             padding: EdgeInsets.only(left: 106), 
             child: Text(
-              donors[widget.index].addresses[index + 1],
+              user.addresses[index + 1],
               style: TextStyle(
                 fontSize: 16,
                 fontFamily: 'Poppins-Reg',

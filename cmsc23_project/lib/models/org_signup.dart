@@ -41,17 +41,16 @@ class Org {
     return data.map<Org>((dynamic d) => Org.fromJson(d)).toList();
   }
 
-  Map<String, dynamic> toJson(Org Org) {
+  Map<String, dynamic> toJson(Org org) {
     return {
-      'id': Org.id,
-      'name': Org.name,
-      'username': Org.username,
-      'password': Org.password,
-      'email': Org.email,
-      'addresses': Org.addresses,
-      'contactNumber': Org.contactNumber,
-      'userType': Org.userType,
-      'proofs': Org.proofs
+      'name': org.name,
+      'username': org.username,
+      'password': org.password,
+      'email': org.email,
+      'addresses': org.addresses,
+      'contactNumber': org.contactNumber,
+      'userType': org.userType,
+      'proofs': org.proofs
     };
   }
 }
