@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 class DonationList extends StatefulWidget {
   // Lists all donations made to the organization
-  final String? driveId;
+  final int? driveId;
   const DonationList({this.driveId, super.key});
 
   @override

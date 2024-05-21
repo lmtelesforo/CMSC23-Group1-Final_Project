@@ -29,7 +29,7 @@ class CurrentOrgProvider with ChangeNotifier {
       .where((drive) => _currentOrg.favorites!.contains(drive.id))
       .toList();
 
-  List<Donation> donations({String? driveId}) {
+  List<Donation> donations({int? driveId}) {
     if (driveId == null) {
       return _donations;
     } else {
@@ -39,14 +39,29 @@ class CurrentOrgProvider with ChangeNotifier {
     }
   }
 
-  bool isFavorite(String driveId) => _currentOrg.favorites!.contains(driveId);
-  void toggleFavorite(String driveId) {
+  bool isFavorite(int driveId) => _currentOrg.favorites!.contains(driveId);
+  void toggleFavorite(int driveId) {
     if (_currentOrg.favorites!.contains(driveId)) {
       _currentOrg.favorites!.remove(driveId);
     } else {
       _currentOrg.favorites!.add(driveId);
     }
     _firebaseOrgAPI.update(_currentOrg);
+    notifyListeners();
+  }
+
+  void addDrive({required String name, required String desc}) {
+    DonationDrive newDrive = DonationDrive(
+      id: _drives.length + 1,
+      orgUsername: _currentOrg.username,
+      name: name,
+      description: desc,
+      image: const AssetImage('assets/images/donation_drive.jpg'),
+      isOngoing: true,
+    );
+
+    _firebaseDriveAPI.addDrive(newDrive);
+    _drives.add(newDrive);
     notifyListeners();
   }
 }

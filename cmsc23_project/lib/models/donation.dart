@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class Donation {
   String donorUsername;
   String orgUsername;
-  String? driveId;
+  int? driveId;
 
   String address;
   String contactNo;

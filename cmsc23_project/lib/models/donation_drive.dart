@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class DonationDrive {
-  String id;
+  int id;
   String orgUsername;
   String name;
   String description;

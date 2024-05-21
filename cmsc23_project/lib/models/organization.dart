@@ -6,7 +6,7 @@ class Organization extends Donor {
   bool isApproved;
   String about;
   bool openForDonations;
-  List<String>? favorites;
+  List<int>? favorites;
 
   Organization({
     required super.name,
