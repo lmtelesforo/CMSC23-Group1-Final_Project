@@ -1,5 +1,4 @@
 import 'package:cmsc23_project/models/donation_drive.dart';
-import 'package:cmsc23_project/models/donations.dart';
 import 'package:flutter/material.dart';
 
 class FirebaseDriveAPI {

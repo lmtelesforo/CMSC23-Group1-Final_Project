@@ -107,26 +107,46 @@ class _ExpandedDriveCardState extends State<ExpandedDriveCard> {
   Widget get _favoriteIcon => Positioned(
         top: 25,
         right: 25,
-        child: Container(
-          padding: const EdgeInsets.all(5),
-          decoration: const BoxDecoration(
-            color: CustomColors.primary,
-            shape: BoxShape.circle,
-          ),
-          child: InkWell(
-            onTap: () {
-              setState(() {
-                context
-                    .read<CurrentOrgProvider>()
-                    .toggleFavorite(widget.drive.id);
-              });
-            },
-            child:
-                context.read<CurrentOrgProvider>().isFavorite(widget.drive.id)
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(5),
+              decoration: const BoxDecoration(
+                color: CustomColors.primary,
+                shape: BoxShape.circle,
+              ),
+              child: InkWell(
+                onTap: () {
+                  setState(() {
+                    context
+                        .read<CurrentOrgProvider>()
+                        .toggleFavorite(widget.drive.id);
+                  });
+                },
+                child: context
+                        .read<CurrentOrgProvider>()
+                        .isFavorite(widget.drive.id)
                     ? const Icon(Icons.favorite, color: CustomColors.secondary)
                     : const Icon(Icons.favorite_border,
                         color: CustomColors.secondary),
-          ),
+              ),
+            ),
+            const SizedBox(width: 5),
+            Container(
+              padding: const EdgeInsets.all(5),
+              decoration: const BoxDecoration(
+                color: CustomColors.primary,
+                shape: BoxShape.circle,
+              ),
+              child: InkWell(
+                onTap: () {
+                  Navigator.of(context).pushNamed('/org/add-a-drive',
+                      arguments: widget.drive.id);
+                },
+                child: const Icon(Icons.edit, color: CustomColors.secondary),
+              ),
+            ),
+          ],
         ),
       );
 }

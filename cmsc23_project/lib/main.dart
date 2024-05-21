@@ -50,6 +50,7 @@ class RootWidget extends StatelessWidget {
         "/viewAllDonors": (context) => const AdminViewAllDonors(),
         "/adminDashboard": (context) => const AdminDashboard(),
         "/donorHomepage": (context) => const DonorHomepage(),
+        // org
         "/org": (context) => const OrgHomePage(),
         "/org/add-a-drive": (context) => const AddADrive(),
         "/org/profile": (context) => const Profile(),

@@ -50,6 +50,10 @@ class CurrentOrgProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  DonationDrive getDrive(String driveId) {
+    return _drives.firstWhere((drive) => drive.id == int.parse(driveId));
+  }
+
   void addDrive({required String name, required String desc}) {
     DonationDrive newDrive = DonationDrive(
       id: _drives.length + 1,
