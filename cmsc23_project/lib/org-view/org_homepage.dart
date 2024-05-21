@@ -85,32 +85,36 @@ class Favorites extends StatelessWidget {
   Widget build(BuildContext context) {
     // Favorites are centered using row if they can fit in the parent container
     // Otherwise, they are built with a horizontal, scrollable listview
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        final totalWidth = favorites.length * (200);
+    return Visibility(
+      visible: favorites.isNotEmpty,
+      child: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          final totalWidth = favorites.length * (200);
 
-        return Container(
-          height: 200,
-          padding: const EdgeInsets.only(bottom: 10),
-          child: totalWidth < constraints.maxWidth
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: favorites.map((favorite) {
-                    return DonationDriveCard(donationDrive: favorite);
-                  }).toList(),
-                )
-              : ListView.builder(
-                  itemCount: favorites.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: DonationDriveCard(donationDrive: favorites[index]),
-                    );
-                  },
-                ),
-        );
-      },
+          return Container(
+            height: 200,
+            padding: const EdgeInsets.only(bottom: 10),
+            child: totalWidth < constraints.maxWidth
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: favorites.map((favorite) {
+                      return DonationDriveCard(donationDrive: favorite);
+                    }).toList(),
+                  )
+                : ListView.builder(
+                    itemCount: favorites.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child:
+                            DonationDriveCard(donationDrive: favorites[index]),
+                      );
+                    },
+                  ),
+          );
+        },
+      ),
     );
   }
 }
