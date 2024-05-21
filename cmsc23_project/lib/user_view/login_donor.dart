@@ -222,6 +222,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                               ),
                             ),
                           TextFormField(
+                            obscureText: true,
                             controller: provider.controller2, 
                             onChanged: provider.updatePassword,
                             validator: (val) {

@@ -217,6 +217,7 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                               ),
                             ),
                           TextFormField(
+                            obscureText: true,
                             controller: provider.controller2, 
                             onChanged: provider.updatePassword,
                             validator: (val) {
