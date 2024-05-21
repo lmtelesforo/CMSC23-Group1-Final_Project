@@ -1,3 +1,4 @@
+import 'package:cmsc23_project/providers/firebase_provider.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +20,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<TextfieldProviders>();
+    List<String> addressesList = [];
 
     bool isNumeric(String str) { // check if input is a contact number
       if(str == null) {
@@ -554,11 +556,20 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                           final nickname = provider.controller2.text;
                           final email = provider.controller3.text;
                           final password = provider.controller4.text;
-                          final addresses = provider.controller5.text;
+                          final addressesUnsplit = provider.controller5.text;
                           final contactnumber = provider.controller6.text;
                           final userType = 'donor';
+                          bool multipleAddresses = addressesUnsplit.contains(',');
 
+                          if (multipleAddresses == true) {
+                            addressesList = addressesUnsplit.split(',').map((address) => address.trim()).toList();
+                          }
+                          else {
+                            addressesList = [addressesUnsplit];
+                          }
+                          
                           final authService = Provider.of<UserAuthProvider>(context, listen: false).authService;
+                          final userService = Provider.of<UserInfosProvider>(context, listen: false).firebaseService;
 
                           signUpResult = (await authService.signUp(email, password))!;
 
@@ -568,6 +579,10 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                             );
                           }
                           else {
+                            final user = UserInfosProvider().userData(name, nickname, email, password, addressesList, contactnumber, userType);
+                            
+                            userService.addUser(user); // add to firebase
+
                             provider.resetSignUp();
                             Navigator.pop(context);
                             Navigator.pushNamed(context, "/donorHomepage");
