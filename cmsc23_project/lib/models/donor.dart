@@ -1,10 +1,19 @@
-import 'package:cmsc23_project/models/donation.dart';
 import 'package:flutter/material.dart';
 
 class Donor {
-  final String name;
-  final List<Donation> donations = [];
-  final ImageProvider profilePic;
+  String name;
+  String username;
+  List<String> addresses;
+  String contactNo;
+  ImageProvider profilePic;
+  List<String>? favoriteOrgs;
 
-  Donor({required this.name, required this.profilePic});
+  Donor({
+    required this.name,
+    required this.username,
+    required this.addresses,
+    required this.contactNo,
+    required this.profilePic,
+    this.favoriteOrgs,
+  });
 }

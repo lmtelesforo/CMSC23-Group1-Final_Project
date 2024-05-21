@@ -1,7 +1,4 @@
-import 'package:cmsc23_project/models/donation.dart';
 import 'package:cmsc23_project/models/donation_drive.dart';
-import 'package:cmsc23_project/models/organization.dart';
-import 'package:cmsc23_project/models/donor.dart';
 import 'package:cmsc23_project/org-view/base_screen.dart';
 import 'package:cmsc23_project/org-view/donations/donation_drive_card.dart';
 import 'package:cmsc23_project/org-view/donation_drive/manage_donation_drives.dart';
@@ -14,49 +11,12 @@ class OrgHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Test data
-    final Organization org = Organization(
-      name: 'Organization 1',
-      profilePic: const AssetImage('assets/images/org_profile.png'),
-      donationDrives: [
-        DonationDrive(
-          name: 'Donation Drive 1',
-          image: const AssetImage('assets/images/donation_drive.jpg'),
-        ),
-        DonationDrive(
-          name: 'Donation Drive 2',
-          image: const AssetImage('assets/images/donation_drive.jpg'),
-        ),
-        DonationDrive(
-          name: 'Donation Drive 3',
-          image: const AssetImage('assets/images/donation_drive.jpg'),
-        ),
-      ],
-    );
-    org.favorite(org.donationDrives[0]);
-    org.donationDrives[2].end();
-
-    Donor abra = Donor(
-        name: 'Abra Abra',
-        profilePic: const AssetImage(
-          'assets/images/profile_pic.jpg',
-        ));
-    abra.donations[0].status = Status.confirmed;
-    abra.donations[1].status = Status.scheduledForPickup;
-    abra.donations[0].associateWith(org.donationDrives[0]);
-
-    Donor cadabra = Donor(
-      name: 'Cababra Cadabra',
-      profilePic: const AssetImage('assets/images/profile_pic.jpg'),
-    );
-    cadabra.donations[0].associateWith(org.donationDrives[0]);
-
     return BaseScreen(
-      body: Column(
+      body: const Column(
         children: [
-          MainAction(org.donationDrives),
-          Favorites(org.favorites),
-          DonationList(org.donations),
+          MainAction([]),
+          Favorites([]),
+          DonationList([]),
         ],
       ),
     );
@@ -125,32 +85,36 @@ class Favorites extends StatelessWidget {
   Widget build(BuildContext context) {
     // Favorites are centered using row if they can fit in the parent container
     // Otherwise, they are built with a horizontal, scrollable listview
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        final totalWidth = favorites.length * (200);
+    return Visibility(
+      visible: favorites.isNotEmpty,
+      child: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          final totalWidth = favorites.length * (200);
 
-        return Container(
-          height: 200,
-          padding: const EdgeInsets.only(bottom: 10),
-          child: totalWidth < constraints.maxWidth
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: favorites.map((favorite) {
-                    return DonationDriveCard(donationDrive: favorite);
-                  }).toList(),
-                )
-              : ListView.builder(
-                  itemCount: favorites.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: DonationDriveCard(donationDrive: favorites[index]),
-                    );
-                  },
-                ),
-        );
-      },
+          return Container(
+            height: 200,
+            padding: const EdgeInsets.only(bottom: 10),
+            child: totalWidth < constraints.maxWidth
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: favorites.map((favorite) {
+                      return DonationDriveCard(donationDrive: favorite);
+                    }).toList(),
+                  )
+                : ListView.builder(
+                    itemCount: favorites.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child:
+                            DonationDriveCard(donationDrive: favorites[index]),
+                      );
+                    },
+                  ),
+          );
+        },
+      ),
     );
   }
 }

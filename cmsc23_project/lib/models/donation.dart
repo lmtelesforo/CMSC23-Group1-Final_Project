@@ -1,43 +1,34 @@
-import 'package:cmsc23_project/models/donation_drive.dart';
-import 'package:cmsc23_project/models/organization.dart';
-import 'package:cmsc23_project/models/donor.dart';
 import 'package:flutter/material.dart';
 
 class Donation {
-  final Donor user;
-  final Organization organization;
-  DonationDrive? associatedDrive;
+  String donorId;
+  String orgId;
+  String? driveId;
 
-  final List<String> items = ['Food', 'Clothes'];
-  final double weight = 67;
+  String address;
+  String contactNo;
+  List<String> categories;
+  bool forPickup;
+  double weight;
+  ImageProvider? donorImage;
+  List<ImageProvider>? orgImages;
+  DateTime scheduledDate;
   Status status;
-  final bool forPickup = true;
 
   Donation({
-    this.status = Status.pending,
-    required this.user,
-    required this.organization,
+    required this.donorId,
+    required this.orgId,
+    required this.driveId,
+    required this.address,
+    required this.contactNo,
+    required this.categories,
+    required this.forPickup,
+    required this.weight,
+    this.donorImage,
+    this.orgImages,
+    required this.scheduledDate,
+    required this.status,
   });
-
-  Widget get statusIcon {
-    switch (status) {
-      case Status.pending:
-        return const Icon(Icons.sms);
-      case Status.confirmed:
-        return const Icon(Icons.arrow_right_alt);
-      case Status.scheduledForPickup:
-        return const Icon(Icons.location_on);
-      case Status.complete:
-        return const Icon(Icons.done);
-      case Status.cancelled:
-        return const Icon(Icons.cancel);
-    }
-  }
-
-  void associateWith(DonationDrive drive) {
-    associatedDrive = drive;
-    drive.donations.add(this);
-  }
 }
 
 enum Status { pending, confirmed, scheduledForPickup, complete, cancelled }
