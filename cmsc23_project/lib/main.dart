@@ -2,6 +2,7 @@ import 'package:cmsc23_project/admin_view/admin_dashboard.dart';
 import 'package:cmsc23_project/admin_view/approve_signups.dart';
 import 'package:cmsc23_project/admin_view/view_all_donors.dart';
 import 'package:cmsc23_project/admin_view/view_all_organizations.dart';
+import 'package:cmsc23_project/providers/current_org_provider.dart';
 import 'package:cmsc23_project/user_view/landing_page.dart';
 import 'package:cmsc23_project/admin_view/login_admin.dart';
 import 'package:cmsc23_project/user_view/login_donor.dart';
@@ -23,7 +24,8 @@ void main() {
       providers: [
         ChangeNotifierProvider(
           create: (context) => TextfieldProviders(),
-        )
+        ),
+        ChangeNotifierProvider(create: (context) => CurrentOrgProvider())
       ],
       child: const RootWidget(),
     ),

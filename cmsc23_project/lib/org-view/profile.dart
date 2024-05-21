@@ -1,24 +1,17 @@
 import 'package:cmsc23_project/models/organization.dart';
 import 'package:cmsc23_project/org-view/base_screen.dart';
 import 'package:cmsc23_project/org-view/org_view_styles.dart';
+import 'package:cmsc23_project/providers/current_org_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Profile extends StatelessWidget {
-  final Organization org = Organization(
-    name: 'Sample Org',
-    username: 'sample_org',
-    addresses: ['Sample Address'],
-    contactNo: '1234567890',
-    profilePic: const AssetImage('assets/images/profile_pic.jpg'),
-    isApproved: true,
-    about: 'Sample about',
-    openForDonations: true,
-  );
-
-  Profile({super.key});
+  const Profile({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Organization org = context.read<CurrentOrgProvider>().currentOrg;
+
     return BaseScreen(
       body: Center(
         child: Column(
@@ -27,7 +20,7 @@ class Profile extends StatelessWidget {
             Container(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Text(org.name, style: CustomTextStyle.h1)),
-            _about,
+            _about(org),
           ],
         ),
       ),
@@ -70,7 +63,7 @@ class Profile extends StatelessWidget {
         ],
       );
 
-  Widget get _about => Container(
+  Widget _about(org) => Container(
         padding: const EdgeInsets.all(20),
         child: Stack(
           children: [

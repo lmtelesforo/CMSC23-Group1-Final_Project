@@ -1,9 +1,25 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cmsc23_project/models/donor.dart';
+import 'package:flutter/material.dart';
 
 class FirebaseDonorAPI {
-  static final FirebaseFirestore _db = FirebaseFirestore.instance;
+  final List<Donor> _donors = [
+    Donor(
+      name: 'John Doe',
+      username: 'johndoe',
+      addresses: ['123 Main St., Makati City', '456 2nd St., Quezon City'],
+      contactNo: '09123456789',
+      profilePic: const AssetImage('assets/images/profile_pic.jpg'),
+      favoriteOrgs: ['Red Cross', 'UNICEF'],
+    ),
+    Donor(
+      name: 'Jane Doe',
+      username: 'janedoe',
+      addresses: ['789 3rd St., Pasig City', '101 4th St., Taguig City'],
+      contactNo: '09876543210',
+      profilePic: const AssetImage('assets/images/profile_pic.jpg'),
+      favoriteOrgs: ['World Vision', 'UNICEF'],
+    ),
+  ];
 
-  Stream<QuerySnapshot> getDonors() {
-    return _db.collection('donors').snapshots();
-  }
+  List<Donor> get donors => _donors;
 }
