@@ -281,7 +281,11 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                     onPressed: () {
                       final userService = Provider.of<UserInfosProvider>(context, listen: false).firebaseService;
                       userService.addOrg(orgMap);
-
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('${org.name} sign up request approved!'),
+                        ),
+                      );
                       userService.deleteSignUpReq(org.id);
                       Navigator.pop(context);
                       Navigator.pushNamed(context, "/adminApprove");
@@ -310,6 +314,13 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                   SizedBox(height: 20),
                   ElevatedButton.icon(
                     onPressed: () {
+                      final userService = Provider.of<UserInfosProvider>(context, listen: false).firebaseService;
+                      userService.deleteSignUpReq(org.id); // only delete request
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('${org.name} sign up request disapproved!'),
+                        ),
+                      );
                       Navigator.pop(context);
                       Navigator.pushNamed(context, "/adminApprove");
                     },

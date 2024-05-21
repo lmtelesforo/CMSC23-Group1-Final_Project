@@ -56,6 +56,16 @@ class UserInfosProvider with ChangeNotifier {
     notifyListeners(); 
   }
 
+  void deleteUser(String email) async {
+    final userDoc = await FirebaseFirestore.instance.collection('users').where('email', isEqualTo: email).get();
+    if (userDoc.docs.isNotEmpty) {
+      final docId = userDoc.docs.first.id;
+      await firebaseService.delete(docId);
+      notifyListeners();
+    }
+  }
+
+
   void deleteSignUpReq(String id) async { // delete data and reflect on firebase
     await firebaseService.deleteSignUpReq(id);
     notifyListeners();

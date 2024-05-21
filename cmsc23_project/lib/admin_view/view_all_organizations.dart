@@ -166,7 +166,7 @@ class _AdminViewAllOrgsState extends State<AdminViewAllOrgs> {
                               ),
                               margin: EdgeInsets.symmetric(vertical: 8, horizontal: 28),
                               child: ListTile(
-                                contentPadding: EdgeInsets.only(top: 2, left: 10, bottom: 2, right: 13),
+                                contentPadding: EdgeInsets.only(top: 2, left: 13, bottom: 2, right: 13),
                                 title: Text(
                                   org.name, 
                                   style: TextStyle(

@@ -635,8 +635,13 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                             userService.addOrgSignUpReq(user); // add to firebase
 
                             provider.resetSignUp();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Awaiting sign up request approval...'),
+                              ),
+                            );
                             Navigator.pop(context);
-                            Navigator.pushNamed(context, "/donorHomepage");
+                            Navigator.pushNamed(context, "/");
 
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(

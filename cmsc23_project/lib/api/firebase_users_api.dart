@@ -24,13 +24,12 @@ class FirebaseUserAPI {
     }
   }
 
-  Future<String> delete(String? id) async {
+  Future<String> delete(String? email) async {
     try {
-      await db.collection("users").doc(id).delete();
-
-      return "Successfully deleted!";
+      await db.collection("users").doc(email).delete();
+      return ("Document with email $email deleted successfully!");
     } on FirebaseException catch (e) {
-      return "Error in ${e.code}: ${e.message}";
+      return ("Error deleting document: $e");
     }
   }
 
