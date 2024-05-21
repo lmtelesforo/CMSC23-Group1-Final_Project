@@ -41,11 +41,6 @@ class OrgHomePage extends StatelessWidget {
         profilePic: const AssetImage(
           'assets/images/profile_pic.jpg',
         ));
-    abra.donate(org);
-    abra.donate(org);
-    abra.donate(org);
-    abra.donate(org);
-    abra.donate(org);
     abra.donations[0].status = Status.confirmed;
     abra.donations[1].status = Status.scheduledForPickup;
     abra.donations[0].associateWith(org.donationDrives[0]);
@@ -54,8 +49,6 @@ class OrgHomePage extends StatelessWidget {
       name: 'Cababra Cadabra',
       profilePic: const AssetImage('assets/images/profile_pic.jpg'),
     );
-    cadabra.donate(org);
-    cadabra.donate(org);
     cadabra.donations[0].associateWith(org.donationDrives[0]);
 
     return BaseScreen(
