@@ -10,6 +10,9 @@ class Profile extends StatelessWidget {
     addresses: ['Sample Address'],
     contactNo: '1234567890',
     profilePic: const AssetImage('assets/images/profile_pic.jpg'),
+    isApproved: true,
+    about: 'Sample about',
+    openForDonations: true,
   );
 
   Profile({super.key});

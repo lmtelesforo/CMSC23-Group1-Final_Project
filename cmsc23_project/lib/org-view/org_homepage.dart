@@ -1,5 +1,4 @@
 import 'package:cmsc23_project/models/donation_drive.dart';
-import 'package:cmsc23_project/models/organization.dart';
 import 'package:cmsc23_project/org-view/base_screen.dart';
 import 'package:cmsc23_project/org-view/donations/donation_drive_card.dart';
 import 'package:cmsc23_project/org-view/donation_drive/manage_donation_drives.dart';
@@ -12,36 +11,12 @@ class OrgHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Test data
-    final Organization org = Organization(
-      name: 'Organization 1',
-      username: 'org1',
-      addresses: ['Address 1'],
-      contactNo: '1234567890',
-      profilePic: const AssetImage('assets/images/org_profile.png'),
-      donationDrives: [
-        DonationDrive(
-          name: 'Donation Drive 1',
-          image: const AssetImage('assets/images/donation_drive.jpg'),
-        ),
-        DonationDrive(
-          name: 'Donation Drive 2',
-          image: const AssetImage('assets/images/donation_drive.jpg'),
-        ),
-        DonationDrive(
-          name: 'Donation Drive 3',
-          image: const AssetImage('assets/images/donation_drive.jpg'),
-        ),
-      ],
-    );
-    org.donationDrives[2].end();
-
     return BaseScreen(
-      body: Column(
+      body: const Column(
         children: [
-          MainAction(org.donationDrives),
-          const Favorites([]),
-          const DonationList([]),
+          MainAction([]),
+          Favorites([]),
+          DonationList([]),
         ],
       ),
     );
