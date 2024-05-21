@@ -1,11 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cmsc23_project/admin_view/indiv_approve_page.dart';
 import 'package:cmsc23_project/admin_view/indiv_view_all_donors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/user_signup.dart';
+import '../providers/firebase_provider.dart';
 import '../providers/textfield_providers.dart';
-import 'indiv_view_all_orgs.dart';
+import 'indiv_view_all_donors.dart';
 
 class AdminViewAllDonors extends StatefulWidget {
   const AdminViewAllDonors({Key? key}) : super(key: key);
@@ -17,21 +19,11 @@ class AdminViewAllDonors extends StatefulWidget {
 class _AdminViewAllDonorsState extends State<AdminViewAllDonors> {
   final _formKey = GlobalKey<FormState>(); 
 
-  List<User> donors = [
-    User(
-      name: 'sadasda',
-      username: 'org1_username',
-      password: 'password1',
-      email: 'laira@gmail.com',
-      addresses: ['Address 1', 'Address 2'],
-      contactNumber: '1234567890',
-      userType: 'user'
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<TextfieldProviders>();
+
+    Stream<QuerySnapshot> userStream = context.watch<UserInfosProvider>().allUsers;
 
     return Scaffold(
       body: Form(
@@ -117,68 +109,112 @@ class _AdminViewAllDonorsState extends State<AdminViewAllDonors> {
               right: 0,
               bottom: MediaQuery.of(context).size.height * 0.057,
               child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    SizedBox(height: 10),
-                    ListView.builder(
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: donors.length,
-                      itemBuilder: (context, index) {
-                        User donor = donors[index];
-                        return Container(
-                          decoration: BoxDecoration(
-                            color: Color(0xFFFFFFFF),
-                            borderRadius: BorderRadius.circular(15), 
-                          ),
-                          margin: EdgeInsets.symmetric(vertical: 8, horizontal: 28),
-                          child: ListTile(
-                            contentPadding: EdgeInsets.only(top: 2, left: 10, bottom: 2, right: 13),
-                            title: Text(
-                              donor.name,
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontFamily: 'Poppins-Bold',
-                                color: Color(0xFF373D66),
-                              ),
+                child: Container(
+                height: MediaQuery.of(context).size.height * 0.7, 
+                width: MediaQuery.of(context).size.width*0.8,
+                  child: Column(
+                    children: [
+                      SizedBox(height: 10),
+                      Expanded(
+                        child: StreamBuilder<QuerySnapshot>(
+                        stream: userStream,
+                        builder: (context, snapshot) {
+                          print("Connection State: ${snapshot.connectionState}"); // debug
+                          if (snapshot.hasError) {
+                            return Center(
+                              child: Text("Error encountered: ${snapshot.error}"),
+                            );
+                          } 
+                          else if (snapshot.connectionState == ConnectionState.waiting) {
+                            context.read<UserInfosProvider>().fetchUsers(); // reload snapshots
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            ); // display loading circle until it succeeds
+                          } 
+                        
+                        List<DocumentSnapshot> userDetails = (snapshot.data as QuerySnapshot)
+                          .docs
+                          .where((user) => (user.data() as Map<String, dynamic>)['userType'] == 'user') 
+                          .toList();
+
+                        if (userDetails.isEmpty) { // if no users, display message
+                          return const Center(
+                            child: Text("No Orgs Found",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontFamily: 'Poppins-Bold',
+                              color: Color(0xFF373D66)
+                              )
                             ),
-                            subtitle: Text(
-                              donor.contactNumber,
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey,
-                                fontFamily: 'Poppins-Reg',
+                          );
+                        }
+
+                        return ListView.builder(
+                          padding: EdgeInsets.zero,
+                          shrinkWrap: true,
+                          physics: AlwaysScrollableScrollPhysics(),
+                          itemCount: userDetails.length,
+                          itemBuilder: (context, index) {
+                            print('Request at index $index: ${userDetails[index].data()}'); 
+                            User user = User.fromJson(userDetails[index].data() as Map<String, dynamic>);
+                            user.id = userDetails[index].id;
+
+                            return Container(
+                              decoration: BoxDecoration(
+                                color: Color(0xFFFFFFFF),
+                                borderRadius: BorderRadius.circular(15),
                               ),
-                            ),
-                            trailing: ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => IndivViewAllDonors(index: index),
+                              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 28),
+                              child: ListTile(
+                                contentPadding: EdgeInsets.only(top: 2, left: 10, bottom: 2, right: 13),
+                                title: Text(
+                                  user.name, 
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontFamily: 'Poppins-Bold',
+                                    color: Color(0xFF373D66),
                                   ),
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                minimumSize: const Size(57, 50),
-                                foregroundColor: Color(0xFF373D66),
-                                textStyle: const TextStyle(
-                                  fontSize: 14,
-                                  fontFamily: 'Poppins-Bold',
                                 ),
-                                backgroundColor: Color(0xFFFCBE4F),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15), 
+                                subtitle: Text(
+                                  user.contactNumber,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey,
+                                    fontFamily: 'Poppins-Reg',
+                                  ),
+                                ),
+                                trailing: ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => IndivViewAllDonors(index: index),
+                                      ),
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    minimumSize: const Size(57, 50),
+                                    foregroundColor: Color(0xFF373D66),
+                                    textStyle: const TextStyle(
+                                      fontSize: 14,
+                                      fontFamily: 'Poppins-Bold',
+                                    ),
+                                    backgroundColor: Color(0xFFFCBE4F),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                  ),
+                                  child: const Text('View Details'),
                                 ),
                               ),
-                              child: const Text('View Details'),
-                            ),
-                          ),
+                            );
+                          },
                         );
-                      },
-                    ),
-                  ],
+                        },
+                      ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
