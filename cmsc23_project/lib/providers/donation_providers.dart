@@ -17,10 +17,8 @@ class DonationProvider with ChangeNotifier {
   List<DonationItem> _donationItems = [];
   String _selectedOrganization = '';
 
-  // New map to track favorite organizations
   Map<String, bool> _favoriteOrganizations = {};
 
-  // New map to store organization details
   final Map<String, List<String>> _organizationDetails = {
     "Animal Welfare Organizations": ["Details for Animal Welfare Organizations"],
     "Charitable Organizations": ["Details for Charitable Organizations"],
@@ -37,13 +35,10 @@ class DonationProvider with ChangeNotifier {
   List<DonationItem> get donationItems => _donationItems;
   String get selectedOrganization => _selectedOrganization;
 
-  // Getter for favorite organizations
   Map<String, bool> get favoriteOrganizations => _favoriteOrganizations;
 
-  // Getter for organization details
   Map<String, List<String>> get organizationDetails => _organizationDetails;
 
-  // Convert the organization details into a list
   final Map<String, List<String>> organizationDonations = {
     "Animal Welfare Organizations": ["Food", "Clothes", "Cash", "Necessities", "Others"],
     "Charitable Organizations": ["Food", "Clothes", "Cash", "Necessities", "Others"],
@@ -59,7 +54,7 @@ class DonationProvider with ChangeNotifier {
 
   void setOrganization(String organization) {
     _selectedOrganization = organization;
-    _donationItems = _getDonationItemsForOrganization(organization);
+    _donationItems = getDonationItemsForOrganization(organization);
     notifyListeners();
   }
 
@@ -68,7 +63,7 @@ class DonationProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  List<DonationItem> _getDonationItemsForOrganization(String organization) {
+  List<DonationItem> getDonationItemsForOrganization(String organization) {
     return organizationDonations[organization]!
         .map((itemName) => DonationItem(itemName: itemName, isChecked: false))
         .toList();
@@ -78,7 +73,6 @@ class DonationProvider with ChangeNotifier {
     return organizationDetails[organization] ?? [];
   }
 
-  // Method to toggle favorite status of an organization
   void toggleFavorite(String organization) {
     if (_favoriteOrganizations.containsKey(organization)) {
       _favoriteOrganizations[organization] = !_favoriteOrganizations[organization]!;
@@ -88,7 +82,6 @@ class DonationProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // Method to check if an organization is a favorite
   bool isOrganizationFavorite(String organization) {
     return _favoriteOrganizations[organization] ?? false;
   }
