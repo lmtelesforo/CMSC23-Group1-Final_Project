@@ -7,7 +7,7 @@ import '../providers/textfield_providers.dart';
 class OrgRequestPage extends StatefulWidget {
   final int index;
 
-  const OrgRequestPage({Key? key, required this.index}) : super(key: key);
+  const OrgRequestPage({super.key, required this.index});
 
   @override
   State<OrgRequestPage> createState() => _OrgRequestPageState();
@@ -97,7 +97,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                   width: 34, 
                   height: 34, 
                 ),
-                label: Text(
+                label: const Text(
                   'Back',
                   style: TextStyle(
                     fontSize: 16,
@@ -106,7 +106,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                   ),
                 ),
                 style: TextButton.styleFrom(
-                  foregroundColor: Color(0xFF373D66),
+                  foregroundColor: const Color(0xFF373D66),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(32), 
                   ),
@@ -117,7 +117,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
               top: MediaQuery.of(context).size.height * 0.12, 
               left: 0,
               right: 0,
-              child: Padding(
+              child: const Padding(
                 padding: EdgeInsets.all(17),
                 child: Text(
                   "Organization Request",
@@ -135,21 +135,21 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
               left: 0,
               right: 0,
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30), 
+                padding: const EdgeInsets.symmetric(horizontal: 30), 
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Color(0xFFFFFFFF),
+                    color: const Color(0xFFFFFFFF),
                     borderRadius: BorderRadius.circular(15), 
                   ),
                   child: Padding(
-                    padding: EdgeInsets.all(10), 
+                    padding: const EdgeInsets.all(10), 
                     child: Expanded (
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
                             children: [
-                              Text(
+                              const Text(
                                 'Name:',
                                 style: TextStyle(
                                   fontSize: 16,
@@ -157,11 +157,11 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                                   color: Color(0xFF373D66),
                                 ),
                               ),
-                              SizedBox(width: 5),
+                              const SizedBox(width: 5),
                               Expanded(
                                 child: Text(
                                   requests[widget.index].name,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 16,
                                     fontFamily: 'Poppins-Reg',
                                     color: Color(0xFF373D66),
@@ -170,10 +170,10 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 7),
+                          const SizedBox(height: 7),
                           Row(
                             children: [
-                              Text(
+                              const Text(
                                 'Username:',
                                 style: TextStyle(
                                   fontSize: 16,
@@ -181,11 +181,11 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                                   color: Color(0xFF373D66),
                                 ),
                               ),
-                              SizedBox(width: 5),
+                              const SizedBox(width: 5),
                               Expanded(
                                 child: Text(
                                   requests[widget.index].username,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 16,
                                     fontFamily: 'Poppins-Reg',
                                     color: Color(0xFF373D66),
@@ -194,13 +194,13 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 7),
+                          const SizedBox(height: 7),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Address/es:',
                                     style: TextStyle(
                                       fontSize: 16,
@@ -208,11 +208,11 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                                       color: Color(0xFF373D66),
                                     ),
                                   ),
-                                  SizedBox(width: 5),
+                                  const SizedBox(width: 5),
                                   Expanded(
                                     child: Text(
                                       requests[widget.index].addresses.first,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 16,
                                         fontFamily: 'Poppins-Reg',
                                         color: Color(0xFF373D66),
@@ -223,13 +223,13 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                               ),
                               (requests[widget.index].addresses.length > 1)
                               ? newAddressLine() // if true
-                              : SizedBox.shrink(), // if false
+                              : const SizedBox.shrink(), // if false
                             ],
                           ),
-                          SizedBox(height: 7),
+                          const SizedBox(height: 7),
                           Row(
                             children: [
-                              Text(
+                              const Text(
                                 'Contact Number:',
                                 style: TextStyle(
                                   fontSize: 16,
@@ -237,11 +237,11 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                                   color: Color(0xFF373D66),
                                 ),
                               ),
-                              SizedBox(width: 5),
+                              const SizedBox(width: 5),
                               Expanded(
                                 child: Text(
                                   requests[widget.index].contactNumber,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 16,
                                     fontFamily: 'Poppins-Reg',
                                     color: Color(0xFF373D66),
@@ -250,13 +250,13 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 7),
+                          const SizedBox(height: 7),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Proof/s:',
                                     style: TextStyle(
                                       fontSize: 16,
@@ -264,11 +264,11 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                                       color: Color(0xFF373D66),
                                     ),
                                   ),
-                                  SizedBox(width: 5),
+                                  const SizedBox(width: 5),
                                   Expanded(
                                     child: Text(
                                       requests[widget.index].proofs?.first,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 16,
                                         fontFamily: 'Poppins-Reg',
                                         color: Color(0xFF373D66),
@@ -279,7 +279,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                               ),
                               (requests[widget.index].proofs!.length > 1)
                               ? newLine() // if true
-                              : SizedBox.shrink(), // if false
+                              : const SizedBox.shrink(), // if false
                             ],
                           ),
                         ],
@@ -294,7 +294,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
             left: 0,
             right: 0,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30),
+              padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -303,11 +303,11 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                       Navigator.pop(context);
                       Navigator.pushNamed(context, "/adminApprove");
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.check,
                       color: Color.fromARGB(255, 68, 183, 39),
                     ),
-                    label: Text(
+                    label: const Text(
                       'Approve',
                       style: TextStyle(
                         fontSize: 14,
@@ -321,20 +321,20 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                         fontSize: 14,
                         fontFamily: 'Poppins-Bold',
                       ),
-                      backgroundColor: Color(0xFF373D66),
+                      backgroundColor: const Color(0xFF373D66),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   ElevatedButton.icon(
                     onPressed: () {
                       Navigator.pop(context);
                       Navigator.pushNamed(context, "/adminApprove");
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.clear,
-                      color: const Color.fromARGB(255, 181, 19, 19),
+                      color: Color.fromARGB(255, 181, 19, 19),
                     ),
-                    label: Text(
+                    label: const Text(
                       'Disapprove',
                       style: TextStyle(
                         fontSize: 14,
@@ -348,7 +348,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                         fontSize: 14,
                         fontFamily: 'Poppins-Bold',
                       ),
-                      backgroundColor: Color(0xFFFCBE4F),
+                      backgroundColor: const Color(0xFFFCBE4F),
                     ),
                   ),
                 ],
@@ -367,10 +367,10 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
         requests[widget.index].addresses.length - 1,
         (index) {
           return Padding(
-            padding: EdgeInsets.only(left: 106), 
+            padding: const EdgeInsets.only(left: 106), 
             child: Text(
               requests[widget.index].addresses[index + 1],
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 fontFamily: 'Poppins-Reg',
                 color: Color(0xFF373D66),
@@ -389,10 +389,10 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
         requests[widget.index].proofs!.length - 1,
         (index) {
           return Padding(
-            padding: EdgeInsets.only(left: 70), 
+            padding: const EdgeInsets.only(left: 70), 
             child: Text(
               requests[widget.index].proofs![index + 1],
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 fontFamily: 'Poppins-Reg',
                 color: Color(0xFF373D66),

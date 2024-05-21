@@ -3,6 +3,8 @@ import 'package:cmsc23_project/donor-view/donor_items/organization_list.dart';
 import 'package:flutter/material.dart';
 
 class DonorHomepage extends StatefulWidget {
+  const DonorHomepage({super.key});
+
   @override
   _DonorHomepageState createState() => _DonorHomepageState();
 }
@@ -29,7 +31,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Donor Homepage",
           style: TextStyle(
             fontFamily: "Montserrat",
@@ -41,7 +43,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         centerTitle: true,
-        iconTheme: IconThemeData(color: Colors.white, size: 30),
+        iconTheme: const IconThemeData(color: Colors.white, size: 30),
         actions: [
           Container(
             decoration: BoxDecoration(
@@ -51,19 +53,19 @@ class _DonorHomepageState extends State<DonorHomepage> {
                 width: 3.0,
               ),
             ),
-            child: CircleAvatar(
+            child: const CircleAvatar(
               backgroundImage: AssetImage("images/profile.jpg"),
               radius: 30.0,
             ),
           ),
-          SizedBox(width: 16),
+          const SizedBox(width: 16),
         ],
       ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            DrawerHeader(
+            const DrawerHeader(
               decoration: BoxDecoration(
                 color: Colors.blue,
               ),
@@ -76,7 +78,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
               ),
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 "Home",
                 style: TextStyle(fontSize: 20),
               ),
@@ -85,7 +87,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
               },
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 "Profile",
                 style: TextStyle(fontSize: 20),
               ),
@@ -94,7 +96,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
               },
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 "Log Out",
                 style: TextStyle(fontSize: 20),
               ),
@@ -103,7 +105,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
                     context, "/", (route) => false);
 
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
+                  const SnackBar(
                     content: Text('User logged out!'),
                   ),
                 );
@@ -116,7 +118,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage("images/wallpaper.jpg"),
                 fit: BoxFit.cover,
@@ -133,7 +135,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
               children: [
                 TextFormField(
                   onChanged: filterOrganizations,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontFamily: "Montserrat",
                     fontSize: 20,
@@ -142,24 +144,24 @@ class _DonorHomepageState extends State<DonorHomepage> {
                     filled: true,
                     fillColor: Colors.white,
                     hintText: "Search...",
-                    prefixIcon: Icon(Icons.search),
+                    prefixIcon: const Icon(Icons.search),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Color(0xffd3dde4),
                         width: 3,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Color(0xffd3dde4),
                         width: 3,
                       ),
                     ),
                   ),
                 ),
-                SizedBox(height: 20.0),
+                const SizedBox(height: 20.0),
                 Container(
                   height: 200,
                   decoration: BoxDecoration(
@@ -170,7 +172,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
                         color: Colors.grey.withOpacity(0.5),
                         spreadRadius: 2,
                         blurRadius: 7,
-                        offset: Offset(0, 3),
+                        offset: const Offset(0, 3),
                       ),
                     ],
                   ),
@@ -186,8 +188,8 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                 "images/icon.jpg",
                                 fit: BoxFit.scaleDown,
                               ),
-                              SizedBox(width: 0),
-                              Expanded(
+                              const SizedBox(width: 0),
+                              const Expanded(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -197,7 +199,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                       style: TextStyle(
                                         fontSize: 38,
                                         fontWeight: FontWeight.bold,
-                                        color: const Color.fromRGBO(
+                                        color: Color.fromRGBO(
                                             74, 66, 155, 1),
                                         fontFamily: "Montserrat",
                                       ),
@@ -208,7 +210,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                       style: TextStyle(
                                         fontSize: 38,
                                         fontWeight: FontWeight.bold,
-                                        color: const Color.fromRGBO(
+                                        color: Color.fromRGBO(
                                             74, 66, 155, 1),
                                         fontFamily: "Montserrat",
                                       ),
@@ -223,7 +225,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
                     ],
                   ),
                 ),
-                SizedBox(height: 20.0),
+                const SizedBox(height: 20.0),
                 Expanded(
                   child: SingleChildScrollView(
                     child: Wrap(
@@ -254,7 +256,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                         color: Colors.grey.withOpacity(0.5),
                                         spreadRadius: 2,
                                         blurRadius: 7,
-                                        offset: Offset(0, 3),
+                                        offset: const Offset(0, 3),
                                       ),
                                     ],
                                   ),
@@ -276,7 +278,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                             fit: BoxFit.cover,
                                           ),
                                         ),
-                                        SizedBox(height: 10),
+                                        const SizedBox(height: 10),
                                         Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
@@ -285,7 +287,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                           children: [
                                             Text(
                                               org.split(" ")[0],
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontFamily: "Poppins",
                                                 fontSize: 16,
                                                 color: Colors.black,
@@ -293,7 +295,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                             ),
                                             Text(
                                               org.split(" ")[1],
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontFamily: 'Poppins',
                                                 fontSize: 16,
                                                 color: Colors.black,
@@ -311,12 +313,12 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                   child: Container(
                                     width: 35,
                                     height: 35,
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                       color:
-                                          const Color.fromRGBO(31, 39, 78, 1),
+                                          Color.fromRGBO(31, 39, 78, 1),
                                       shape: BoxShape.circle,
                                     ),
-                                    child: Icon(
+                                    child: const Icon(
                                       Icons.favorite,
                                       color: Colors.white,
                                       size: 25,

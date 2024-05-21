@@ -6,7 +6,7 @@ import 'package:cmsc23_project/donor-view/donation_buttons/donation_checkbox.dar
 class DonorPage extends StatefulWidget {
   final String organization;
 
-  DonorPage({required this.organization});
+  const DonorPage({super.key, required this.organization});
 
   @override
   _DonorPageState createState() => _DonorPageState();
@@ -30,11 +30,11 @@ class _DonorPageState extends State<DonorPage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: false,
-        iconTheme: IconThemeData(color: Colors.white, size: 30),
+        iconTheme: const IconThemeData(color: Colors.white, size: 30),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Expanded(
+            const Expanded(
               child: Text(
                 "Donation Details",
                 textAlign: TextAlign.center,
@@ -46,7 +46,7 @@ class _DonorPageState extends State<DonorPage> {
                 ),
               ),
             ),
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
             SizedBox(
               width: 40,
               height: 40,
@@ -54,13 +54,13 @@ class _DonorPageState extends State<DonorPage> {
             ),
           ],
         ),
-        actions: [],
+        actions: const [],
       ),
       extendBodyBehindAppBar: true,
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage("images/wallpaper.jpg"),
                 fit: BoxFit.cover,
@@ -76,7 +76,7 @@ class _DonorPageState extends State<DonorPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  padding: EdgeInsets.all(22),
+                  padding: const EdgeInsets.all(22),
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.5),
                     borderRadius: BorderRadius.circular(10),
@@ -87,19 +87,19 @@ class _DonorPageState extends State<DonorPage> {
                       Center(
                         child: Text(
                           widget.organization,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 19,
                               fontWeight: FontWeight.bold,
                               fontFamily: "Montserrat",
-                              color: const Color.fromRGBO(55, 61, 102, 1)),
+                              color: Color.fromRGBO(55, 61, 102, 1)),
                         ),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Container(
-                  padding: EdgeInsets.all(22),
+                  padding: const EdgeInsets.all(22),
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.5),
                     borderRadius: BorderRadius.circular(10),
@@ -107,16 +107,16 @@ class _DonorPageState extends State<DonorPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         "Donation Items",
                         style: TextStyle(
                           fontSize: 21,
                           fontWeight: FontWeight.bold,
                           fontFamily: "Montserrat",
-                          color: const Color.fromRGBO(55, 61, 102, 1),
+                          color: Color.fromRGBO(55, 61, 102, 1),
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: donationItems.map((item) {
@@ -135,15 +135,15 @@ class _DonorPageState extends State<DonorPage> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.all(16),
-                  child: DropdownMenuExample(),
+                  padding: const EdgeInsets.all(16),
+                  child: const DropdownMenuExample(),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text("Go Back"),
+                  child: const Text("Go Back"),
                 ),
               ],
             ),

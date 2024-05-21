@@ -77,7 +77,7 @@ class _DonationDetailsState extends State<DonationDetails> {
       );
 
   Widget get _setStatus {
-    List<Status> _validStatuses = widget.donation.forPickup
+    List<Status> validStatuses = widget.donation.forPickup
         ? Status.values
         : Status.values
             .where((status) => status != Status.scheduledForPickup)
@@ -93,7 +93,7 @@ class _DonationDetailsState extends State<DonationDetails> {
           widget.donation.status = status as Status;
         });
       },
-      dropdownMenuEntries: _validStatuses.map((status) {
+      dropdownMenuEntries: validStatuses.map((status) {
         return DropdownMenuEntry<Status>(
           value: status,
           label: status.toString().split('.').last,

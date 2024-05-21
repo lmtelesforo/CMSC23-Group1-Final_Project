@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import '../providers/textfield_providers.dart';
 
 class LogInAdminPage extends StatefulWidget {
-  const LogInAdminPage({Key? key}) : super(key: key);
+  const LogInAdminPage({super.key});
 
   @override
   State<LogInAdminPage> createState() => _LogInAdminPageState();
@@ -50,7 +50,7 @@ class _LogInAdminPageState extends State<LogInAdminPage> {
                   width: 34,
                   height: 34,
                 ),
-                label: Text(
+                label: const Text(
                   'Back',
                   style: TextStyle(
                     fontSize: 16,
@@ -59,7 +59,7 @@ class _LogInAdminPageState extends State<LogInAdminPage> {
                   ),
                 ),
                 style: TextButton.styleFrom(
-                  foregroundColor: Color(0xFF373D66),
+                  foregroundColor: const Color(0xFF373D66),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(32),
                   ),
@@ -98,8 +98,8 @@ class _LogInAdminPageState extends State<LogInAdminPage> {
               top: MediaQuery.of(context).size.height * 0.43,
               left: 0,
               right: 0,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 16, right: 16),
+              child: const Padding(
+                padding: EdgeInsets.only(left: 16, right: 16),
                 child: Text(
                   "For admin access only!",
                   style: TextStyle(
@@ -125,7 +125,7 @@ class _LogInAdminPageState extends State<LogInAdminPage> {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 4),
-                          child: Text(
+                          child: const Text(
                             "Username",
                             style: TextStyle(
                               fontSize: 15,
@@ -137,7 +137,7 @@ class _LogInAdminPageState extends State<LogInAdminPage> {
                         ),
                       ],
                     ),
-                    Container(
+                    SizedBox(
                       width: 320,
                       height: 60,
                       child: Stack (
@@ -147,7 +147,7 @@ class _LogInAdminPageState extends State<LogInAdminPage> {
                             height: 40,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(32),
-                                color: Color(0xFFFFFFFF).withOpacity(0.7),
+                                color: const Color(0xFFFFFFFF).withOpacity(0.7),
                               ),
                             ),
                           TextFormField(
@@ -174,22 +174,22 @@ class _LogInAdminPageState extends State<LogInAdminPage> {
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Poppins-Reg',
-                                color: Color(0xFF373D66).withOpacity(0.9),
+                                color: const Color(0xFF373D66).withOpacity(0.9),
                               ),
                               border: InputBorder.none,
-                              contentPadding: EdgeInsets.only(left: 16, right: 16, bottom: 7),
+                              contentPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 7),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
                           padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 4),
-                          child: Text(
+                          child: const Text(
                             "Password",
                             style: TextStyle(
                               fontSize: 15,
@@ -201,7 +201,7 @@ class _LogInAdminPageState extends State<LogInAdminPage> {
                         ),
                       ],
                     ),
-                    Container(
+                    SizedBox(
                       width: 320,
                       height: 60,
                       child: Stack (
@@ -211,7 +211,7 @@ class _LogInAdminPageState extends State<LogInAdminPage> {
                             height: 40,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(32),
-                                color: Color(0xFFFFFFFF).withOpacity(0.7),
+                                color: const Color(0xFFFFFFFF).withOpacity(0.7),
                               ),
                             ),
                           TextFormField(
@@ -241,23 +241,23 @@ class _LogInAdminPageState extends State<LogInAdminPage> {
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Poppins-Reg',
-                                color: Color(0xFF373D66).withOpacity(0.9),
+                                color: const Color(0xFF373D66).withOpacity(0.9),
                               ),
                               border: InputBorder.none,
-                              contentPadding: EdgeInsets.only(left: 16, right: 16, bottom: 7),
+                              contentPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 7),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 40),
+                    const SizedBox(height: 40),
                     SizedBox(
                       height: 34,
                       child: TextButton(
                         onPressed: () {
                           provider.resetLogIn();
                         },
-                        child: Text(
+                        child: const Text(
                           "Reset",
                           style: TextStyle(
                             fontSize: 14,
@@ -276,7 +276,7 @@ class _LogInAdminPageState extends State<LogInAdminPage> {
 
                           if (username == "admin" && password == "adminPass") {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
+                              const SnackBar(
                                 content: Text('Logged in!'),
                               ),
                             );
@@ -287,7 +287,7 @@ class _LogInAdminPageState extends State<LogInAdminPage> {
 
                           else {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
+                              const SnackBar(
                                 content: Text('Invalid admin credentials!'),
                               ),
                             );
@@ -299,12 +299,12 @@ class _LogInAdminPageState extends State<LogInAdminPage> {
                       },
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(320, 40),
-                        foregroundColor: Color(0xFFFCBE4F),
+                        foregroundColor: const Color(0xFFFCBE4F),
                         textStyle: const TextStyle(
                           fontSize: 14,
                           fontFamily: 'Poppins-Bold',
                         ),
-                        backgroundColor: Color(0xFF373D66),
+                        backgroundColor: const Color(0xFF373D66),
                       ),
                       child: const Text('Log in as Admin'),
                     ),
