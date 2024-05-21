@@ -10,9 +10,7 @@ import 'package:cmsc23_project/user_view/login_org.dart';
 import 'package:cmsc23_project/user_view/signup_donor.dart';
 import 'package:cmsc23_project/user_view/signup_org.dart';
 import 'package:cmsc23_project/donor-view/donation_page/donor_homepage.dart';
-import 'package:cmsc23_project/org-view/donation_drive/add_a_drive.dart';
-import 'package:cmsc23_project/org-view/org_homepage.dart';
-import 'package:cmsc23_project/org-view/profile.dart';
+import 'package:cmsc23_project/org-view/org_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'admin_view/view_all_donations.dart';
@@ -52,9 +50,10 @@ class RootWidget extends StatelessWidget {
         "/viewAllDonors": (context) => const AdminViewAllDonors(),
         "/adminDashboard": (context) => const AdminDashboard(),
         "/donorHomepage": (context) => const DonorHomepage(),
-        "/orgHomepage": (context) => const OrgHomePage(),
-        "/add-a-drive": (context) => const AddADrive(),
-        "/orgProfile": (context) => Profile(),
+        "/org": (context) => const OrgHomePage(),
+        "/org/add-a-drive": (context) => const AddADrive(),
+        "/org/profile": (context) => const Profile(),
+        "/org/manage-drives": (context) => const ManageDonationDrives(),
       },
       debugShowCheckedModeBanner: false,
     );

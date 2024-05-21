@@ -1,22 +1,14 @@
 import 'package:cmsc23_project/models/donation.dart';
-import 'package:cmsc23_project/models/donation_drive.dart';
-import 'package:cmsc23_project/org-view/base_screen.dart';
-import 'package:cmsc23_project/org-view/org_view_styles.dart';
+import 'package:cmsc23_project/org-view/base_elements/base_screen.dart';
+import 'package:cmsc23_project/org-view/base_elements/org_view_styles.dart';
+import 'package:cmsc23_project/providers/current_org_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DonationDetails extends StatefulWidget {
   final Donation donation;
-  final List<DonationDrive> donationDrives = [
-    DonationDrive(
-      orgId: '1',
-      name: 'Donation Drive 1',
-      description: 'This is a donation drive.',
-      image: const AssetImage('assets/images/donation_drive.jpg'),
-      isOngoing: true,
-    ),
-  ];
 
-  DonationDetails({required this.donation, super.key});
+  const DonationDetails({required this.donation, super.key});
 
   @override
   State<DonationDetails> createState() => _DonationDetailsState();
@@ -103,12 +95,16 @@ class _DonationDetailsState extends State<DonationDetails> {
           filled: true,
         ),
         onSelected: (drive) {},
-        dropdownMenuEntries: widget.donationDrives.map((drive) {
+        dropdownMenuEntries:
+            context.read<CurrentOrgProvider>().drives.map((drive) {
+          return DropdownMenuEntry(value: drive, label: drive.name);
+        }).toList(),
+        /*widget.donationDrives.map((drive) {
           return DropdownMenuEntry<DonationDrive>(
             value: drive,
             label: drive.name,
           );
-        }).toList(),
+        }).toList(),*/
       );
 
   Widget get _donationInfo => Container(

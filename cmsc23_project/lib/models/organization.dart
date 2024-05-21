@@ -1,4 +1,3 @@
-import 'package:cmsc23_project/models/donation_drive.dart';
 import 'package:cmsc23_project/models/donor.dart';
 import 'package:flutter/material.dart';
 
@@ -7,7 +6,7 @@ class Organization extends Donor {
   bool isApproved;
   String about;
   bool openForDonations;
-  List<DonationDrive>? favorites;
+  List<String>? favorites;
 
   Organization({
     required super.name,

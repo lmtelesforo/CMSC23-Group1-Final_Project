@@ -36,11 +36,11 @@ class _ProfileTile extends StatelessWidget {
     return ListTile(
       title: const Text('Profile'),
       onTap: () {
-        if (ModalRoute.of(context)!.settings.name == '/orgProfile') {
+        if (ModalRoute.of(context)!.settings.name == '/org/profile') {
           Navigator.pop(context);
         } else {
           Navigator.pop(context);
-          Navigator.pushNamed(context, '/orgProfile');
+          Navigator.pushNamed(context, '/org/profile');
         }
       },
     );
@@ -53,11 +53,11 @@ class _AddDriveTile extends StatelessWidget {
     return ListTile(
       title: const Text('Add a Drive'),
       onTap: () {
-        if (ModalRoute.of(context)!.settings.name == '/add-a-drive') {
+        if (ModalRoute.of(context)!.settings.name == '/org/add-a-drive') {
           Navigator.pop(context);
         } else {
           Navigator.pop(context);
-          Navigator.pushNamed(context, '/add-a-drive');
+          Navigator.pushNamed(context, '/org/add-a-drive');
         }
       },
     );
@@ -70,11 +70,11 @@ class _HomeTile extends StatelessWidget {
     return ListTile(
       title: const Text('Home'),
       onTap: () {
-        if (ModalRoute.of(context)!.settings.name == '/orgHomepage') {
+        if (ModalRoute.of(context)!.settings.name == '/org') {
           Navigator.pop(context);
         } else {
           Navigator.pop(context);
-          Navigator.pushNamed(context, '/orgHomepage');
+          Navigator.pushNamed(context, '/org');
         }
       },
     );

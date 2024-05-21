@@ -1,6 +1,6 @@
 import 'package:cmsc23_project/models/donation_drive.dart';
 import 'package:cmsc23_project/org-view/donation_drive/donation_drive_page.dart';
-import 'package:cmsc23_project/org-view/org_view_styles.dart';
+import 'package:cmsc23_project/org-view/base_elements/org_view_styles.dart';
 import 'package:flutter/material.dart';
 
 class DonationDriveCard extends StatelessWidget {

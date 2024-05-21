@@ -10,7 +10,7 @@ class SignUpOrgPage extends StatefulWidget {
 }
 
 class _SignUpOrgPageState extends State<SignUpOrgPage> {
-  final _formKey = GlobalKey<FormState>(); 
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +18,10 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
 
     return Scaffold(
       body: Form(
-        key: _formKey, 
+        key: _formKey,
         child: Stack(
           children: [
-            Positioned (
+            Positioned(
               top: 0,
               left: 0,
               right: 0,
@@ -30,7 +30,8 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                 height: MediaQuery.of(context).size.height,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('lib/user_view/assets/cmsc23_background.png'),
+                    image: AssetImage(
+                        'lib/user_view/assets/cmsc23_background.png'),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -46,9 +47,9 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                   Navigator.pushNamed(context, "/");
                 },
                 icon: Image.asset(
-                  'lib/user_view/assets/back.png', 
-                  width: 34, 
-                  height: 34, 
+                  'lib/user_view/assets/back.png',
+                  width: 34,
+                  height: 34,
                 ),
                 label: const Text(
                   'Back',
@@ -61,13 +62,13 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                 style: TextButton.styleFrom(
                   foregroundColor: const Color(0xFF373D66),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(32), 
+                    borderRadius: BorderRadius.circular(32),
                   ),
                 ),
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.07, 
+              top: MediaQuery.of(context).size.height * 0.07,
               left: 0,
               right: 0,
               child: Container(
@@ -79,7 +80,7 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.15, 
+              top: MediaQuery.of(context).size.height * 0.15,
               left: 0,
               right: 0,
               child: const Text(
@@ -95,7 +96,7 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.20, 
+              top: MediaQuery.of(context).size.height * 0.20,
               left: 0,
               right: 0,
               child: const Padding(
@@ -113,7 +114,7 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.24, 
+              top: MediaQuery.of(context).size.height * 0.24,
               left: 0,
               right: 0,
               child: Center(
@@ -124,7 +125,9 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 4),
+                          padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.133,
+                              bottom: 4),
                           child: const Text(
                             "Name",
                             style: TextStyle(
@@ -140,18 +143,18 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                     SizedBox(
                       width: 320,
                       height: 55,
-                      child: Stack (
+                      child: Stack(
                         children: [
-                          Container (
+                          Container(
                             width: 320,
                             height: 38,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(32),
-                                color: const Color(0xFFFFFFFF).withOpacity(0.7),
-                              ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(32),
+                              color: const Color(0xFFFFFFFF).withOpacity(0.7),
                             ),
+                          ),
                           TextFormField(
-                            controller: provider.controller1, 
+                            controller: provider.controller1,
                             onChanged: provider.updateName,
                             validator: (val) {
                               if (val!.isEmpty) {
@@ -166,8 +169,7 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
                                 fontFamily: 'Poppins-Reg',
-                                color: Color(0xFF373D66)
-                            ),
+                                color: Color(0xFF373D66)),
                             decoration: InputDecoration(
                               hintText: 'Enter your name',
                               hintStyle: TextStyle(
@@ -177,7 +179,8 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                                 color: const Color(0xFF373D66).withOpacity(0.9),
                               ),
                               border: InputBorder.none,
-                              contentPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 7),
+                              contentPadding: const EdgeInsets.only(
+                                  left: 16, right: 16, bottom: 7),
                             ),
                           ),
                         ],
@@ -187,7 +190,9 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 4),
+                          padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.133,
+                              bottom: 4),
                           child: const Text(
                             "Username",
                             style: TextStyle(
@@ -203,18 +208,18 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                     SizedBox(
                       width: 320,
                       height: 55,
-                      child: Stack (
+                      child: Stack(
                         children: [
-                          Container (
+                          Container(
                             width: 320,
                             height: 38,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(32),
-                                color: const Color(0xFFFFFFFF).withOpacity(0.7),
-                              ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(32),
+                              color: const Color(0xFFFFFFFF).withOpacity(0.7),
                             ),
+                          ),
                           TextFormField(
-                            controller: provider.controller2, 
+                            controller: provider.controller2,
                             onChanged: provider.updateUsername,
                             validator: (val) {
                               if (val!.isEmpty) {
@@ -229,8 +234,7 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
                                 fontFamily: 'Poppins-Reg',
-                                color: Color(0xFF373D66)
-                            ),
+                                color: Color(0xFF373D66)),
                             decoration: InputDecoration(
                               hintText: 'Enter your username',
                               hintStyle: TextStyle(
@@ -240,7 +244,8 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                                 color: const Color(0xFF373D66).withOpacity(0.9),
                               ),
                               border: InputBorder.none,
-                              contentPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 7),
+                              contentPadding: const EdgeInsets.only(
+                                  left: 16, right: 16, bottom: 7),
                             ),
                           ),
                         ],
@@ -250,7 +255,9 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 6),
+                          padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.133,
+                              bottom: 6),
                           child: const Text(
                             "Password",
                             style: TextStyle(
@@ -266,18 +273,18 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                     SizedBox(
                       width: 320,
                       height: 55,
-                      child: Stack (
+                      child: Stack(
                         children: [
-                          Container (
+                          Container(
                             width: 320,
                             height: 38,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(32),
-                                color: const Color(0xFFFFFFFF).withOpacity(0.7),
-                              ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(32),
+                              color: const Color(0xFFFFFFFF).withOpacity(0.7),
                             ),
+                          ),
                           TextFormField(
-                            controller: provider.controller3, 
+                            controller: provider.controller3,
                             onChanged: provider.updatePassword,
                             validator: (val) {
                               if (val!.isEmpty) {
@@ -295,8 +302,7 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
                                 fontFamily: 'Poppins-Reg',
-                                color: Color(0xFF373D66)
-                            ),
+                                color: Color(0xFF373D66)),
                             decoration: InputDecoration(
                               hintText: 'Enter your password',
                               hintStyle: TextStyle(
@@ -306,7 +312,8 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                                 color: const Color(0xFF373D66).withOpacity(0.9),
                               ),
                               border: InputBorder.none,
-                              contentPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 7),
+                              contentPadding: const EdgeInsets.only(
+                                  left: 16, right: 16, bottom: 7),
                             ),
                           ),
                         ],
@@ -316,7 +323,9 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 3),
+                          padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.133,
+                              bottom: 3),
                           child: const Text(
                             "Address/es",
                             style: TextStyle(
@@ -328,7 +337,9 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1, bottom: 3),
+                          padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.1,
+                              bottom: 3),
                           child: const Text(
                             "separate with commas",
                             style: TextStyle(
@@ -343,18 +354,18 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                     SizedBox(
                       width: 320,
                       height: 55,
-                      child: Stack (
+                      child: Stack(
                         children: [
-                          Container (
+                          Container(
                             width: 320,
                             height: 38,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(32),
-                                color: const Color(0xFFFFFFFF).withOpacity(0.7),
-                              ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(32),
+                              color: const Color(0xFFFFFFFF).withOpacity(0.7),
                             ),
+                          ),
                           TextFormField(
-                            controller: provider.controller4, 
+                            controller: provider.controller4,
                             onChanged: provider.updateAddresses,
                             validator: (val) {
                               if (val!.isEmpty) {
@@ -369,8 +380,7 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
                                 fontFamily: 'Poppins-Reg',
-                                color: Color(0xFF373D66)
-                            ),
+                                color: Color(0xFF373D66)),
                             decoration: InputDecoration(
                               hintText: 'Enter your address/es',
                               hintStyle: TextStyle(
@@ -380,7 +390,8 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                                 color: const Color(0xFF373D66).withOpacity(0.9),
                               ),
                               border: InputBorder.none,
-                              contentPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 7),
+                              contentPadding: const EdgeInsets.only(
+                                  left: 16, right: 16, bottom: 7),
                             ),
                           ),
                         ],
@@ -390,7 +401,9 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 6),
+                          padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.133,
+                              bottom: 6),
                           child: const Text(
                             "Contact number",
                             style: TextStyle(
@@ -406,18 +419,18 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                     SizedBox(
                       width: 320,
                       height: 55,
-                      child: Stack (
+                      child: Stack(
                         children: [
-                          Container (
+                          Container(
                             width: 320,
                             height: 38,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(32),
-                                color: const Color(0xFFFFFFFF).withOpacity(0.7),
-                              ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(32),
+                              color: const Color(0xFFFFFFFF).withOpacity(0.7),
                             ),
+                          ),
                           TextFormField(
-                            controller: provider.controller5, 
+                            controller: provider.controller5,
                             onChanged: provider.updateContactNumber,
                             validator: (val) {
                               if (val!.isEmpty) {
@@ -432,8 +445,7 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
                                 fontFamily: 'Poppins-Reg',
-                                color: Color(0xFF373D66)
-                            ),
+                                color: Color(0xFF373D66)),
                             decoration: InputDecoration(
                               hintText: 'Enter your contact number',
                               hintStyle: TextStyle(
@@ -443,7 +455,8 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                                 color: const Color(0xFF373D66).withOpacity(0.9),
                               ),
                               border: InputBorder.none,
-                              contentPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 7),
+                              contentPadding: const EdgeInsets.only(
+                                  left: 16, right: 16, bottom: 7),
                             ),
                           ),
                         ],
@@ -453,7 +466,9 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 3),
+                          padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.133,
+                              bottom: 3),
                           child: const Text(
                             "Proof/s of Legitimacy",
                             style: TextStyle(
@@ -469,18 +484,18 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                     SizedBox(
                       width: 320,
                       height: 55,
-                      child: Stack (
+                      child: Stack(
                         children: [
-                          Container (
+                          Container(
                             width: 320,
                             height: 38,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(32),
-                                color: const Color(0xFFFFFFFF).withOpacity(0.7),
-                              ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(32),
+                              color: const Color(0xFFFFFFFF).withOpacity(0.7),
                             ),
+                          ),
                           TextFormField(
-                            controller: provider.controller6, 
+                            controller: provider.controller6,
                             onChanged: provider.updateContactNumber,
                             validator: (val) {
                               if (val!.isEmpty) {
@@ -495,8 +510,7 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
                                 fontFamily: 'Poppins-Reg',
-                                color: Color(0xFF373D66)
-                            ),
+                                color: Color(0xFF373D66)),
                             decoration: InputDecoration(
                               hintText: 'e.g. Date established, etc.',
                               hintStyle: TextStyle(
@@ -506,7 +520,8 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                                 color: const Color(0xFF373D66).withOpacity(0.9),
                               ),
                               border: InputBorder.none,
-                              contentPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 7),
+                              contentPadding: const EdgeInsets.only(
+                                  left: 16, right: 16, bottom: 7),
                             ),
                           ),
                         ],
@@ -541,21 +556,18 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
 
                           provider.resetSignUp();
                           Navigator.pop(context);
-                          Navigator.pushNamed(context, "/orgHomepage");
+                          Navigator.pushNamed(context, "/org");
 
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text('Signed up!'),
                             ),
                           );
-                        } 
-                        else {
-                          
-                        }
+                        } else {}
                       },
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(320, 40),
-                        foregroundColor:  const Color(0xFFFCBE4F),
+                        foregroundColor: const Color(0xFFFCBE4F),
                         textStyle: const TextStyle(
                           fontSize: 14,
                           fontFamily: 'Poppins-Bold',
@@ -564,7 +576,7 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                       ),
                       child: const Text('Sign up as a Donor'),
                     ),
-                    Center (
+                    Center(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -595,15 +607,15 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                               ),
                             ),
                           ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
-      ),
+          ],
+        ),
       ),
     );
   }

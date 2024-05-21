@@ -1,7 +1,7 @@
 import 'package:cmsc23_project/models/donation_drive.dart';
-import 'package:cmsc23_project/org-view/base_screen.dart';
+import 'package:cmsc23_project/org-view/base_elements/base_screen.dart';
 import 'package:cmsc23_project/org-view/donations/donation_list.dart';
-import 'package:cmsc23_project/org-view/org_view_styles.dart';
+import 'package:cmsc23_project/org-view/base_elements/org_view_styles.dart';
 import 'package:flutter/material.dart';
 
 class DonationDriveScreen extends StatelessWidget {

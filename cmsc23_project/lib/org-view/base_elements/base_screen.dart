@@ -1,6 +1,6 @@
 import 'package:cmsc23_project/models/organization.dart';
-import 'package:cmsc23_project/org-view/drawer.dart';
-import 'package:cmsc23_project/org-view/org_view_styles.dart';
+import 'package:cmsc23_project/org-view/base_elements/drawer.dart';
+import 'package:cmsc23_project/org-view/base_elements/org_view_styles.dart';
 import 'package:cmsc23_project/providers/current_org_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -70,8 +70,8 @@ class _Avatar extends StatelessWidget {
     return InkWell(
       onTap: () {
         // Don't push the profile screen if it's already open
-        if (ModalRoute.of(context)!.settings.name != "/orgProfile") {
-          Navigator.pushNamed(context, "/orgProfile");
+        if (ModalRoute.of(context)!.settings.name != "/org/profile") {
+          Navigator.pushNamed(context, "/org/profile");
         }
       },
       child: Container(

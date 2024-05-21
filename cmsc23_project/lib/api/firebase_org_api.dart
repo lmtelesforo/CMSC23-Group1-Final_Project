@@ -13,7 +13,7 @@ class FirebaseOrgAPI {
       about:
           'The Philippine Red Cross is a humanitarian organization that provides services to uplift the lives of the underprivileged in the country.',
       openForDonations: true,
-      favorites: [],
+      favorites: ['1', '2'],
     ),
     Organization(
       name: 'UNICEF',

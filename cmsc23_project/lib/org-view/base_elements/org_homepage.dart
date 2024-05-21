@@ -1,10 +1,11 @@
 import 'package:cmsc23_project/models/donation_drive.dart';
-import 'package:cmsc23_project/org-view/base_screen.dart';
+import 'package:cmsc23_project/org-view/base_elements/base_screen.dart';
 import 'package:cmsc23_project/org-view/donation_drive/donation_drive_card.dart';
-import 'package:cmsc23_project/org-view/donation_drive/manage_donation_drives.dart';
 import 'package:cmsc23_project/org-view/donations/donation_list.dart';
-import 'package:cmsc23_project/org-view/org_view_styles.dart';
+import 'package:cmsc23_project/org-view/base_elements/org_view_styles.dart';
+import 'package:cmsc23_project/providers/current_org_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class OrgHomePage extends StatelessWidget {
   // Main homepage for the organization
@@ -15,8 +16,8 @@ class OrgHomePage extends StatelessWidget {
     return const BaseScreen(
       body: Column(
         children: [
-          MainAction([]),
-          Favorites([]),
+          MainAction(),
+          Favorites(),
           DonationList(),
         ],
       ),
@@ -26,8 +27,7 @@ class OrgHomePage extends StatelessWidget {
 
 class MainAction extends StatelessWidget {
   // The main/leading card on the org homepage
-  final List<DonationDrive> donationDrives;
-  const MainAction(this.donationDrives, {super.key});
+  const MainAction({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,14 +38,7 @@ class MainAction extends StatelessWidget {
         child: Card(
           child: InkWell(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ManageDonationDrives(
-                    donationDrives: donationDrives,
-                  ),
-                ),
-              );
+              Navigator.pushNamed(context, '/org/manage-drives');
             },
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
@@ -79,11 +72,13 @@ class MainAction extends StatelessWidget {
 
 class Favorites extends StatelessWidget {
   // List of favorited donation drives
-  final List<DonationDrive> favorites;
-  const Favorites(this.favorites, {super.key});
+  const Favorites({super.key});
 
   @override
   Widget build(BuildContext context) {
+    List<DonationDrive> favorites =
+        context.read<CurrentOrgProvider>().favorites;
+
     // Favorites are centered using row if they can fit in the parent container
     // Otherwise, they are built with a horizontal, scrollable listview
     return Visibility(
