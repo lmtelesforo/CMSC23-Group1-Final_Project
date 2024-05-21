@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Donation {
-  String donorId;
-  String orgId;
+  String donorUsername;
+  String orgUsername;
   String? driveId;
 
   String address;
@@ -16,8 +16,8 @@ class Donation {
   Status status;
 
   Donation({
-    required this.donorId,
-    required this.orgId,
+    required this.donorUsername,
+    required this.orgUsername,
     required this.driveId,
     required this.address,
     required this.contactNo,

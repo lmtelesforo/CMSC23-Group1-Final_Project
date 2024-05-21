@@ -17,7 +17,7 @@ class OrgHomePage extends StatelessWidget {
         children: [
           MainAction([]),
           Favorites([]),
-          DonationList([]),
+          DonationList(),
         ],
       ),
     );
