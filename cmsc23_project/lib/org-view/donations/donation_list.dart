@@ -79,9 +79,7 @@ class _DonationListState extends State<DonationList> {
                   );
                 },
                 child: ListTile(
-                  leading: CircleAvatar(
-                    backgroundImage: filteredDonations[index].donorImage,
-                  ),
+                  leading: _statusIcon(filteredDonations[index].status),
                   title: Text(filteredDonations[index].donorUsername),
                   trailing: Text(filteredDonations[index].status.name),
                 ),
@@ -91,5 +89,22 @@ class _DonationListState extends State<DonationList> {
         ),
       ),
     );
+  }
+
+  Widget _statusIcon(status) {
+    switch (status) {
+      case Status.pending:
+        return const Icon(Icons.schedule, color: CustomColors.primary);
+      case Status.confirmed:
+        return const Icon(Icons.check, color: CustomColors.primary);
+      case Status.scheduledForPickup:
+        return const Icon(Icons.schedule_send, color: CustomColors.primary);
+      case Status.complete:
+        return const Icon(Icons.done, color: CustomColors.primary);
+      case Status.cancelled:
+        return const Icon(Icons.cancel, color: CustomColors.primary);
+      default:
+        return const Icon(Icons.error, color: CustomColors.primary);
+    }
   }
 }
