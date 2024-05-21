@@ -31,7 +31,7 @@ class _DonationDetailsState extends State<DonationDetails> {
         child: Center(
           child: Column(
             children: [
-              Text(widget.donation.user.name, style: CustomTextStyle.h1),
+              Text(widget.donation.donorId, style: CustomTextStyle.h1),
               const SizedBox(height: 30),
               _donationForm,
               const SizedBox(height: 30),
@@ -85,7 +85,7 @@ class _DonationDetailsState extends State<DonationDetails> {
       initialSelection: widget.donation.status,
       onSelected: (status) {
         setState(() {
-          widget.donation.status = status as Status;
+          widget.donation.status = status!;
         });
       },
       dropdownMenuEntries: validStatuses.map((status) {
@@ -102,7 +102,6 @@ class _DonationDetailsState extends State<DonationDetails> {
           fillColor: Colors.white,
           filled: true,
         ),
-        initialSelection: widget.donation.associatedDrive,
         onSelected: (drive) {},
         dropdownMenuEntries: widget.donationDrives.map((drive) {
           return DropdownMenuEntry<DonationDrive>(
@@ -129,7 +128,7 @@ class _DonationDetailsState extends State<DonationDetails> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 30),
                       child: Text(
-                        widget.donation.items.join(', '),
+                        widget.donation.categories.join(', '),
                         style: CustomTextStyle.body,
                       ),
                     ),

@@ -127,7 +127,7 @@ class _DonationListState extends State<DonationList> {
 
   Widget get _donationTiles {
     List<Donation> filteredDonations = widget.donations.where((donation) {
-      return donation.user.name
+      return donation.donorId
           .toLowerCase()
           .contains(_searchQuery.toLowerCase());
     }).toList();
@@ -152,8 +152,10 @@ class _DonationListState extends State<DonationList> {
                   );
                 },
                 child: ListTile(
-                  leading: filteredDonations[index].statusIcon,
-                  title: Text(filteredDonations[index].user.name),
+                  leading: CircleAvatar(
+                    backgroundImage: filteredDonations[index].donorImage,
+                  ),
+                  title: Text(filteredDonations[index].donorId),
                   trailing: Text(filteredDonations[index].status.name),
                 ),
               ),
