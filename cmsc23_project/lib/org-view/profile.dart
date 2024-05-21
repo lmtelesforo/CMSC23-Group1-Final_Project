@@ -16,7 +16,7 @@ class Profile extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            _bigAvatar,
+            _bigAvatar(org),
             Container(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Text(org.name, style: CustomTextStyle.h1)),
@@ -27,7 +27,7 @@ class Profile extends StatelessWidget {
     );
   }
 
-  Widget get _bigAvatar => Stack(
+  Widget _bigAvatar(org) => Stack(
         children: [
           Container(
             decoration: BoxDecoration(
@@ -37,8 +37,8 @@ class Profile extends StatelessWidget {
                 width: 7,
               ),
             ),
-            child: const CircleAvatar(
-              backgroundImage: AssetImage('assets/images/profile_pic.jpg'),
+            child: CircleAvatar(
+              backgroundImage: org.profilePic,
               radius: 50,
               backgroundColor: Colors.white,
             ),
