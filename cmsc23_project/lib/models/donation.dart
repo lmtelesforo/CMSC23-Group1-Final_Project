@@ -1,10 +1,10 @@
 import 'package:cmsc23_project/models/donation_drive.dart';
 import 'package:cmsc23_project/models/organization.dart';
-import 'package:cmsc23_project/models/user.dart';
+import 'package:cmsc23_project/models/donor.dart';
 import 'package:flutter/material.dart';
 
 class Donation {
-  final User user;
+  final Donor user;
   final Organization organization;
   DonationDrive? associatedDrive;
 

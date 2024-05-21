@@ -1,4 +1,4 @@
-import 'package:cmsc23_project/models/user.dart';
+import 'package:cmsc23_project/models/donor.dart';
 import 'package:cmsc23_project/org-view/drawer.dart';
 import 'package:cmsc23_project/org-view/org_view_styles.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class BaseScreen extends StatelessWidget {
   // Represents the base screen of the org view (appbar + background image)
 
-  final User sampleUser = User(
+  final Donor sampleUser = Donor(
     name: 'Sample User',
     profilePic: const AssetImage('assets/images/profile_pic.jpg'),
   );
@@ -65,7 +65,7 @@ class _Avatar extends StatelessWidget {
     required this.sampleUser,
   });
 
-  final User sampleUser;
+  final Donor sampleUser;
 
   @override
   Widget build(BuildContext context) {

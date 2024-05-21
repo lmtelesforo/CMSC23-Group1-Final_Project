@@ -1,7 +1,7 @@
 import 'package:cmsc23_project/models/donation_drive.dart';
-import 'package:cmsc23_project/models/user.dart';
+import 'package:cmsc23_project/models/donor.dart';
 
-class Organization extends User {
+class Organization extends Donor {
   List<DonationDrive> donationDrives;
   List<DonationDrive> favorites = [];
   String about =

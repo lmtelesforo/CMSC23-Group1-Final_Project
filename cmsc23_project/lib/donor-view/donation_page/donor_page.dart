@@ -13,7 +13,8 @@ class DonorPage extends StatefulWidget {
 }
 
 class _DonorPageState extends State<DonorPage> {
-  List<DonationItem> donationItems = []; // Updated to include donation items for the selected organization
+  List<DonationItem> donationItems =
+      []; // Updated to include donation items for the selected organization
 
   @override
   void initState() {
@@ -83,14 +84,14 @@ class _DonorPageState extends State<DonorPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Center (
+                      Center(
                         child: Text(
                           widget.organization,
                           style: TextStyle(
-                            fontSize: 19,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "Montserrat",
-                            color: const Color.fromRGBO(55, 61, 102, 1)),
+                              fontSize: 19,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Montserrat",
+                              color: const Color.fromRGBO(55, 61, 102, 1)),
                         ),
                       ),
                     ],
@@ -106,13 +107,14 @@ class _DonorPageState extends State<DonorPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text("Donation Items",
-                      style: TextStyle(
-                        fontSize: 21,
-                        fontWeight: FontWeight.bold, 
-                        fontFamily: "Montserrat",
-                        color: const Color.fromRGBO(55, 61, 102, 1),
-                      ),
+                      Text(
+                        "Donation Items",
+                        style: TextStyle(
+                          fontSize: 21,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "Montserrat",
+                          color: const Color.fromRGBO(55, 61, 102, 1),
+                        ),
                       ),
                       SizedBox(height: 20),
                       Column(

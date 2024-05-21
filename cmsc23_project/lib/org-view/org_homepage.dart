@@ -1,7 +1,7 @@
 import 'package:cmsc23_project/models/donation.dart';
 import 'package:cmsc23_project/models/donation_drive.dart';
 import 'package:cmsc23_project/models/organization.dart';
-import 'package:cmsc23_project/models/user.dart';
+import 'package:cmsc23_project/models/donor.dart';
 import 'package:cmsc23_project/org-view/base_screen.dart';
 import 'package:cmsc23_project/org-view/donations/donation_drive_card.dart';
 import 'package:cmsc23_project/org-view/donation_drive/manage_donation_drives.dart';
@@ -36,7 +36,7 @@ class OrgHomePage extends StatelessWidget {
     org.favorite(org.donationDrives[0]);
     org.donationDrives[2].end();
 
-    User abra = User(
+    Donor abra = Donor(
         name: 'Abra Abra',
         profilePic: const AssetImage(
           'assets/images/profile_pic.jpg',
@@ -50,7 +50,7 @@ class OrgHomePage extends StatelessWidget {
     abra.donations[1].status = Status.scheduledForPickup;
     abra.donations[0].associateWith(org.donationDrives[0]);
 
-    User cadabra = User(
+    Donor cadabra = Donor(
       name: 'Cababra Cadabra',
       profilePic: const AssetImage('assets/images/profile_pic.jpg'),
     );
