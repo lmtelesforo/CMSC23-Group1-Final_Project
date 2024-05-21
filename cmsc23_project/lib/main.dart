@@ -1,18 +1,23 @@
-import 'package:cmsc23_project/donation_page/donor_homepage.dart';
+// main.dart
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'donation_page/donor_homepage.dart';
+import 'provider/donation_provider.dart';
+
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => DonationProvider(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       home: DonorHomepage(),
     );
   }
