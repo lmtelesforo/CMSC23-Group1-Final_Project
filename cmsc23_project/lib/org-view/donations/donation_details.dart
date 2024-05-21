@@ -31,7 +31,7 @@ class _DonationDetailsState extends State<DonationDetails> {
         child: Center(
           child: Column(
             children: [
-              Text(widget.donation.donorId, style: CustomTextStyle.h1),
+              Text(widget.donation.donorUsername, style: CustomTextStyle.h1),
               const SizedBox(height: 30),
               _donationForm,
               const SizedBox(height: 30),

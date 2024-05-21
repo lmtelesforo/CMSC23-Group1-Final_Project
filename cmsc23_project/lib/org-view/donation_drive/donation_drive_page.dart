@@ -16,7 +16,7 @@ class DonationDriveScreen extends StatelessWidget {
       body: Column(
         children: [
           ExpandedDriveCard(donationDrive),
-          const DonationList([]),
+          const DonationList(),
         ],
       ),
     );

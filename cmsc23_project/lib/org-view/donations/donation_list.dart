@@ -1,13 +1,13 @@
 import 'package:cmsc23_project/models/donation.dart';
 import 'package:cmsc23_project/org-view/donations/donation_details.dart';
 import 'package:cmsc23_project/org-view/org_view_styles.dart';
+import 'package:cmsc23_project/providers/current_org_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DonationList extends StatefulWidget {
   // Lists all donations made to the organization
-  final List<Donation> donations;
-
-  const DonationList(this.donations, {super.key});
+  const DonationList({super.key});
 
   @override
   State<DonationList> createState() => _DonationListState();
@@ -51,8 +51,10 @@ class _DonationListState extends State<DonationList> {
       );
 
   Widget get _donationTiles {
-    List<Donation> filteredDonations = widget.donations.where((donation) {
-      return donation.donorId
+    List<Donation> donations = context.read<CurrentOrgProvider>().donations;
+
+    List<Donation> filteredDonations = donations.where((donation) {
+      return donation.donorUsername
           .toLowerCase()
           .contains(_searchQuery.toLowerCase());
     }).toList();
@@ -80,7 +82,7 @@ class _DonationListState extends State<DonationList> {
                   leading: CircleAvatar(
                     backgroundImage: filteredDonations[index].donorImage,
                   ),
-                  title: Text(filteredDonations[index].donorId),
+                  title: Text(filteredDonations[index].donorUsername),
                   trailing: Text(filteredDonations[index].status.name),
                 ),
               ),
