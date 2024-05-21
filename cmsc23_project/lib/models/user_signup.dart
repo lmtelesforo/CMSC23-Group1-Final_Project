@@ -4,18 +4,22 @@ class User {
   String name;
   String username;
   String password;
+  String email;
   List addresses;
   String contactNumber;
   List? proofs;
   String? id;
+  String userType;
 
   User ({
     this.id, 
     required this.name, 
     required this.username,
-    required this.password, 
+    required this.password,
+    required this.email, 
     required this.addresses, 
     required this.contactNumber, 
+    required this.userType,
     this.proofs 
   });
 
@@ -25,8 +29,10 @@ class User {
       name: json['name'],
       username: json['username'],
       password: json['password'],
+      email: json['email'],
       addresses: json['addresses'],
       contactNumber: json['contactNumber'],
+      userType: json['userType'],
       proofs: json['proofs']
     );
   }
@@ -42,8 +48,10 @@ class User {
       'name': User.name,
       'username': User.username,
       'password': User.password,
+      'email': User.email,
       'addresses': User.addresses,
       'contactNumber': User.contactNumber,
+      'userType': User.userType,
       'proofs': User.proofs
     };
   }

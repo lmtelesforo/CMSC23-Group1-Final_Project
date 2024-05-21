@@ -19,29 +19,10 @@ class _IndivViewAllDonorsState extends State<IndivViewAllDonors> {
       name: 'User1',
       username: 'org1_username',
       password: 'password1',
+      email: 'laira@gmail.com',
       addresses: ['Address 1', 'Address 2'],
       contactNumber: '1234567890',
-    ),
-    User(
-      name: 'fsfsd',
-      username: 'org3_username',
-      password: 'password3',
-      addresses: ['Address 5', 'Address 6'],
-      contactNumber: '9876543210',
-    ),
-    User(
-      name: 'fdsfsdf',
-      username: 'org3_username',
-      password: 'password3',
-      addresses: ['Address 5', 'Address 6'],
-      contactNumber: '9876543210',
-    ),
-    User(
-      name: 'sdf',
-      username: 'org3_username',
-      password: 'password3',
-      addresses: ['Address 5', 'Address 6'],
-      contactNumber: '9876543210',
+      userType: 'user'
     ),
   ];
 

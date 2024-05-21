@@ -22,29 +22,10 @@ class _AdminViewAllDonorsState extends State<AdminViewAllDonors> {
       name: 'sadasda',
       username: 'org1_username',
       password: 'password1',
+      email: 'laira@gmail.com',
       addresses: ['Address 1', 'Address 2'],
       contactNumber: '1234567890',
-    ),
-    User(
-      name: 'Ofsda',
-      username: 'org3_username',
-      password: 'password3',
-      addresses: ['Address 5', 'Address 6'],
-      contactNumber: '9876543210',
-    ),
-    User(
-      name: 'fdsfds',
-      username: 'org3_username',
-      password: 'password3',
-      addresses: ['Address 5', 'Address 6'],
-      contactNumber: '9876543210',
-    ),
-    User(
-      name: 'Org 3',
-      username: 'org3_username',
-      password: 'password3',
-      addresses: ['Address 5', 'Address 6'],
-      contactNumber: '9876543210',
+      userType: 'user'
     ),
   ];
 

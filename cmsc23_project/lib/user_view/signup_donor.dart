@@ -84,13 +84,13 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
               child: Container(
                 child: Image.asset(
                   'lib/user_view/assets/cmsc23_logo1.png',
-                  width: 90,
-                  height: 90,
+                  width: 70,
+                  height: 70,
                 ),
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.20, 
+              top: MediaQuery.of(context).size.height * 0.17, 
               left: 0,
               right: 0,
               child: const Text(
@@ -106,7 +106,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.26, 
+              top: MediaQuery.of(context).size.height * 0.23, 
               left: 0,
               right: 0,
               child: Padding(
@@ -124,7 +124,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.30, 
+              top: MediaQuery.of(context).size.height * 0.26, 
               left: 0,
               right: 0,
               child: Center(
@@ -200,7 +200,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                         Padding(
                           padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 4),
                           child: Text(
-                            "Email",
+                            "Username",
                             style: TextStyle(
                               fontSize: 15,
                               fontFamily: 'Poppins-Reg',
@@ -226,6 +226,69 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                             ),
                           TextFormField(
                             controller: provider.controller2, 
+                            onChanged: provider.updateNickname,
+                            validator: (val) {
+                              if (val!.isEmpty) {
+                                return "Please enter your username";
+                              }
+                              if (val.trim().isEmpty) {
+                                return "Please enter your username";
+                              }
+                              return null;
+                            },
+                            style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'Poppins-Reg',
+                                color: Color(0xFF373D66)
+                            ),
+                            decoration: InputDecoration(
+                              hintText: 'Enter your username',
+                              hintStyle: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'Poppins-Reg',
+                                color: Color(0xFF373D66).withOpacity(0.9),
+                              ),
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.only(left: 16, right: 16, bottom: 7),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 4),
+                          child: Text(
+                            "Email",
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontFamily: 'Poppins-Reg',
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF373D66),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Container(
+                      width: 320,
+                      height: 55,
+                      child: Stack (
+                        children: [
+                          Container (
+                            width: 320,
+                            height: 38,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(32),
+                                color: Color(0xFFFFFFFF).withOpacity(0.7),
+                              ),
+                            ),
+                          TextFormField(
+                            controller: provider.controller3, 
                             onChanged: provider.updateEmail,
                             validator: (val) {
                               if (val!.isEmpty) {
@@ -291,7 +354,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                               ),
                             ),
                           TextFormField(
-                            controller: provider.controller3, 
+                            controller: provider.controller4, 
                             onChanged: provider.updatePassword,
                             validator: (val) {
                               if (val!.isEmpty) {
@@ -368,7 +431,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                               ),
                             ),
                           TextFormField(
-                            controller: provider.controller4, 
+                            controller: provider.controller5, 
                             onChanged: provider.updateAddresses,
                             validator: (val) {
                               if (val!.isEmpty) {
@@ -431,7 +494,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                               ),
                             ),
                           TextFormField(
-                            controller: provider.controller5, 
+                            controller: provider.controller6, 
                             onChanged: provider.updateContactNumber,
                             validator: (val) {
                               if (val!.isEmpty) {
@@ -488,10 +551,12 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
                           final name = provider.controller1.text;
-                          final email = provider.controller2.text;
-                          final password = provider.controller3.text;
-                          final addresses = provider.controller4.text;
-                          final contactnumber = provider.controller5.text;
+                          final nickname = provider.controller2.text;
+                          final email = provider.controller3.text;
+                          final password = provider.controller4.text;
+                          final addresses = provider.controller5.text;
+                          final contactnumber = provider.controller6.text;
+                          final userType = 'donor';
 
                           final authService = Provider.of<UserAuthProvider>(context, listen: false).authService;
 

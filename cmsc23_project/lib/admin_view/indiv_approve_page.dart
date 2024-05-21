@@ -19,33 +19,11 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
       name: 'Org 1',
       username: 'org1_username',
       password: 'password1',
+      email: 'laira@gmail.com',
       addresses: ['Address 1', 'Address 2'],
       contactNumber: '1234567890',
       proofs: ['Proofs for Organization 1'],
-    ),
-    User(
-      name: 'Org 2',
-      username: 'org2_username',
-      password: 'password2',
-      addresses: ['Address 3', 'Address 4'],
-      contactNumber: '0987654321',
-      proofs: ['gfgdf', '7979'],
-    ),
-    User(
-      name: 'Org 3',
-      username: 'org3_username',
-      password: 'password3',
-      addresses: ['Address 5', 'Address 6'],
-      contactNumber: '9876543210',
-      proofs: ['Proofs for Organization 3'],
-    ),
-    User(
-      name: 'Org 3',
-      username: 'org3_username',
-      password: 'password3',
-      addresses: ['Address 5', 'Address 6'],
-      contactNumber: '9876543210',
-      proofs: ['Proofs for Organization 3'],
+      userType: 'user'
     ),
   ];
   

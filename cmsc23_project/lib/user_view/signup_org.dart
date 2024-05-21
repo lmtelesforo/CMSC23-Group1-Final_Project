@@ -77,25 +77,25 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.07, 
+              top: MediaQuery.of(context).size.height * 0.08, 
               left: 0,
               right: 0,
               child: Container(
                 child: Image.asset(
                   'lib/user_view/assets/cmsc23_logo1.png',
-                  width: 70,
-                  height: 70,
+                  width: 50,
+                  height: 50,
                 ),
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.15, 
+              top: MediaQuery.of(context).size.height * 0.14, 
               left: 0,
               right: 0,
               child: const Text(
                 "ELBIDrive",
                 style: TextStyle(
-                  fontSize: 31,
+                  fontSize: 29,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'CaveatBrush',
                   color: Color(0xFF373D66),
@@ -105,25 +105,7 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.20, 
-              left: 0,
-              right: 0,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 16, right: 16),
-                child: Text(
-                  "Create a donor account.",
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontFamily: 'Poppins-Reg',
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF373D66),
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-            Positioned(
-              top: MediaQuery.of(context).size.height * 0.24, 
+              top: MediaQuery.of(context).size.height * 0.19, 
               left: 0,
               right: 0,
               child: Center(
@@ -199,7 +181,7 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                         Padding(
                           padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 4),
                           child: Text(
-                            "Email",
+                            "Nickname",
                             style: TextStyle(
                               fontSize: 15,
                               fontFamily: 'Poppins-Reg',
@@ -225,6 +207,69 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                             ),
                           TextFormField(
                             controller: provider.controller2, 
+                            onChanged: provider.updateNickname,
+                            validator: (val) {
+                              if (val!.isEmpty) {
+                                return "Please enter your nickname";
+                              }
+                              if (val.trim().isEmpty) {
+                                return "Please enter your nickname";
+                              }
+                              return null;
+                            },
+                            style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'Poppins-Reg',
+                                color: Color(0xFF373D66)
+                            ),
+                            decoration: InputDecoration(
+                              hintText: 'Enter your nickname',
+                              hintStyle: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'Poppins-Reg',
+                                color: Color(0xFF373D66).withOpacity(0.9),
+                              ),
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.only(left: 16, right: 16, bottom: 7),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 4),
+                          child: Text(
+                            "Email",
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontFamily: 'Poppins-Reg',
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF373D66),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Container(
+                      width: 320,
+                      height: 55,
+                      child: Stack (
+                        children: [
+                          Container (
+                            width: 320,
+                            height: 38,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(32),
+                                color: Color(0xFFFFFFFF).withOpacity(0.7),
+                              ),
+                            ),
+                          TextFormField(
+                            controller: provider.controller3, 
                             onChanged: provider.updateEmail,
                             validator: (val) {
                               if (val!.isEmpty) {
@@ -287,7 +332,7 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                               ),
                             ),
                           TextFormField(
-                            controller: provider.controller3, 
+                            controller: provider.controller4, 
                             onChanged: provider.updatePassword,
                             validator: (val) {
                               if (val!.isEmpty) {
@@ -364,7 +409,7 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                               ),
                             ),
                           TextFormField(
-                            controller: provider.controller4, 
+                            controller: provider.controller5, 
                             onChanged: provider.updateAddresses,
                             validator: (val) {
                               if (val!.isEmpty) {
@@ -427,7 +472,7 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                               ),
                             ),
                           TextFormField(
-                            controller: provider.controller5, 
+                            controller: provider.controller6, 
                             onChanged: provider.updateContactNumber,
                             validator: (val) {
                               if (val!.isEmpty) {
@@ -493,7 +538,7 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                               ),
                             ),
                           TextFormField(
-                            controller: provider.controller6, 
+                            controller: provider.controller7, 
                             onChanged: provider.updateContactNumber,
                             validator: (val) {
                               if (val!.isEmpty) {
@@ -547,10 +592,13 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
                           final name = provider.controller1.text;
-                          final email = provider.controller2.text;
-                          final password = provider.controller3.text;
-                          final addresses = provider.controller4.text;
-                          final contactnumber = provider.controller5.text;
+                          final nickname = provider.controller2.text;
+                          final email = provider.controller3.text;
+                          final password = provider.controller4.text;
+                          final addresses = provider.controller5.text;
+                          final contactnumber = provider.controller6.text;
+                          final proofs = provider.controller7.text;
+                          final userType = 'organization';
 
                           final authService = Provider.of<UserAuthProvider>(context, listen: false).authService;
 
