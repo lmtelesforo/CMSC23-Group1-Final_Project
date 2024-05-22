@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/user_signup.dart';
+import '../providers/firebase_provider.dart';
 import '../providers/textfield_providers.dart';
 
 class IndivViewAllDonors extends StatefulWidget {
@@ -228,6 +229,45 @@ class _IndivViewAllDonorsState extends State<IndivViewAllDonors> {
                     ),
                   ),
                 ),
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: MediaQuery.of(context).size.height * 0.25,
+            left: (MediaQuery.of(context).size.width - 250) / 2, // center
+            child: ElevatedButton.icon(
+              onPressed: () {
+                final userService = Provider.of<UserInfosProvider>(context, listen: false);
+
+                userService.deleteUser(user.email); // delete org
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('${user.name} deleted!'),
+                  ),
+                );
+                Navigator.pop(context);
+                Navigator.pushNamed(context, "/viewAllDonors");
+              },
+              icon: Icon(
+                Icons.clear,
+                color: Color(0xFFFCBE4F),
+              ),
+              label: Text(
+                'Delete Donor',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: 'Poppins-Bold',
+                  color: Color(0xFFFCBE4F),
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(250, 50),
+                textStyle: const TextStyle(
+                  fontSize: 14,
+                  fontFamily: 'Poppins-Bold',
+                ),
+                backgroundColor: Color.fromARGB(255, 190, 58, 58),
               ),
             ),
           ),

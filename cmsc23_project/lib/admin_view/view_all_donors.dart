@@ -134,12 +134,12 @@ class _AdminViewAllDonorsState extends State<AdminViewAllDonors> {
                         
                         List<DocumentSnapshot> userDetails = (snapshot.data as QuerySnapshot)
                           .docs
-                          .where((user) => (user.data() as Map<String, dynamic>)['userType'] == 'user') 
+                          .where((user) => (user.data() as Map<String, dynamic>)['userType'] == 'donor') 
                           .toList();
 
                         if (userDetails.isEmpty) { // if no users, display message
                           return const Center(
-                            child: Text("No Orgs Found",
+                            child: Text("No Donors Yet",
                             style: TextStyle(
                               fontSize: 16,
                               fontFamily: 'Poppins-Bold',

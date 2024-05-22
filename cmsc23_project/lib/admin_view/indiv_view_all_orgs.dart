@@ -151,7 +151,7 @@ class _IndivViewAllOrgsState extends State<IndivViewAllOrgs> {
                         Row(
                           children: [
                             Text(
-                              'Orgname:',
+                              'Username:',
                               style: TextStyle(
                                 fontSize: 16,
                                 fontFamily: 'Poppins-Bold',

@@ -139,7 +139,7 @@ class _AdminViewAllOrgsState extends State<AdminViewAllOrgs> {
 
                         if (orgDetails.isEmpty) { // if no orgs, display message
                           return const Center(
-                            child: Text("No Orgs Found",
+                            child: Text("No Organizations Yet",
                             style: TextStyle(
                               fontSize: 16,
                               fontFamily: 'Poppins-Bold',
