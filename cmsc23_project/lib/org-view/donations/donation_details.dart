@@ -41,26 +41,37 @@ class _DonationDetailsState extends State<DonationDetails> {
     );
   }
 
-  Widget get _donationForm => Table(
-        columnWidths: const {
-          0: FlexColumnWidth(1),
-          1: FlexColumnWidth(2),
-        },
-        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-        children: [
-          TableRow(
+  Widget get _donationForm => Center(
+        child: SizedBox(
+          width: 400,
+          child: Table(
+            columnWidths: const {
+              0: FlexColumnWidth(1),
+              1: FlexColumnWidth(2),
+            },
+            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
             children: [
-              const Icon(Icons.sms, color: CustomColors.primary),
-              _setStatus,
+              TableRow(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(bottom: 20.0),
+                    child: Icon(Icons.sms, color: CustomColors.primary),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20.0),
+                    child: _setStatus,
+                  ),
+                ],
+              ),
+              TableRow(
+                children: [
+                  const Icon(Icons.route, color: CustomColors.primary),
+                  _setDrive,
+                ],
+              ),
             ],
           ),
-          TableRow(
-            children: [
-              const Icon(Icons.route, color: CustomColors.primary),
-              _setDrive,
-            ],
-          ),
-        ],
+        ),
       );
 
   Widget get _setStatus {
@@ -126,47 +137,90 @@ class _DonationDetailsState extends State<DonationDetails> {
                 1: FlexColumnWidth(1.5),
               },
               children: [
-                TableRow(
-                  children: [
-                    const Icon(Icons.archive, color: CustomColors.primary),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 30),
-                      child: Text(
-                        widget.donation.categories.join(', '),
-                        style: CustomTextStyle.body,
-                      ),
-                    ),
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    const Icon(Icons.scale, color: CustomColors.primary),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 30),
-                      child: Text(
-                        '${widget.donation.weight} kg',
-                        style: CustomTextStyle.body,
-                      ),
-                    ),
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    const Icon(Icons.local_shipping,
-                        color: CustomColors.primary),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 30),
-                      child: widget.donation.forPickup
-                          ? const Text('For Pickup',
-                              style: CustomTextStyle.body)
-                          : const Text('For Drop-off',
-                              style: CustomTextStyle.body),
-                    ),
-                  ],
-                )
+                categories(),
+                weight(),
+                forPickup(),
+                address(),
+                date(),
               ],
             ),
           ),
         ),
       );
+
+  TableRow date() {
+    DateTime date = widget.donation.scheduledDate;
+
+    return TableRow(
+      children: [
+        const Icon(Icons.calendar_today, color: CustomColors.primary),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 30),
+          child: Text(
+            '${date.month}/${date.day}/${date.year}',
+            style: CustomTextStyle.body,
+          ),
+        ),
+      ],
+    );
+  }
+
+  TableRow address() {
+    return TableRow(
+      children: [
+        const Icon(Icons.location_on, color: CustomColors.primary),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 30),
+          child: Text(
+            widget.donation.address,
+            style: CustomTextStyle.body,
+          ),
+        ),
+      ],
+    );
+  }
+
+  TableRow forPickup() {
+    return TableRow(
+      children: [
+        const Icon(Icons.local_shipping, color: CustomColors.primary),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 30),
+          child: widget.donation.forPickup
+              ? const Text('For Pickup', style: CustomTextStyle.body)
+              : const Text('For Drop-off', style: CustomTextStyle.body),
+        ),
+      ],
+    );
+  }
+
+  TableRow weight() {
+    return TableRow(
+      children: [
+        const Icon(Icons.scale, color: CustomColors.primary),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 30),
+          child: Text(
+            '${widget.donation.weight} kg',
+            style: CustomTextStyle.body,
+          ),
+        ),
+      ],
+    );
+  }
+
+  TableRow categories() {
+    return TableRow(
+      children: [
+        const Icon(Icons.archive, color: CustomColors.primary),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 30),
+          child: Text(
+            widget.donation.categories.join(', '),
+            style: CustomTextStyle.body,
+          ),
+        ),
+      ],
+    );
+  }
 }
