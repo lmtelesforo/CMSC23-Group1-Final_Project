@@ -69,24 +69,31 @@ class _DonationDetailsState extends State<DonationDetails> {
         : Status.values
             .where((status) => status != Status.scheduledForPickup)
             .toList();
-    return DropdownMenu(
-      inputDecorationTheme: const InputDecorationTheme(
-        fillColor: Colors.white,
-        filled: true,
-      ),
-      initialSelection: widget.donation.status,
-      onSelected: (status) {
-        setState(() {
-          widget.donation.status = status!;
-          context.read<CurrentOrgProvider>().updateDonation(widget.donation);
-        });
-      },
-      dropdownMenuEntries: validStatuses.map((status) {
-        return DropdownMenuEntry<Status>(
-          value: status,
-          label: status.toString().split('.').last,
-        );
-      }).toList(),
+
+    return Row(
+      children: [
+        ...validStatuses.map((status) {
+          return Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30),
+              color: status == widget.donation.status
+                  ? CustomColors.secondary
+                  : Colors.transparent,
+            ),
+            child: IconButton(
+              icon: statusIcon(status),
+              onPressed: () {
+                setState(() {
+                  widget.donation.status = status;
+                  context
+                      .read<CurrentOrgProvider>()
+                      .updateDonation(widget.donation);
+                });
+              },
+            ),
+          );
+        }),
+      ],
     );
   }
 

@@ -1,3 +1,4 @@
+import 'package:cmsc23_project/org-view/base_elements/org_view_styles.dart';
 import 'package:flutter/material.dart';
 
 class Donation {
@@ -29,6 +30,27 @@ class Donation {
     required this.scheduledDate,
     required this.status,
   });
+}
+
+Widget statusIcon(status) {
+  IconData icon;
+
+  switch (status) {
+    case Status.pending:
+      icon = Icons.schedule;
+    case Status.confirmed:
+      icon = Icons.arrow_forward;
+    case Status.scheduledForPickup:
+      icon = Icons.schedule_send;
+    case Status.complete:
+      icon = Icons.done;
+    case Status.cancelled:
+      icon = Icons.cancel_outlined;
+    default:
+      icon = Icons.error;
+  }
+
+  return Icon(icon, color: CustomColors.primary);
 }
 
 enum Status { pending, confirmed, scheduledForPickup, complete, cancelled }

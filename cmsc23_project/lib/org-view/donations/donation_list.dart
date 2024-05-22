@@ -81,7 +81,7 @@ class _DonationListState extends State<DonationList> {
                   );
                 },
                 child: ListTile(
-                  leading: _statusIcon(filteredDonations[index].status),
+                  leading: statusIcon(filteredDonations[index].status),
                   title: Text(filteredDonations[index].donorUsername),
                   trailing: Text(filteredDonations[index].status.name),
                 ),
@@ -91,26 +91,5 @@ class _DonationListState extends State<DonationList> {
         ),
       ),
     );
-  }
-
-  Widget _statusIcon(status) {
-    IconData icon;
-
-    switch (status) {
-      case Status.pending:
-        icon = Icons.schedule;
-      case Status.confirmed:
-        icon = Icons.check;
-      case Status.scheduledForPickup:
-        icon = Icons.schedule_send;
-      case Status.complete:
-        icon = Icons.done;
-      case Status.cancelled:
-        icon = Icons.cancel;
-      default:
-        icon = Icons.error;
-    }
-
-    return Icon(icon, color: CustomColors.primary);
   }
 }
