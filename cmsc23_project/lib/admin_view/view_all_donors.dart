@@ -10,7 +10,7 @@ import '../providers/textfield_providers.dart';
 import 'indiv_view_all_donors.dart';
 
 class AdminViewAllDonors extends StatefulWidget {
-  const AdminViewAllDonors({Key? key}) : super(key: key);
+  const AdminViewAllDonors({super.key});
 
   @override
   State<AdminViewAllDonors> createState() => _AdminViewAllDonorsState();
@@ -70,7 +70,7 @@ class _AdminViewAllDonorsState extends State<AdminViewAllDonors> {
                   width: 34, 
                   height: 34, 
                 ),
-                label: Text(
+                label: const Text(
                   'Back',
                   style: TextStyle(
                     fontSize: 16,
@@ -79,7 +79,7 @@ class _AdminViewAllDonorsState extends State<AdminViewAllDonors> {
                   ),
                 ),
                 style: TextButton.styleFrom(
-                  foregroundColor: Color(0xFF373D66),
+                  foregroundColor: const Color(0xFF373D66),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(32), 
                   ),
@@ -90,7 +90,7 @@ class _AdminViewAllDonorsState extends State<AdminViewAllDonors> {
               top: MediaQuery.of(context).size.height * 0.13, 
               left: 0,
               right: 0,
-              child: Padding(
+              child: const Padding(
                 padding: EdgeInsets.all(17),
                 child: Text(
                   "All Donors",

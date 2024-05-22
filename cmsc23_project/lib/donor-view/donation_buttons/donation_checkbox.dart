@@ -9,8 +9,8 @@ class DonationCheckbox extends StatefulWidget {
     required this.isChecked,
     required this.itemName,
     required this.onChanged,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   _DonationCheckboxState createState() => _DonationCheckboxState();

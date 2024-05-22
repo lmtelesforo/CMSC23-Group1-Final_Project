@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class DropdownMenuExample extends StatefulWidget {
+  const DropdownMenuExample({super.key});
+
   @override
   _DropdownMenuExampleState createState() => _DropdownMenuExampleState();
 }
@@ -15,7 +17,7 @@ class _DropdownMenuExampleState extends State<DropdownMenuExample> {
         color: Colors.white.withOpacity(0.5), // Color of the dropdown menu box
         borderRadius: BorderRadius.circular(10),
       ),
-      padding: EdgeInsets.symmetric(horizontal: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       child: DropdownButton<String>(
         value: dropdownValue,
         icon: Icon(Icons.arrow_drop_down),
@@ -25,7 +27,7 @@ class _DropdownMenuExampleState extends State<DropdownMenuExample> {
           color: const Color.fromRGBO(55, 61, 102, 1), // Color of the selected item text
           fontSize: 16,
         ),
-        underline: SizedBox(), // Remove the underline
+        underline: const SizedBox(), // Remove the underline
         onChanged: (String? newValue) {
           setState(() {
             dropdownValue = newValue!;
@@ -37,7 +39,7 @@ class _DropdownMenuExampleState extends State<DropdownMenuExample> {
             value: value,
             child: Text(
               value,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Color.fromRGBO(55, 61, 102, 1),
                 fontFamily: "Montserrat",
                 fontWeight: FontWeight.bold, 

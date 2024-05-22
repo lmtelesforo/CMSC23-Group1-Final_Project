@@ -5,6 +5,8 @@ import 'package:cmsc23_project/donor-view/donation_page/favorite_page.dart';
 import 'package:cmsc23_project/donor-view/donation_page/org_details_page.dart';
 
 class DonorHomepage extends StatefulWidget {
+  const DonorHomepage({super.key});
+
   @override
   _DonorHomepageState createState() => _DonorHomepageState();
 }
@@ -32,7 +34,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Donor Homepage",
           style: TextStyle(
             fontFamily: "Montserrat",
@@ -44,7 +46,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         centerTitle: true,
-        iconTheme: IconThemeData(color: Colors.white, size: 30),
+        iconTheme: const IconThemeData(color: Colors.white, size: 30),
         actions: [
           Container(
             decoration: BoxDecoration(
@@ -54,19 +56,19 @@ class _DonorHomepageState extends State<DonorHomepage> {
                 width: 3.0,
               ),
             ),
-            child: CircleAvatar(
+            child: const CircleAvatar(
               backgroundImage: AssetImage("images/profile.jpg"),
               radius: 30.0,
             ),
           ),
-          SizedBox(width: 16),
+          const SizedBox(width: 16),
         ],
       ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            DrawerHeader(
+            const DrawerHeader(
               decoration: BoxDecoration(
                 color: Colors.blue,
               ),
@@ -79,7 +81,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
               ),
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 "Home",
                 style: TextStyle(fontSize: 20),
               ),
@@ -88,7 +90,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
               },
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 "Profile",
                 style: TextStyle(fontSize: 20),
               ),
@@ -125,7 +127,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage("images/wallpaper.jpg"),
                 fit: BoxFit.cover,
@@ -142,7 +144,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
               children: [
                 TextFormField(
                   onChanged: filterOrganizations,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontFamily: "Montserrat",
                     fontSize: 16,
@@ -163,14 +165,14 @@ class _DonorHomepageState extends State<DonorHomepage> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Color(0xffd3dde4),
                         width: 2,
                       ),
                     ),
                   ),
                 ),
-                SizedBox(height: 20.0),
+                const SizedBox(height: 20.0),
                 Container(
                   height: 200,
                   decoration: BoxDecoration(
@@ -181,7 +183,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
                         color: Colors.grey.withOpacity(0.5),
                         spreadRadius: 2,
                         blurRadius: 7,
-                        offset: Offset(0, 3),
+                        offset: const Offset(0, 3),
                       ),
                     ],
                   ),
@@ -197,8 +199,8 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                 "images/icon.png",
                                 fit: BoxFit.scaleDown,
                               ),
-                              SizedBox(width: 0),
-                              Expanded(
+                              const SizedBox(width: 0),
+                              const Expanded(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -232,7 +234,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
                     ],
                   ),
                 ),
-                SizedBox(height: 20.0),
+                const SizedBox(height: 20.0),
                 Expanded(
                   child: SingleChildScrollView(
                     child: Wrap(
@@ -268,18 +270,21 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                         color: Colors.grey.withOpacity(0.5),
                                         spreadRadius: 2,
                                         blurRadius: 7,
-                                        offset: Offset(0, 3),
+                                        offset: const Offset(0, 3),
                                       ),
                                     ],
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
                                         ClipRRect(
-                                          borderRadius: BorderRadius.circular(25),
+                                          borderRadius:
+                                              BorderRadius.circular(25),
                                           child: Image.asset(
                                             "images/$org.jpg",
                                             width: 148,
@@ -287,10 +292,12 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                             fit: BoxFit.cover,
                                           ),
                                         ),
-                                        SizedBox(height: 10),
+                                        const SizedBox(height: 10),
                                         Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
                                           children: [
                                             Text(
                                               org,

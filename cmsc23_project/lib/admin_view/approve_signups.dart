@@ -9,7 +9,7 @@ import '../providers/firebase_provider.dart';
 import '../providers/textfield_providers.dart';
 
 class ApproveOrgSignups extends StatefulWidget {
-  const ApproveOrgSignups({Key? key}) : super(key: key);
+  const ApproveOrgSignups({super.key});
 
   @override
   State<ApproveOrgSignups> createState() => _ApproveOrgSignupsState();
@@ -69,7 +69,7 @@ class _ApproveOrgSignupsState extends State<ApproveOrgSignups> {
                   width: 34, 
                   height: 34, 
                 ),
-                label: Text(
+                label: const Text(
                   'Back',
                   style: TextStyle(
                     fontSize: 16,
@@ -78,7 +78,7 @@ class _ApproveOrgSignupsState extends State<ApproveOrgSignups> {
                   ),
                 ),
                 style: TextButton.styleFrom(
-                  foregroundColor: Color(0xFF373D66),
+                  foregroundColor: const Color(0xFF373D66),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(32), 
                   ),
@@ -89,7 +89,7 @@ class _ApproveOrgSignupsState extends State<ApproveOrgSignups> {
               top: MediaQuery.of(context).size.height * 0.12, 
               left: 0,
               right: 0,
-              child: Padding(
+              child: const Padding(
                 padding: EdgeInsets.all(17),
                 child: Text(
                   "Pending Organization Sign ups",
