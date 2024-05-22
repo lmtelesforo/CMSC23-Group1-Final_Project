@@ -298,7 +298,7 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                               showSignInErrorMessage = false;
                               provider.resetLogIn();
                               Navigator.pop(context);
-                              Navigator.pushNamed(context, "/donorHomepage");
+                              Navigator.pushNamed(context, "/orgHomepage");
 
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(

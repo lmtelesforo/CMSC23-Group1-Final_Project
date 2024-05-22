@@ -642,12 +642,6 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                             );
                             Navigator.pop(context);
                             Navigator.pushNamed(context, "/");
-
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('Welcome to ElbiDrive, $name!'),
-                              ),
-                            );  
                           }
                         } 
                       },
