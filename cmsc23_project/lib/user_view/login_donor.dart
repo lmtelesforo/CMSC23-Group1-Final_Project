@@ -1,13 +1,12 @@
 import 'package:cmsc23_project/providers/auth_provider.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/textfield_providers.dart';
 
 class LogInDonorPage extends StatefulWidget {
-  const LogInDonorPage({Key? key}) : super(key: key);
+  const LogInDonorPage({super.key});
 
   @override
   State<LogInDonorPage> createState() => _LogInDonorPageState();
@@ -55,7 +54,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                   width: 34, 
                   height: 34, 
                 ),
-                label: Text(
+                label: const Text(
                   'Back',
                   style: TextStyle(
                     fontSize: 16,
@@ -63,7 +62,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                   ),
                 ),
                 style: TextButton.styleFrom(
-                  foregroundColor: Color(0xFF373D66),
+                  foregroundColor: const Color(0xFF373D66),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(32), 
                   ),
@@ -102,8 +101,8 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
               top: MediaQuery.of(context).size.height * 0.43, 
               left: 0,
               right: 0,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 16, right: 16),
+              child: const Padding(
+                padding: EdgeInsets.only(left: 16, right: 16),
                 child: Text(
                   "Log in your donor account.",
                   style: TextStyle(
@@ -129,7 +128,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 4),
-                          child: Text(
+                          child: const Text(
                             "Email",
                             style: TextStyle(
                               fontSize: 15,
@@ -141,7 +140,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                         ),
                       ],
                     ),
-                    Container(
+                    SizedBox(
                       width: 320,
                       height: 60,
                       child: Stack (
@@ -151,7 +150,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                             height: 40,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(32),
-                                color: Color(0xFFFFFFFF).withOpacity(0.7),
+                                color: const Color(0xFFFFFFFF).withOpacity(0.7),
                               ),
                             ),
                           TextFormField(
@@ -181,22 +180,22 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Poppins-Reg',
-                                color: Color(0xFF373D66).withOpacity(0.9),
+                                color: const Color(0xFF373D66).withOpacity(0.9),
                               ),
                               border: InputBorder.none,
-                              contentPadding: EdgeInsets.only(left: 16, right: 16, bottom: 7),
+                              contentPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 7),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
                           padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 4),
-                          child: Text(
+                          child: const Text(
                             "Password",
                             style: TextStyle(
                               fontSize: 15,
@@ -208,7 +207,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                         ),
                       ],
                     ),
-                    Container(
+                    SizedBox(
                       width: 320,
                       height: 60,
                       child: Stack (
@@ -218,7 +217,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                             height: 40,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(32),
-                                color: Color(0xFFFFFFFF).withOpacity(0.7),
+                                color: const Color(0xFFFFFFFF).withOpacity(0.7),
                               ),
                             ),
                           TextFormField(
@@ -249,23 +248,23 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Poppins-Reg',
-                                color: Color(0xFF373D66).withOpacity(0.9),
+                                color: const Color(0xFF373D66).withOpacity(0.9),
                               ),
                               border: InputBorder.none,
-                              contentPadding: EdgeInsets.only(left: 16, right: 16, bottom: 7),
+                              contentPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 7),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                     SizedBox(
                       height: 34,
                       child: TextButton(
                         onPressed: () {
                           provider.resetLogIn();
                         },
-                        child: Text(
+                        child: const Text(
                           "Reset",
                           style: TextStyle(
                             fontSize: 14,
@@ -285,7 +284,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                           String? message = await context
                           .read<UserAuthProvider>()
                           .authService
-                          .signIn(email!, password!);
+                          .signIn(email, password);
 
                           print(message);
                           print(showSignInErrorMessage);
@@ -294,7 +293,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                             if (message != null && message.isNotEmpty) {
                               showSignInErrorMessage = true;
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
+                                const SnackBar(
                                   content: Text('Invalid email or password'),
                                 ),
                               );
@@ -306,7 +305,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                               Navigator.pushNamed(context, "/donorHomepage");
 
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
+                                const SnackBar(
                                   content: Text('Logged in!'),
                                 ),
                               );
@@ -319,12 +318,12 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                       },
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(320, 40),
-                        foregroundColor:  Color(0xFFFCBE4F),
+                        foregroundColor:  const Color(0xFFFCBE4F),
                         textStyle: const TextStyle(
                           fontSize: 14,
                           fontFamily: 'Poppins-Bold',
                         ),
-                        backgroundColor: Color(0xFF373D66),
+                        backgroundColor: const Color(0xFF373D66),
                       ),
                       child: const Text('Log in'),
                     ),
@@ -332,7 +331,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             "Don't have an account?",
                             style: TextStyle(
                               fontSize: 14,
@@ -349,7 +348,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                                 Navigator.pop(context);
                                 Navigator.pushNamed(context, "/signupDonor");
                               },
-                              child: Text(
+                              child: const Text(
                                 "Sign up",
                                 style: TextStyle(
                                   fontSize: 14,

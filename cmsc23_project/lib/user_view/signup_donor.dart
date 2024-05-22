@@ -7,7 +7,7 @@ import '../providers/auth_provider.dart';
 import '../providers/textfield_providers.dart';
 
 class SignUpDonorPage extends StatefulWidget {
-  const SignUpDonorPage({Key? key}) : super(key: key);
+  const SignUpDonorPage({super.key});
 
   @override
   State<SignUpDonorPage> createState() => _SignUpDonorPageState();
@@ -23,9 +23,6 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
     List<String> addressesList = [];
 
     bool isNumeric(String str) { // check if input is a contact number
-      if(str == null) {
-        return false;
-      }
       return double.tryParse(str) != null;
     }
 
@@ -63,7 +60,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                   width: 34, 
                   height: 34, 
                 ),
-                label: Text(
+                label: const Text(
                   'Back',
                   style: TextStyle(
                     fontSize: 16,
@@ -72,7 +69,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                   ),
                 ),
                 style: TextButton.styleFrom(
-                  foregroundColor: Color(0xFF373D66),
+                  foregroundColor: const Color(0xFF373D66),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(32), 
                   ),
@@ -111,8 +108,8 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
               top: MediaQuery.of(context).size.height * 0.23, 
               left: 0,
               right: 0,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 16, right: 16),
+              child: const Padding(
+                padding: EdgeInsets.only(left: 16, right: 16),
                 child: Text(
                   "Create a donor account.",
                   style: TextStyle(
@@ -138,7 +135,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 4),
-                          child: Text(
+                          child: const Text(
                             "Name",
                             style: TextStyle(
                               fontSize: 15,
@@ -150,7 +147,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                         ),
                       ],
                     ),
-                    Container(
+                    SizedBox(
                       width: 320,
                       height: 55,
                       child: Stack (
@@ -160,7 +157,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                             height: 38,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(32),
-                                color: Color(0xFFFFFFFF).withOpacity(0.7),
+                                color: const Color(0xFFFFFFFF).withOpacity(0.7),
                               ),
                             ),
                           TextFormField(
@@ -187,10 +184,10 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Poppins-Reg',
-                                color: Color(0xFF373D66).withOpacity(0.9),
+                                color: const Color(0xFF373D66).withOpacity(0.9),
                               ),
                               border: InputBorder.none,
-                              contentPadding: EdgeInsets.only(left: 16, right: 16, bottom: 7),
+                              contentPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 7),
                             ),
                           ),
                         ],
@@ -201,7 +198,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 4),
-                          child: Text(
+                          child: const Text(
                             "Username",
                             style: TextStyle(
                               fontSize: 15,
@@ -213,7 +210,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                         ),
                       ],
                     ),
-                    Container(
+                    SizedBox(
                       width: 320,
                       height: 55,
                       child: Stack (
@@ -223,7 +220,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                             height: 38,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(32),
-                                color: Color(0xFFFFFFFF).withOpacity(0.7),
+                                color: const Color(0xFFFFFFFF).withOpacity(0.7),
                               ),
                             ),
                           TextFormField(
@@ -250,10 +247,10 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Poppins-Reg',
-                                color: Color(0xFF373D66).withOpacity(0.9),
+                                color: const Color(0xFF373D66).withOpacity(0.9),
                               ),
                               border: InputBorder.none,
-                              contentPadding: EdgeInsets.only(left: 16, right: 16, bottom: 7),
+                              contentPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 7),
                             ),
                           ),
                         ],
@@ -264,7 +261,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 4),
-                          child: Text(
+                          child: const Text(
                             "Email",
                             style: TextStyle(
                               fontSize: 15,
@@ -276,7 +273,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                         ),
                       ],
                     ),
-                    Container(
+                    SizedBox(
                       width: 320,
                       height: 55,
                       child: Stack (
@@ -286,7 +283,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                             height: 38,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(32),
-                                color: Color(0xFFFFFFFF).withOpacity(0.7),
+                                color: const Color(0xFFFFFFFF).withOpacity(0.7),
                               ),
                             ),
                           TextFormField(
@@ -316,10 +313,10 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Poppins-Reg',
-                                color: Color(0xFF373D66).withOpacity(0.9),
+                                color: const Color(0xFF373D66).withOpacity(0.9),
                               ),
                               border: InputBorder.none,
-                              contentPadding: EdgeInsets.only(left: 16, right: 16, bottom: 7),
+                              contentPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 7),
                             ),
                           ),
                         ],
@@ -330,7 +327,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 6),
-                          child: Text(
+                          child: const Text(
                             "Password",
                             style: TextStyle(
                               fontSize: 15,
@@ -342,7 +339,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                         ),
                       ],
                     ),
-                    Container(
+                    SizedBox(
                       width: 320,
                       height: 55,
                       child: Stack (
@@ -352,7 +349,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                             height: 38,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(32),
-                                color: Color(0xFFFFFFFF).withOpacity(0.7),
+                                color: const Color(0xFFFFFFFF).withOpacity(0.7),
                               ),
                             ),
                           TextFormField(
@@ -382,10 +379,10 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Poppins-Reg',
-                                color: Color(0xFF373D66).withOpacity(0.9),
+                                color: const Color(0xFF373D66).withOpacity(0.9),
                               ),
                               border: InputBorder.none,
-                              contentPadding: EdgeInsets.only(left: 16, right: 16, bottom: 7),
+                              contentPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 7),
                             ),
                           ),
                         ],
@@ -396,7 +393,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 3),
-                          child: Text(
+                          child: const Text(
                             "Address/es",
                             style: TextStyle(
                               fontSize: 15,
@@ -408,7 +405,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                         ),
                         Padding(
                           padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1, bottom: 3),
-                          child: Text(
+                          child: const Text(
                             "separate with commas",
                             style: TextStyle(
                               fontSize: 13,
@@ -419,7 +416,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                         ),
                       ],
                     ),
-                    Container(
+                    SizedBox(
                       width: 320,
                       height: 55,
                       child: Stack (
@@ -429,7 +426,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                             height: 38,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(32),
-                                color: Color(0xFFFFFFFF).withOpacity(0.7),
+                                color: const Color(0xFFFFFFFF).withOpacity(0.7),
                               ),
                             ),
                           TextFormField(
@@ -456,10 +453,10 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Poppins-Reg',
-                                color: Color(0xFF373D66).withOpacity(0.9),
+                                color: const Color(0xFF373D66).withOpacity(0.9),
                               ),
                               border: InputBorder.none,
-                              contentPadding: EdgeInsets.only(left: 16, right: 16, bottom: 7),
+                              contentPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 7),
                             ),
                           ),
                         ],
@@ -470,7 +467,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 6),
-                          child: Text(
+                          child: const Text(
                             "Contact number",
                             style: TextStyle(
                               fontSize: 15,
@@ -482,7 +479,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                         ),
                       ],
                     ),
-                    Container(
+                    SizedBox(
                       width: 320,
                       height: 55,
                       child: Stack (
@@ -492,7 +489,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                             height: 38,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(32),
-                                color: Color(0xFFFFFFFF).withOpacity(0.7),
+                                color: const Color(0xFFFFFFFF).withOpacity(0.7),
                               ),
                             ),
                           TextFormField(
@@ -522,10 +519,10 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Poppins-Reg',
-                                color: Color(0xFF373D66).withOpacity(0.9),
+                                color: const Color(0xFF373D66).withOpacity(0.9),
                               ),
                               border: InputBorder.none,
-                              contentPadding: EdgeInsets.only(left: 16, right: 16, bottom: 7),
+                              contentPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 7),
                             ),
                           ),
                         ],
@@ -537,7 +534,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                         onPressed: () {
                           provider.resetSignUp();
                         },
-                        child: Text(
+                        child: const Text(
                           "Reset",
                           style: TextStyle(
                             fontSize: 14,
@@ -558,7 +555,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                           final password = provider.controller4.text;
                           final addressesUnsplit = provider.controller5.text;
                           final contactnumber = provider.controller6.text;
-                          final userType = 'donor';
+                          const userType = 'donor';
                           bool multipleAddresses = addressesUnsplit.contains(',');
 
                           if (multipleAddresses == true) {
@@ -575,7 +572,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
 
                           if (signUpResult == 'The account already exists for that email.') { // match error message
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Account already exists!')),
+                              const SnackBar(content: Text('Account already exists!')),
                             );
                           }
                           else {
@@ -597,12 +594,12 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                       },
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(320, 40),
-                        foregroundColor:  Color(0xFFFCBE4F),
+                        foregroundColor:  const Color(0xFFFCBE4F),
                         textStyle: const TextStyle(
                           fontSize: 14,
                           fontFamily: 'Poppins-Bold',
                         ),
-                        backgroundColor: Color(0xFF373D66),
+                        backgroundColor: const Color(0xFF373D66),
                       ),
                       child: const Text('Sign up as a Donor'),
                     ),
@@ -610,7 +607,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             "Already have an account?",
                             style: TextStyle(
                               fontSize: 14,
@@ -627,7 +624,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                                 Navigator.pop(context);
                                 Navigator.pushNamed(context, "/loginDonor");
                               },
-                              child: Text(
+                              child: const Text(
                                 "Log in",
                                 style: TextStyle(
                                   fontSize: 14,

@@ -1,16 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cmsc23_project/admin_view/indiv_approve_page.dart';
 import 'package:cmsc23_project/models/org_signup.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models/user_signup.dart';
 import '../providers/firebase_provider.dart';
 import '../providers/textfield_providers.dart';
 import 'indiv_view_all_orgs.dart';
 
 class AdminViewAllOrgs extends StatefulWidget {
-  const AdminViewAllOrgs({Key? key}) : super(key: key);
+  const AdminViewAllOrgs({super.key});
 
   @override
   State<AdminViewAllOrgs> createState() => _AdminViewAllOrgsState();
@@ -70,7 +68,7 @@ class _AdminViewAllOrgsState extends State<AdminViewAllOrgs> {
                   width: 34, 
                   height: 34, 
                 ),
-                label: Text(
+                label: const Text(
                   'Back',
                   style: TextStyle(
                     fontSize: 16,
@@ -79,7 +77,7 @@ class _AdminViewAllOrgsState extends State<AdminViewAllOrgs> {
                   ),
                 ),
                 style: TextButton.styleFrom(
-                  foregroundColor: Color(0xFF373D66),
+                  foregroundColor: const Color(0xFF373D66),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(32), 
                   ),
@@ -90,7 +88,7 @@ class _AdminViewAllOrgsState extends State<AdminViewAllOrgs> {
               top: MediaQuery.of(context).size.height * 0.13, 
               left: 0,
               right: 0,
-              child: Padding(
+              child: const Padding(
                 padding: EdgeInsets.all(17),
                 child: Text(
                   "All Organizations",
@@ -109,12 +107,12 @@ class _AdminViewAllOrgsState extends State<AdminViewAllOrgs> {
               right: 0,
               bottom: MediaQuery.of(context).size.height * 0.057,
               child: SingleChildScrollView(
-                child: Container(
+                child: SizedBox(
                 height: MediaQuery.of(context).size.height * 0.7, 
                 width: MediaQuery.of(context).size.width*0.8,
                   child: Column(
                     children: [
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Expanded(
                         child: StreamBuilder<QuerySnapshot>(
                         stream: userStream,
@@ -127,7 +125,7 @@ class _AdminViewAllOrgsState extends State<AdminViewAllOrgs> {
                           } 
                           else if (snapshot.connectionState == ConnectionState.waiting) {
                             context.read<UserInfosProvider>().fetchUsers(); // reload snapshots
-                            return Center(
+                            return const Center(
                               child: CircularProgressIndicator(),
                             ); // display loading circle until it succeeds
                           } 
@@ -152,7 +150,7 @@ class _AdminViewAllOrgsState extends State<AdminViewAllOrgs> {
                         return ListView.builder(
                           padding: EdgeInsets.zero,
                           shrinkWrap: true,
-                          physics: AlwaysScrollableScrollPhysics(),
+                          physics: const AlwaysScrollableScrollPhysics(),
                           itemCount: orgDetails.length,
                           itemBuilder: (context, index) {
                             print('Request at index $index: ${orgDetails[index].data()}'); 
@@ -161,15 +159,15 @@ class _AdminViewAllOrgsState extends State<AdminViewAllOrgs> {
 
                             return Container(
                               decoration: BoxDecoration(
-                                color: Color(0xFFFFFFFF),
+                                color: const Color(0xFFFFFFFF),
                                 borderRadius: BorderRadius.circular(15),
                               ),
-                              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 28),
+                              margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 28),
                               child: ListTile(
-                                contentPadding: EdgeInsets.only(top: 2, left: 13, bottom: 2, right: 13),
+                                contentPadding: const EdgeInsets.only(top: 2, left: 13, bottom: 2, right: 13),
                                 title: Text(
                                   org.name, 
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 18,
                                     fontFamily: 'Poppins-Bold',
                                     color: Color(0xFF373D66),
@@ -177,7 +175,7 @@ class _AdminViewAllOrgsState extends State<AdminViewAllOrgs> {
                                 ),
                                 subtitle: Text(
                                   org.contactNumber,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 12,
                                     color: Colors.grey,
                                     fontFamily: 'Poppins-Reg',
@@ -194,12 +192,12 @@ class _AdminViewAllOrgsState extends State<AdminViewAllOrgs> {
                                   },
                                   style: ElevatedButton.styleFrom(
                                     minimumSize: const Size(57, 50),
-                                    foregroundColor: Color(0xFF373D66),
+                                    foregroundColor: const Color(0xFF373D66),
                                     textStyle: const TextStyle(
                                       fontSize: 14,
                                       fontFamily: 'Poppins-Bold',
                                     ),
-                                    backgroundColor: Color(0xFFFCBE4F),
+                                    backgroundColor: const Color(0xFFFCBE4F),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15),
                                     ),

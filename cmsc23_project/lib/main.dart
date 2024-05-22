@@ -46,16 +46,18 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: DonorHomepage(),
     );
   }
 }
 
 class RootWidget extends StatelessWidget {
-  const RootWidget({Key? key});
+  const RootWidget({super.key, Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +75,7 @@ class RootWidget extends StatelessWidget {
         "/viewAllDonations": (context) => const AdminViewAllDonations(),
         "/viewAllDonors": (context) => const AdminViewAllDonors(),
         "/adminDashboard": (context) => const AdminDashboard(),
-        "/donorHomepage": (context) => DonorHomepage(),
+        "/donorHomepage": (context) => const DonorHomepage(),
         // org
         "/org": (context) => const OrgHomePage(),
         "/org/add-a-drive": (context) => const AddADrive(),
