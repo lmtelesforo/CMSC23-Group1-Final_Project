@@ -1,6 +1,5 @@
 import 'package:cmsc23_project/providers/auth_provider.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -129,7 +128,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 4),
-                          child: Text(
+                          child: const Text(
                             "Email",
                             style: TextStyle(
                               fontSize: 15,
@@ -285,7 +284,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                           String? message = await context
                           .read<UserAuthProvider>()
                           .authService
-                          .signIn(email!, password!);
+                          .signIn(email, password);
 
                           print(message);
                           print(showSignInErrorMessage);
@@ -294,7 +293,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                             if (message != null && message.isNotEmpty) {
                               showSignInErrorMessage = true;
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
+                                const SnackBar(
                                   content: Text('Invalid email or password'),
                                 ),
                               );
@@ -306,7 +305,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                               Navigator.pushNamed(context, "/donorHomepage");
 
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
+                                const SnackBar(
                                   content: Text('Logged in!'),
                                 ),
                               );

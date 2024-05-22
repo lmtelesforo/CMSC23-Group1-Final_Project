@@ -4,15 +4,17 @@ import 'package:cmsc23_project/providers/donation_providers.dart';
 import 'donor_page.dart';
 
 class FavoritePage extends StatelessWidget {
+  const FavoritePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Favorite Organizations",
           style: TextStyle(
             fontFamily: "Montserrat",
-            color: const Color.fromRGBO(55, 61, 102, 1),
+            color: Color.fromRGBO(55, 61, 102, 1),
             fontWeight: FontWeight.bold,
             fontSize: 20,
           ),
@@ -20,14 +22,14 @@ class FavoritePage extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         centerTitle: true,
-        iconTheme: IconThemeData(color: Colors.white, size: 30),
+        iconTheme: const IconThemeData(color: Colors.white, size: 30),
       ),
       body: Consumer<DonationProvider>(
         builder: (context, donationProvider, child) {
           final favoriteOrganizations = donationProvider.getFavoriteOrganizations();
 
           if (favoriteOrganizations.isEmpty) {
-            return Center(
+            return const Center(
               child: Text(
                 "No favorite organizations selected",
                 style: TextStyle(

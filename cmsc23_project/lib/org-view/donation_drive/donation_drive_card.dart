@@ -1,15 +1,17 @@
 import 'package:cmsc23_project/models/donation_drive.dart';
-import 'package:cmsc23_project/org-view/donation_drive/donation_drive_page.dart';
-import 'package:cmsc23_project/org-view/org_view_styles.dart';
+import 'package:cmsc23_project/org-view/donation_drive/donation_drive_details.dart';
+import 'package:cmsc23_project/org-view/base_elements/org_view_styles.dart';
+import 'package:cmsc23_project/providers/current_org_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DonationDriveCard extends StatelessWidget {
   // Represents a donation drive card on the homepage and donation drive list
-  final DonationDrive donationDrive;
+  final DonationDrive drive;
 
   const DonationDriveCard({
     super.key,
-    required this.donationDrive,
+    required this.drive,
   });
 
   @override
@@ -25,8 +27,8 @@ class DonationDriveCard extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => DonationDriveScreen(
-                      donationDrive: donationDrive,
+                    builder: (context) => DonationDriveDetails(
+                      drive: drive,
                     ),
                   ),
                 );
@@ -35,7 +37,8 @@ class DonationDriveCard extends StatelessWidget {
             ),
           ),
         ),
-        if (true) _favoriteIcon,
+        if (context.read<CurrentOrgProvider>().isFavorite(drive.id))
+          _favoriteIcon,
       ],
     );
   }
@@ -46,15 +49,19 @@ class DonationDriveCard extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: Image(
-              image: donationDrive.image,
+              image: drive.image,
               height: 90,
               width: 150,
               fit: BoxFit.cover,
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: Text(donationDrive.name, style: CustomTextStyle.body),
+            padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
+            child: Text(
+              drive.name,
+              style: CustomTextStyle.body,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
         ],
       );

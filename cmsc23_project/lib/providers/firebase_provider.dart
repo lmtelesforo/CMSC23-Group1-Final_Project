@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../api/firebase_users_api.dart';
-import '../models/user_signup.dart';
 
 // created provider for storing user details (details page)
 class UserInfosProvider with ChangeNotifier {
@@ -18,18 +17,20 @@ class UserInfosProvider with ChangeNotifier {
 
   Stream<QuerySnapshot> get allUsers => _userStream;
   Stream<QuerySnapshot> get allSignUpReqs => _orgSignUpStream;
-  
+
   void fetchUsers() {
     _userStream = firebaseService.getAllUsers();
     notifyListeners();
   }
 
   void fetchSignUpRequests() {
-    _orgSignUpStream = firebaseService.getAllSignUpReqs(); // FirebaseUserAPI get org sign up requests
+    _orgSignUpStream = firebaseService
+        .getAllSignUpReqs(); // FirebaseUserAPI get org sign up requests
     notifyListeners();
   }
 
-  Future<Map<String, dynamic>?> fetchCurrentUser(String? email) async { // get current user and their first and last name + email
+  Future<Map<String, dynamic>?> fetchCurrentUser(String? email) async {
+    // get current user and their first and last name + email
     if (email != null && email.isNotEmpty) {
       final snapshot = await firebaseService.getUsersByEmail(email).first;
       if (snapshot.docs.isNotEmpty) {
@@ -44,20 +45,25 @@ class UserInfosProvider with ChangeNotifier {
     }
   }
 
-  void addUser(Map<String, dynamic> user) async { // add user to firebase
+  void addUser(Map<String, dynamic> user) async {
+    // add user to firebase
     String? message = await firebaseService.addUser(user);
-    print(message); 
-    notifyListeners(); 
+    print(message);
+    notifyListeners();
   }
 
-  void addOrg(Map<String, dynamic> org) async { // add user to firebase
+  void addOrg(Map<String, dynamic> org) async {
+    // add user to firebase
     String? message = await firebaseService.addOrg(org);
-    print(message); 
-    notifyListeners(); 
+    print(message);
+    notifyListeners();
   }
 
   void deleteUser(String email) async {
-    final userDoc = await FirebaseFirestore.instance.collection('users').where('email', isEqualTo: email).get();
+    final userDoc = await FirebaseFirestore.instance
+        .collection('users')
+        .where('email', isEqualTo: email)
+        .get();
     if (userDoc.docs.isNotEmpty) {
       final docId = userDoc.docs.first.id;
       await firebaseService.delete(docId);
@@ -65,13 +71,15 @@ class UserInfosProvider with ChangeNotifier {
     }
   }
 
-
-  void deleteSignUpReq(String id) async { // delete data and reflect on firebase
+  void deleteSignUpReq(String id) async {
+    // delete data and reflect on firebase
     await firebaseService.deleteSignUpReq(id);
     notifyListeners();
   }
-  
-  Map<String, dynamic> donorData(String name, String username, String email, String password, List addresses, String contactnumber, String userType){ // created a structure for easier storing
+
+  Map<String, dynamic> donorData(String name, String username, String email,
+      String password, List addresses, String contactnumber, String userType) {
+    // created a structure for easier storing
     Map<String, dynamic> newData = {
       'name': name,
       'username': username,
@@ -84,7 +92,16 @@ class UserInfosProvider with ChangeNotifier {
     return newData;
   }
 
-  Map<String, dynamic> orgData(String name, String username, String email, String password, List addresses, String contactnumber, List proofs, String userType){ // created a structure for easier storing
+  Map<String, dynamic> orgData(
+      String name,
+      String username,
+      String email,
+      String password,
+      List addresses,
+      String contactnumber,
+      List proofs,
+      String userType) {
+    // created a structure for easier storing
     Map<String, dynamic> newData = {
       'name': name,
       'username': username,

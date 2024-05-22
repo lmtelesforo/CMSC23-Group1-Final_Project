@@ -17,7 +17,7 @@ class DonationProvider with ChangeNotifier {
   List<DonationItem> _donationItems = [];
   String _selectedOrganization = '';
 
-  Map<String, bool> _favoriteOrganizations = {};
+  final Map<String, bool> _favoriteOrganizations = {};
 
   final Map<String, List<String>> _organizationDetails = {
     "Animal Welfare Organizations": ["Details for Animal Welfare Organizations"],

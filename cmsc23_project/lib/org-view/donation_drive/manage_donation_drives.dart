@@ -1,15 +1,19 @@
 import 'package:cmsc23_project/models/donation_drive.dart';
-import 'package:cmsc23_project/org-view/base_screen.dart';
+import 'package:cmsc23_project/org-view/base_elements/base_screen.dart';
 import 'package:cmsc23_project/org-view/donation_drive/donation_drive_card.dart';
-import 'package:cmsc23_project/org-view/org_view_styles.dart';
+import 'package:cmsc23_project/org-view/base_elements/org_view_styles.dart';
+import 'package:cmsc23_project/providers/current_org_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ManageDonationDrives extends StatelessWidget {
-  final List<DonationDrive> donationDrives;
-  const ManageDonationDrives({super.key, required this.donationDrives});
+  const ManageDonationDrives({super.key});
 
   @override
   Widget build(BuildContext context) {
+    List<DonationDrive> donationDrives =
+        context.watch<CurrentOrgProvider>().drives;
+
     return BaseScreen(
       body: Center(
         child: Column(
@@ -26,7 +30,7 @@ class ManageDonationDrives extends StatelessWidget {
                 const AddDonationDrive(),
                 ...donationDrives.map(
                   (donationDrive) {
-                    return DonationDriveCard(donationDrive: donationDrive);
+                    return DonationDriveCard(drive: donationDrive);
                   },
                 ),
               ],
@@ -51,7 +55,7 @@ class AddDonationDrive extends StatelessWidget {
       child: Card(
         child: InkWell(
           onTap: () {
-            Navigator.pushNamed(context, "/add-a-drive");
+            Navigator.pushNamed(context, "/org/add-a-drive");
           },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

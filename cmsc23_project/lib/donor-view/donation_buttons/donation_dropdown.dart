@@ -20,11 +20,11 @@ class _DropdownMenuExampleState extends State<DropdownMenuExample> {
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: DropdownButton<String>(
         value: dropdownValue,
-        icon: Icon(Icons.arrow_drop_down),
+        icon: const Icon(Icons.arrow_drop_down),
         iconSize: 22,
         elevation: 16,
-        style: TextStyle(
-          color: const Color.fromRGBO(55, 61, 102, 1), // Color of the selected item text
+        style: const TextStyle(
+          color: Color.fromRGBO(55, 61, 102, 1), // Color of the selected item text
           fontSize: 16,
         ),
         underline: const SizedBox(), // Remove the underline

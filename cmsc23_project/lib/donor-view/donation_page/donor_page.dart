@@ -8,7 +8,7 @@ import 'package:image_picker/image_picker.dart';
 class DonorPage extends StatelessWidget {
   final String organization;
 
-  DonorPage({required this.organization});
+  const DonorPage({super.key, required this.organization});
 
   @override
   Widget build(BuildContext context) {
@@ -18,23 +18,23 @@ class DonorPage extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: false,
-        iconTheme: IconThemeData(color: Colors.white, size: 30),
+        iconTheme: const IconThemeData(color: Colors.white, size: 30),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Expanded(
+            const Expanded(
               child: Text(
                 "Donation Details",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: "Montserrat",
-                  color: const Color.fromRGBO(55, 61, 102, 1),
+                  color: Color.fromRGBO(55, 61, 102, 1),
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
                 ),
               ),
             ),
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
             SizedBox(
               width: 40,
               height: 40,
@@ -42,13 +42,13 @@ class DonorPage extends StatelessWidget {
             ),
           ],
         ),
-        actions: [],
+        actions: const [],
       ),
       extendBodyBehindAppBar: true,
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage("images/wallpaper.jpg"),
                 fit: BoxFit.cover,
@@ -64,7 +64,7 @@ class DonorPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.5),
                     borderRadius: BorderRadius.circular(10),
@@ -75,18 +75,18 @@ class DonorPage extends StatelessWidget {
                       Center(
                         child: Text(
                           organization,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                             fontFamily: "Montserrat",
-                            color: const Color.fromRGBO(55, 61, 102, 1),
+                            color: Color.fromRGBO(55, 61, 102, 1),
                           ),
                         ),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 Column(
                   children: donationProvider.donationItems.map((item) {
                     return DonationCheckbox( 
@@ -98,31 +98,31 @@ class DonorPage extends StatelessWidget {
                     );
                   }).toList(),
                 ),
-                SizedBox(height: 10),
-                Text("Select if the items are for pickup or drop-off"),
-                SizedBox(height: 10),
-                DropdownMenuExample(),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
+                const Text("Select if the items are for pickup or drop-off"),
+                const SizedBox(height: 10),
+                const DropdownMenuExample(),
+                const SizedBox(height: 10),
                 TextFormField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Weight of items (kg/lbs)',
                   ),
                   keyboardType: TextInputType.number,
                   onChanged: (value) {},
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
                     _openCamera(context);
                   },
-                  child: Text('Take Photo'),
+                  child: const Text('Take Photo'),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
                     _openGallery(context);
                   },
-                  child: Text('Upload Photo'),
+                  child: const Text('Upload Photo'),
                 ),
               ],
             ),

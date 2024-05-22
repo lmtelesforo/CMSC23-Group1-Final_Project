@@ -1,13 +1,14 @@
 import 'package:cmsc23_project/models/donation.dart';
 import 'package:cmsc23_project/org-view/donations/donation_details.dart';
-import 'package:cmsc23_project/org-view/org_view_styles.dart';
+import 'package:cmsc23_project/org-view/base_elements/org_view_styles.dart';
 import 'package:cmsc23_project/providers/current_org_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DonationList extends StatefulWidget {
   // Lists all donations made to the organization
-  const DonationList({super.key});
+  final int? driveId;
+  const DonationList({this.driveId, super.key});
 
   @override
   State<DonationList> createState() => _DonationListState();
@@ -51,7 +52,8 @@ class _DonationListState extends State<DonationList> {
       );
 
   Widget get _donationTiles {
-    List<Donation> donations = context.read<CurrentOrgProvider>().donations;
+    List<Donation> donations =
+        context.watch<CurrentOrgProvider>().donations(driveId: widget.driveId);
 
     List<Donation> filteredDonations = donations.where((donation) {
       return (donation.donorUsername + donation.status.name)
@@ -79,7 +81,7 @@ class _DonationListState extends State<DonationList> {
                   );
                 },
                 child: ListTile(
-                  leading: _statusIcon(filteredDonations[index].status),
+                  leading: statusIcon(filteredDonations[index].status),
                   title: Text(filteredDonations[index].donorUsername),
                   trailing: Text(filteredDonations[index].status.name),
                 ),
@@ -89,22 +91,5 @@ class _DonationListState extends State<DonationList> {
         ),
       ),
     );
-  }
-
-  Widget _statusIcon(status) {
-    switch (status) {
-      case Status.pending:
-        return const Icon(Icons.schedule, color: CustomColors.primary);
-      case Status.confirmed:
-        return const Icon(Icons.check, color: CustomColors.primary);
-      case Status.scheduledForPickup:
-        return const Icon(Icons.schedule_send, color: CustomColors.primary);
-      case Status.complete:
-        return const Icon(Icons.done, color: CustomColors.primary);
-      case Status.cancelled:
-        return const Icon(Icons.cancel, color: CustomColors.primary);
-      default:
-        return const Icon(Icons.error, color: CustomColors.primary);
-    }
   }
 }

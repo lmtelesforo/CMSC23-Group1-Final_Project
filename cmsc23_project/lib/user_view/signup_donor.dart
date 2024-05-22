@@ -23,9 +23,6 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
     List<String> addressesList = [];
 
     bool isNumeric(String str) { // check if input is a contact number
-      if(str == null) {
-        return false;
-      }
       return double.tryParse(str) != null;
     }
 
@@ -264,7 +261,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 4),
-                          child: Text(
+                          child: const Text(
                             "Email",
                             style: TextStyle(
                               fontSize: 15,
@@ -276,7 +273,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                         ),
                       ],
                     ),
-                    Container(
+                    SizedBox(
                       width: 320,
                       height: 55,
                       child: Stack (
@@ -286,7 +283,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                             height: 38,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(32),
-                                color: Color(0xFFFFFFFF).withOpacity(0.7),
+                                color: const Color(0xFFFFFFFF).withOpacity(0.7),
                               ),
                             ),
                           TextFormField(
@@ -316,10 +313,10 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Poppins-Reg',
-                                color: Color(0xFF373D66).withOpacity(0.9),
+                                color: const Color(0xFF373D66).withOpacity(0.9),
                               ),
                               border: InputBorder.none,
-                              contentPadding: EdgeInsets.only(left: 16, right: 16, bottom: 7),
+                              contentPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 7),
                             ),
                           ),
                         ],
@@ -330,7 +327,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 6),
-                          child: Text(
+                          child: const Text(
                             "Password",
                             style: TextStyle(
                               fontSize: 15,
@@ -342,7 +339,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                         ),
                       ],
                     ),
-                    Container(
+                    SizedBox(
                       width: 320,
                       height: 55,
                       child: Stack (
@@ -352,7 +349,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                             height: 38,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(32),
-                                color: Color(0xFFFFFFFF).withOpacity(0.7),
+                                color: const Color(0xFFFFFFFF).withOpacity(0.7),
                               ),
                             ),
                           TextFormField(
@@ -558,7 +555,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                           final password = provider.controller4.text;
                           final addressesUnsplit = provider.controller5.text;
                           final contactnumber = provider.controller6.text;
-                          final userType = 'donor';
+                          const userType = 'donor';
                           bool multipleAddresses = addressesUnsplit.contains(',');
 
                           if (multipleAddresses == true) {
@@ -575,7 +572,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
 
                           if (signUpResult == 'The account already exists for that email.') { // match error message
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Account already exists!')),
+                              const SnackBar(content: Text('Account already exists!')),
                             );
                           }
                           else {

@@ -13,7 +13,7 @@ class DonorHomepage extends StatefulWidget {
 
 class _DonorHomepageState extends State<DonorHomepage> {
   List<String> filteredOrganizations = [];
-  DonationProvider _donationProvider = DonationProvider();
+  final DonationProvider _donationProvider = DonationProvider();
 
   @override
   void initState() {
@@ -38,7 +38,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
           "Donor Homepage",
           style: TextStyle(
             fontFamily: "Montserrat",
-            color: const Color.fromRGBO(55, 61, 102, 1),
+            color: Color.fromRGBO(55, 61, 102, 1),
             fontWeight: FontWeight.bold,
             fontSize: 20,
           ),
@@ -99,19 +99,19 @@ class _DonorHomepageState extends State<DonorHomepage> {
               },
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 "Favorite",
                 style: TextStyle(fontSize: 20),
               ),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => FavoritePage()),
+                  MaterialPageRoute(builder: (context) => const FavoritePage()),
                 );
               },
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 "Log Out",
                 style: TextStyle(fontSize: 20),
               ),
@@ -153,12 +153,12 @@ class _DonorHomepageState extends State<DonorHomepage> {
                     filled: true,
                     fillColor: Colors.white,
                     hintText: "Search...",
-                    hintStyle: TextStyle(fontSize: 16),
-                    prefixIcon: Icon(Icons.search),
-                    contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                    hintStyle: const TextStyle(fontSize: 16),
+                    prefixIcon: const Icon(Icons.search),
+                    contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Color(0xffd3dde4),
                         width: 1,
                       ),
@@ -210,7 +210,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                       style: TextStyle(
                                         fontSize: 25,
                                         fontWeight: FontWeight.bold,
-                                        color: const Color.fromRGBO(252, 190, 79, 1),
+                                        color: Color.fromRGBO(252, 190, 79, 1),
                                         fontFamily: "Montserrat",
                                       ),
                                     ),
@@ -220,7 +220,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                       style: TextStyle(
                                         fontSize: 25,
                                         fontWeight: FontWeight.bold,
-                                        color: const Color.fromRGBO(252, 190, 79, 1),
+                                        color: Color.fromRGBO(252, 190, 79, 1),
                                         fontFamily: "Montserrat",
                                       ),
                                     ),
@@ -277,14 +277,11 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(25),
+                                          borderRadius: BorderRadius.circular(25),
                                           child: Image.asset(
                                             "images/$org.jpg",
                                             width: 148,
@@ -294,14 +291,12 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                         ),
                                         const SizedBox(height: 10),
                                         Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
                                           children: [
                                             Text(
                                               org,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontFamily: "Poppins",
                                                 fontSize: 14,
                                                 color: Colors.black,
