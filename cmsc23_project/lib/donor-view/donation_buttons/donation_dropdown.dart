@@ -19,11 +19,11 @@ class _DropdownMenuExampleState extends State<DropdownMenuExample> {
       child: DropdownButton<String>(
         value: dropdownValue,
         icon: Icon(Icons.arrow_drop_down),
-        iconSize: 24,
+        iconSize: 22,
         elevation: 16,
         style: TextStyle(
           color: const Color.fromRGBO(55, 61, 102, 1), // Color of the selected item text
-          fontSize: 18,
+          fontSize: 16,
         ),
         underline: SizedBox(), // Remove the underline
         onChanged: (String? newValue) {

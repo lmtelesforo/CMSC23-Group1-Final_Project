@@ -1,6 +1,8 @@
-import 'package:cmsc23_project/donor-view/donation_page/donor_page.dart';
-import 'package:cmsc23_project/donor-view/donor_items/organization_list.dart';
+import 'package:cmsc23_project/providers/donation_providers.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:cmsc23_project/donor-view/donation_page/favorite_page.dart';
+import 'package:cmsc23_project/donor-view/donation_page/org_details_page.dart';
 
 class DonorHomepage extends StatefulWidget {
   @override
@@ -9,17 +11,18 @@ class DonorHomepage extends StatefulWidget {
 
 class _DonorHomepageState extends State<DonorHomepage> {
   List<String> filteredOrganizations = [];
+  DonationProvider _donationProvider = DonationProvider();
 
   @override
   void initState() {
     super.initState();
     // Initially, set filtered organizations to all organizations
-    filteredOrganizations.addAll(organizations);
+    filteredOrganizations.addAll(_donationProvider.organizations);
   }
 
   void filterOrganizations(String query) {
     setState(() {
-      filteredOrganizations = organizations
+      filteredOrganizations = _donationProvider.organizations
           .where((org) => org.toLowerCase().contains(query.toLowerCase()))
           .toList();
     });
@@ -33,7 +36,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
           "Donor Homepage",
           style: TextStyle(
             fontFamily: "Montserrat",
-            color: Colors.white,
+            color: const Color.fromRGBO(55, 61, 102, 1),
             fontWeight: FontWeight.bold,
             fontSize: 20,
           ),
@@ -95,17 +98,13 @@ class _DonorHomepageState extends State<DonorHomepage> {
             ),
             ListTile(
               title: Text(
-                "Log Out",
+                "Favorite",
                 style: TextStyle(fontSize: 20),
               ),
               onTap: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(context, "/");
-
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('User logged out!'),
-                  ),
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => FavoritePage()),
                 );
               },
             ),
@@ -125,9 +124,9 @@ class _DonorHomepageState extends State<DonorHomepage> {
           ),
           Positioned(
             top: AppBar().preferredSize.height + 80,
-            left: 16,
-            right: 16,
-            bottom: 16,
+            left: 30,
+            right: 30,
+            bottom: 30,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -136,25 +135,27 @@ class _DonorHomepageState extends State<DonorHomepage> {
                   style: TextStyle(
                     color: Colors.black,
                     fontFamily: "Montserrat",
-                    fontSize: 20,
+                    fontSize: 16,
                   ),
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
                     hintText: "Search...",
+                    hintStyle: TextStyle(fontSize: 16),
                     prefixIcon: Icon(Icons.search),
+                    contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(30),
                       borderSide: BorderSide(
                         color: Color(0xffd3dde4),
-                        width: 3,
+                        width: 1,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
                       borderSide: BorderSide(
                         color: Color(0xffd3dde4),
-                        width: 3,
+                        width: 2,
                       ),
                     ),
                   ),
@@ -163,7 +164,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
                 Container(
                   height: 200,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: const Color.fromRGBO(55, 61, 102, 1),
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
@@ -183,7 +184,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Image.asset(
-                                "images/icon.jpg",
+                                "images/icon.png",
                                 fit: BoxFit.scaleDown,
                               ),
                               SizedBox(width: 0),
@@ -195,9 +196,9 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                     Text(
                                       "Donate",
                                       style: TextStyle(
-                                        fontSize: 38,
+                                        fontSize: 25,
                                         fontWeight: FontWeight.bold,
-                                        color: const Color.fromRGBO(74, 66, 155, 1),
+                                        color: const Color.fromRGBO(252, 190, 79, 1),
                                         fontFamily: "Montserrat",
                                       ),
                                     ),
@@ -205,9 +206,9 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                     Text(
                                       "Now!",
                                       style: TextStyle(
-                                        fontSize: 38,
+                                        fontSize: 25,
                                         fontWeight: FontWeight.bold,
-                                        color: const Color.fromRGBO(74, 66, 155, 1),
+                                        color: const Color.fromRGBO(252, 190, 79, 1),
                                         fontFamily: "Montserrat",
                                       ),
                                     ),
@@ -231,17 +232,24 @@ class _DonorHomepageState extends State<DonorHomepage> {
                         for (String org in filteredOrganizations)
                           GestureDetector(
                             onTap: () {
+                              context.read<DonationProvider>().setOrganization(org);
+                              Map<String, List<String>> organizationDetails = context.read<DonationProvider>().organizationDetails;
+                              String details = organizationDetails[org]?.join('\n') ?? '';
+                              Map<String, String> detailsMap = {'Details': details};
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => DonorPage(organization: org),
+                                MaterialPageRoute(
+                                  builder: (context) => OrgDetailsPage(
+                                    organization: org,
+                                    organizationDetails: detailsMap,),
                                 ),
                               );
                             },
                             child: Stack(
                               children: [
                                 Container(
-                                  height: 200,
-                                  width: 177,
+                                  height: 190,
+                                  width: 163,
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(30),
@@ -264,7 +272,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                           borderRadius: BorderRadius.circular(25),
                                           child: Image.asset(
                                             "images/$org.jpg",
-                                            width: 161,
+                                            width: 148,
                                             height: 120,
                                             fit: BoxFit.cover,
                                           ),
@@ -275,20 +283,13 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                           crossAxisAlignment: CrossAxisAlignment.center,
                                           children: [
                                             Text(
-                                              org.split(" ")[0],
+                                              org,
                                               style: TextStyle(
                                                 fontFamily: "Poppins",
-                                                fontSize: 16,
+                                                fontSize: 14,
                                                 color: Colors.black,
                                               ),
-                                            ),
-                                            Text(
-                                              org.split(" ")[1],
-                                              style: TextStyle(
-                                                fontFamily: 'Poppins',
-                                                fontSize: 16,
-                                                color: Colors.black,
-                                              ),
+                                              textAlign: TextAlign.center,
                                             ),
                                           ],
                                         ),
@@ -297,32 +298,44 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                   ),
                                 ),
                                 Positioned(
-                                  top: 10,
-                                  right: 10,
-                                  child: Container(
-                                    width: 35,
-                                    height: 35,
-                                    decoration: BoxDecoration(
-                                      color: const Color.fromRGBO(31, 39, 78, 1),
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Icon(
-                                      Icons.favorite,
-                                      color: Colors.white,
-                                      size: 25,
+                                  top: 5,
+                                  right: 5,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Provider.of<DonationProvider>(context, listen: false).toggleFavorite(org);
+                                    },
+                                    child: Container(
+                                      width: 29,
+                                      height: 29,
+                                      decoration: BoxDecoration(
+                                        color: const Color.fromRGBO(55, 61, 102, 1),
+                                        borderRadius: BorderRadius.circular(50),
+                                      ),
+                                      child: Center(
+                                        child: Consumer<DonationProvider>(
+                                          builder: (context, provider, _) {
+                                            return Icon(
+                                              Icons.favorite,
+                                              color: provider.isOrganizationFavorite(org) ? 
+                                              const Color.fromRGBO(252, 190, 79, 1) :
+                                              Colors.transparent,
+                                            );
+                                          },
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                      ],
+                        ],
                     ),
                   ),
                 ),
-              ],
-            ),
+            ],
           ),
+        ),
         ],
       ),
     );

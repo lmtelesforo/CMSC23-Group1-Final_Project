@@ -25,12 +25,13 @@ class _DonationCheckboxState extends State<DonationCheckbox> {
         Text(
           widget.itemName,
           style: TextStyle(
-            fontSize: 19,
+            fontSize: 16,
             fontFamily: "Montserrat",
+            fontWeight: FontWeight.bold,
             color: const Color.fromRGBO(55, 61, 102, 1),
           ),
         ),
-        SizedBox(height: 50),
+        SizedBox(height: 30),
         Transform.scale(
           scale: 1.1,
           child: Checkbox(
