@@ -53,7 +53,7 @@ class _DonationListState extends State<DonationList> {
 
   Widget get _donationTiles {
     List<Donation> donations =
-        context.read<CurrentOrgProvider>().donations(driveId: widget.driveId);
+        context.watch<CurrentOrgProvider>().donations(driveId: widget.driveId);
 
     List<Donation> filteredDonations = donations.where((donation) {
       return (donation.donorUsername + donation.status.name)

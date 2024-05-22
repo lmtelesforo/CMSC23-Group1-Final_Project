@@ -56,8 +56,12 @@ class DonationDriveCard extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: Text(drive.name, style: CustomTextStyle.body),
+            padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
+            child: Text(
+              drive.name,
+              style: CustomTextStyle.body,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
         ],
       );

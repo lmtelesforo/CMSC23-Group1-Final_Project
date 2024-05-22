@@ -39,6 +39,11 @@ class CurrentOrgProvider with ChangeNotifier {
     }
   }
 
+  void updateDonation(Donation donation) {
+    _firebaseDonationAPI.update(donation);
+    notifyListeners();
+  }
+
   bool isFavorite(int driveId) => _currentOrg.favorites!.contains(driveId);
   void toggleFavorite(int driveId) {
     if (_currentOrg.favorites!.contains(driveId)) {

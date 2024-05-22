@@ -78,6 +78,7 @@ class _DonationDetailsState extends State<DonationDetails> {
       onSelected: (status) {
         setState(() {
           widget.donation.status = status!;
+          context.read<CurrentOrgProvider>().updateDonation(widget.donation);
         });
       },
       dropdownMenuEntries: validStatuses.map((status) {

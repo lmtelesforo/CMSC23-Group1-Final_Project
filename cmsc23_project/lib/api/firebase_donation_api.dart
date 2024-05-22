@@ -34,4 +34,9 @@ class FirebaseDonationAPI {
         .where((donation) => donation.orgUsername == orgUsername)
         .toList();
   }
+
+  void update(Donation donation) {
+    int index = _donations.indexWhere((d) => d == donation);
+    _donations[index] = donation;
+  }
 }
