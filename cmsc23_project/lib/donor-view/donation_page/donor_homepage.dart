@@ -108,6 +108,16 @@ class _DonorHomepageState extends State<DonorHomepage> {
                 );
               },
             ),
+            ListTile(
+              title: Text(
+                "Log Out",
+                style: TextStyle(fontSize: 20),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, "/");
+              },
+            ),
           ],
         ),
       ),
