@@ -6,7 +6,6 @@ import 'package:cmsc23_project/admin_view/view_all_donors.dart';
 import 'package:cmsc23_project/admin_view/view_all_organizations.dart';
 import 'package:cmsc23_project/providers/current_org_provider.dart';
 import 'package:cmsc23_project/donor-view/donation_page/donor_homepage.dart';
-import 'package:cmsc23_project/providers/current_org_provider.dart';
 import 'package:cmsc23_project/providers/donation_providers.dart';
 import 'package:cmsc23_project/user_view/landing_page.dart';
 import 'package:cmsc23_project/user_view/login_donor.dart';
