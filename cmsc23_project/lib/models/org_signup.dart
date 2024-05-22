@@ -1,16 +1,17 @@
 import 'dart:convert';
 
-class User {
+class Org {
   String name;
   String username;
   String password;
   String email;
   List addresses;
   String contactNumber;
+  List proofs;
   String? id;
   String userType;
 
-  User ({
+  Org ({
     this.id, 
     required this.name, 
     required this.username,
@@ -19,11 +20,11 @@ class User {
     required this.addresses, 
     required this.contactNumber, 
     required this.userType,
+    required this.proofs 
   });
 
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-      id: json['id'],
+  factory Org.fromJson(Map<String, dynamic> json) {
+    return Org(
       name: json['name'],
       username: json['username'],
       password: json['password'],
@@ -31,23 +32,25 @@ class User {
       addresses: json['addresses'],
       contactNumber: json['contactNumber'],
       userType: json['userType'],
+      proofs: json['proofs']
     );
   }
 
-  static List<User> fromJsonArray(String jsonData) {
+  static List<Org> fromJsonArray(String jsonData) {
     final Iterable<dynamic> data = jsonDecode(jsonData);
-    return data.map<User>((dynamic d) => User.fromJson(d)).toList();
+    return data.map<Org>((dynamic d) => Org.fromJson(d)).toList();
   }
 
-  Map<String, dynamic> toJson(User user) {
-    return { // removed id mapping 
-      'name': user.name,
-      'username': user.username,
-      'password': user.password,
-      'email': user.email,
-      'addresses': user.addresses,
-      'contactNumber': user.contactNumber,
-      'userType': user.userType,
+  Map<String, dynamic> toJson(Org org) {
+    return {
+      'name': org.name,
+      'username': org.username,
+      'password': org.password,
+      'email': org.email,
+      'addresses': org.addresses,
+      'contactNumber': org.contactNumber,
+      'userType': org.userType,
+      'proofs': org.proofs
     };
   }
 }

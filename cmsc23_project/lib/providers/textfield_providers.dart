@@ -4,6 +4,7 @@ class TextfieldProviders extends ChangeNotifier {
   // initiate all common variables from forms to avoid redundancy
   String name = '';
   String username = '';
+  String email = '';
   String password = '';
   String addresses = '';
   List addressesSpliced = [];
@@ -16,6 +17,7 @@ class TextfieldProviders extends ChangeNotifier {
   final controller4 = TextEditingController();
   final controller5 = TextEditingController();
   final controller6 = TextEditingController();
+  final controller7 = TextEditingController();
 
   void updateName(String value) {
     name = value;
@@ -24,6 +26,11 @@ class TextfieldProviders extends ChangeNotifier {
 
   void updateUsername(String value) {
     username = value;
+    notifyListeners();
+  }
+
+  void updateEmail(String value) {
+    email = value;
     notifyListeners();
   }
 
@@ -50,6 +57,7 @@ class TextfieldProviders extends ChangeNotifier {
   void resetSignUp() {
     name = '';
     username = '';
+    email = '';
     password = '';
     addresses = '';
     addressesSpliced = [];
@@ -62,11 +70,12 @@ class TextfieldProviders extends ChangeNotifier {
     controller4.clear();
     controller5.clear();
     controller6.clear();
+    controller7.clear();
     notifyListeners();
   }
 
   void resetLogIn() {
-    username = '';
+    email = '';
     password = '';
     controller1.clear(); // clears form field
     controller2.clear();
