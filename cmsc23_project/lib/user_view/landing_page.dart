@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class LandingPage extends StatefulWidget {
-  const LandingPage({super.key});
+  const LandingPage({Key? key}) : super(key: key);
 
   @override
   State<LandingPage> createState() => _LandingPageState();
@@ -57,8 +57,8 @@ class _LandingPageState extends State<LandingPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.only(left: 16, right: 16, bottom: 12),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16, right: 16, bottom: 12),
                     child: Text(
                       "For the People, by the People.",
                       style: TextStyle(
@@ -77,12 +77,12 @@ class _LandingPageState extends State<LandingPage> {
                     },
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(300, 35),
-                      foregroundColor: const Color(0xFFFCBE4F),
+                      foregroundColor: Color(0xFFFCBE4F),
                       textStyle: const TextStyle(
                         fontSize: 14,
                         fontFamily: 'Poppins-Bold',
                       ),
-                      backgroundColor: const Color(0xFF373D66),
+                      backgroundColor: Color(0xFF373D66),
                     ),
                     child: const Text('Log In'),
                   ),
@@ -93,12 +93,12 @@ class _LandingPageState extends State<LandingPage> {
                     },
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(300, 35),
-                      foregroundColor: const Color(0xFFFCBE4F),
+                      foregroundColor: Color(0xFFFCBE4F),
                       textStyle: const TextStyle(
                         fontSize: 14,
                         fontFamily: 'Poppins-Bold',
                       ),
-                      backgroundColor: const Color(0xFF373D66),
+                      backgroundColor: Color(0xFF373D66),
                     ),
                     child: const Text('Sign Up'),
                   ),
@@ -122,12 +122,12 @@ class _LandingPageState extends State<LandingPage> {
                     },
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(300, 35),
-                      foregroundColor: const Color(0xFF373D66),
+                      foregroundColor: Color(0xFF373D66),
                       textStyle: const TextStyle(
                         fontSize: 14,
                         fontFamily: 'Poppins-Bold',
                       ),
-                      backgroundColor: const Color(0xFFFCBE4F),
+                      backgroundColor: Color(0xFFFCBE4F),
                     ),
                     child: const Text('Log in as an Organization'),
                   ),
@@ -138,12 +138,12 @@ class _LandingPageState extends State<LandingPage> {
                     },
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(300, 35),
-                      foregroundColor: const Color(0xFF373D66),
+                      foregroundColor: Color(0xFF373D66),
                       textStyle: const TextStyle(
                         fontSize: 14,
                         fontFamily: 'Poppins-Bold',
                       ),
-                      backgroundColor: const Color(0xFFFCBE4F),
+                      backgroundColor: Color(0xFFFCBE4F),
                     ),
                     child: const Text('Sign up as an Organization'),
                   ),
@@ -154,7 +154,7 @@ class _LandingPageState extends State<LandingPage> {
                         Navigator.pop(context);
                         Navigator.pushNamed(context, "/loginAdmin");
                       },
-                      child: const Text(
+                      child: Text(
                         "Log in as Admin",
                         style: TextStyle(
                           fontSize: 14,

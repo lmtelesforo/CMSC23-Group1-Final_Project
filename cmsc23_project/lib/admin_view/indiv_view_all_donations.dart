@@ -2,12 +2,13 @@ import 'package:cmsc23_project/models/donations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/user_signup.dart';
 import '../providers/textfield_providers.dart';
 
 class IndivViewAllDonations extends StatefulWidget {
   final int index;
 
-  const IndivViewAllDonations({super.key, required this.index});
+  const IndivViewAllDonations({Key? key, required this.index}) : super(key: key);
 
   @override
   State<IndivViewAllDonations> createState() => _IndivViewAllDonationsState();
@@ -92,7 +93,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                 width: 34, 
                 height: 34, 
               ),
-              label: const Text(
+              label: Text(
                 'Back',
                 style: TextStyle(
                   fontSize: 16,
@@ -101,7 +102,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                 ),
               ),
               style: TextButton.styleFrom(
-                foregroundColor: const Color(0xFF373D66),
+                foregroundColor: Color(0xFF373D66),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(32), 
                 ),
@@ -112,7 +113,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
             top: MediaQuery.of(context).size.height * 0.14, 
             left: 0,
             right: 0,
-            child: const Padding(
+            child: Padding(
               padding: EdgeInsets.all(17),
               child: Text(
                 "Donation Details",
@@ -130,21 +131,21 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
             left: 0,
             right: 0,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30), 
+              padding: EdgeInsets.symmetric(horizontal: 30), 
               child: Container(
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFFFFFF),
+                  color: Color(0xFFFFFFFF),
                   borderRadius: BorderRadius.circular(15), 
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(10), 
+                  padding: EdgeInsets.all(10), 
                   child: Expanded (
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           children: [
-                            const Text(
+                            Text(
                               'Category:',
                               style: TextStyle(
                                 fontSize: 16,
@@ -152,11 +153,11 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                                 color: Color(0xFF373D66),
                               ),
                             ),
-                            const SizedBox(width: 5),
+                            SizedBox(width: 5),
                             Expanded(
                               child: Text(
                                 donations[widget.index].category,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 16,
                                   fontFamily: 'Poppins-Reg',
                                   color: Color(0xFF373D66),
@@ -165,10 +166,10 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 7),
+                        SizedBox(height: 7),
                         Row(
                           children: [
-                            const Text(
+                            Text(
                               'Shipping Option:',
                               style: TextStyle(
                                 fontSize: 16,
@@ -176,11 +177,11 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                                 color: Color(0xFF373D66),
                               ),
                             ),
-                            const SizedBox(width: 5),
+                            SizedBox(width: 5),
                             Expanded(
                               child: Text(
                                 donations[widget.index].shipping,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 16,
                                   fontFamily: 'Poppins-Reg',
                                   color: Color(0xFF373D66),
@@ -189,10 +190,10 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 7),
+                        SizedBox(height: 7),
                         Row(
                           children: [
-                            const Text(
+                            Text(
                               'Weight:',
                               style: TextStyle(
                                 fontSize: 16,
@@ -200,11 +201,11 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                                 color: Color(0xFF373D66),
                               ),
                             ),
-                            const SizedBox(width: 5),
+                            SizedBox(width: 5),
                             Expanded(
                               child: Text(
                                 donations[widget.index].weight,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 16,
                                   fontFamily: 'Poppins-Reg',
                                   color: Color(0xFF373D66),
@@ -213,10 +214,10 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 7),
+                        SizedBox(height: 7),
                         Row(
                           children: [
-                            const Text(
+                            Text(
                               'Date:',
                               style: TextStyle(
                                 fontSize: 16,
@@ -224,11 +225,11 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                                 color: Color(0xFF373D66),
                               ),
                             ),
-                            const SizedBox(width: 5),
+                            SizedBox(width: 5),
                             Expanded(
                               child: Text(
                                 donations[widget.index].date,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 16,
                                   fontFamily: 'Poppins-Reg',
                                   color: Color(0xFF373D66),
@@ -237,10 +238,10 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 7),
+                        SizedBox(height: 7),
                         Row(
                           children: [
-                            const Text(
+                            Text(
                               'Time:',
                               style: TextStyle(
                                 fontSize: 16,
@@ -248,11 +249,11 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                                 color: Color(0xFF373D66),
                               ),
                             ),
-                            const SizedBox(width: 5),
+                            SizedBox(width: 5),
                             Expanded(
                               child: Text(
                                 donations[widget.index].time,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 16,
                                   fontFamily: 'Poppins-Reg',
                                   color: Color(0xFF373D66),
@@ -261,13 +262,13 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 7),
+                        SizedBox(height: 7),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               children: [
-                                const Text(
+                                Text(
                                   'Address/es:',
                                   style: TextStyle(
                                     fontSize: 16,
@@ -275,11 +276,11 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                                     color: Color(0xFF373D66),
                                   ),
                                 ),
-                                const SizedBox(width: 5),
+                                SizedBox(width: 5),
                                 Expanded(
                                   child: Text(
                                     donations[widget.index].addresses.first,
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 16,
                                       fontFamily: 'Poppins-Reg',
                                       color: Color(0xFF373D66),
@@ -290,13 +291,13 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                             ),
                             (donations[widget.index].addresses.length > 1)
                             ? newAddressLine() // if true
-                            : const SizedBox.shrink(), // if false
+                            : SizedBox.shrink(), // if false
                           ],
                         ),
-                        const SizedBox(height: 7),
+                        SizedBox(height: 7),
                         Row(
                           children: [
-                            const Text(
+                            Text(
                               'Contact Number:',
                               style: TextStyle(
                                 fontSize: 16,
@@ -304,11 +305,11 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                                 color: Color(0xFF373D66),
                               ),
                             ),
-                            const SizedBox(width: 5),
+                            SizedBox(width: 5),
                             Expanded(
                               child: Text(
                                 donations[widget.index].contactNumber,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 16,
                                   fontFamily: 'Poppins-Reg',
                                   color: Color(0xFF373D66),
@@ -336,10 +337,10 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
         donations[widget.index].addresses.length - 1,
         (index) {
           return Padding(
-            padding: const EdgeInsets.only(left: 106), 
+            padding: EdgeInsets.only(left: 106), 
             child: Text(
               donations[widget.index].addresses[index + 1],
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 16,
                 fontFamily: 'Poppins-Reg',
                 color: Color(0xFF373D66),

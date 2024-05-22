@@ -9,8 +9,8 @@ class DonationCheckbox extends StatefulWidget {
     required this.isChecked,
     required this.itemName,
     required this.onChanged,
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   _DonationCheckboxState createState() => _DonationCheckboxState();
@@ -24,13 +24,14 @@ class _DonationCheckboxState extends State<DonationCheckbox> {
       children: [
         Text(
           widget.itemName,
-          style: const TextStyle(
-            fontSize: 19,
+          style: TextStyle(
+            fontSize: 16,
             fontFamily: "Montserrat",
-            color: Color.fromRGBO(55, 61, 102, 1),
+            fontWeight: FontWeight.bold,
+            color: const Color.fromRGBO(55, 61, 102, 1),
           ),
         ),
-        const SizedBox(height: 50),
+        SizedBox(height: 30),
         Transform.scale(
           scale: 1.1,
           child: Checkbox(

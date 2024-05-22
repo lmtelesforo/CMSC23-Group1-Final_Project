@@ -1,12 +1,14 @@
+import 'package:cmsc23_project/admin_view/indiv_approve_page.dart';
 import 'package:cmsc23_project/admin_view/indiv_view_all_donations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/donations.dart';
+import '../models/user_signup.dart';
 import '../providers/textfield_providers.dart';
 
 class AdminViewAllDonations extends StatefulWidget {
-  const AdminViewAllDonations({super.key});
+  const AdminViewAllDonations({Key? key}) : super(key: key);
 
   @override
   State<AdminViewAllDonations> createState() => _AdminViewAllDonationsState();
@@ -94,7 +96,7 @@ class _AdminViewAllDonationsState extends State<AdminViewAllDonations> {
                   width: 34, 
                   height: 34, 
                 ),
-                label: const Text(
+                label: Text(
                   'Back',
                   style: TextStyle(
                     fontSize: 16,
@@ -103,7 +105,7 @@ class _AdminViewAllDonationsState extends State<AdminViewAllDonations> {
                   ),
                 ),
                 style: TextButton.styleFrom(
-                  foregroundColor: const Color(0xFF373D66),
+                  foregroundColor: Color(0xFF373D66),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(32), 
                   ),
@@ -114,7 +116,7 @@ class _AdminViewAllDonationsState extends State<AdminViewAllDonations> {
               top: MediaQuery.of(context).size.height * 0.12, 
               left: 0,
               right: 0,
-              child: const Padding(
+              child: Padding(
                 padding: EdgeInsets.all(17),
                 child: Text(
                   "All Donations",
@@ -135,25 +137,25 @@ class _AdminViewAllDonationsState extends State<AdminViewAllDonations> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     ListView.builder(
                       padding: EdgeInsets.zero,
                       shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
+                      physics: NeverScrollableScrollPhysics(),
                       itemCount: donations.length,
                       itemBuilder: (context, index) {
                         Donation donation = donations[index];
                         return Container(
                           decoration: BoxDecoration(
-                            color: const Color(0xFFFFFFFF),
+                            color: Color(0xFFFFFFFF),
                             borderRadius: BorderRadius.circular(15), 
                           ),
-                          margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 28),
+                          margin: EdgeInsets.symmetric(vertical: 8, horizontal: 28),
                           child: ListTile(
-                            contentPadding: const EdgeInsets.only(top: 2, left: 10, bottom: 2, right: 13),
+                            contentPadding: EdgeInsets.only(top: 2, left: 10, bottom: 2, right: 13),
                             title: Text(
                               donation.category,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 18,
                                 fontFamily: 'Poppins-Bold',
                                 color: Color(0xFF373D66),
@@ -161,7 +163,7 @@ class _AdminViewAllDonationsState extends State<AdminViewAllDonations> {
                             ),
                             subtitle: Text(
                               donation.weight,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.grey,
                                 fontFamily: 'Poppins-Reg',
@@ -178,12 +180,12 @@ class _AdminViewAllDonationsState extends State<AdminViewAllDonations> {
                               },
                               style: ElevatedButton.styleFrom(
                                 minimumSize: const Size(57, 50),
-                                foregroundColor: const Color(0xFF373D66),
+                                foregroundColor: Color(0xFF373D66),
                                 textStyle: const TextStyle(
                                   fontSize: 14,
                                   fontFamily: 'Poppins-Bold',
                                 ),
-                                backgroundColor: const Color(0xFFFCBE4F),
+                                backgroundColor: Color(0xFFFCBE4F),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15), 
                                 ),

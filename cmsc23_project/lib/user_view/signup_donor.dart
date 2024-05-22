@@ -1,10 +1,13 @@
+import 'package:cmsc23_project/providers/firebase_provider.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/auth_provider.dart';
 import '../providers/textfield_providers.dart';
 
 class SignUpDonorPage extends StatefulWidget {
-  const SignUpDonorPage({super.key});
+  const SignUpDonorPage({Key? key}) : super(key: key);
 
   @override
   State<SignUpDonorPage> createState() => _SignUpDonorPageState();
@@ -12,10 +15,19 @@ class SignUpDonorPage extends StatefulWidget {
 
 class _SignUpDonorPageState extends State<SignUpDonorPage> {
   final _formKey = GlobalKey<FormState>(); 
+  late String signUpResult;
 
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<TextfieldProviders>();
+    List<String> addressesList = [];
+
+    bool isNumeric(String str) { // check if input is a contact number
+      if(str == null) {
+        return false;
+      }
+      return double.tryParse(str) != null;
+    }
 
     return Scaffold(
       body: Form(
@@ -51,7 +63,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                   width: 34, 
                   height: 34, 
                 ),
-                label: const Text(
+                label: Text(
                   'Back',
                   style: TextStyle(
                     fontSize: 16,
@@ -60,7 +72,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                   ),
                 ),
                 style: TextButton.styleFrom(
-                  foregroundColor: const Color(0xFF373D66),
+                  foregroundColor: Color(0xFF373D66),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(32), 
                   ),
@@ -74,13 +86,13 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
               child: Container(
                 child: Image.asset(
                   'lib/user_view/assets/cmsc23_logo1.png',
-                  width: 90,
-                  height: 90,
+                  width: 70,
+                  height: 70,
                 ),
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.20, 
+              top: MediaQuery.of(context).size.height * 0.17, 
               left: 0,
               right: 0,
               child: const Text(
@@ -96,11 +108,11 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.26, 
+              top: MediaQuery.of(context).size.height * 0.23, 
               left: 0,
               right: 0,
-              child: const Padding(
-                padding: EdgeInsets.only(left: 16, right: 16),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 16, right: 16),
                 child: Text(
                   "Create a donor account.",
                   style: TextStyle(
@@ -114,7 +126,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.30, 
+              top: MediaQuery.of(context).size.height * 0.26, 
               left: 0,
               right: 0,
               child: Center(
@@ -126,7 +138,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 4),
-                          child: const Text(
+                          child: Text(
                             "Name",
                             style: TextStyle(
                               fontSize: 15,
@@ -138,7 +150,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    Container(
                       width: 320,
                       height: 55,
                       child: Stack (
@@ -148,7 +160,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                             height: 38,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(32),
-                                color: const Color(0xFFFFFFFF).withOpacity(0.7),
+                                color: Color(0xFFFFFFFF).withOpacity(0.7),
                               ),
                             ),
                           TextFormField(
@@ -175,10 +187,10 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Poppins-Reg',
-                                color: const Color(0xFF373D66).withOpacity(0.9),
+                                color: Color(0xFF373D66).withOpacity(0.9),
                               ),
                               border: InputBorder.none,
-                              contentPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 7),
+                              contentPadding: EdgeInsets.only(left: 16, right: 16, bottom: 7),
                             ),
                           ),
                         ],
@@ -189,7 +201,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 4),
-                          child: const Text(
+                          child: Text(
                             "Username",
                             style: TextStyle(
                               fontSize: 15,
@@ -201,7 +213,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    Container(
                       width: 320,
                       height: 55,
                       child: Stack (
@@ -211,7 +223,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                             height: 38,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(32),
-                                color: const Color(0xFFFFFFFF).withOpacity(0.7),
+                                color: Color(0xFFFFFFFF).withOpacity(0.7),
                               ),
                             ),
                           TextFormField(
@@ -238,10 +250,76 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Poppins-Reg',
-                                color: const Color(0xFF373D66).withOpacity(0.9),
+                                color: Color(0xFF373D66).withOpacity(0.9),
                               ),
                               border: InputBorder.none,
-                              contentPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 7),
+                              contentPadding: EdgeInsets.only(left: 16, right: 16, bottom: 7),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 4),
+                          child: Text(
+                            "Email",
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontFamily: 'Poppins-Reg',
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF373D66),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Container(
+                      width: 320,
+                      height: 55,
+                      child: Stack (
+                        children: [
+                          Container (
+                            width: 320,
+                            height: 38,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(32),
+                                color: Color(0xFFFFFFFF).withOpacity(0.7),
+                              ),
+                            ),
+                          TextFormField(
+                            controller: provider.controller3, 
+                            onChanged: provider.updateEmail,
+                            validator: (val) {
+                              if (val!.isEmpty) {
+                                return "Please enter your email";
+                              }
+                              if (val.trim().isEmpty) {
+                                return "Please enter your email";
+                              }
+                              if (EmailValidator.validate(val) != true) {
+                                return "Invalid email";
+                              }
+                              return null;
+                            },
+                            style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'Poppins-Reg',
+                                color: Color(0xFF373D66)
+                            ),
+                            decoration: InputDecoration(
+                              hintText: 'Enter your email',
+                              hintStyle: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'Poppins-Reg',
+                                color: Color(0xFF373D66).withOpacity(0.9),
+                              ),
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.only(left: 16, right: 16, bottom: 7),
                             ),
                           ),
                         ],
@@ -252,7 +330,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 6),
-                          child: const Text(
+                          child: Text(
                             "Password",
                             style: TextStyle(
                               fontSize: 15,
@@ -264,7 +342,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    Container(
                       width: 320,
                       height: 55,
                       child: Stack (
@@ -274,11 +352,11 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                             height: 38,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(32),
-                                color: const Color(0xFFFFFFFF).withOpacity(0.7),
+                                color: Color(0xFFFFFFFF).withOpacity(0.7),
                               ),
                             ),
                           TextFormField(
-                            controller: provider.controller3, 
+                            controller: provider.controller4, 
                             onChanged: provider.updatePassword,
                             validator: (val) {
                               if (val!.isEmpty) {
@@ -304,10 +382,10 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Poppins-Reg',
-                                color: const Color(0xFF373D66).withOpacity(0.9),
+                                color: Color(0xFF373D66).withOpacity(0.9),
                               ),
                               border: InputBorder.none,
-                              contentPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 7),
+                              contentPadding: EdgeInsets.only(left: 16, right: 16, bottom: 7),
                             ),
                           ),
                         ],
@@ -318,7 +396,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 3),
-                          child: const Text(
+                          child: Text(
                             "Address/es",
                             style: TextStyle(
                               fontSize: 15,
@@ -330,7 +408,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                         ),
                         Padding(
                           padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1, bottom: 3),
-                          child: const Text(
+                          child: Text(
                             "separate with commas",
                             style: TextStyle(
                               fontSize: 13,
@@ -341,7 +419,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    Container(
                       width: 320,
                       height: 55,
                       child: Stack (
@@ -351,11 +429,11 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                             height: 38,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(32),
-                                color: const Color(0xFFFFFFFF).withOpacity(0.7),
+                                color: Color(0xFFFFFFFF).withOpacity(0.7),
                               ),
                             ),
                           TextFormField(
-                            controller: provider.controller4, 
+                            controller: provider.controller5, 
                             onChanged: provider.updateAddresses,
                             validator: (val) {
                               if (val!.isEmpty) {
@@ -378,10 +456,10 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Poppins-Reg',
-                                color: const Color(0xFF373D66).withOpacity(0.9),
+                                color: Color(0xFF373D66).withOpacity(0.9),
                               ),
                               border: InputBorder.none,
-                              contentPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 7),
+                              contentPadding: EdgeInsets.only(left: 16, right: 16, bottom: 7),
                             ),
                           ),
                         ],
@@ -392,7 +470,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 6),
-                          child: const Text(
+                          child: Text(
                             "Contact number",
                             style: TextStyle(
                               fontSize: 15,
@@ -404,7 +482,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    Container(
                       width: 320,
                       height: 55,
                       child: Stack (
@@ -414,11 +492,11 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                             height: 38,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(32),
-                                color: const Color(0xFFFFFFFF).withOpacity(0.7),
+                                color: Color(0xFFFFFFFF).withOpacity(0.7),
                               ),
                             ),
                           TextFormField(
-                            controller: provider.controller5, 
+                            controller: provider.controller6, 
                             onChanged: provider.updateContactNumber,
                             validator: (val) {
                               if (val!.isEmpty) {
@@ -426,6 +504,9 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                               }
                               if (val.trim().isEmpty) {
                                 return "Please enter your contact number";
+                              }
+                              if (isNumeric(val) != true) {
+                                return "Please enter a valid contact number";
                               }
                               return null;
                             },
@@ -441,10 +522,10 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Poppins-Reg',
-                                color: const Color(0xFF373D66).withOpacity(0.9),
+                                color: Color(0xFF373D66).withOpacity(0.9),
                               ),
                               border: InputBorder.none,
-                              contentPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 7),
+                              contentPadding: EdgeInsets.only(left: 16, right: 16, bottom: 7),
                             ),
                           ),
                         ],
@@ -456,7 +537,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                         onPressed: () {
                           provider.resetSignUp();
                         },
-                        child: const Text(
+                        child: Text(
                           "Reset",
                           style: TextStyle(
                             fontSize: 14,
@@ -468,36 +549,60 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          String name = provider.controller1.text;
-                          String username = provider.controller2.text;
-                          String password = provider.controller3.text;
-                          String addresses = provider.controller4.text;
-                          String contactnumber = provider.controller5.text;
+                          _formKey.currentState!.save();
+                          final name = provider.controller1.text;
+                          final username = provider.controller2.text;
+                          final email = provider.controller3.text;
+                          final password = provider.controller4.text;
+                          final addressesUnsplit = provider.controller5.text;
+                          final contactnumber = provider.controller6.text;
+                          final userType = 'donor';
+                          bool multipleAddresses = addressesUnsplit.contains(',');
 
-                          provider.resetSignUp();
-                          Navigator.pop(context);
-                          Navigator.pushNamed(context, "/donorHomepage");
-
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Signed up!'),
-                            ),
-                          );
-                        } 
-                        else {
+                          if (multipleAddresses == true) {
+                            addressesList = addressesUnsplit.split(',').map((address) => address.trim()).toList();
+                          }
+                          else {
+                            addressesList = [addressesUnsplit];
+                          }
                           
-                        }
+                          final authService = Provider.of<UserAuthProvider>(context, listen: false).authService;
+                          final userService = Provider.of<UserInfosProvider>(context, listen: false).firebaseService;
+
+                          signUpResult = (await authService.signUp(email, password))!;
+
+                          if (signUpResult == 'The account already exists for that email.') { // match error message
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Account already exists!')),
+                            );
+                          }
+                          else {
+                            final user = UserInfosProvider().donorData(name, username, email, password, addressesList, contactnumber, userType);
+                            
+                            userService.addUser(user); // add to firebase
+
+                            provider.resetSignUp();
+                            Navigator.pop(context);
+                            Navigator.pushNamed(context, "/donorHomepage");
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Welcome to ElbiDrive, $name!'),
+                              ),
+                            );  
+                          }
+                        } 
                       },
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(320, 40),
-                        foregroundColor:  const Color(0xFFFCBE4F),
+                        foregroundColor:  Color(0xFFFCBE4F),
                         textStyle: const TextStyle(
                           fontSize: 14,
                           fontFamily: 'Poppins-Bold',
                         ),
-                        backgroundColor: const Color(0xFF373D66),
+                        backgroundColor: Color(0xFF373D66),
                       ),
                       child: const Text('Sign up as a Donor'),
                     ),
@@ -505,7 +610,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text(
+                          Text(
                             "Already have an account?",
                             style: TextStyle(
                               fontSize: 14,
@@ -522,7 +627,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                                 Navigator.pop(context);
                                 Navigator.pushNamed(context, "/loginDonor");
                               },
-                              child: const Text(
+                              child: Text(
                                 "Log in",
                                 style: TextStyle(
                                   fontSize: 14,

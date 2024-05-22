@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/auth_provider.dart';
 import '../providers/textfield_providers.dart';
 
 class LogInOrgPage extends StatefulWidget {
-  const LogInOrgPage({super.key});
+  const LogInOrgPage({Key? key}) : super(key: key);
 
   @override
   State<LogInOrgPage> createState() => _LogInOrgPageState();
 }
 
 class _LogInOrgPageState extends State<LogInOrgPage> {
-  final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>(); 
+  bool showSignInErrorMessage = false;
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +21,10 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
 
     return Scaffold(
       body: Form(
-        key: _formKey,
+        key: _formKey, 
         child: Stack(
           children: [
-            Positioned(
+            Positioned (
               top: 0,
               left: 0,
               right: 0,
@@ -31,8 +33,7 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                 height: MediaQuery.of(context).size.height,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(
-                        'lib/user_view/assets/cmsc23_background.png'),
+                    image: AssetImage('lib/user_view/assets/cmsc23_background.png'),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -48,11 +49,11 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                   Navigator.pushNamed(context, "/");
                 },
                 icon: Image.asset(
-                  'lib/user_view/assets/back.png',
-                  width: 34,
-                  height: 34,
+                  'lib/user_view/assets/back.png', 
+                  width: 34, 
+                  height: 34, 
                 ),
-                label: const Text(
+                label: Text(
                   'Back',
                   style: TextStyle(
                     fontSize: 16,
@@ -60,15 +61,15 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                   ),
                 ),
                 style: TextButton.styleFrom(
-                  foregroundColor: const Color(0xFF373D66),
+                  foregroundColor: Color(0xFF373D66),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(32),
+                    borderRadius: BorderRadius.circular(32), 
                   ),
                 ),
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.165,
+              top: MediaQuery.of(context).size.height * 0.165, 
               left: 0,
               right: 0,
               child: Container(
@@ -80,7 +81,7 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.345,
+              top: MediaQuery.of(context).size.height * 0.345, 
               left: 0,
               right: 0,
               child: const Text(
@@ -96,11 +97,11 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.43,
+              top: MediaQuery.of(context).size.height * 0.43, 
               left: 0,
               right: 0,
-              child: const Padding(
-                padding: EdgeInsets.only(left: 16, right: 16),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 16, right: 16),
                 child: Text(
                   "Log in your org account.",
                   style: TextStyle(
@@ -114,7 +115,7 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.515,
+              top: MediaQuery.of(context).size.height * 0.515, 
               left: 0,
               right: 0,
               child: Center(
@@ -125,11 +126,9 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(
-                              left: MediaQuery.of(context).size.width * 0.133,
-                              bottom: 4),
-                          child: const Text(
-                            "Username",
+                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 4),
+                          child: Text(
+                            "Email",
                             style: TextStyle(
                               fontSize: 15,
                               fontFamily: 'Poppins-Reg',
@@ -140,21 +139,21 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    Container(
                       width: 320,
                       height: 60,
-                      child: Stack(
+                      child: Stack (
                         children: [
-                          Container(
+                          Container (
                             width: 320,
                             height: 40,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(32),
-                              color: const Color(0xFFFFFFFF).withOpacity(0.7),
+                              color: Color(0xFFFFFFFF).withOpacity(0.7),
                             ),
                           ),
                           TextFormField(
-                            controller: provider.controller1,
+                            controller: provider.controller1, 
                             onChanged: provider.updateName,
                             validator: (val) {
                               if (val!.isEmpty) {
@@ -166,35 +165,33 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                               return null;
                             },
                             style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: 'Poppins-Reg',
-                                color: Color(0xFF373D66)),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'Poppins-Reg',
+                              color: Color(0xFF373D66)
+                            ),
                             decoration: InputDecoration(
-                              hintText: 'Enter your username',
+                              hintText: 'Enter your email',
                               hintStyle: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Poppins-Reg',
-                                color: const Color(0xFF373D66).withOpacity(0.9),
+                                color: Color(0xFF373D66).withOpacity(0.9),
                               ),
                               border: InputBorder.none,
-                              contentPadding: const EdgeInsets.only(
-                                  left: 16, right: 16, bottom: 7),
+                              contentPadding: EdgeInsets.only(left: 16, right: 16, bottom: 7),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 15),
+                    SizedBox(height: 15),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(
-                              left: MediaQuery.of(context).size.width * 0.133,
-                              bottom: 4),
-                          child: const Text(
+                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 4),
+                          child: Text(
                             "Password",
                             style: TextStyle(
                               fontSize: 15,
@@ -206,21 +203,22 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    Container(
                       width: 320,
                       height: 60,
-                      child: Stack(
+                      child: Stack (
                         children: [
-                          Container(
+                          Container (
                             width: 320,
                             height: 40,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(32),
-                              color: const Color(0xFFFFFFFF).withOpacity(0.7),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(32),
+                                color: Color(0xFFFFFFFF).withOpacity(0.7),
+                              ),
                             ),
-                          ),
                           TextFormField(
-                            controller: provider.controller2,
+                            obscureText: true,
+                            controller: provider.controller2, 
                             onChanged: provider.updatePassword,
                             validator: (val) {
                               if (val!.isEmpty) {
@@ -238,31 +236,31 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
                                 fontFamily: 'Poppins-Reg',
-                                color: Color(0xFF373D66)),
+                                color: Color(0xFF373D66)
+                            ),
                             decoration: InputDecoration(
                               hintText: 'Enter your password',
                               hintStyle: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Poppins-Reg',
-                                color: const Color(0xFF373D66).withOpacity(0.9),
+                                color: Color(0xFF373D66).withOpacity(0.9),
                               ),
                               border: InputBorder.none,
-                              contentPadding: const EdgeInsets.only(
-                                  left: 16, right: 16, bottom: 7),
+                              contentPadding: EdgeInsets.only(left: 16, right: 16, bottom: 7),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 15),
+                    SizedBox(height: 15),
                     SizedBox(
                       height: 34,
                       child: TextButton(
                         onPressed: () {
                           provider.resetLogIn();
                         },
-                        child: const Text(
+                        child: Text(
                           "Reset",
                           style: TextStyle(
                             fontSize: 14,
@@ -274,75 +272,109 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          String username = provider.controller1.text;
+                          String email = provider.controller1.text;
                           String password = provider.controller2.text;
 
-                          provider.resetLogIn();
-                          Navigator.pop(context);
-                          Navigator.pushNamed(context, "/org");
+                          String? message = await context
+                          .read<UserAuthProvider>()
+                          .authService
+                          .signIn(email!, password!);
 
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Logged in!'),
-                            ),
-                          );
-                        } else {}
+                          print(message);
+                          print(showSignInErrorMessage);
+
+                          setState(() {
+                            if (message != null && message.isNotEmpty) {
+                              showSignInErrorMessage = true;
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Invalid email or password'),
+                                ),
+                              );
+                            } 
+                            else {
+                              showSignInErrorMessage = false;
+                              provider.resetLogIn();
+                              Navigator.pop(context);
+                              Navigator.pushNamed(context, "/donorHomepage");
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Logged in!'),
+                                ),
+                              );
+                            }
+                          });
+                        } 
+                        else {
+                          
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(320, 40),
-                        foregroundColor: const Color(0xFFFCBE4F),
+                        foregroundColor:  Color(0xFFFCBE4F),
                         textStyle: const TextStyle(
                           fontSize: 14,
                           fontFamily: 'Poppins-Bold',
                         ),
-                        backgroundColor: const Color(0xFF373D66),
+                        backgroundColor: Color(0xFF373D66),
                       ),
                       child: const Text('Log in'),
                     ),
-                    Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            "Don't have an org account?",
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontFamily: 'Poppins-Reg',
-                              fontWeight: FontWeight.w500,
-                              color: Color(0xFF373D66),
-                            ),
+                  Center (
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Don't have an org account?",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontFamily: 'Poppins-Reg',
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xFF373D66),
                           ),
-                          SizedBox(
-                            height: 40,
-                            child: TextButton(
-                              onPressed: () {
-                                provider.resetLogIn();
-                                Navigator.pop(context);
-                                Navigator.pushNamed(context, "/signupOrg");
-                              },
-                              child: const Text(
-                                "Sign up",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontFamily: 'Poppins-Reg',
-                                  fontWeight: FontWeight.w900,
-                                  color: Color(0xFF373D66),
-                                ),
+                        ),
+                        SizedBox(
+                          height: 40,
+                          child: TextButton(
+                            onPressed: () {
+                              provider.resetLogIn();
+                              Navigator.pop(context);
+                              Navigator.pushNamed(context, "/signupOrg");
+                            },
+                            child: Text(
+                              "Sign up",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontFamily: 'Poppins-Reg',
+                                fontWeight: FontWeight.w900,
+                                color: Color(0xFF373D66),
                               ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
+    ),
     );
   }
+  Widget get signInErrorMessage => const Padding(
+    padding: EdgeInsets.only(bottom: 30),
+    child: Text(
+      "Invalid email or password",
+      style: TextStyle(
+        color: Color.fromARGB(255, 179, 42, 32),
+        fontFamily: 'Poppins',
+        fontSize: 15),
+    ),
+  );
 }
