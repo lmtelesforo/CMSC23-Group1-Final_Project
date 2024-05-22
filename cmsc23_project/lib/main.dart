@@ -43,7 +43,6 @@ Future<void> main() async {
         ),
         ChangeNotifierProvider(
           create: (context) => DonationProvider(),
-          child: MyApp(),
         ),
       ],
       child: const RootWidget(),
