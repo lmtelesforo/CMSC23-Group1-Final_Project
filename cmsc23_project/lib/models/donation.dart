@@ -30,6 +30,21 @@ class Donation {
     required this.scheduledDate,
     required this.status,
   });
+
+  List<Status> get validStatuses => forPickup
+      ? [
+          Status.pending,
+          Status.confirmed,
+          Status.scheduledForPickup,
+          Status.complete,
+          Status.cancelled,
+        ]
+      : [
+          Status.pending,
+          Status.confirmed,
+          Status.complete,
+          Status.cancelled,
+        ];
 }
 
 Widget statusIcon(status) {
