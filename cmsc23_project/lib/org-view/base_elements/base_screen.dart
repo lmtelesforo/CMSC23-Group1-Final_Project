@@ -17,8 +17,10 @@ class BaseScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Avoids resizing the screen when the keyboard appears
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
+      // Drawer is only shown if the current screen is the home screen
       drawer: !Navigator.canPop(context) ? const OrgDrawer() : null,
       appBar: _appBar,
       floatingActionButton: floatingActionButton,
@@ -54,7 +56,7 @@ class BaseScreen extends StatelessWidget {
   Widget get _backgroundImage => Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/home_background.jpg'),
+            image: AssetImage('images/wallpaper.jpg'),
             fit: BoxFit.cover,
           ),
         ),
