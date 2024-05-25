@@ -17,6 +17,7 @@ class DonationDriveCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
+      clipBehavior: Clip.none,
       children: [
         SizedBox(
           height: 150,
@@ -33,42 +34,21 @@ class DonationDriveCard extends StatelessWidget {
                   ),
                 );
               },
-              child: _cardContent,
+              child: _CardContent(drive),
             ),
           ),
         ),
-        if (context.read<CurrentOrgProvider>().isFavorite(drive.id))
-          _favoriteIcon,
+        Visibility(
+          visible: context.read<CurrentOrgProvider>().isFavorite(drive.id),
+          child: _favoriteIcon,
+        ),
       ],
     );
   }
 
-  Widget get _cardContent => Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Image(
-              image: drive.image,
-              height: 90,
-              width: 150,
-              fit: BoxFit.cover,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
-            child: Text(
-              drive.name,
-              style: CustomTextStyle.body,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-        ],
-      );
-
   Widget get _favoriteIcon => Positioned(
-        top: 5,
-        right: 5,
+        top: -3,
+        right: -3,
         child: Container(
           padding: const EdgeInsets.all(2),
           decoration: const BoxDecoration(
@@ -80,5 +60,69 @@ class DonationDriveCard extends StatelessWidget {
             color: CustomColors.secondary,
           ),
         ),
+      );
+}
+
+class _CardContent extends StatefulWidget {
+  const _CardContent(this.drive);
+
+  final DonationDrive drive;
+
+  @override
+  State<_CardContent> createState() => _CardContentState();
+}
+
+class _CardContentState extends State<_CardContent> {
+  @override
+  Widget build(BuildContext context) => Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Text(
+              widget.drive.name,
+              style: CustomTextStyle.h2,
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          Table(
+            columnWidths: const {
+              0: FlexColumnWidth(1),
+              1: FlexColumnWidth(1.5),
+            },
+            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+            children: [
+              TableRow(
+                children: [
+                  widget.drive.isOngoing
+                      ? const Icon(
+                          Icons.more_horiz,
+                          color: CustomColors.secondary,
+                        )
+                      : const Icon(
+                          Icons.close,
+                          color: CustomColors.secondary,
+                        ),
+                  widget.drive.isOngoing
+                      ? Text("Ongoing",
+                          style: CustomTextStyle.body.apply(fontSizeDelta: -2))
+                      : Text("Ended",
+                          style: CustomTextStyle.body.apply(fontSizeDelta: -2)),
+                ],
+              ),
+              TableRow(
+                children: [
+                  const Icon(Icons.tag, color: CustomColors.secondary),
+                  Text(
+                    "${context.watch<CurrentOrgProvider>().donations().where((donation) => donation.driveId == widget.drive.id).length} donation${context.watch<CurrentOrgProvider>().donations().where((donation) => donation.driveId == widget.drive.id).length != 1 ? 's' : ''}",
+                    style: CustomTextStyle.body.apply(fontSizeDelta: -2),
+                  )
+                ],
+              ),
+            ],
+          ),
+        ],
       );
 }

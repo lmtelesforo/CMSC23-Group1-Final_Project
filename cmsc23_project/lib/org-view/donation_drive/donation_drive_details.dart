@@ -44,14 +44,14 @@ class _ExpandedDriveCardState extends State<ExpandedDriveCard> {
           padding: const EdgeInsets.all(20),
           child: _DriveCard(widget.drive),
         ),
-        _favoriteIcon,
+        _driveActions,
       ],
     );
   }
 
-  Widget get _favoriteIcon => Positioned(
-        top: 25,
-        right: 25,
+  Widget get _driveActions => Positioned(
+        top: 13,
+        right: 20,
         child: Row(
           children: [
             Container(
@@ -105,23 +105,17 @@ class _DriveCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 10),
+        padding: const EdgeInsets.symmetric(vertical: 30),
         child: Column(
           children: [
-            _image(),
             _name(),
-            _statusInfo(),
+            const SizedBox(height: 5),
+            _statusInfo(context),
+            const SizedBox(height: 20),
             _description(),
           ],
         ),
       ),
-    );
-  }
-
-  Widget _description() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Text(drive.description, style: CustomTextStyle.body),
     );
   }
 
@@ -138,38 +132,44 @@ class _DriveCard extends StatelessWidget {
     );
   }
 
-  Widget _statusInfo() {
-    return Container(
-      padding: const EdgeInsets.only(bottom: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          _status,
-        ],
-      ),
+  Widget _statusInfo(BuildContext context) {
+    int noOfDonations = context
+        .watch<CurrentOrgProvider>()
+        .donations()
+        .where((donation) => donation.driveId == drive.id)
+        .length;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        _status,
+        Row(
+          children: [
+            const Icon(Icons.tag, color: CustomColors.secondary),
+            Container(
+              padding: const EdgeInsets.only(left: 10),
+              child: Text(
+                '$noOfDonations donation${noOfDonations != 1 ? 's' : ''}',
+                style: CustomTextStyle.body,
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 
-  Widget _image() {
+  Widget _description() {
     return Container(
-      padding: const EdgeInsets.only(
-        left: 10,
-        right: 10,
-        bottom: 10,
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: Image(
-          image: drive.image,
-          fit: BoxFit.cover,
-        ),
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Text(drive.description, style: CustomTextStyle.body),
     );
   }
 
   Widget get _status => Row(
         children: [
-          const Icon(Icons.schedule, color: CustomColors.secondary),
+          drive.isOngoing
+              ? const Icon(Icons.more_horiz, color: CustomColors.secondary)
+              : const Icon(Icons.close, color: CustomColors.secondary),
           Container(
             padding: const EdgeInsets.only(left: 10),
             child: Text(

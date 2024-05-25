@@ -57,23 +57,19 @@ class AddDonationDrive extends StatelessWidget {
           onTap: () {
             Navigator.pushNamed(context, "/org/add-a-drive");
           },
-          child: Column(
+          child: const Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
+              SizedBox(
                 height: 90,
                 width: 150,
-                decoration: BoxDecoration(
-                  color: CustomColors.prompt,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: const Icon(
+                child: Icon(
                   Icons.add,
                   size: 100,
                   color: CustomColors.primary,
                 ),
               ),
-              const Padding(
+              Padding(
                 padding: EdgeInsets.only(top: 10),
                 child: Text("Add a Drive", style: CustomTextStyle.body),
               ),

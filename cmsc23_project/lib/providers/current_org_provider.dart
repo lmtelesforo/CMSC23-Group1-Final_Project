@@ -65,7 +65,6 @@ class CurrentOrgProvider with ChangeNotifier {
       orgUsername: _currentOrg.username,
       name: name,
       description: desc,
-      image: const AssetImage('assets/images/donation_drive.jpg'),
       isOngoing: true,
     );
 

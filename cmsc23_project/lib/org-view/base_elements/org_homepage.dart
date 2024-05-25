@@ -88,7 +88,7 @@ class Favorites extends StatelessWidget {
           final totalWidth = favorites.length * (200);
 
           return Container(
-            height: 200,
+            height: 150,
             padding: const EdgeInsets.only(bottom: 10),
             child: totalWidth < constraints.maxWidth
                 ? Row(

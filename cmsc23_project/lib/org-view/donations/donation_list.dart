@@ -20,7 +20,7 @@ class _DonationListState extends State<DonationList> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: SizedBox(
         height: 300,
         child: Card(

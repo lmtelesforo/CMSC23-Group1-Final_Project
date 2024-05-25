@@ -8,7 +8,6 @@ class FirebaseDriveAPI {
       orgUsername: 'redcross',
       name: 'Typhoon Relief Drive',
       description: 'Help us provide relief to the victims of Typhoon Odette.',
-      image: const AssetImage('assets/images/donation_drive.jpg'),
       isOngoing: true,
     ),
     DonationDrive(
@@ -16,7 +15,6 @@ class FirebaseDriveAPI {
       orgUsername: 'redcross',
       name: 'Vaccination Drive',
       description: 'Help us provide vaccines to children in need.',
-      image: const AssetImage('assets/images/donation_drive.jpg'),
       isOngoing: true,
     ),
   ];

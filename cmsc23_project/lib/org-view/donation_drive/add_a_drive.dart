@@ -54,23 +54,13 @@ class Fields extends StatelessWidget {
           child: Form(
             key: _formKey,
             child: Column(
-              children: [_uploadImage, _enterName, _enterDesc],
+              children: [_enterName, _enterDesc],
             ),
           ),
         ),
       ),
     );
   }
-
-  Widget get _uploadImage => Container(
-        height: 200,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: CustomColors.prompt,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: const Icon(Icons.add_a_photo, color: CustomColors.primary),
-      );
 
   Widget get _enterName => Container(
         padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
