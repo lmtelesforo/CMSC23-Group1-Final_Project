@@ -293,7 +293,7 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                             setState(() async {
                               if (message != null && message.isNotEmpty) {
                                 showSignInErrorMessage = true;
-                                    ScaffoldMessenger.of(context).showSnackBar(
+                                  ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text('Invalid email or password'),
                                   ),

@@ -44,6 +44,12 @@ class _DonorPageState extends State<DonorPage> {
     var donationProvider = context.watch<DonationProvider>();
     final provider = context.watch<TextfieldProviders>();
 
+    bool containsWeight(String weight) {
+      RegExp regex = RegExp(r'\d+(\.\d+)?\s*(kg|lbs)'); 
+      return regex.hasMatch(weight);
+    }
+
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -142,11 +148,23 @@ class _DonorPageState extends State<DonorPage> {
                       DropdownMenuExample(),
                       SizedBox(height: 10),
                       TextFormField(
+                        controller: provider.controller4, 
+                        onChanged: provider.updateWeight,
                         decoration: InputDecoration(
-                          labelText: 'Weight of items (kg/lbs)',
+                          labelText: 'Weight of items (indicate if in kg or lbs)',
                         ),
-                        keyboardType: TextInputType.number,
-                        onChanged: (value) {},
+                        validator: (val) {
+                          if (val!.isEmpty) {
+                            return "Please enter the weight";
+                          }
+                          if (val.trim().isEmpty) {
+                            return "Please enter the weight";
+                          }
+                          if (containsWeight(val) != true) {
+                            return "Please enter the weight in kg/lbs";
+                          }
+                          return null;
+                        },
                       ),
                       SizedBox(height: 20),
                       ElevatedButton(
@@ -252,6 +270,7 @@ class _DonorPageState extends State<DonorPage> {
         ElevatedButton(
           onPressed: () {
             if (_formKey.currentState!.validate()) {
+              final weight = provider.controller4.text;
               final addressesUnsplit = provider.controller5.text;
               final contactnumber = provider.controller6.text;
               bool multipleAddresses = addressesUnsplit.contains(';');
@@ -281,36 +300,15 @@ class _DonorPageState extends State<DonorPage> {
 
   Widget ifDropOff(BuildContext context) {
     final provider = context.watch<TextfieldProviders>();
+    final dateOfDropOff = provider.date;
 
     return Column (
       children: [
-        TextFormField(
-          controller: provider.controller7,
-          onChanged: provider.updateQRCodeInput,
-          validator: (val) {
-            if (val!.isEmpty) {
-              return "Please enter date of drop-off";
-            }
-            if (val.trim().isEmpty) {
-              return "Please enter date of drop-off";
-            }
-            return null;
-          },
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-            fontFamily: 'Poppins-Reg',
-            color: Color(0xFF373D66),
-          ),
-          decoration: InputDecoration(
-            labelText: 'Please enter date of drop-off',
-          ),
-        ),
         ElevatedButton(
           onPressed: () {
             if (_formKey.currentState!.validate()) {
               setState(() {
-                qrcodeinput = provider.controller7.text;
+                qrcodeinput = dateOfDropOff;
                 generate = true;
               });
             }

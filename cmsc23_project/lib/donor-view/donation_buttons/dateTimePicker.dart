@@ -56,9 +56,11 @@ class _DateTimePickerState extends State<DateTimePicker> {
     );
     if (dateTime != null) {
       print(dateTime);
-      Provider.of<TextfieldProviders>(context, listen: false).updateDateTime(dateTime);
-      Provider.of<TextfieldProviders>(context, listen: false).dateandtimepicked(true);
-      print(Provider.of<TextfieldProviders>(context, listen: false).datetimepicked);
+      dateandtime = dateTime.toString();
+      int space = dateandtime!.indexOf(' '); // extract date w/c is before the first space
+
+      String date = dateandtime!.substring(0, space);
+      
     } else {
       print('No date and time chosen.');
     }

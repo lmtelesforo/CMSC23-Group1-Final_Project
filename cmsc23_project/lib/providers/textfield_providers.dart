@@ -16,7 +16,9 @@ class TextfieldProviders extends ChangeNotifier {
   String qrcodeinput = '';
   String shippingOpt = 'Pick up';
   List category = [];
+  String weight = '';
   bool datetimepicked = false;
+  String date = '';
   final controller1 = TextEditingController();
   final controller2 = TextEditingController();
   final controller3 = TextEditingController();
@@ -79,6 +81,16 @@ class TextfieldProviders extends ChangeNotifier {
 
   void dateandtimepicked(bool value) {
     datetimepicked = value;
+    notifyListeners();
+  }
+
+  void updateDate(String value) {
+    date = value;
+    notifyListeners();
+  }
+
+  void updateWeight(String value) {
+    weight = value;
     notifyListeners();
   }
 
