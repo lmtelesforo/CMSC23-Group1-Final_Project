@@ -407,9 +407,9 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1, bottom: 3),
+                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.08, bottom: 3),
                           child: const Text(
-                            "separate with commas",
+                            "separate with semi-colons",
                             style: TextStyle(
                               fontSize: 13,
                               fontFamily: 'Poppins-Reg',
@@ -559,10 +559,10 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                           final addressesUnsplit = provider.controller5.text;
                           final contactnumber = provider.controller6.text;
                           final userType = 'donor';
-                          bool multipleAddresses = addressesUnsplit.contains(',');
+                          bool multipleAddresses = addressesUnsplit.contains(';');
 
                           if (multipleAddresses == true) {
-                            addressesList = addressesUnsplit.split(',').map((address) => address.trim()).toList();
+                            addressesList = addressesUnsplit.split(';').map((address) => address.trim()).toList();
                           }
                           else {
                             addressesList = [addressesUnsplit];

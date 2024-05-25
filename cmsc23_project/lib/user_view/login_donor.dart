@@ -1,9 +1,11 @@
+import 'package:cmsc23_project/api/firebase_users_api.dart';
 import 'package:cmsc23_project/providers/auth_provider.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/firebase_provider.dart';
 import '../providers/textfield_providers.dart';
 
 class LogInDonorPage extends StatefulWidget {
@@ -20,6 +22,9 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
   @override
   Widget build(BuildContext context) {    
     final provider = context.watch<TextfieldProviders>();
+    final firebaseUsers = context.watch<UserInfosProvider>();
+
+    firebaseUsers.printAllUsers();
 
     return Scaffold(
       body: Form(
@@ -290,7 +295,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                           print(message);
                           print(showSignInErrorMessage);
 
-                          setState(() {
+                          setState(() async {
                             if (message != null && message.isNotEmpty) {
                               showSignInErrorMessage = true;
                                   ScaffoldMessenger.of(context).showSnackBar(
@@ -301,15 +306,39 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                             } 
                             else {
                               showSignInErrorMessage = false;
-                              provider.resetLogIn();
-                              Navigator.pop(context);
-                              Navigator.pushNamed(context, "/donorHomepage");
 
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text('Logged in!'),
-                                ),
-                              );
+                              final donorsData = await firebaseUsers.getDonors();
+
+                              // loop through donorsData and check if user email has match in all donors
+                              String? donorName;
+                              bool found = false;
+                              for (var donorData in donorsData) {
+                                var donorEmail = donorData['email'];
+                                if (donorEmail == email) {
+                                  found = true;
+                                  donorName = donorData['name'];
+                                  break;
+                                }
+                              }
+
+                              if (found) {
+                                provider.resetLogIn();Navigator.pop(context);
+                                Navigator.pushNamed(context, "/donorHomepage");
+
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Welcome, ${donorName}!'),
+                                  ),
+                                );
+
+                              } 
+                              else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('You don\'t have an existing account. Create one?'),
+                                  ),
+                                );
+                              }
                             }
                           });
                         } 

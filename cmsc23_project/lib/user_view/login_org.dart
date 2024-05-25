@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/auth_provider.dart';
+import '../providers/firebase_provider.dart';
 import '../providers/textfield_providers.dart';
 
 class LogInOrgPage extends StatefulWidget {
@@ -18,6 +19,7 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<TextfieldProviders>();
+    final firebaseUsers = context.watch<UserInfosProvider>();
 
     return Scaffold(
       body: Form(
@@ -285,7 +287,7 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                           print(message);
                           print(showSignInErrorMessage);
 
-                          setState(() {
+                          setState(() async {
                             if (message != null && message.isNotEmpty) {
                               showSignInErrorMessage = true;
                                   ScaffoldMessenger.of(context).showSnackBar(
@@ -296,15 +298,41 @@ class _LogInOrgPageState extends State<LogInOrgPage> {
                             } 
                             else {
                               showSignInErrorMessage = false;
-                              provider.resetLogIn();
-                              Navigator.pop(context);
-                              Navigator.pushNamed(context, "/orgHomepage");
 
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text('Logged in!'),
-                                ),
-                              );
+                              final orgsData = await firebaseUsers.getOrgs();
+
+                              // loop through orgsData and check if user email has match in all orgs
+                              String? orgName;
+                              bool found = false;
+                              for (var orgData in orgsData) {
+                                var orgEmail = orgData['email'];
+                                if (orgEmail == email) {
+                                  found = true;
+                                  orgName = orgData['name'];
+                                  break;
+                                }
+                              }
+
+                              if (found) {
+                                provider.resetLogIn();
+                                Navigator.pop(context);
+                                Navigator.pushNamed(context, "/orgHomepage");
+
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Welcome, ${orgName}!'),
+                                  ),
+                                );
+                                provider.resetLogIn();
+                                
+                              } 
+                              else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('You don\'t have an existing account. Create one?'),
+                                  ),
+                                );
+                              }
                             }
                           });
                         } 

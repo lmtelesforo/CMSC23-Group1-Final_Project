@@ -97,4 +97,70 @@ class UserInfosProvider with ChangeNotifier {
     };
     return newData;
   }
+
+  void printAllUsers() async {
+    try {
+      final usersSnapshot = await firebaseService.getAllUsers().first;
+      usersSnapshot.docs.forEach((doc) {
+        print(doc.data()); // print to console
+      });
+    } catch (e) {
+      print("Error: $e");
+    }
+  }
+
+  void getUserType() async {
+    try {
+      final usersSnapshot = await firebaseService.getAllUsers().first;
+      usersSnapshot.docs.forEach((doc) {
+        final userData = doc.data() as Map<String, dynamic>;
+        final userType = userData['userType'];
+        print('User Type: $userType');
+      });
+    } catch (e) {
+      print("Error: $e");
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> getDonors() async {
+    try {
+      final usersSnapshot = await firebaseService.getAllUsers().first;
+      final donorDataList = <Map<String, dynamic>>[];
+
+      usersSnapshot.docs.forEach((doc) {
+        final userData = doc.data() as Map<String, dynamic>;
+        final userType = userData['userType'];
+        if (userType == 'donor') {
+          donorDataList.add(userData);
+        }
+      });
+
+      print('ALL DONORS: $donorDataList');
+      return donorDataList;
+    } catch (e) {
+      print("Error: $e");
+      return [];
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> getOrgs() async {
+    try {
+      final usersSnapshot = await firebaseService.getAllUsers().first;
+      final orgDataList = <Map<String, dynamic>>[];
+
+      usersSnapshot.docs.forEach((doc) {
+        final userData = doc.data() as Map<String, dynamic>;
+        final userType = userData['userType'];
+        if (userType == 'organization') {
+          orgDataList.add(userData);
+        }
+      });
+
+      print('ALL ORGS: $orgDataList');
+      return orgDataList;
+    } catch (e) {
+      print("Error: $e");
+      return [];
+    }
+  }
 }

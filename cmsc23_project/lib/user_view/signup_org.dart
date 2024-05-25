@@ -386,9 +386,9 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1, bottom: 3),
+                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.08, bottom: 3),
                           child: const Text(
-                            "separate with commas",
+                            "separate with semi-colons",
                             style: TextStyle(
                               fontSize: 13,
                               fontFamily: 'Poppins-Reg',
@@ -602,11 +602,11 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                           final contactnumber = provider.controller6.text;
                           final proofsUnsplit = provider.controller7.text;
                           final userType = 'organization';
-                          bool multipleAddresses = addressesUnsplit.contains(',');
-                          bool multipleProofs = proofsUnsplit.contains(',');
+                          bool multipleAddresses = addressesUnsplit.contains(';');
+                          bool multipleProofs = proofsUnsplit.contains(';');
 
                           if (multipleAddresses == true) {
-                            addressesList = addressesUnsplit.split(',').map((address) => address.trim()).toList();
+                            addressesList = addressesUnsplit.split(';').map((address) => address.trim()).toList();
                           }
                           else {
                             addressesList = [addressesUnsplit];
