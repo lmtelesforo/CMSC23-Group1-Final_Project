@@ -60,6 +60,30 @@ class _DateTimePickerState extends State<DateTimePicker> {
       int space = dateandtime!.indexOf(' '); // extract date w/c is before the first space
 
       String date = dateandtime!.substring(0, space);
+      DateTime selectedDate = DateTime.parse(date);
+
+      DateTime currentDate = DateTime.now();
+      DateTime nextDay = currentDate.add(Duration(days: 1));
+      
+      print(currentDate);
+      print(nextDay);
+
+      if (selectedDate.year == nextDay.year && selectedDate.month == nextDay.month && selectedDate.day == nextDay.day) {
+        // one day after the current date
+        print('Selected date is one day after the current date.');
+        Provider.of<TextfieldProviders>(context, listen: false).updateDate(date);
+        Provider.of<TextfieldProviders>(context, listen: false).updateDateTime(dateTime);
+        Provider.of<TextfieldProviders>(context, listen: false).dateandtimepicked(true);
+      } 
+      else {
+        // not one day after the current date
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Drop-offs must be made at least one day after making the donation.'),
+          ),
+        );
+      }
+
       
     } else {
       print('No date and time chosen.');
