@@ -197,6 +197,7 @@ class _DonorPageState extends State<DonorPage> {
 
   Widget forPickUpInputs(BuildContext context) {
     final provider = context.watch<TextfieldProviders>();
+    generate = false;
 
     return Column (
       children: [
