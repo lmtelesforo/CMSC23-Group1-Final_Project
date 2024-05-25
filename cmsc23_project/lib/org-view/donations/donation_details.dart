@@ -6,11 +6,16 @@ import 'package:cmsc23_project/providers/current_org_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class DonationDetails extends StatelessWidget {
+class DonationDetails extends StatefulWidget {
   final Donation donation;
 
   const DonationDetails({required this.donation, super.key});
 
+  @override
+  State<DonationDetails> createState() => _DonationDetailsState();
+}
+
+class _DonationDetailsState extends State<DonationDetails> {
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
@@ -19,11 +24,11 @@ class DonationDetails extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              Text(donation.donorUsername, style: CustomTextStyle.h1),
+              Text(widget.donation.donorUsername, style: CustomTextStyle.h1),
               const SizedBox(height: 30),
-              _EditDonation(donation),
+              _EditDonation(widget.donation),
               const SizedBox(height: 30),
-              _DonationInfo(donation),
+              _DonationInfo(widget.donation),
             ],
           ),
         ),
@@ -177,34 +182,66 @@ class _EditDonationState extends State<_EditDonation> {
         ),
       );
 
+  String? qrCodeValue;
   Widget get _setStatus {
-    return DropdownMenu(
-      menuHeight: 200,
-      initialSelection: Status.values.indexOf(widget.donation.status),
-      dropdownMenuEntries: Status.values
-          .map((status) => DropdownMenuEntry(
-                value: Status.values.indexOf(status),
-                label: status.toString().split('.').last,
-                style: ButtonStyle(
-                    textStyle: MaterialStateProperty.all(CustomTextStyle.body)),
-              ))
-          .toList(),
-      onSelected: (status) {
-        setState(() {
-          widget.donation.status = Status.values[status!];
-          context.read<CurrentOrgProvider>().updateDonation(widget.donation);
-        });
-      },
-      width: MediaQuery.of(context).size.width * 0.51,
-      inputDecorationTheme: InputDecorationTheme(
-        fillColor: Colors.white,
-        filled: true,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide.none,
+    List<Status> statuses = widget.donation.validStatuses;
+
+    return Column(
+      children: [
+        DropdownMenu(
+          menuHeight: 200,
+          initialSelection: statuses.indexOf(widget.donation.status),
+          dropdownMenuEntries: statuses
+              .map((status) => DropdownMenuEntry(
+                    value: statuses.indexOf(status),
+                    label: status.toString().split('.').last,
+                    style: ButtonStyle(
+                        textStyle:
+                            MaterialStateProperty.all(CustomTextStyle.body)),
+                  ))
+              .toList(),
+          onSelected: (status) {
+            setState(() {
+              widget.donation.status = statuses[status!];
+              context
+                  .read<CurrentOrgProvider>()
+                  .updateDonation(widget.donation);
+            });
+          },
+          inputDecorationTheme: InputDecorationTheme(
+            fillColor: Colors.white,
+            filled: true,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide.none,
+            ),
+          ),
+          textStyle: CustomTextStyle.body,
         ),
-      ),
-      textStyle: CustomTextStyle.body,
+        Visibility(
+          visible: widget.donation.forPickup &&
+              widget.donation.status == Status.complete &&
+              qrCodeValue == null,
+          child: SizedBox(
+            height: 150,
+            width: 180,
+            child: Card(
+              child: InkWell(
+                onTap: () async {
+                  qrCodeValue =
+                      await Navigator.pushNamed(context, '/org/scan-qr')
+                          as String;
+
+                  if (qrCodeValue != null) {
+                    setState(() {});
+                  }
+                },
+                child: const Icon(Icons.qr_code),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
