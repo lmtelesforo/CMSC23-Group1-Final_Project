@@ -69,6 +69,10 @@ class DonationProvider with ChangeNotifier {
         .toList();
   }
 
+  List<DonationItem> getCheckedItems() {
+    return _donationItems.where((item) => item.isChecked).toList();
+  }
+
   List<String> _getOrganizationDetails(String organization) {
     return organizationDetails[organization] ?? [];
   }
@@ -99,4 +103,9 @@ class DonationItem {
   bool isChecked;
 
   DonationItem({required this.itemName, required this.isChecked});
+
+  @override
+  String toString() {
+    return '{itemName: $itemName}';
+  }
 }

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/textfield_providers.dart';
 
 class DonationCheckbox extends StatefulWidget {
   final bool isChecked;
@@ -19,6 +22,8 @@ class DonationCheckbox extends StatefulWidget {
 class _DonationCheckboxState extends State<DonationCheckbox> {
   @override
   Widget build(BuildContext context) {
+  final provider = context.watch<TextfieldProviders>();
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

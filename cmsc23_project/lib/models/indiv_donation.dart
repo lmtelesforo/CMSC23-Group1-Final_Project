@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class Donations {
-  String category;
+  List category;
   String shipping;
   String weight;
   List? photo;
@@ -12,6 +12,7 @@ class Donations {
   String? qrcode;
   String status;
   String? id;
+  String name;
 
   Donations ({
     this.id, 
@@ -23,6 +24,7 @@ class Donations {
     required this.addresses, 
     required this.contactNumber, 
     required this.status,
+    required this.name,
     this.qrcode,
     this.photo
   });
@@ -30,6 +32,7 @@ class Donations {
   factory Donations.fromJson(Map<String, dynamic> json) {
     return Donations(
       id: json['id'],
+      name: json['name'],
       category: json['category'],
       shipping: json['shipping'],
       weight: json['weight'],
@@ -52,6 +55,7 @@ class Donations {
     return {
       'id': Donation.id,
       'category': Donation.category,
+      'name': Donation.name,
       'weight': Donation.weight,
       'shipping': Donation.shipping,
       'date': Donation.date,

@@ -166,7 +166,7 @@ class _AdminViewAllDonationsState extends State<AdminViewAllDonations> {
                                 child: ListTile(
                                   contentPadding: EdgeInsets.only(top: 2, left: 10, bottom: 2, right: 13),
                                   title: Text(
-                                    donation.category, 
+                                    'Donated by: ${donation.name}', 
                                     style: TextStyle(
                                       fontSize: 18,
                                       fontFamily: 'Poppins-Bold',

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'donation_providers.dart';
+
 class TextfieldProviders extends ChangeNotifier {
   // initiate all common variables from forms to avoid redundancy
   String name = '';
@@ -13,6 +15,7 @@ class TextfieldProviders extends ChangeNotifier {
   List proofsSpliced = [];
   String qrcodeinput = '';
   String shippingOpt = '';
+  List category = [];
   final controller1 = TextEditingController();
   final controller2 = TextEditingController();
   final controller3 = TextEditingController();

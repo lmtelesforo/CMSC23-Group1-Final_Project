@@ -125,7 +125,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                         Row(
                           children: [
                             const Text(
-                              'Category:',
+                              'Category/ies:',
                               style: TextStyle(
                                 fontSize: 16,
                                 fontFamily: 'Poppins-Bold',
@@ -135,7 +135,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                             const SizedBox(width: 5),
                             Expanded(
                               child: Text(
-                                donation.category,
+                                donation.category.first,
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontFamily: 'Poppins-Reg',
@@ -145,6 +145,9 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                             ),
                           ],
                         ),
+                        (donation.category.length > 1)
+                        ? newCategoryLine() // if true
+                        : const SizedBox.shrink(), // if false
                         const SizedBox(height: 7),
                         Row(
                           children: [
@@ -305,6 +308,28 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget newCategoryLine() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: List.generate(
+        donation.category.length - 1,
+        (index) {
+          return Padding(
+            padding: const EdgeInsets.only(left: 120), 
+            child: Text(
+              donation.category[index + 1],
+              style: const TextStyle(
+                fontSize: 16,
+                fontFamily: 'Poppins-Reg',
+                color: Color(0xFF373D66),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

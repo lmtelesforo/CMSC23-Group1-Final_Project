@@ -118,6 +118,8 @@ class _DonorPageState extends State<DonorPage> {
                           isChecked: item.isChecked,
                           onChanged: (isChecked) {
                             donationProvider.toggleItemCheck(item, isChecked!);
+                            provider.category = donationProvider.getCheckedItems();
+                            print(provider.category);
                           },
                         );
                       }).toList(),
