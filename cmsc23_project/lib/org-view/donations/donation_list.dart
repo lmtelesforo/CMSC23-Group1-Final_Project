@@ -54,6 +54,7 @@ class _DonationListState extends State<DonationList> {
   Widget get _donationTiles {
     List<Donation> donations =
         context.watch<CurrentOrgProvider>().donations(driveId: widget.driveId);
+    donations.sort((a, b) => a.status.index.compareTo(b.status.index));
 
     List<Donation> filteredDonations = donations.where((donation) {
       return (donation.donorUsername + donation.status.name)
@@ -68,7 +69,10 @@ class _DonationListState extends State<DonationList> {
           itemCount: filteredDonations.length,
           itemBuilder: (context, index) {
             return Card(
-              color: CustomColors.secondary,
+              color: filteredDonations[index].status == Status.cancelled ||
+                      filteredDonations[index].status == Status.complete
+                  ? Colors.grey
+                  : CustomColors.secondary,
               child: InkWell(
                 onTap: () {
                   Navigator.push(
