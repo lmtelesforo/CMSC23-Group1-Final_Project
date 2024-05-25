@@ -1,48 +1,28 @@
-import 'package:cmsc23_project/models/donations.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cmsc23_project/models/indiv_donation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/textfield_providers.dart';
 
 class IndivViewAllDonations extends StatefulWidget {
-  final int index;
+  final DocumentSnapshot donationDetails;
 
-  const IndivViewAllDonations({super.key, required this.index});
+  const IndivViewAllDonations({Key? key, required this.donationDetails}) : super(key: key);
 
   @override
   State<IndivViewAllDonations> createState() => _IndivViewAllDonationsState();
 }
 
 class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
-  List<Donation> donations = [
-    Donation (
-      category: 'Clothes',
-      shipping: 'Pickup',
-      weight: '0.2 kg',
-      date: '02/03/2023',
-      time: '9:00 AM',
-      addresses: ['Address 1'],
-      contactNumber: '1234567890',
-    ),
-    Donation (
-      category: 'Cash',
-      shipping: 'Pickup',
-      weight: '0.2 kg',
-      date: '02/03/2023',
-      time: '9:00 AM',
-      addresses: ['Address 1', 'Address 2'],
-      contactNumber: '1234567890',
-    ),
-    Donation (
-      category: 'Food',
-      shipping: 'Pickup',
-      weight: '0.2 kg',
-      date: '02/03/2023',
-      time: '9:00 AM',
-      addresses: ['Address 1', 'Address 2'],
-      contactNumber: '1234567890',
-    ),
-  ];
+  late Donations donation;
+
+  @override
+  void initState() {
+    super.initState();
+    donation = Donations.fromJson(widget.donationDetails.data() as Map<String, dynamic>);
+    donation.id = widget.donationDetails.id;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -155,7 +135,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                             const SizedBox(width: 5),
                             Expanded(
                               child: Text(
-                                donations[widget.index].category,
+                                donation.category,
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontFamily: 'Poppins-Reg',
@@ -179,7 +159,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                             const SizedBox(width: 5),
                             Expanded(
                               child: Text(
-                                donations[widget.index].shipping,
+                                donation.shipping,
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontFamily: 'Poppins-Reg',
@@ -203,7 +183,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                             const SizedBox(width: 5),
                             Expanded(
                               child: Text(
-                                donations[widget.index].weight,
+                                donation.weight,
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontFamily: 'Poppins-Reg',
@@ -227,7 +207,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                             const SizedBox(width: 5),
                             Expanded(
                               child: Text(
-                                donations[widget.index].date,
+                                donation.date,
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontFamily: 'Poppins-Reg',
@@ -251,7 +231,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                             const SizedBox(width: 5),
                             Expanded(
                               child: Text(
-                                donations[widget.index].time,
+                                donation.time,
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontFamily: 'Poppins-Reg',
@@ -278,7 +258,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                                 const SizedBox(width: 5),
                                 Expanded(
                                   child: Text(
-                                    donations[widget.index].addresses.first,
+                                    donation.addresses.first,
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontFamily: 'Poppins-Reg',
@@ -288,7 +268,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                                 ),
                               ],
                             ),
-                            (donations[widget.index].addresses.length > 1)
+                            (donation.addresses.length > 1)
                             ? newAddressLine() // if true
                             : const SizedBox.shrink(), // if false
                           ],
@@ -307,7 +287,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                             const SizedBox(width: 5),
                             Expanded(
                               child: Text(
-                                donations[widget.index].contactNumber,
+                                donation.contactNumber,
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontFamily: 'Poppins-Reg',
@@ -333,12 +313,12 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: List.generate(
-        donations[widget.index].addresses.length - 1,
+        donation.addresses.length - 1,
         (index) {
           return Padding(
             padding: const EdgeInsets.only(left: 106), 
             child: Text(
-              donations[widget.index].addresses[index + 1],
+              donation.addresses[index + 1],
               style: const TextStyle(
                 fontSize: 16,
                 fontFamily: 'Poppins-Reg',

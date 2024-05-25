@@ -122,276 +122,280 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.515, 
+              top: MediaQuery.of(context).size.height * 0.415, 
               left: 0,
               right: 0,
+              bottom: 0,
               child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 4),
-                          child: Text(
-                            "Email",
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontFamily: 'Poppins-Reg',
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF373D66),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: 320,
-                      height: 60,
-                      child: Stack (
+                child: Container (
+                  width: 320,
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container (
-                            width: 320,
-                            height: 40,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(32),
-                                color: const Color(0xFFFFFFFF).withOpacity(0.7),
-                              ),
-                            ),
-                          TextFormField(
-                            controller: provider.controller1, 
-                            onChanged: provider.updateName,
-                            validator: (val) {
-                              if (val!.isEmpty) {
-                                return "Please enter your name";
-                              }
-                              if (val.trim().isEmpty) {
-                                return "Please enter your name";
-                              }
-                              if (EmailValidator.validate(val) != true) {
-                                return "Invalid email";
-                              }
-                              return null;
-                            },
-                            style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
+                          Padding(
+                            padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.041, bottom: 4),
+                            child: Text(
+                              "Email",
+                              style: TextStyle(
+                                fontSize: 15,
                                 fontFamily: 'Poppins-Reg',
-                                color: Color(0xFF373D66)
-                            ),
-                            decoration: InputDecoration(
-                              hintText: 'Enter your email',
-                              hintStyle: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Poppins-Reg',
-                                color: const Color(0xFF373D66).withOpacity(0.9),
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF373D66),
                               ),
-                              border: InputBorder.none,
-                              contentPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 7),
                             ),
                           ),
                         ],
                       ),
-                    ),
-                    const SizedBox(height: 15),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 4),
-                          child: const Text(
-                            "Password",
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontFamily: 'Poppins-Reg',
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF373D66),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: 320,
-                      height: 60,
-                      child: Stack (
-                        children: [
-                          Container (
-                            width: 320,
-                            height: 40,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(32),
-                                color: const Color(0xFFFFFFFF).withOpacity(0.7),
-                              ),
-                            ),
-                          TextFormField(
-                            obscureText: true,
-                            controller: provider.controller2, 
-                            onChanged: provider.updatePassword,
-                            validator: (val) {
-                              if (val!.isEmpty) {
-                                return "Please enter your password";
-                              }
-                              if (val.trim().isEmpty) {
-                                return "Please enter your password";
-                              }
-                              if (val.trim().length < 6) {
-                                return "Minimum of 6 characters";
-                              }
-                              return null;
-                            },
-                            style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: 'Poppins-Reg',
-                                color: Color(0xFF373D66)
-                            ),
-                            decoration: InputDecoration(
-                              hintText: 'Enter your password',
-                              hintStyle: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Poppins-Reg',
-                                color: const Color(0xFF373D66).withOpacity(0.9),
-                              ),
-                              border: InputBorder.none,
-                              contentPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 7),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    SizedBox(
-                      height: 34,
-                      child: TextButton(
-                        onPressed: () {
-                          provider.resetLogIn();
-                        },
-                        child: const Text(
-                          "Reset",
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontFamily: 'Poppins-Reg',
-                            fontWeight: FontWeight.w900,
-                            color: Color(0xFF373D66),
-                          ),
-                        ),
-                      ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          String email = provider.controller1.text;
-                          String password = provider.controller2.text;
-
-                          String? message = await context
-                          .read<UserAuthProvider>()
-                          .authService
-                          .signIn(email!, password!);
-
-                          print(message);
-                          print(showSignInErrorMessage);
-
-                          setState(() async {
-                            if (message != null && message.isNotEmpty) {
-                              showSignInErrorMessage = true;
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text('Invalid email or password'),
+                      SizedBox(
+                        width: 320,
+                        height: 60,
+                        child: Stack (
+                          children: [
+                            Container (
+                              width: 320,
+                              height: 40,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(32),
+                                  color: const Color(0xFFFFFFFF).withOpacity(0.7),
                                 ),
-                              );
-                            } 
-                            else {
-                              showSignInErrorMessage = false;
-
-                              final donorsData = await firebaseUsers.getDonors();
-
-                              // loop through donorsData and check if user email has match in all donors
-                              String? donorName;
-                              bool found = false;
-                              for (var donorData in donorsData) {
-                                var donorEmail = donorData['email'];
-                                if (donorEmail == email) {
-                                  found = true;
-                                  donorName = donorData['name'];
-                                  break;
+                              ),
+                            TextFormField(
+                              controller: provider.controller1, 
+                              onChanged: provider.updateName,
+                              validator: (val) {
+                                if (val!.isEmpty) {
+                                  return "Please enter your name";
                                 }
-                              }
-
-                              if (found) {
-                                provider.resetLogIn();Navigator.pop(context);
-                                Navigator.pushNamed(context, "/donorHomepage");
-
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text('Welcome, ${donorName}!'),
-                                  ),
-                                );
-
-                              } 
-                              else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text('You don\'t have an existing account. Create one?'),
-                                  ),
-                                );
-                              }
-                            }
-                          });
-                        } 
-                        else {
-                          
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(320, 40),
-                        foregroundColor:  const Color(0xFFFCBE4F),
-                        textStyle: const TextStyle(
-                          fontSize: 14,
-                          fontFamily: 'Poppins-Bold',
+                                if (val.trim().isEmpty) {
+                                  return "Please enter your name";
+                                }
+                                if (EmailValidator.validate(val) != true) {
+                                  return "Invalid email";
+                                }
+                                return null;
+                              },
+                              style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: 'Poppins-Reg',
+                                  color: Color(0xFF373D66)
+                              ),
+                              decoration: InputDecoration(
+                                hintText: 'Enter your email',
+                                hintStyle: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: 'Poppins-Reg',
+                                  color: const Color(0xFF373D66).withOpacity(0.9),
+                                ),
+                                border: InputBorder.none,
+                                contentPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 7),
+                              ),
+                            ),
+                          ],
                         ),
-                        backgroundColor: const Color(0xFF373D66),
                       ),
-                      child: const Text('Log in'),
-                    ),
-                    Center (
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      const SizedBox(height: 15),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            "Don't have an account?",
+                          Padding(
+                            padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.041, bottom: 4),
+                            child: const Text(
+                              "Password",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontFamily: 'Poppins-Reg',
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF373D66),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        width: 320,
+                        height: 60,
+                        child: Stack (
+                          children: [
+                            Container (
+                              width: 320,
+                              height: 40,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(32),
+                                  color: const Color(0xFFFFFFFF).withOpacity(0.7),
+                                ),
+                              ),
+                            TextFormField(
+                              obscureText: true,
+                              controller: provider.controller2, 
+                              onChanged: provider.updatePassword,
+                              validator: (val) {
+                                if (val!.isEmpty) {
+                                  return "Please enter your password";
+                                }
+                                if (val.trim().isEmpty) {
+                                  return "Please enter your password";
+                                }
+                                if (val.trim().length < 6) {
+                                  return "Minimum of 6 characters";
+                                }
+                                return null;
+                              },
+                              style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: 'Poppins-Reg',
+                                  color: Color(0xFF373D66)
+                              ),
+                              decoration: InputDecoration(
+                                hintText: 'Enter your password',
+                                hintStyle: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: 'Poppins-Reg',
+                                  color: const Color(0xFF373D66).withOpacity(0.9),
+                                ),
+                                border: InputBorder.none,
+                                contentPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 7),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      SizedBox(
+                        height: 34,
+                        child: TextButton(
+                          onPressed: () {
+                            provider.resetLogIn();
+                          },
+                          child: const Text(
+                            "Reset",
                             style: TextStyle(
                               fontSize: 14,
                               fontFamily: 'Poppins-Reg',
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w900,
                               color: Color(0xFF373D66),
                             ),
                           ),
-                          SizedBox(
-                            height: 40,
-                            child: TextButton(
-                              onPressed: () {
-                                provider.resetLogIn();
-                                Navigator.pop(context);
-                                Navigator.pushNamed(context, "/signupDonor");
-                              },
-                              child: const Text(
-                                "Sign up",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontFamily: 'Poppins-Bold',
-                                  color: Color(0xFF373D66),
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
+                            String email = provider.controller1.text;
+                            String password = provider.controller2.text;
+
+                            String? message = await context
+                            .read<UserAuthProvider>()
+                            .authService
+                            .signIn(email!, password!);
+
+                            print(message);
+                            print(showSignInErrorMessage);
+
+                            setState(() async {
+                              if (message != null && message.isNotEmpty) {
+                                showSignInErrorMessage = true;
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Invalid email or password'),
+                                  ),
+                                );
+                              } 
+                              else {
+                                showSignInErrorMessage = false;
+
+                                final donorsData = await firebaseUsers.getDonors();
+
+                                // loop through donorsData and check if user email has match in all donors
+                                String? donorName;
+                                bool found = false;
+                                for (var donorData in donorsData) {
+                                  var donorEmail = donorData['email'];
+                                  if (donorEmail == email) {
+                                    found = true;
+                                    donorName = donorData['name'];
+                                    break;
+                                  }
+                                }
+
+                                if (found) {
+                                  provider.resetLogIn();Navigator.pop(context);
+                                  Navigator.pushNamed(context, "/donorHomepage");
+
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('Welcome, ${donorName}!'),
+                                    ),
+                                  );
+
+                                } 
+                                else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('You don\'t have an existing account. Create one?'),
+                                    ),
+                                  );
+                                }
+                              }
+                            });
+                          } 
+                          else {
+                            
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(320, 40),
+                          foregroundColor:  const Color(0xFFFCBE4F),
+                          textStyle: const TextStyle(
+                            fontSize: 14,
+                            fontFamily: 'Poppins-Bold',
+                          ),
+                          backgroundColor: const Color(0xFF373D66),
+                        ),
+                        child: const Text('Log in'),
+                      ),
+                      Center (
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              "Don't have an account?",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontFamily: 'Poppins-Reg',
+                                fontWeight: FontWeight.w500,
+                                color: Color(0xFF373D66),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 40,
+                              child: TextButton(
+                                onPressed: () {
+                                  provider.resetLogIn();
+                                  Navigator.pop(context);
+                                  Navigator.pushNamed(context, "/signupDonor");
+                                },
+                                child: const Text(
+                                  "Sign up",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontFamily: 'Poppins-Bold',
+                                    color: Color(0xFF373D66),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
