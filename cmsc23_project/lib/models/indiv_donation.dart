@@ -5,26 +5,24 @@ class Donations {
   String shipping;
   String weight;
   List? photo;
-  String date;
-  String time;
   List addresses;
   String contactNumber;
   String? qrcode;
   String status;
   String? id;
   String name;
+  DateTime dateTime;
 
   Donations ({
     this.id, 
     required this.category, 
     required this.shipping,
     required this.weight,
-    required this.date, 
-    required this.time,
     required this.addresses, 
     required this.contactNumber, 
     required this.status,
     required this.name,
+    required this.dateTime,
     this.qrcode,
     this.photo
   });
@@ -36,8 +34,7 @@ class Donations {
       category: json['category'],
       shipping: json['shipping'],
       weight: json['weight'],
-      date: json['date'],
-      time: json['time'],
+      dateTime: json['datetime'],
       addresses: json['addresses'],
       contactNumber: json['contactNumber'],
       photo: json['photo'],
@@ -58,8 +55,6 @@ class Donations {
       'name': Donation.name,
       'weight': Donation.weight,
       'shipping': Donation.shipping,
-      'date': Donation.date,
-      'time': Donation.time,
       'addresses': Donation.addresses,
       'contactNumber': Donation.contactNumber,
       'photo': Donation.photo,

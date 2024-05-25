@@ -1,4 +1,5 @@
 import 'package:cmsc23_project/donor-view/donation_buttons/donation_checkbox.dart';
+import 'package:cmsc23_project/providers/donation_storage_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cmsc23_project/providers/donation_providers.dart';
@@ -11,8 +12,9 @@ import '../donation_buttons/dateTimePicker.dart';
 
 class DonorPage extends StatefulWidget {
   final String organization;
+  final Map<String, dynamic> donorDetails;
 
-  DonorPage({required this.organization});
+  DonorPage({required this.organization, required this.donorDetails});
 
   @override
   _DonorPageState createState() => _DonorPageState();
@@ -25,6 +27,7 @@ class _DonorPageState extends State<DonorPage> {
   String qrcodeinput = "";
   bool datetimepicked = false;
   List<String> addressesList = [];
+  late Map<String, dynamic> donorDetails;
 
   bool isNumeric(String str) { // check if input is a contact number
     if(str == null) {
@@ -37,6 +40,7 @@ class _DonorPageState extends State<DonorPage> {
   void initState() {
     super.initState();
     organization = widget.organization;
+    donorDetails = widget.donorDetails;
   }
   
   @override
@@ -311,7 +315,32 @@ class _DonorPageState extends State<DonorPage> {
           onPressed: () {
             if (_formKey.currentState!.validate()) {
               final weight = provider.controller4.text;
-              final contactnumber = provider.controller6.text;
+              final donorEmail = donorDetails['email'];
+              final status = 'Pending';
+
+              final donationService = Provider.of<DonationStorageProvider>(context, listen: false).firebaseService;
+
+              if (provider.category.length == 0) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Please add at least one donation category.'),
+                  ),
+                ); 
+              }
+              else {
+                final donation = DonationStorageProvider().donationDataDropOff(donorEmail, provider.dateTime, status, provider.category, provider.shippingOpt, provider.qrcodeinput, weight);
+
+              donationService.addDonation(donation); // add to firebase
+
+              Navigator.pop(context);
+              Navigator.pushNamed(context, "/donorHomepage", arguments: donorDetails);
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Thank you for your donation request! Check back regularly for your donation status updates.'),
+                ),
+              );  
+              }
             }
           },
           child: Text('Send Donation'),
@@ -345,7 +374,11 @@ class _DonorPageState extends State<DonorPage> {
   }
 
   Widget qrCodeImage(String qrcodeinput) {
-    String dateandstatus = qrcodeinput + ',Pending';
+    final donorEmail = donorDetails['email'];
+    String dateandstatus = 'Pending' + "|" + qrcodeinput + "|" + donorEmail;
+    final provider = context.watch<TextfieldProviders>();
+    provider.updateQRCodeInput(dateandstatus);
+
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
@@ -360,10 +393,12 @@ class _DonorPageState extends State<DonorPage> {
           ),
         ],
       ),
-      child: QrImageView(
-        data: dateandstatus,
-        version: QrVersions.auto,
-        size: 200.0,
+      child: Center( // Center widget added here
+        child: QrImageView(
+          data: dateandstatus,
+          version: QrVersions.auto,
+          size: 200.0,
+        ),
       ),
     );
   }

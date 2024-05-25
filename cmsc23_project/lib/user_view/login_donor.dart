@@ -312,6 +312,8 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
 
                                 final donorsData = await firebaseUsers.getDonors();
 
+                                var donorDetails;
+
                                 // loop through donorsData and check if user email has match in all donors
                                 String? donorName;
                                 bool found = false;
@@ -320,13 +322,14 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                                   if (donorEmail == email) {
                                     found = true;
                                     donorName = donorData['name'];
+                                    donorDetails = donorData;
                                     break;
                                   }
                                 }
 
                                 if (found) {
                                   provider.resetLogIn();Navigator.pop(context);
-                                  Navigator.pushNamed(context, "/donorHomepage");
+                                  Navigator.pushNamed(context, "/donorHomepage", arguments: donorDetails);
 
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
