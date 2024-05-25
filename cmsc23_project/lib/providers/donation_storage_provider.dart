@@ -37,16 +37,16 @@ class DonationStorageProvider with ChangeNotifier {
     }
   }
 
-  Map<String, dynamic> donationDataPickUp(String name, DateTime dateTime, List addresses, String contactnumber, String status, List category, String shipping, String weight, String qrCode){ // created a structure for easier storing
+  Map<String, dynamic> donationDataPickUp(String email, DateTime dateTime, List addresses, String contactnumber, String status, List category, String shipping, String weight){ // created a structure for easier storing
     Map<String, dynamic> newData = {
-      'name': name,
+      'email': email,
+      'dateTime': dateTime,
+      'addresses': addresses,
+      'contactNumber': contactnumber,
+      'status': status,
       'category': category,
       'shipping': shipping,
       'weight': weight,
-      'dateTime': dateTime,
-      'status': status,
-      'addresses': addresses,
-      'contactNumber': contactnumber,
     };
     return newData;
   }

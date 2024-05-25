@@ -279,6 +279,9 @@ class _DonorPageState extends State<DonorPage> {
               final weight = provider.controller4.text;
               final addressesUnsplit = provider.controller5.text;
               final contactnumber = provider.controller6.text;
+              final donorEmail = donorDetails['email'];
+              final status = 'Pending';
+
               bool multipleAddresses = addressesUnsplit.contains(';');
 
               if (multipleAddresses == true) {
@@ -287,7 +290,31 @@ class _DonorPageState extends State<DonorPage> {
               else {
                 addressesList = [addressesUnsplit];
               }
-            }
+
+              final donationService = Provider.of<DonationStorageProvider>(context, listen: false).firebaseService;
+
+              if (provider.category.length == 0) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Please add at least one donation category.'),
+                  ),
+                ); 
+              }
+              else {
+                final donation = DonationStorageProvider().donationDataPickUp(donorEmail, provider.dateTime, addressesList, provider.contactNumber, status, provider.category, provider.shippingOpt, weight);
+
+                donationService.addDonation(donation); // add to firebase
+
+                Navigator.pop(context);
+                Navigator.pushNamed(context, "/donorHomepage", arguments: donorDetails);
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Thank you for your donation request! Check back regularly for your donation status updates.'),
+                  ),
+                );  
+              }
+            };
           },
           child: Text('Send Donation'),
         ),
