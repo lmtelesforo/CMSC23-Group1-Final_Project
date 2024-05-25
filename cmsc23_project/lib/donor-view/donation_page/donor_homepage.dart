@@ -32,6 +32,8 @@ class _DonorHomepageState extends State<DonorHomepage> {
 
   @override
   Widget build(BuildContext context) {
+    final Map<String, dynamic> donorDetails = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -106,7 +108,8 @@ class _DonorHomepageState extends State<DonorHomepage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => FavoritePage()),
+                  MaterialPageRoute(builder: (context) => FavoritePage(),
+                  settings: RouteSettings(arguments: donorDetails)),
                 );
               },
             ),
@@ -253,7 +256,8 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                 MaterialPageRoute(
                                   builder: (context) => OrgDetailsPage(
                                     organization: org,
-                                    organizationDetails: detailsMap,),
+                                    organizationDetails: detailsMap,
+                                    donorDetails: donorDetails),
                                 ),
                               );
                             },

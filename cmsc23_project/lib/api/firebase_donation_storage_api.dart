@@ -7,5 +7,15 @@ class FirebaseDonationStorageAPI {
   Stream<QuerySnapshot> getAllDonations() {
     return db.collection("donations").snapshots();
   }
-  
+
+  Future<String> addDonation(Map<String, dynamic> donation) async {
+    try {
+      await db.collection("donations").add(donation);
+
+      return "Successfully added donation!";
+    } on FirebaseException catch (e) {
+      return "Error in ${e.code}: ${e.message}";
+    }
+  }
+
 }

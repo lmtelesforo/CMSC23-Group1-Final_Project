@@ -20,6 +20,12 @@ class DonationStorageProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void addDonation(Map<String, dynamic> donation) async { // add user to firebase
+    String? message = await firebaseService.addDonation(donation);
+    print(message); 
+    notifyListeners(); 
+  }
+
   void printAllDonations() async {
     try {
       final donationsSnapshot = await firebaseService.getAllDonations().first;
@@ -29,5 +35,31 @@ class DonationStorageProvider with ChangeNotifier {
     } catch (e) {
       print("Error: $e");
     }
+  }
+
+  Map<String, dynamic> donationDataPickUp(String name, DateTime dateTime, List addresses, String contactnumber, String status, List category, String shipping, String weight, String qrCode){ // created a structure for easier storing
+    Map<String, dynamic> newData = {
+      'name': name,
+      'category': category,
+      'shipping': shipping,
+      'weight': weight,
+      'dateTime': dateTime,
+      'status': status,
+      'addresses': addresses,
+      'contactNumber': contactnumber,
+    };
+    return newData;
+  }
+  Map<String, dynamic> donationDataDropOff(String email, DateTime dateTime, String status, List category, String shipping, String weight, String qrCode){ // created a structure for easier storing
+    Map<String, dynamic> newData = {
+      'email': email,
+      'dateTime': dateTime,
+      'status': status,
+      'shipping': shipping,
+      'qrcode': qrCode,
+      'category': category,
+      'weight': weight
+    };
+    return newData;
   }
 }

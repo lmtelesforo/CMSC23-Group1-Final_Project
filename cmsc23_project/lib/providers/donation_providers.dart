@@ -65,12 +65,15 @@ class DonationProvider with ChangeNotifier {
 
   List<DonationItem> getDonationItemsForOrganization(String organization) {
     return organizationDonations[organization]!
-        .map((itemName) => DonationItem(itemName: itemName, isChecked: false))
-        .toList();
+      .map((itemName) => DonationItem(itemName: itemName, isChecked: false))
+      .toList();
   }
 
-  List<DonationItem> getCheckedItems() {
-    return _donationItems.where((item) => item.isChecked).toList();
+  List<dynamic> getCheckedItems() {
+    return _donationItems
+      .where((item) => item.isChecked)
+      .map((item) => item.itemName.toString())
+      .toList();
   }
 
   List<String> _getOrganizationDetails(String organization) {
@@ -103,9 +106,4 @@ class DonationItem {
   bool isChecked;
 
   DonationItem({required this.itemName, required this.isChecked});
-
-  @override
-  String toString() {
-    return '{itemName: $itemName}';
-  }
 }
