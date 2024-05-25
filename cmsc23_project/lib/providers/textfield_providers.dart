@@ -14,7 +14,7 @@ class TextfieldProviders extends ChangeNotifier {
   String proofs = '';
   List proofsSpliced = [];
   String qrcodeinput = '';
-  String shippingOpt = '';
+  String shippingOpt = 'Pick up';
   List category = [];
   bool datetimepicked = false;
   final controller1 = TextEditingController();

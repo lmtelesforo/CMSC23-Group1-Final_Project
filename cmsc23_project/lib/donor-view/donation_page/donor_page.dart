@@ -24,6 +24,14 @@ class _DonorPageState extends State<DonorPage> {
   bool generate = false;
   String qrcodeinput = "";
   bool datetimepicked = false;
+  List<String> addressesList = [];
+
+  bool isNumeric(String str) { // check if input is a contact number
+    if(str == null) {
+      return false;
+    }
+    return double.tryParse(str) != null;
+  }
 
   @override
   void initState() {
@@ -85,83 +93,180 @@ class _DonorPageState extends State<DonorPage> {
               left: 30,
               right: 30,
               bottom: 20,
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.5),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Center(
-                            child: Text(
-                              organization,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: "Montserrat",
-                                color: const Color.fromRGBO(55, 61, 102, 1),
+               child: Center(
+                child: Container (
+                  width: 320,
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Center(
+                              child: Text(
+                                organization,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "Montserrat",
+                                  color: const Color.fromRGBO(55, 61, 102, 1),
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 15),
-                    Column(
-                      children: donationProvider.donationItems.map((item) {
-                        return DonationCheckbox(
-                          itemName: item.itemName,
-                          isChecked: item.isChecked,
-                          onChanged: (isChecked) {
-                            donationProvider.toggleItemCheck(item, isChecked!);
-                            provider.category = donationProvider.getCheckedItems();
-                            print(provider.category);
-                          },
-                        );
-                      }).toList(),
-                    ),
-                    SizedBox(height: 10),
-                    Text("Select if the items are for pickup or drop-off"),
-                    SizedBox(height: 10),
-                    DropdownMenuExample(),
-                    SizedBox(height: 10),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Weight of items (kg/lbs)',
+                      SizedBox(height: 15),
+                      Column(
+                        children: donationProvider.donationItems.map((item) {
+                          return DonationCheckbox(
+                            itemName: item.itemName,
+                            isChecked: item.isChecked,
+                            onChanged: (isChecked) {
+                              donationProvider.toggleItemCheck(item, isChecked!);
+                              provider.category = donationProvider.getCheckedItems();
+                              print(provider.category);
+                            },
+                          );
+                        }).toList(),
                       ),
-                      keyboardType: TextInputType.number,
-                      onChanged: (value) {},
-                    ),
-                    SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () {
-                        _openCamera(context);
-                      },
-                      child: Text('Take Photo'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        _openGallery(context);
-                      },
-                      child: Text('Upload Photo'),
-                    ),
-                    DateTimePicker(),
-                    provider.datetimepicked == true ? showDateTimePicked(provider.dateTime) : const SizedBox.shrink(),
-                    provider.shippingOpt == 'Drop-off' ? ifDropOff(context) : const SizedBox.shrink(),
-                    generate ? qrCodeImage(qrcodeinput) : const SizedBox.shrink(),
-                  ],
+                      SizedBox(height: 10),
+                      Text("Select if the items are for pickup or drop-off"),
+                      SizedBox(height: 10),
+                      DropdownMenuExample(),
+                      SizedBox(height: 10),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'Weight of items (kg/lbs)',
+                        ),
+                        keyboardType: TextInputType.number,
+                        onChanged: (value) {},
+                      ),
+                      SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: () {
+                          _openCamera(context);
+                        },
+                        child: Text('Take Photo'),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          _openGallery(context);
+                        },
+                        child: Text('Upload Photo'),
+                      ),
+                      DateTimePicker(),
+                      provider.datetimepicked == true ? showDateTimePicked(provider.dateTime) : const SizedBox.shrink(),
+                      provider.shippingOpt == 'Pick up' ? forPickUpInputs(context) : const SizedBox.shrink(),
+                      provider.shippingOpt == 'Drop-off' ? ifDropOff(context) : const SizedBox.shrink(),
+                      generate ? qrCodeImage(qrcodeinput) : const SizedBox.shrink(),
+                    ],
+                  ),
                 ),
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget forPickUpInputs(BuildContext context) {
+    final provider = context.watch<TextfieldProviders>();
+
+    return Column (
+      children: [
+        Divider(
+          thickness: 1, 
+          color: const Color(0xFFFCBE4F),
+        ),
+        Text(
+          "Separate multiple entries with semi-colons. Leave no space in between (e.g. Address 1;Address 2)",
+          style: TextStyle(
+            fontSize: 14,
+            fontFamily: 'Poppins-Reg',
+            fontWeight: FontWeight.w600,
+            color: Color(0xFF373D66),
+          ),
+          textAlign: TextAlign.center,
+        ),
+        Divider(
+          thickness: 1, 
+          color: const Color(0xFFFCBE4F), 
+        ),
+        SizedBox(height: 10),
+        TextFormField(
+          controller: provider.controller5,
+          onChanged: provider.updateAddresses,
+          validator: (val) {
+            if (val!.isEmpty) {
+              return "Please enter a valid address or addresses";
+            }
+            if (val.trim().isEmpty) {
+              return "Please enter a valid address or addresses";
+            }
+            return null;
+          },
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            fontFamily: 'Poppins-Reg',
+            color: Color(0xFF373D66),
+          ),
+          decoration: InputDecoration(
+            labelText: 'Please enter the address for pickup',
+          ),
+        ),
+        TextFormField(
+          controller: provider.controller6,
+          onChanged: provider.updateContactNumber,
+          validator: (val) {
+             if (val!.isEmpty) {
+              return "Please enter your contact number";
+            }
+            if (val.trim().isEmpty) {
+              return "Please enter your contact number";
+            }
+            if (isNumeric(val) != true) {
+              return "Please enter a valid contact number";
+            }
+            return null;
+          },
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            fontFamily: 'Poppins-Reg',
+            color: Color(0xFF373D66),
+          ),
+          decoration: InputDecoration(
+            labelText: 'Please enter the contact number for pickup',
+          ),
+        ),
+        SizedBox(height: 30),
+        ElevatedButton(
+          onPressed: () {
+            if (_formKey.currentState!.validate()) {
+              final addressesUnsplit = provider.controller5.text;
+              final contactnumber = provider.controller6.text;
+              bool multipleAddresses = addressesUnsplit.contains(';');
+
+              if (multipleAddresses == true) {
+                addressesList = addressesUnsplit.split(';').map((address) => address.trim()).toList();
+              }
+              else {
+                addressesList = [addressesUnsplit];
+              }
+            }
+          },
+          child: Text('Send Donation'),
+        ),
+      ],
     );
   }
 
