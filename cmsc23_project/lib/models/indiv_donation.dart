@@ -5,24 +5,30 @@ class Donations {
   String shipping;
   String weight;
   List? photo;
-  List addresses;
-  String contactNumber;
+  List? addresses;
+  String? contactNumber;
   String? qrcode;
   String status;
   String? id;
+  String email;
   String name;
-  DateTime dateTime;
+  // DateTime dateTime;
+  String date;
+  String time;
 
   Donations ({
     this.id, 
     required this.category, 
     required this.shipping,
     required this.weight,
-    required this.addresses, 
-    required this.contactNumber, 
+    this.addresses, 
+    this.contactNumber, 
     required this.status,
     required this.name,
-    required this.dateTime,
+    required this.email,
+    // required this.dateTime,
+    required this.date,
+    required this.time,
     this.qrcode,
     this.photo
   });
@@ -31,10 +37,13 @@ class Donations {
     return Donations(
       id: json['id'],
       name: json['name'],
+      email: json['email'],
       category: json['category'],
       shipping: json['shipping'],
       weight: json['weight'],
-      dateTime: json['datetime'],
+      // dateTime: json['dateTime'],
+      date: json['date'],
+      time: json['time'],
       addresses: json['addresses'],
       contactNumber: json['contactNumber'],
       photo: json['photo'],

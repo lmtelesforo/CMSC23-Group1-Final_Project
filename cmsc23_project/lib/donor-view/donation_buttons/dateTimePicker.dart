@@ -3,6 +3,7 @@ import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 import 'package:provider/provider.dart';
 import '../../providers/textfield_providers.dart';
 import '../donation_page/donor_page.dart';
+import 'package:intl/intl.dart';
 
 class DateTimePicker extends StatefulWidget {
   const DateTimePicker({super.key});
@@ -59,6 +60,8 @@ class _DateTimePickerState extends State<DateTimePicker> {
       dateandtime = dateTime.toString();
       int space = dateandtime!.indexOf(' '); // extract date w/c is before the first space
 
+      String time = DateFormat('hh:mm a').format(dateTime);
+
       String date = dateandtime!.substring(0, space);
       DateTime selectedDate = DateTime.parse(date);
 
@@ -74,6 +77,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
         Provider.of<TextfieldProviders>(context, listen: false).updateDate(date);
         Provider.of<TextfieldProviders>(context, listen: false).updateDateTime(dateTime);
         Provider.of<TextfieldProviders>(context, listen: false).dateandtimepicked(true);
+        Provider.of<TextfieldProviders>(context, listen: false).updateTime(time);
       } 
       else {
         // not one day after the current date

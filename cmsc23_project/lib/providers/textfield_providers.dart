@@ -19,6 +19,7 @@ class TextfieldProviders extends ChangeNotifier {
   String weight = '';
   bool datetimepicked = false;
   String date = '';
+  String time = '';
   final controller1 = TextEditingController();
   final controller2 = TextEditingController();
   final controller3 = TextEditingController();
@@ -86,6 +87,11 @@ class TextfieldProviders extends ChangeNotifier {
 
   void updateDate(String value) {
     date = value;
+    notifyListeners();
+  }
+
+  void updateTime(String value) {
+    time = value;
     notifyListeners();
   }
 

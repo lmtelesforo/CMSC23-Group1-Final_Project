@@ -276,6 +276,7 @@ class _DonorPageState extends State<DonorPage> {
         ElevatedButton(
           onPressed: () {
             if (_formKey.currentState!.validate()) {
+              final donorName = donorDetails['name'];
               final weight = provider.controller4.text;
               final addressesUnsplit = provider.controller5.text;
               final contactnumber = provider.controller6.text;
@@ -301,7 +302,7 @@ class _DonorPageState extends State<DonorPage> {
                 ); 
               }
               else {
-                final donation = DonationStorageProvider().donationDataPickUp(donorEmail, provider.dateTime, addressesList, provider.contactNumber, status, provider.category, provider.shippingOpt, weight);
+                final donation = DonationStorageProvider().donationDataPickUp(donorName, donorEmail, provider.date, provider.time, addressesList, provider.contactNumber, status, provider.category, provider.shippingOpt, weight);
 
                 donationService.addDonation(donation); // add to firebase
 
@@ -343,6 +344,7 @@ class _DonorPageState extends State<DonorPage> {
             if (_formKey.currentState!.validate()) {
               final weight = provider.controller4.text;
               final donorEmail = donorDetails['email'];
+              final donorName = donorDetails['name'];
               final status = 'Pending';
 
               final donationService = Provider.of<DonationStorageProvider>(context, listen: false).firebaseService;
@@ -355,7 +357,7 @@ class _DonorPageState extends State<DonorPage> {
                 ); 
               }
               else {
-                final donation = DonationStorageProvider().donationDataDropOff(donorEmail, provider.dateTime, status, provider.category, provider.shippingOpt, provider.qrcodeinput, weight);
+                final donation = DonationStorageProvider().donationDataDropOff(donorName, donorEmail, provider.date, provider.time, status, provider.category, provider.shippingOpt, provider.qrcodeinput, weight);
 
               donationService.addDonation(donation); // add to firebase
 

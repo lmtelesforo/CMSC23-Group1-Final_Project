@@ -37,10 +37,13 @@ class DonationStorageProvider with ChangeNotifier {
     }
   }
 
-  Map<String, dynamic> donationDataPickUp(String email, DateTime dateTime, List addresses, String contactnumber, String status, List category, String shipping, String weight){ // created a structure for easier storing
+  Map<String, dynamic> donationDataPickUp(String name, String email, String date, String time, List addresses, String contactnumber, String status, List category, String shipping, String weight){ // created a structure for easier storing
     Map<String, dynamic> newData = {
+      'name': name,
       'email': email,
-      'dateTime': dateTime,
+      // 'dateTime': dateTime,
+      'date': date,
+      'time': time,
       'addresses': addresses,
       'contactNumber': contactnumber,
       'status': status,
@@ -50,10 +53,12 @@ class DonationStorageProvider with ChangeNotifier {
     };
     return newData;
   }
-  Map<String, dynamic> donationDataDropOff(String email, DateTime dateTime, String status, List category, String shipping, String weight, String qrCode){ // created a structure for easier storing
+  Map<String, dynamic> donationDataDropOff(String name, String email, String date, String time, String status, List category, String shipping, String weight, String qrCode){ // created a structure for easier storing
     Map<String, dynamic> newData = {
+      'name': name,
       'email': email,
-      'dateTime': dateTime,
+      'date': date,
+      'time': time,
       'status': status,
       'shipping': shipping,
       'qrcode': qrCode,
