@@ -4,7 +4,6 @@ import 'package:cmsc23_project/admin_view/login_admin.dart';
 import 'package:cmsc23_project/admin_view/view_all_donations.dart';
 import 'package:cmsc23_project/admin_view/view_all_donors.dart';
 import 'package:cmsc23_project/admin_view/view_all_organizations.dart';
-import 'package:cmsc23_project/org-view/donations/scanner/scanner_overlay.dart';
 import 'package:cmsc23_project/providers/current_org_provider.dart';
 import 'package:cmsc23_project/donor-view/donation_page/donor_homepage.dart';
 import 'package:cmsc23_project/providers/donation_providers.dart';

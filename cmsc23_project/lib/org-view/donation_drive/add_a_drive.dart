@@ -1,4 +1,4 @@
-import 'package:cmsc23_project/org-view/base_elements/base_screen.dart';
+import 'package:cmsc23_project/org-view/base_elements/base_screen/base_screen.dart';
 import 'package:cmsc23_project/org-view/base_elements/org_view_styles.dart';
 import 'package:cmsc23_project/providers/current_org_provider.dart';
 import 'package:flutter/material.dart';

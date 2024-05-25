@@ -1,7 +1,7 @@
-import 'package:cmsc23_project/org-view/base_elements/app_bar.dart';
+import 'package:cmsc23_project/org-view/base_elements/base_screen/app_bar.dart';
 import 'package:cmsc23_project/org-view/base_elements/org_view_styles.dart';
-import 'package:cmsc23_project/org-view/donations/scanner/scanner_button_widgets.dart';
-import 'package:cmsc23_project/org-view/donations/scanner/scanner_error_widget.dart';
+import 'package:cmsc23_project/org-view/base_elements/scanner/scanner_button_widgets.dart';
+import 'package:cmsc23_project/org-view/base_elements/scanner/scanner_error_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 

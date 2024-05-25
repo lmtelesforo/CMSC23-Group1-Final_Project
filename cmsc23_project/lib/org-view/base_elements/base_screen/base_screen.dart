@@ -1,6 +1,6 @@
 import 'package:cmsc23_project/models/organization.dart';
-import 'package:cmsc23_project/org-view/base_elements/app_bar.dart';
-import 'package:cmsc23_project/org-view/base_elements/drawer.dart';
+import 'package:cmsc23_project/org-view/base_elements/base_screen/app_bar.dart';
+import 'package:cmsc23_project/org-view/base_elements/base_screen/drawer.dart';
 import 'package:cmsc23_project/providers/current_org_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
