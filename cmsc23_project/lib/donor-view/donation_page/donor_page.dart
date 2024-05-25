@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../providers/textfield_providers.dart';
+import '../donation_buttons/dateTimePicker.dart';
 
 class DonorPage extends StatefulWidget {
   final String organization;
@@ -143,13 +144,13 @@ class _DonorPageState extends State<DonorPage> {
                       },
                       child: Text('Take Photo'),
                     ),
-                    SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {
                         _openGallery(context);
                       },
                       child: Text('Upload Photo'),
                     ),
+                    DateTimePicker(),
                     provider.shippingOpt == 'Drop-off' ? ifDropOff(context) : const SizedBox.shrink(),
                     generate ? qrCodeImage(qrcodeinput) : const SizedBox.shrink(),
                   ],
