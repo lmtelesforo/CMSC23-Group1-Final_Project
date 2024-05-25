@@ -23,6 +23,7 @@ class _DonorPageState extends State<DonorPage> {
   late String organization; 
   bool generate = false;
   String qrcodeinput = "";
+  bool datetimepicked = false;
 
   @override
   void initState() {
@@ -151,6 +152,7 @@ class _DonorPageState extends State<DonorPage> {
                       child: Text('Upload Photo'),
                     ),
                     DateTimePicker(),
+                    provider.datetimepicked == true ? showDateTimePicked(provider.dateTime) : const SizedBox.shrink(),
                     provider.shippingOpt == 'Drop-off' ? ifDropOff(context) : const SizedBox.shrink(),
                     generate ? qrCodeImage(qrcodeinput) : const SizedBox.shrink(),
                   ],
@@ -159,6 +161,15 @@ class _DonorPageState extends State<DonorPage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget showDateTimePicked(DateTime dateandtime) {
+    return Container(
+      padding: const EdgeInsets.all(16.0),
+      child: Text(
+        dateandtime.toString(),
       ),
     );
   }

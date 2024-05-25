@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
+import 'package:provider/provider.dart';
+import '../../providers/textfield_providers.dart';
 import '../donation_page/donor_page.dart';
 
 class DateTimePicker extends StatefulWidget {
@@ -10,6 +12,8 @@ class DateTimePicker extends StatefulWidget {
 }
 
 class _DateTimePickerState extends State<DateTimePicker> {
+  late String? dateandtime = '';
+
   showDatePicker() async {
     DateTime? dateTime = await showOmniDateTimePicker(
       context: context,
@@ -50,10 +54,20 @@ class _DateTimePickerState extends State<DateTimePicker> {
         }
       },
     );
+    if (dateTime != null) {
+      print(dateTime);
+      Provider.of<TextfieldProviders>(context, listen: false).updateDateTime(dateTime);
+      Provider.of<TextfieldProviders>(context, listen: false).dateandtimepicked(true);
+      print(Provider.of<TextfieldProviders>(context, listen: false).datetimepicked);
+    } else {
+      print('No date and time chosen.');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final provider = context.watch<TextfieldProviders>();
+
     return Container (
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
