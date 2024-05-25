@@ -338,6 +338,7 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                                 ),
                               ),
                             TextFormField(
+                              obscureText: true,
                               controller: provider.controller4, 
                               onChanged: provider.updatePassword,
                               validator: (val) {

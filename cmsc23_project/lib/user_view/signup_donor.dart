@@ -359,6 +359,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                                 ),
                               ),
                             TextFormField(
+                              obscureText: true,
                               controller: provider.controller4, 
                               onChanged: provider.updatePassword,
                               validator: (val) {
