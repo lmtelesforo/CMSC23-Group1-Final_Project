@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/textfield_providers.dart';
 
 class DropdownMenuExample extends StatefulWidget {
-  const DropdownMenuExample({super.key});
+  DropdownMenuExample({super.key});
 
   @override
   _DropdownMenuExampleState createState() => _DropdownMenuExampleState();
@@ -12,6 +15,8 @@ class _DropdownMenuExampleState extends State<DropdownMenuExample> {
 
   @override
   Widget build(BuildContext context) {
+    final provider = context.watch<TextfieldProviders>();
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.5), // Color of the dropdown menu box
@@ -31,6 +36,7 @@ class _DropdownMenuExampleState extends State<DropdownMenuExample> {
         onChanged: (String? newValue) {
           setState(() {
             dropdownValue = newValue!;
+            provider.updateShippingOpt(dropdownValue);
           });
         },
         items: <String>['Pick up', 'Drop-off']

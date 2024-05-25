@@ -1,16 +1,19 @@
 import 'dart:convert';
 
-class Donation {
+class Donations {
   String category;
   String shipping;
   String weight;
+  List? photo;
   String date;
   String time;
   List addresses;
   String contactNumber;
+  String? qrcode;
+  String status;
   String? id;
 
-  Donation ({
+  Donations ({
     this.id, 
     required this.category, 
     required this.shipping,
@@ -19,10 +22,13 @@ class Donation {
     required this.time,
     required this.addresses, 
     required this.contactNumber, 
+    required this.status,
+    this.qrcode,
+    this.photo
   });
 
-  factory Donation.fromJson(Map<String, dynamic> json) {
-    return Donation(
+  factory Donations.fromJson(Map<String, dynamic> json) {
+    return Donations(
       id: json['id'],
       category: json['category'],
       shipping: json['shipping'],
@@ -30,16 +36,19 @@ class Donation {
       date: json['date'],
       time: json['time'],
       addresses: json['addresses'],
-      contactNumber: json['contactNumber']
+      contactNumber: json['contactNumber'],
+      photo: json['photo'],
+      qrcode: json['qrcode'],
+      status: json['status']
     );
   }
 
-  static List<Donation> fromJsonArray(String jsonData) {
+  static List<Donations> fromJsonArray(String jsonData) {
     final Iterable<dynamic> data = jsonDecode(jsonData);
-    return data.map<Donation>((dynamic d) => Donation.fromJson(d)).toList();
+    return data.map<Donations>((dynamic d) => Donations.fromJson(d)).toList();
   }
 
-  Map<String, dynamic> toJson(Donation Donation) {
+  Map<String, dynamic> toJson(Donations Donation) {
     return {
       'id': Donation.id,
       'category': Donation.category,
@@ -48,7 +57,10 @@ class Donation {
       'date': Donation.date,
       'time': Donation.time,
       'addresses': Donation.addresses,
-      'contactNumber': Donation.contactNumber
+      'contactNumber': Donation.contactNumber,
+      'photo': Donation.photo,
+      'status': Donation.status,
+      'qrcode': Donation.qrcode
     };
   }
 }

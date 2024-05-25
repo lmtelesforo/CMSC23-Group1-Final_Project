@@ -11,6 +11,8 @@ class TextfieldProviders extends ChangeNotifier {
   String contactNumber = '';
   String proofs = '';
   List proofsSpliced = [];
+  String qrcodeinput = '';
+  String shippingOpt = '';
   final controller1 = TextEditingController();
   final controller2 = TextEditingController();
   final controller3 = TextEditingController();
@@ -52,6 +54,21 @@ class TextfieldProviders extends ChangeNotifier {
   void updateProofs(String value) {
     proofs = value;
     notifyListeners();
+  }
+
+  void updateQRCodeInput(String value) {
+    qrcodeinput = value;
+    notifyListeners();
+  }
+
+  void updateShippingOpt(String value) {
+    shippingOpt = value;
+    notifyListeners();
+  }
+
+  void resetDonationInputs() {
+    qrcodeinput = '';
+    controller7.clear();
   }
 
   void resetSignUp() {

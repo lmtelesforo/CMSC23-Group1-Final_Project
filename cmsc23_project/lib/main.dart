@@ -10,6 +10,7 @@ import 'package:cmsc23_project/org-view/donation_drive/add_a_drive.dart';
 import 'package:cmsc23_project/org-view/org_homepage.dart';
 import 'package:cmsc23_project/org-view/profile.dart';
 import 'package:cmsc23_project/providers/donation_providers.dart';
+import 'package:cmsc23_project/providers/donation_storage_provider.dart';
 import 'package:cmsc23_project/user_view/landing_page.dart';
 import 'package:cmsc23_project/user_view/login_donor.dart';
 import 'package:cmsc23_project/user_view/login_org.dart';
@@ -48,6 +49,9 @@ Future<void> main() async {
         ChangeNotifierProvider(
           create: (context) => CurrentOrgProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => DonationStorageProvider(),
+        ),
       ],
       child: const RootWidget(),
     ),
@@ -69,7 +73,7 @@ class RootWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: "/",
+      initialRoute: "/donorHomepage",
       routes: {
         "/": (context) => const LandingPage(),
         "/loginDonor": (context) => const LogInDonorPage(),
