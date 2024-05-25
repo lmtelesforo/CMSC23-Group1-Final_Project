@@ -18,4 +18,15 @@ class FirebaseDonationStorageAPI {
     }
   }
 
+  Future<String> updateDonationStatus(String donationId, String newStatus) async {
+    try {
+      await db.collection('donations').doc(donationId).update({
+        'status': newStatus,
+      });
+      return('Donation status updated successfully');
+    } catch (e) {
+      return('Error updating donation status: $e');
+    }
+  }
+
 }

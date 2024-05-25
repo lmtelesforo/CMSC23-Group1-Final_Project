@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:cmsc23_project/donor-view/donation_page/favorite_page.dart';
 import 'package:cmsc23_project/donor-view/donation_page/org_details_page.dart';
 
+import '../../admin_view/user_view_own_donations.dart';
+
 class DonorHomepage extends StatefulWidget {
   const DonorHomepage({super.key});
 
@@ -14,6 +16,7 @@ class DonorHomepage extends StatefulWidget {
 class _DonorHomepageState extends State<DonorHomepage> {
   List<String> filteredOrganizations = [];
   DonationProvider _donationProvider = DonationProvider();
+  late Map<String, dynamic> donorDetails;
 
   @override
   void initState() {
@@ -72,12 +75,13 @@ class _DonorHomepageState extends State<DonorHomepage> {
           children: <Widget>[
             const DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: const Color.fromRGBO(55, 61, 102, 1),
               ),
               child: Text(
                 "Menu",
                 style: TextStyle(
                   color: Colors.white,
+                  fontFamily: 'Poppins',
                   fontSize: 28,
                 ),
               ),
@@ -85,7 +89,8 @@ class _DonorHomepageState extends State<DonorHomepage> {
             ListTile(
               title: const Text(
                 "Home",
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(fontSize: 20, 
+                  fontFamily: 'Poppins',),
               ),
               onTap: () {
                 Navigator.pop(context);
@@ -94,7 +99,8 @@ class _DonorHomepageState extends State<DonorHomepage> {
             ListTile(
               title: const Text(
                 "Profile",
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(fontSize: 20,
+                  fontFamily: 'Poppins'),
               ),
               onTap: () {
                 Navigator.pop(context);
@@ -103,7 +109,8 @@ class _DonorHomepageState extends State<DonorHomepage> {
             ListTile(
               title: Text(
                 "Favorite",
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(fontSize: 20,
+                  fontFamily: 'Poppins'),
               ),
               onTap: () {
                 Navigator.push(
@@ -115,8 +122,26 @@ class _DonorHomepageState extends State<DonorHomepage> {
             ),
             ListTile(
               title: Text(
+                "View All Donations",
+                style: TextStyle(fontSize: 20,
+                  fontFamily: 'Poppins'),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UserViewAllDonations(
+                      donorDetails: donorDetails),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              title: Text(
                 "Log Out",
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(fontSize: 20,
+                  fontFamily: 'Poppins'),
               ),
               onTap: () {
                 Navigator.pop(context);

@@ -82,6 +82,15 @@ class _DonorPageState extends State<DonorPage> {
               child: Image.asset('images/logo.png'),
             ),
           ],
+        ), 
+        leading: IconButton(
+          icon: Icon(Icons.home,
+          color: const Color.fromRGBO(55, 61, 102, 1)),
+          onPressed: () {
+            provider.controller4.clear();
+            Navigator.pop(context);
+            Navigator.pushNamed(context, "/donorHomepage", arguments: donorDetails);
+          },
         ),
         actions: [],
       ),

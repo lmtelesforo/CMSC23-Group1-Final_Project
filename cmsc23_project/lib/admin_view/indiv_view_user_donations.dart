@@ -5,25 +5,30 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
+import '../providers/donation_storage_provider.dart';
 import '../providers/textfield_providers.dart';
+import 'user_view_own_donations.dart';
 
-class IndivViewAllDonations extends StatefulWidget {
+class UserIndivViewDonation extends StatefulWidget {
   final DocumentSnapshot donationDetails;
+  final Map<String, dynamic> donorDetails;
 
-  const IndivViewAllDonations({Key? key, required this.donationDetails}) : super(key: key);
+  const UserIndivViewDonation({Key? key, required this.donationDetails, required this.donorDetails}) : super(key: key);
 
   @override
-  State<IndivViewAllDonations> createState() => _IndivViewAllDonationsState();
+  State<UserIndivViewDonation> createState() => _IndivViewAllDonationsState();
 }
 
-class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
+class _IndivViewAllDonationsState extends State<UserIndivViewDonation> {
   late Donations donation;
+  late Map<String, dynamic> donorDetails;
 
   @override
   void initState() {
     super.initState();
     donation = Donations.fromJson(widget.donationDetails.data() as Map<String, dynamic>);
     donation.id = widget.donationDetails.id;
+    donorDetails = widget.donorDetails;
   }
 
   @override
@@ -66,8 +71,15 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
             left: 0,
             child: TextButton.icon(
               onPressed: () {
+                provider.controller4.clear();
                 Navigator.pop(context);
-                Navigator.pushNamed(context, "/viewAllDonations");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UserViewAllDonations(
+                      donorDetails: donorDetails),
+                  ),
+                );
               },
               icon: Image.asset(
                 'lib/user_view/assets/back.png', 
@@ -271,6 +283,8 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                         const SizedBox(height: 7),
                         donation.shipping == 'Pick up' ? showAddressandContact() : const SizedBox.shrink(),
                         donation.shipping == 'Drop-off' ? showGeneratedQR() : const SizedBox.shrink(),
+                        SizedBox(height: 20),
+                        donation.status != 'Cancelled' ? showCancelButton() : const SizedBox.shrink(),
                       ],
                     ),
                   ),
@@ -279,6 +293,50 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget showCancelButton() {
+    return Center(
+      child: ElevatedButton.icon(
+        onPressed: () {
+          final donationService = Provider.of<DonationStorageProvider>(context, listen: false).firebaseService;
+          donationService.updateDonationStatus(donation.id!, 'Cancelled'); // only delete request
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Donation cancelled.'),
+            ),
+          );
+          Navigator.pop(context);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => UserViewAllDonations(
+                donorDetails: donorDetails),
+            ),
+          );
+        },
+        icon: const Icon(
+          Icons.clear,
+          color: Color.fromARGB(255, 181, 19, 19),
+        ),
+        label: const Text(
+          'Cancel Donation',
+          style: TextStyle(
+            fontSize: 14,
+            fontFamily: 'Poppins-Bold',
+            color: Color(0xFF373D66),
+          ),
+        ),
+        style: ElevatedButton.styleFrom(
+          minimumSize: const Size(300, 35),
+          textStyle: const TextStyle(
+            fontSize: 14,
+            fontFamily: 'Poppins-Bold',
+          ),
+          backgroundColor: const Color(0xFFFCBE4F),
+        ),
       ),
     );
   }

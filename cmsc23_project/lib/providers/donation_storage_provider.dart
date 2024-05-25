@@ -26,6 +26,12 @@ class DonationStorageProvider with ChangeNotifier {
     notifyListeners(); 
   }
 
+  Future<void> updateDonationStatus(String donationId, String newStatus) async {
+    String? message = await firebaseService.updateDonationStatus(donationId, newStatus);
+    print(message); 
+    notifyListeners(); 
+  }
+
   void printAllDonations() async {
     try {
       final donationsSnapshot = await firebaseService.getAllDonations().first;
@@ -53,7 +59,7 @@ class DonationStorageProvider with ChangeNotifier {
     };
     return newData;
   }
-  Map<String, dynamic> donationDataDropOff(String name, String email, String date, String time, String status, List category, String shipping, String weight, String qrCode){ // created a structure for easier storing
+  Map<String, dynamic> donationDataDropOff(String name, String email, String date, String time, String status, List category, String shipping, String qrCode, String weight){ // created a structure for easier storing
     Map<String, dynamic> newData = {
       'name': name,
       'email': email,
