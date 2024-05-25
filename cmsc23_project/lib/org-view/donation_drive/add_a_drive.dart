@@ -4,15 +4,20 @@ import 'package:cmsc23_project/providers/current_org_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AddADrive extends StatelessWidget {
+class AddADrive extends StatefulWidget {
   const AddADrive({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final formKey = GlobalKey<FormState>();
-    final nameController = TextEditingController();
-    final descController = TextEditingController();
+  State<AddADrive> createState() => _AddADriveState();
+}
 
+class _AddADriveState extends State<AddADrive> {
+  final formKey = GlobalKey<FormState>();
+  final nameController = TextEditingController();
+  final descController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
     return BaseScreen(
       body: Column(
         children: [
@@ -21,6 +26,13 @@ class AddADrive extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    descController.dispose();
+    super.dispose();
   }
 }
 
@@ -66,6 +78,8 @@ class Fields extends StatelessWidget {
           controller: _nameController,
           style: CustomTextStyle.h1,
           textAlign: TextAlign.center,
+          minLines: 1,
+          maxLines: null,
           decoration: const InputDecoration(
             border: InputBorder.none,
             hintText: 'Enter name of drive',
@@ -86,6 +100,7 @@ class Fields extends StatelessWidget {
   Widget get _enterDesc => Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: TextFormField(
+          controller: _descController,
           style: CustomTextStyle.body,
           textAlign: TextAlign.center,
           minLines: 1,
