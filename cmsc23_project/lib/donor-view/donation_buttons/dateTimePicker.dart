@@ -68,9 +68,9 @@ class _DateTimePickerState extends State<DateTimePicker> {
       print(currentDate);
       print(nextDay);
 
-      if (selectedDate.year == nextDay.year && selectedDate.month == nextDay.month && selectedDate.day == nextDay.day) {
+      if (selectedDate.year >= nextDay.year && selectedDate.month >= nextDay.month && selectedDate.day >= nextDay.day) {
         // one day after the current date
-        print('Selected date is one day after the current date.');
+        print('Selected date is at least one day after the current date.');
         Provider.of<TextfieldProviders>(context, listen: false).updateDate(date);
         Provider.of<TextfieldProviders>(context, listen: false).updateDateTime(dateTime);
         Provider.of<TextfieldProviders>(context, listen: false).dateandtimepicked(true);

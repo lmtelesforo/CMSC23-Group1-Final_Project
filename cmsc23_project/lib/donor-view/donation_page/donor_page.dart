@@ -184,6 +184,7 @@ class _DonorPageState extends State<DonorPage> {
                       provider.shippingOpt == 'Pick up' ? forPickUpInputs(context) : const SizedBox.shrink(),
                       provider.shippingOpt == 'Drop-off' ? ifDropOff(context) : const SizedBox.shrink(),
                       generate ? qrCodeImage(qrcodeinput) : const SizedBox.shrink(),
+                      generate ? submitDropOff(context) : const SizedBox.shrink(),
                     ],
                   ),
                 ),
@@ -299,25 +300,48 @@ class _DonorPageState extends State<DonorPage> {
     );
   }
 
-  Widget ifDropOff(BuildContext context) {
+  Widget submitDropOff(BuildContext context) {
     final provider = context.watch<TextfieldProviders>();
     final dateOfDropOff = provider.date;
 
     return Column (
       children: [
+        SizedBox(height: 20),
         ElevatedButton(
           onPressed: () {
             if (_formKey.currentState!.validate()) {
+              final weight = provider.controller4.text;
+              final contactnumber = provider.controller6.text;
+            }
+          },
+          child: Text('Send Donation'),
+        ),
+      ],
+    );
+  }
+
+  Widget ifDropOff(BuildContext context) {
+    final provider = context.watch<TextfieldProviders>();
+    if (provider.datetimepicked != true) {
+      return Text('Select date for drop-off first.');
+    }
+    else {
+      final dateOfDropOff = provider.date;
+
+      return Column (
+        children: [
+          ElevatedButton(
+            onPressed: () {
               setState(() {
                 qrcodeinput = dateOfDropOff;
                 generate = true;
               });
-            }
-          },
-          child: Text('Generate QR Code'),
-        ),
-      ],
-    );
+            },
+            child: Text('Generate QR Code'),
+          ),
+        ],
+      );
+    }
   }
 
   Widget qrCodeImage(String qrcodeinput) {
