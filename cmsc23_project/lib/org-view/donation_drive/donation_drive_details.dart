@@ -42,67 +42,12 @@ class _ExpandedDriveCardState extends State<ExpandedDriveCard> {
       children: [
         Container(
           padding: const EdgeInsets.all(20),
-          child: Card(
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Column(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.only(
-                      left: 10,
-                      right: 10,
-                      bottom: 10,
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image(
-                        image: widget.drive.image,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Text(widget.drive.name, style: CustomTextStyle.h1),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        _status,
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Text(
-                      widget.drive.description,
-                      style: CustomTextStyle.body,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          child: _DriveCard(widget.drive),
         ),
         _favoriteIcon,
       ],
     );
   }
-
-  Widget get _status => Row(
-        children: [
-          const Icon(Icons.schedule, color: CustomColors.secondary),
-          Container(
-            padding: const EdgeInsets.only(left: 10),
-            child: Text(
-              widget.drive.isOngoing ? 'Ongoing' : 'Ended',
-              style: CustomTextStyle.body,
-            ),
-          ),
-        ],
-      );
 
   Widget get _favoriteIcon => Positioned(
         top: 25,
@@ -148,5 +93,90 @@ class _ExpandedDriveCardState extends State<ExpandedDriveCard> {
             ),
           ],
         ),
+      );
+}
+
+class _DriveCard extends StatelessWidget {
+  final DonationDrive drive;
+
+  const _DriveCard(this.drive);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: Column(
+          children: [
+            _image(),
+            _name(),
+            _statusInfo(),
+            _description(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _description() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Text(drive.description, style: CustomTextStyle.body),
+    );
+  }
+
+  Widget _name() {
+    return Center(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Text(
+          drive.name,
+          style: CustomTextStyle.h1,
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+  }
+
+  Widget _statusInfo() {
+    return Container(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          _status,
+        ],
+      ),
+    );
+  }
+
+  Widget _image() {
+    return Container(
+      padding: const EdgeInsets.only(
+        left: 10,
+        right: 10,
+        bottom: 10,
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: Image(
+          image: drive.image,
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
+
+  Widget get _status => Row(
+        children: [
+          const Icon(Icons.schedule, color: CustomColors.secondary),
+          Container(
+            padding: const EdgeInsets.only(left: 10),
+            child: Text(
+              drive.isOngoing ? 'Ongoing' : 'Ended',
+              style: CustomTextStyle.body,
+            ),
+          ),
+        ],
       );
 }
