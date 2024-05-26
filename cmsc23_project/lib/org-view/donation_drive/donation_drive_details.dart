@@ -87,6 +87,27 @@ class _ExpandedDriveCardState extends State<ExpandedDriveCard> {
               ),
               child: InkWell(
                 onTap: () {
+                  setState(() {
+                    context
+                        .read<CurrentOrgProvider>()
+                        .toggleDriveStatus(widget.drive.id);
+                  });
+                },
+                child: widget.drive.isOngoing
+                    ? const Icon(Icons.close, color: CustomColors.secondary)
+                    : const Icon(Icons.more_horiz,
+                        color: CustomColors.secondary),
+              ),
+            ),
+            const SizedBox(width: 5),
+            Container(
+              padding: const EdgeInsets.all(5),
+              decoration: const BoxDecoration(
+                color: CustomColors.primary,
+                shape: BoxShape.circle,
+              ),
+              child: InkWell(
+                onTap: () {
                   Navigator.of(context)
                       .pushNamed('/org/add-a-drive', arguments: widget.drive);
                 },

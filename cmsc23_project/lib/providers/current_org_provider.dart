@@ -81,4 +81,11 @@ class CurrentOrgProvider with ChangeNotifier {
     _firebaseDriveAPI.updateDrive(id, name, desc);
     notifyListeners();
   }
+
+  void toggleDriveStatus(int id) {
+    DonationDrive drive = _drives.firstWhere((drive) => drive.id == id);
+    drive.isOngoing = !drive.isOngoing;
+    _firebaseDriveAPI.updateDrive(drive.id, drive.name, drive.description);
+    notifyListeners();
+  }
 }
