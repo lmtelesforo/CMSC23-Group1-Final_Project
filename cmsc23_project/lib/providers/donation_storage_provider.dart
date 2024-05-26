@@ -32,6 +32,12 @@ class DonationStorageProvider with ChangeNotifier {
     notifyListeners(); 
   }
 
+  Future<void> updateQRDetails(String donationId, String newQRCode) async {
+    String? message = await firebaseService.updateQRDetails(donationId, newQRCode);
+    print(message); 
+    notifyListeners(); 
+  }
+
   void printAllDonations() async {
     try {
       final donationsSnapshot = await firebaseService.getAllDonations().first;

@@ -303,6 +303,8 @@ class _IndivViewAllDonationsState extends State<UserIndivViewDonation> {
         onPressed: () {
           final donationService = Provider.of<DonationStorageProvider>(context, listen: false).firebaseService;
           donationService.updateDonationStatus(donation.id!, 'Cancelled'); // only delete request
+          String newQRCode = 'Cancelled' + "|" + donation.date + "|" + donation.email;
+          donationService.updateQRDetails(donation.id!, newQRCode);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('Donation cancelled.'),

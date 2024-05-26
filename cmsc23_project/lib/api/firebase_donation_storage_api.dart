@@ -29,4 +29,15 @@ class FirebaseDonationStorageAPI {
     }
   }
 
+  Future<String> updateQRDetails(String donationId, String newQRCode) async {
+    try {
+      await db.collection('donations').doc(donationId).update({
+        'qrcode': newQRCode,
+      });
+      return('Donation status updated successfully');
+    } catch (e) {
+      return('Error updating donation status: $e');
+    }
+  }
+
 }
