@@ -23,6 +23,11 @@ class _BarcodeScannerWithOverlayState extends State<BarcodeScannerWithOverlay> {
     controller.barcodes.listen((barcode) {
       controller.stop();
       Navigator.pop(context, barcode.barcodes.first.displayValue);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Scanned: ${barcode.barcodes.first.displayValue}'),
+        ),
+      );
     });
   }
 

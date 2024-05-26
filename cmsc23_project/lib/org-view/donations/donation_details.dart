@@ -6,16 +6,11 @@ import 'package:cmsc23_project/providers/current_org_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class DonationDetails extends StatefulWidget {
+class DonationDetails extends StatelessWidget {
   final Donation donation;
 
   const DonationDetails({required this.donation, super.key});
 
-  @override
-  State<DonationDetails> createState() => _DonationDetailsState();
-}
-
-class _DonationDetailsState extends State<DonationDetails> {
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
@@ -24,15 +19,198 @@ class _DonationDetailsState extends State<DonationDetails> {
         child: Center(
           child: Column(
             children: [
-              Text(widget.donation.donorUsername, style: CustomTextStyle.h1),
+              Text(donation.donorUsername, style: CustomTextStyle.h1),
               const SizedBox(height: 30),
-              _EditDonation(widget.donation),
+              _EditDonation(donation),
               const SizedBox(height: 30),
-              _DonationInfo(widget.donation),
+              _DonationInfo(donation),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class _EditDonation extends StatefulWidget {
+  final Donation donation;
+
+  const _EditDonation(this.donation);
+
+  @override
+  State<_EditDonation> createState() => _EditDonationState();
+}
+
+class _EditDonationState extends State<_EditDonation> {
+  String? qrCodeValue;
+  Donation? tempDonation;
+
+  @override
+  void initState() {
+    super.initState();
+    tempDonation = widget.donation.copy();
+  }
+
+  void saveChanges() {
+    if (!widget.donation.forPickup && qrCodeValue == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please scan the QR code first'),
+        ),
+      );
+      return;
+    }
+    setState(() {
+      widget.donation.status = tempDonation!.status;
+      widget.donation.driveId = tempDonation!.driveId;
+      context.read<CurrentOrgProvider>().updateDonation(widget.donation);
+      Navigator.pop(context);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 50),
+      child: Column(
+        children: [
+          Table(
+            columnWidths: const {
+              0: FlexColumnWidth(1),
+              1: FlexColumnWidth(2),
+            },
+            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+            children: [
+              TableRow(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(bottom: 20.0),
+                    child: Icon(Icons.sms, color: CustomColors.primary),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20.0),
+                    child: _setStatus,
+                  ),
+                ],
+              ),
+              TableRow(
+                children: [
+                  const SizedBox(),
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    height: !widget.donation.forPickup &&
+                            widget.donation.status != tempDonation!.status &&
+                            qrCodeValue == null
+                        ? 200
+                        : 0,
+                    width: !widget.donation.forPickup &&
+                            widget.donation.status != tempDonation!.status &&
+                            qrCodeValue == null
+                        ? 200
+                        : 0,
+                    child: Visibility(
+                      visible: !widget.donation.forPickup &&
+                          widget.donation.status != tempDonation!.status &&
+                          qrCodeValue == null,
+                      child: Card(
+                        child: InkWell(
+                          onTap: () async {
+                            var value = await Navigator.pushNamed(
+                                context, '/org/scan-qr');
+                            setState(() {
+                              qrCodeValue = value as String?;
+                            });
+                          },
+                          child: Icon(Icons.qr_code),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              TableRow(
+                children: [
+                  const Icon(Icons.route, color: CustomColors.primary),
+                  _setDrive,
+                ],
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: saveChanges,
+            style: const ButtonStyle(
+              surfaceTintColor: MaterialStatePropertyAll(Colors.white),
+            ),
+            child: const Text('Save'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget get _setStatus {
+    List<Status> statuses = widget.donation.validStatuses;
+
+    return DropdownMenu(
+      menuHeight: 200,
+      width: MediaQuery.of(context).size.width * 0.51,
+      initialSelection: statuses.indexOf(widget.donation.status),
+      dropdownMenuEntries: statuses
+          .map((status) => DropdownMenuEntry(
+                value: statuses.indexOf(status),
+                label: status.toString().split('.').last,
+                style: ButtonStyle(
+                    textStyle: MaterialStateProperty.all(CustomTextStyle.body)),
+              ))
+          .toList(),
+      onSelected: (status) {
+        setState(() {
+          tempDonation!.status = statuses[status!];
+        });
+      },
+      inputDecorationTheme: InputDecorationTheme(
+        fillColor: Colors.white,
+        filled: true,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide.none,
+        ),
+      ),
+      textStyle: CustomTextStyle.body,
+    );
+  }
+
+  Widget get _setDrive {
+    List<DonationDrive> drives = context.read<CurrentOrgProvider>().drives;
+
+    return DropdownMenu(
+      menuHeight: 400,
+      width: MediaQuery.of(context).size.width * 0.51,
+      initialSelection:
+          drives.indexWhere((drive) => drive.id == widget.donation.driveId),
+      dropdownMenuEntries: drives
+          .map((drive) => DropdownMenuEntry(
+                value: drives.indexOf(drive),
+                label: drive.name,
+                style: ButtonStyle(
+                    textStyle: MaterialStateProperty.all(CustomTextStyle.body)),
+              ))
+          .toList(),
+      onSelected: (drive) {
+        setState(() {
+          tempDonation!.driveId = drives[drive!].id;
+        });
+      },
+      inputDecorationTheme: InputDecorationTheme(
+        fillColor: Colors.white,
+        filled: true,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide.none,
+        ),
+      ),
+      textStyle: CustomTextStyle.body,
     );
   }
 }
@@ -135,147 +313,6 @@ class _DonationInfo extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _EditDonation extends StatefulWidget {
-  final Donation donation;
-  const _EditDonation(this.donation);
-
-  @override
-  State<_EditDonation> createState() => _EditDonationState();
-}
-
-class _EditDonationState extends State<_EditDonation> {
-  @override
-  Widget build(BuildContext context) => Center(
-        child: SizedBox(
-          width: 400,
-          child: Table(
-            columnWidths: const {
-              0: FlexColumnWidth(1),
-              1: FlexColumnWidth(2),
-            },
-            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-            children: [
-              TableRow(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(bottom: 20.0),
-                    child: Icon(Icons.sms, color: CustomColors.primary),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 20.0),
-                    child: _setStatus,
-                  ),
-                ],
-              ),
-              TableRow(
-                children: [
-                  const Icon(Icons.route, color: CustomColors.primary),
-                  _setDrive,
-                ],
-              ),
-            ],
-          ),
-        ),
-      );
-
-  String? qrCodeValue;
-  Widget get _setStatus {
-    List<Status> statuses = widget.donation.validStatuses;
-
-    return Column(
-      children: [
-        DropdownMenu(
-          menuHeight: 200,
-          initialSelection: statuses.indexOf(widget.donation.status),
-          dropdownMenuEntries: statuses
-              .map((status) => DropdownMenuEntry(
-                    value: statuses.indexOf(status),
-                    label: status.toString().split('.').last,
-                    style: ButtonStyle(
-                        textStyle:
-                            MaterialStateProperty.all(CustomTextStyle.body)),
-                  ))
-              .toList(),
-          onSelected: (status) {
-            setState(() {
-              widget.donation.status = statuses[status!];
-              context
-                  .read<CurrentOrgProvider>()
-                  .updateDonation(widget.donation);
-            });
-          },
-          inputDecorationTheme: InputDecorationTheme(
-            fillColor: Colors.white,
-            filled: true,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide.none,
-            ),
-          ),
-          textStyle: CustomTextStyle.body,
-        ),
-        Visibility(
-          visible: widget.donation.forPickup &&
-              widget.donation.status == Status.complete &&
-              qrCodeValue == null,
-          child: SizedBox(
-            height: 150,
-            width: 180,
-            child: Card(
-              child: InkWell(
-                onTap: () async {
-                  qrCodeValue =
-                      await Navigator.pushNamed(context, '/org/scan-qr')
-                          as String;
-
-                  if (qrCodeValue != null) {
-                    setState(() {});
-                  }
-                },
-                child: const Icon(Icons.qr_code),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget get _setDrive {
-    List<DonationDrive> drives = context.read<CurrentOrgProvider>().drives;
-
-    return DropdownMenu(
-      menuHeight: 400,
-      initialSelection:
-          drives.indexWhere((drive) => drive.id == widget.donation.driveId),
-      dropdownMenuEntries: drives
-          .map((drive) => DropdownMenuEntry(
-                value: drives.indexOf(drive),
-                label: drive.name,
-                style: ButtonStyle(
-                    textStyle: MaterialStateProperty.all(CustomTextStyle.body)),
-              ))
-          .toList(),
-      onSelected: (drive) {
-        setState(() {
-          widget.donation.driveId = drives[drive!].id;
-          context.read<CurrentOrgProvider>().updateDonation(widget.donation);
-        });
-      },
-      width: MediaQuery.of(context).size.width * 0.51,
-      inputDecorationTheme: InputDecorationTheme(
-        fillColor: Colors.white,
-        filled: true,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide.none,
-        ),
-      ),
-      textStyle: CustomTextStyle.body,
     );
   }
 }

@@ -45,6 +45,23 @@ class Donation {
           Status.complete,
           Status.cancelled,
         ];
+
+  Donation copy() {
+    return Donation(
+      donorUsername: donorUsername,
+      orgUsername: orgUsername,
+      driveId: driveId,
+      address: address,
+      contactNo: contactNo,
+      categories: categories,
+      forPickup: forPickup,
+      weight: weight,
+      donorImage: donorImage,
+      orgImages: orgImages,
+      scheduledDate: scheduledDate,
+      status: status,
+    );
+  }
 }
 
 Widget statusIcon(status) {
