@@ -1,5 +1,4 @@
 import 'package:cmsc23_project/models/donation_drive.dart';
-import 'package:cmsc23_project/org-view/donation_drive/donation_drive_details.dart';
 import 'package:cmsc23_project/org-view/base_elements/org_view_styles.dart';
 import 'package:cmsc23_project/providers/current_org_provider.dart';
 import 'package:flutter/material.dart';
@@ -25,14 +24,7 @@ class DonationDriveCard extends StatelessWidget {
           child: Card(
             child: InkWell(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => DonationDriveDetails(
-                      drive: drive,
-                    ),
-                  ),
-                );
+                Navigator.pushNamed(context, '/org/details', arguments: drive);
               },
               child: _CardContent(drive),
             ),

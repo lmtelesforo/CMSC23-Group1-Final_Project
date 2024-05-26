@@ -8,12 +8,14 @@ import 'package:provider/provider.dart';
 
 class DonationDriveDetails extends StatelessWidget {
   // The screen for a single donation drive
-  final DonationDrive drive;
 
-  const DonationDriveDetails({super.key, required this.drive});
+  const DonationDriveDetails({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final DonationDrive drive =
+        ModalRoute.of(context)!.settings.arguments as DonationDrive;
+
     return BaseScreen(
       body: Column(
         children: [
@@ -85,8 +87,8 @@ class _ExpandedDriveCardState extends State<ExpandedDriveCard> {
               ),
               child: InkWell(
                 onTap: () {
-                  Navigator.of(context).pushNamed('/org/add-a-drive',
-                      arguments: widget.drive.id);
+                  Navigator.of(context)
+                      .pushNamed('/org/add-a-drive', arguments: widget.drive);
                 },
                 child: const Icon(Icons.edit, color: CustomColors.secondary),
               ),

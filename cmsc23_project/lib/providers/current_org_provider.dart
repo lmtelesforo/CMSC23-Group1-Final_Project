@@ -72,4 +72,13 @@ class CurrentOrgProvider with ChangeNotifier {
     _drives.add(newDrive);
     notifyListeners();
   }
+
+  void updateDrive({
+    required int id,
+    required String name,
+    required String desc,
+  }) {
+    _firebaseDriveAPI.updateDrive(id, name, desc);
+    notifyListeners();
+  }
 }

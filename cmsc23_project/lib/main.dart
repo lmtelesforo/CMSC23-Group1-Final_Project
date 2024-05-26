@@ -4,6 +4,7 @@ import 'package:cmsc23_project/admin_view/login_admin.dart';
 import 'package:cmsc23_project/admin_view/view_all_donations.dart';
 import 'package:cmsc23_project/admin_view/view_all_donors.dart';
 import 'package:cmsc23_project/admin_view/view_all_organizations.dart';
+import 'package:cmsc23_project/org-view/donation_drive/donation_drive_details.dart';
 import 'package:cmsc23_project/providers/current_org_provider.dart';
 import 'package:cmsc23_project/donor-view/donation_page/donor_homepage.dart';
 import 'package:cmsc23_project/providers/donation_providers.dart';
@@ -82,6 +83,7 @@ class RootWidget extends StatelessWidget {
         "/org/profile": (context) => const Profile(),
         "/org/manage-drives": (context) => const ManageDonationDrives(),
         "/org/scan-qr": (context) => const BarcodeScannerWithOverlay(),
+        "/org/details": (context) => const DonationDriveDetails(),
       },
       debugShowCheckedModeBanner: false,
     );

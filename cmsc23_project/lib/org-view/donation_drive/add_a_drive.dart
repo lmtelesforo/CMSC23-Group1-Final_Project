@@ -1,3 +1,4 @@
+import 'package:cmsc23_project/models/donation_drive.dart';
 import 'package:cmsc23_project/org-view/base_elements/base_screen/base_screen.dart';
 import 'package:cmsc23_project/org-view/base_elements/org_view_styles.dart';
 import 'package:cmsc23_project/providers/current_org_provider.dart';
@@ -18,11 +19,16 @@ class _AddADriveState extends State<AddADrive> {
 
   @override
   Widget build(BuildContext context) {
+    final DonationDrive? drive =
+        ModalRoute.of(context)!.settings.arguments as DonationDrive?;
+    nameController.text = drive?.name ?? '';
+    descController.text = drive?.description ?? '';
+
     return BaseScreen(
       body: Column(
         children: [
           Fields(formKey, nameController, descController),
-          Submit(formKey, nameController, descController),
+          Submit(formKey, nameController, descController, drive),
         ],
       ),
     );
@@ -117,8 +123,15 @@ class Submit extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final TextEditingController _nameController;
   final TextEditingController _descController;
-  const Submit(this.formKey, this._nameController, this._descController,
-      {super.key});
+  final DonationDrive? drive;
+
+  const Submit(
+    this.formKey,
+    this._nameController,
+    this._descController,
+    this.drive, {
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -139,10 +152,18 @@ class Submit extends StatelessWidget {
             formKey.currentState!.save();
           }
 
-          context.read<CurrentOrgProvider>().addDrive(
-                name: _nameController.text,
-                desc: _descController.text,
-              );
+          if (drive == null) {
+            context.read<CurrentOrgProvider>().addDrive(
+                  name: _nameController.text,
+                  desc: _descController.text,
+                );
+          } else {
+            context.read<CurrentOrgProvider>().updateDrive(
+                  id: drive!.id,
+                  name: _nameController.text,
+                  desc: _descController.text,
+                );
+          }
 
           Navigator.pop(context);
         },

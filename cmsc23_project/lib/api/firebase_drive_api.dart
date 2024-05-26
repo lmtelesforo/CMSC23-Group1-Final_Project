@@ -1,5 +1,4 @@
 import 'package:cmsc23_project/models/donation_drive.dart';
-import 'package:flutter/material.dart';
 
 class FirebaseDriveAPI {
   final List<DonationDrive> _drives = [
@@ -26,5 +25,11 @@ class FirebaseDriveAPI {
 
   void addDrive(DonationDrive drive) {
     _drives.add(drive);
+  }
+
+  void updateDrive(int id, String name, String desc) {
+    DonationDrive drive = _drives.firstWhere((drive) => drive.id == id);
+    drive.name = name;
+    drive.description = desc;
   }
 }
