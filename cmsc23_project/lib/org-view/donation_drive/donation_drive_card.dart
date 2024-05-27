@@ -24,7 +24,8 @@ class DonationDriveCard extends StatelessWidget {
           child: Card(
             child: InkWell(
               onTap: () {
-                Navigator.pushNamed(context, '/org/details', arguments: drive);
+                Navigator.pushNamed(context, '/org/drives/details',
+                    arguments: drive);
               },
               child: _CardContent(drive),
             ),
@@ -32,13 +33,16 @@ class DonationDriveCard extends StatelessWidget {
         ),
         Visibility(
           visible: context.read<CurrentOrgProvider>().isFavorite(drive.id),
-          child: _favoriteIcon,
+          child: _FavoriteIcon(),
         ),
       ],
     );
   }
+}
 
-  Widget get _favoriteIcon => Positioned(
+class _FavoriteIcon extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) => Positioned(
         top: -3,
         right: -3,
         child: Container(
@@ -55,66 +59,77 @@ class DonationDriveCard extends StatelessWidget {
       );
 }
 
-class _CardContent extends StatefulWidget {
+class _CardContent extends StatelessWidget {
   const _CardContent(this.drive);
 
   final DonationDrive drive;
 
   @override
-  State<_CardContent> createState() => _CardContentState();
-}
+  Widget build(BuildContext context) {
+    final donationCount = context
+        .watch<CurrentOrgProvider>()
+        .donations()
+        .where((donation) => donation.driveId == drive.id)
+        .length;
 
-class _CardContentState extends State<_CardContent> {
-  @override
-  Widget build(BuildContext context) => Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Text(
-              widget.drive.name,
-              style: CustomTextStyle.h2,
-              textAlign: TextAlign.center,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          Table(
-            columnWidths: const {
-              0: FlexColumnWidth(1),
-              1: FlexColumnWidth(1.5),
-            },
-            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-            children: [
-              TableRow(
-                children: [
-                  widget.drive.isOngoing
-                      ? const Icon(
-                          Icons.more_horiz,
-                          color: CustomColors.secondary,
-                        )
-                      : const Icon(
-                          Icons.close,
-                          color: CustomColors.secondary,
-                        ),
-                  widget.drive.isOngoing
-                      ? Text("Ongoing",
-                          style: CustomTextStyle.body.apply(fontSizeDelta: -2))
-                      : Text("Ended",
-                          style: CustomTextStyle.body.apply(fontSizeDelta: -2)),
-                ],
-              ),
-              TableRow(
-                children: [
-                  const Icon(Icons.tag, color: CustomColors.secondary),
-                  Text(
-                    "${context.watch<CurrentOrgProvider>().donations().where((donation) => donation.driveId == widget.drive.id).length} donation${context.watch<CurrentOrgProvider>().donations().where((donation) => donation.driveId == widget.drive.id).length != 1 ? 's' : ''}",
-                    style: CustomTextStyle.body.apply(fontSizeDelta: -2),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        _driveName(),
+        _driveInfo(donationCount),
+      ],
+    );
+  }
+
+  Table _driveInfo(int donationCount) {
+    return Table(
+      columnWidths: const {
+        0: FlexColumnWidth(1),
+        1: FlexColumnWidth(1.5),
+      },
+      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+      children: [
+        TableRow(
+          children: [
+            drive.isOngoing
+                ? const Icon(
+                    Icons.more_horiz,
+                    color: CustomColors.secondary,
                   )
-                ],
-              ),
-            ],
-          ),
-        ],
-      );
+                : const Icon(
+                    Icons.close,
+                    color: CustomColors.secondary,
+                  ),
+            drive.isOngoing
+                ? Text("Ongoing",
+                    style: CustomTextStyle.body.apply(fontSizeDelta: -2))
+                : Text("Ended",
+                    style: CustomTextStyle.body.apply(fontSizeDelta: -2)),
+          ],
+        ),
+        TableRow(
+          children: [
+            const Icon(Icons.tag, color: CustomColors.secondary),
+            Text(
+              "$donationCount donation${donationCount != 1 ? 's' : ''}",
+              style: CustomTextStyle.body.apply(fontSizeDelta: -2),
+            )
+          ],
+        ),
+      ],
+    );
+  }
+
+  Padding _driveName() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Text(
+        drive.name,
+        style: CustomTextStyle.h2,
+        textAlign: TextAlign.center,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+      ),
+    );
+  }
 }

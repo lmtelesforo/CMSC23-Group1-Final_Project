@@ -1,5 +1,4 @@
 import 'package:cmsc23_project/models/donation.dart';
-import 'package:cmsc23_project/org-view/donations/donation_details.dart';
 import 'package:cmsc23_project/org-view/base_elements/org_view_styles.dart';
 import 'package:cmsc23_project/providers/current_org_provider.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +7,7 @@ import 'package:provider/provider.dart';
 class DonationList extends StatefulWidget {
   // Lists all donations made to the organization
   final int? driveId;
+
   const DonationList({this.driveId, super.key});
 
   @override
@@ -29,6 +29,7 @@ class _DonationListState extends State<DonationList> {
             child: Column(
               children: [
                 _searchBar,
+                const SizedBox(height: 8),
                 _donationTiles,
               ],
             ),
@@ -54,6 +55,7 @@ class _DonationListState extends State<DonationList> {
   Widget get _donationTiles {
     List<Donation> donations =
         context.watch<CurrentOrgProvider>().donations(driveId: widget.driveId);
+
     donations.sort((a, b) => a.status.index.compareTo(b.status.index));
 
     List<Donation> filteredDonations = donations.where((donation) {
@@ -63,37 +65,31 @@ class _DonationListState extends State<DonationList> {
     }).toList();
 
     return Expanded(
-      child: Container(
-        padding: const EdgeInsets.only(top: 8),
-        child: ListView.builder(
-          itemCount: filteredDonations.length,
-          itemBuilder: (context, index) {
-            return Card(
-              color: filteredDonations[index].status == Status.cancelled ||
-                      filteredDonations[index].status == Status.complete
-                  ? Colors.grey
-                  : CustomColors.secondary,
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DonationDetails(
-                        donation: filteredDonations[index],
-                      ),
-                    ),
-                  );
-                },
-                child: ListTile(
-                  leading: statusIcon(filteredDonations[index].status),
-                  title: Text(filteredDonations[index].donorUsername),
-                  trailing: Text(filteredDonations[index].status.name),
-                ),
+      child: ListView.builder(
+        itemCount: filteredDonations.length,
+        itemBuilder: (context, index) {
+          return Card(
+            color: _getTileColor(filteredDonations[index].status),
+            child: InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, "/org/donation",
+                    arguments: filteredDonations[index]);
+              },
+              child: ListTile(
+                leading: statusIcon(filteredDonations[index].status),
+                title: Text(filteredDonations[index].donorUsername),
+                trailing: Text(filteredDonations[index].status.name),
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
+  }
+
+  Color _getTileColor(Status status) {
+    return status == Status.cancelled || status == Status.complete
+        ? Colors.grey
+        : CustomColors.secondary;
   }
 }

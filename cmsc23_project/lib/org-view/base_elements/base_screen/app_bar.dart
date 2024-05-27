@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class OrgAppBar {
   final List<Widget>? actions;
+
   const OrgAppBar({this.actions});
 
   AppBar get appBar => AppBar(

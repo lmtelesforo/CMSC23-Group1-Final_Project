@@ -5,14 +5,14 @@ import 'package:cmsc23_project/providers/current_org_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AddADrive extends StatefulWidget {
-  const AddADrive({super.key});
+class DriveForm extends StatefulWidget {
+  const DriveForm({super.key});
 
   @override
-  State<AddADrive> createState() => _AddADriveState();
+  State<DriveForm> createState() => _DriveFormState();
 }
 
-class _AddADriveState extends State<AddADrive> {
+class _DriveFormState extends State<DriveForm> {
   final formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final descController = TextEditingController();
@@ -21,6 +21,7 @@ class _AddADriveState extends State<AddADrive> {
   Widget build(BuildContext context) {
     final DonationDrive? drive =
         ModalRoute.of(context)!.settings.arguments as DonationDrive?;
+
     nameController.text = drive?.name ?? '';
     descController.text = drive?.description ?? '';
 

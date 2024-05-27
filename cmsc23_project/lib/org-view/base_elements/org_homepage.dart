@@ -38,7 +38,7 @@ class MainAction extends StatelessWidget {
         child: Card(
           child: InkWell(
             onTap: () {
-              Navigator.pushNamed(context, '/org/manage-drives');
+              Navigator.pushNamed(context, '/org/drives');
             },
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
@@ -84,8 +84,8 @@ class Favorites extends StatelessWidget {
     return Visibility(
       visible: favorites.isNotEmpty,
       child: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-          final totalWidth = favorites.length * (200);
+        builder: (context, constraints) {
+          final totalWidth = favorites.length * 200;
 
           return Container(
             height: 150,

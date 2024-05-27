@@ -18,26 +18,34 @@ class ManageDonationDrives extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: const Text(
-                'Donation Drives',
-                style: CustomTextStyle.h1,
-              ),
-            ),
-            Wrap(
-              children: [
-                ...donationDrives.map(
-                  (donationDrive) {
-                    return DonationDriveCard(drive: donationDrive);
-                  },
-                ),
-                const AddDonationDrive(),
-              ],
-            ),
+            _title(),
+            _cards(donationDrives),
           ],
         ),
       ),
+    );
+  }
+
+  Container _title() {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: const Text(
+        'Donation Drives',
+        style: CustomTextStyle.h1,
+      ),
+    );
+  }
+
+  Wrap _cards(List<DonationDrive> donationDrives) {
+    return Wrap(
+      children: [
+        ...donationDrives.map(
+          (donationDrive) {
+            return DonationDriveCard(drive: donationDrive);
+          },
+        ),
+        const AddDonationDrive(),
+      ],
     );
   }
 }
@@ -55,24 +63,17 @@ class AddDonationDrive extends StatelessWidget {
       child: Card(
         child: InkWell(
           onTap: () {
-            Navigator.pushNamed(context, "/org/add-a-drive");
+            Navigator.pushNamed(context, "/org/drives/add");
           },
           child: const Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                height: 90,
-                width: 150,
-                child: Icon(
-                  Icons.add,
-                  size: 100,
-                  color: CustomColors.primary,
-                ),
+              Icon(
+                Icons.add,
+                size: 100,
+                color: CustomColors.primary,
               ),
-              Padding(
-                padding: EdgeInsets.only(top: 10),
-                child: Text("Add a Drive", style: CustomTextStyle.body),
-              ),
+              Text("Add a Drive", style: CustomTextStyle.body),
             ],
           ),
         ),

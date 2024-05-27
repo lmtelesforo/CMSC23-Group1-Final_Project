@@ -7,12 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DonationDetails extends StatelessWidget {
-  final Donation donation;
-
-  const DonationDetails({required this.donation, super.key});
+  const DonationDetails({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Donation donation = ModalRoute.of(context)!.settings.arguments as Donation;
+
     return BaseScreen(
       body: Container(
         padding: const EdgeInsets.only(top: 20),
@@ -60,12 +60,20 @@ class _EditDonationState extends State<_EditDonation> {
       );
       return;
     }
+
     setState(() {
       widget.donation.status = tempDonation!.status;
       widget.donation.driveId = tempDonation!.driveId;
       context.read<CurrentOrgProvider>().updateDonation(widget.donation);
+
       Navigator.pop(context);
     });
+  }
+
+  bool shouldShowQRCode() {
+    return !widget.donation.forPickup &&
+        widget.donation.status != tempDonation!.status &&
+        qrCodeValue == null;
   }
 
   @override
@@ -74,68 +82,7 @@ class _EditDonationState extends State<_EditDonation> {
       padding: const EdgeInsets.symmetric(horizontal: 50),
       child: Column(
         children: [
-          Table(
-            columnWidths: const {
-              0: FlexColumnWidth(1),
-              1: FlexColumnWidth(2),
-            },
-            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-            children: [
-              TableRow(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(bottom: 20.0),
-                    child: Icon(Icons.sms, color: CustomColors.primary),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 20.0),
-                    child: _setStatus,
-                  ),
-                ],
-              ),
-              TableRow(
-                children: [
-                  const SizedBox(),
-                  AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
-                    height: !widget.donation.forPickup &&
-                            widget.donation.status != tempDonation!.status &&
-                            qrCodeValue == null
-                        ? 200
-                        : 0,
-                    width: !widget.donation.forPickup &&
-                            widget.donation.status != tempDonation!.status &&
-                            qrCodeValue == null
-                        ? 200
-                        : 0,
-                    child: Visibility(
-                      visible: !widget.donation.forPickup &&
-                          widget.donation.status != tempDonation!.status &&
-                          qrCodeValue == null,
-                      child: Card(
-                        child: InkWell(
-                          onTap: () async {
-                            var value = await Navigator.pushNamed(
-                                context, '/org/scan-qr');
-                            setState(() {
-                              qrCodeValue = value as String?;
-                            });
-                          },
-                          child: Icon(Icons.qr_code),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              TableRow(
-                children: [
-                  const Icon(Icons.route, color: CustomColors.primary),
-                  _setDrive,
-                ],
-              ),
-            ],
-          ),
+          _form(context),
           const SizedBox(height: 20),
           ElevatedButton(
             onPressed: saveChanges,
@@ -146,6 +93,61 @@ class _EditDonationState extends State<_EditDonation> {
           ),
         ],
       ),
+    );
+  }
+
+  Table _form(BuildContext context) {
+    return Table(
+      columnWidths: const {
+        0: FlexColumnWidth(1),
+        1: FlexColumnWidth(2),
+      },
+      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+      children: [
+        TableRow(
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(bottom: 20.0),
+              child: Icon(Icons.sms, color: CustomColors.primary),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 20.0),
+              child: _setStatus,
+            ),
+          ],
+        ),
+        TableRow(
+          children: [
+            const SizedBox(),
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              height: shouldShowQRCode() ? 200 : 0,
+              width: shouldShowQRCode() ? 200 : 0,
+              child: Visibility(
+                visible: shouldShowQRCode(),
+                child: Card(
+                  child: InkWell(
+                    onTap: () async {
+                      var value =
+                          await Navigator.pushNamed(context, '/org/scan-qr');
+                      setState(() {
+                        qrCodeValue = value as String?;
+                      });
+                    },
+                    child: const Icon(Icons.qr_code),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        TableRow(
+          children: [
+            const Icon(Icons.route, color: CustomColors.primary),
+            _setDrive,
+          ],
+        ),
+      ],
     );
   }
 

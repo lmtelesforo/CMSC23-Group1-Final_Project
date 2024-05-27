@@ -30,13 +30,9 @@ class CurrentOrgProvider with ChangeNotifier {
       .toList();
 
   List<Donation> donations({int? driveId}) {
-    if (driveId == null) {
-      return _donations;
-    } else {
-      return _donations
-          .where((donation) => donation.driveId == driveId)
-          .toList();
-    }
+    return driveId == null
+        ? _donations
+        : _donations.where((donation) => donation.driveId == driveId).toList();
   }
 
   void updateDonation(Donation donation) {
@@ -45,12 +41,14 @@ class CurrentOrgProvider with ChangeNotifier {
   }
 
   bool isFavorite(int driveId) => _currentOrg.favorites!.contains(driveId);
+
   void toggleFavorite(int driveId) {
     if (_currentOrg.favorites!.contains(driveId)) {
       _currentOrg.favorites!.remove(driveId);
     } else {
       _currentOrg.favorites!.add(driveId);
     }
+
     _firebaseOrgAPI.update(_currentOrg);
     notifyListeners();
   }
