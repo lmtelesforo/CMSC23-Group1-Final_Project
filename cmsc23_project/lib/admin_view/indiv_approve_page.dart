@@ -278,8 +278,11 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   ElevatedButton.icon(
-                    onPressed: () {
-                      if (checkUserType(org.email) != false) {
+                    onPressed: () async {
+                      final bool found = await checkUserType(org.email);
+                      print(found);   
+
+                      if (found != false) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text('An account already exists under this email. Disapprove request?')),
                         );
