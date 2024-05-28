@@ -654,13 +654,15 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                             final userService = Provider.of<UserInfosProvider>(context, listen: false).firebaseService;
 
                             signUpResult = (await authService.signUp(email, password))!;
+                            final bool found = await checkUserType(email);
+                            print(found);   
 
-                            if (signUpResult == 'The account already exists for that email.' && checkUserType(email) != false) { // match error message
+                            if (signUpResult == 'The account already exists for that email.' && found != false) { // match error message
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text('An account already exists under this email. Log in instead.')),
                               );
                             }
-                            else if (checkUserType(email) != false) {
+                            else if (found != false) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text('An account already exists under this email. Log in instead.')),
                               );

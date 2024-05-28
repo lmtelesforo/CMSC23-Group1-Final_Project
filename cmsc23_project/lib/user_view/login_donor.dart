@@ -299,11 +299,24 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                             print(showSignInErrorMessage);
 
                             setState(() async {
-                              if (message != null && message.isNotEmpty) {
+                              final bool found = await checkUserType(email);
+                              print(found);    
+                              // ignore: unrelated_type_equality_checks
+                              if (message != null && message.isNotEmpty && found != false) {
+                                print(found);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Invalid email or password. Check your credentials or try signing in with Google.'),
+                                  ),
+                                );
+                              }
+                              // ignore: unrelated_type_equality_checks
+                              else if (found != true) {
+                                 print(found);
                                 showSignInErrorMessage = true;
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                    content: Text('Invalid email or password'),
+                                    content: Text('No existing account. Create one?'),
                                   ),
                                 );
                               } 
@@ -453,4 +466,25 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
         fontSize: 15),
     ),
   );
+
+  Future<bool> checkUserType(String? googleEmail) async {
+    final firebaseUsers = context.read<UserInfosProvider>();
+    final donorsData = await firebaseUsers.getDonors();
+    final orgsData = await firebaseUsers.getOrgs();
+
+    // check if it matches any existing email
+    final foundDonor = donorsData.any((donorData) => donorData['email'] == googleEmail);
+
+    // check if it matches any emails
+    final foundOrg = orgsData.any((orgData) => orgData['email'] == googleEmail);
+
+    print('Donor match: $foundDonor');
+    print('Organization match: $foundOrg');
+
+    // true if it matched with any email
+    if (foundDonor == true || foundOrg == true) {
+      return true;
+    }
+    return false;
+  }
 }
