@@ -279,16 +279,23 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                 children: [
                   ElevatedButton.icon(
                     onPressed: () {
-                      final userService = Provider.of<UserInfosProvider>(context, listen: false).firebaseService;
-                      userService.addOrg(orgMap);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('${org.name} sign up request approved!'),
-                        ),
-                      );
-                      userService.deleteSignUpReq(org.id);
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, "/adminApprove");
+                      if (checkUserType(org.email) != false) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('An account already exists under this email. Disapprove request?')),
+                        );
+                      }
+                      else {
+                        final userService = Provider.of<UserInfosProvider>(context, listen: false).firebaseService;
+                        userService.addOrg(orgMap);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('${org.name} sign up request approved!'),
+                          ),
+                        );
+                        userService.deleteSignUpReq(org.id);
+                        Navigator.pop(context);
+                        Navigator.pushNamed(context, "/adminApprove");
+                      }
                     },
                     icon: const Icon(
                       Icons.check,
@@ -396,5 +403,20 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
         },
       ),
     );
+  }
+
+  Future<bool> checkUserType(String? googleEmail) async {
+    final firebaseUsers = context.read<UserInfosProvider>();
+    final donorsData = await firebaseUsers.getDonors();
+    final orgsData = await firebaseUsers.getOrgs();
+
+    // check if it matches any existing email
+    final foundDonor = donorsData.any((donorData) => donorData['email'] == googleEmail);
+
+    // check if it matches any emails
+    final foundOrg = orgsData.any((orgData) => orgData['email'] == googleEmail);
+
+    // true if it matched with any email
+    return foundDonor || foundOrg;
   }
 }
