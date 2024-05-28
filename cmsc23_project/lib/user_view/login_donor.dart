@@ -316,18 +316,18 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
 
                                 // loop through donorsData and check if user email has match in all donors
                                 String? donorName;
-                                bool found = false;
+                                bool foundDonor = false;
                                 for (var donorData in donorsData) {
                                   var donorEmail = donorData['email'];
                                   if (donorEmail == email) {
-                                    found = true;
+                                    foundDonor = true;
                                     donorName = donorData['name'];
                                     donorDetails = donorData;
                                     break;
                                   }
-                                }
-
-                                if (found) {
+                                } 
+                                
+                                if (foundDonor == true) {
                                   provider.resetLogIn();Navigator.pop(context);
                                   Navigator.pushNamed(context, "/donorHomepage", arguments: donorDetails);
 
@@ -336,14 +336,41 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                                       content: Text('Welcome, ${donorName}!'),
                                     ),
                                   );
-
                                 } 
-                                else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text('You don\'t have an existing account. Create one?'),
-                                    ),
-                                  );
+                                else if (foundDonor != true) {
+                                  final orgsData = await firebaseUsers.getOrgs();
+
+                                  // loop through orgsData and check if user email has match in all orgs
+                                  String? orgName;
+                                  bool foundOrg = false;
+                                  for (var orgData in orgsData) {
+                                    var orgEmail = orgData['email'];
+                                    if (orgEmail == email) {
+                                      foundOrg = true;
+                                      orgName = orgData['name'];
+                                      break;
+                                    }
+                                  }
+
+                                  if (foundOrg == true) {
+                                    provider.resetLogIn();
+                                    Navigator.pop(context);
+                                    Navigator.pushNamed(context, "/orgHomepage");
+
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text('Welcome, ${orgName}!'),
+                                      ),
+                                    );
+                                    provider.resetLogIn();
+                                  } 
+                                  else if (foundDonor != true && foundOrg != true) { // no match for either
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text('You don\'t have an existing account. Create one?'),
+                                      ),
+                                    );
+                                  }
                                 }
                               }
                             });

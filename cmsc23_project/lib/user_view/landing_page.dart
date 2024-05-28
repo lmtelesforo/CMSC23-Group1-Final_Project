@@ -120,22 +120,6 @@ class _LandingPageState extends State<LandingPage> {
                     ElevatedButton(
                       onPressed: () {
                         Navigator.pop(context);
-                        Navigator.pushNamed(context, "/loginOrg");
-                      },
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(300, 35),
-                        foregroundColor: const Color(0xFF373D66),
-                        textStyle: const TextStyle(
-                          fontSize: 14,
-                          fontFamily: 'Poppins-Bold',
-                        ),
-                        backgroundColor: const Color(0xFFFCBE4F),
-                      ),
-                      child: const Text('Log in as an Organization'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
                         Navigator.pushNamed(context, "/signupOrg");
                       },
                       style: ElevatedButton.styleFrom(
@@ -148,6 +132,22 @@ class _LandingPageState extends State<LandingPage> {
                         backgroundColor: const Color(0xFFFCBE4F),
                       ),
                       child: const Text('Sign up as an Organization'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.pushNamed(context, "/loginOrg");
+                      },
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(300, 35),
+                        foregroundColor: const Color(0xFF373D66),
+                        textStyle: const TextStyle(
+                          fontSize: 14,
+                          fontFamily: 'Poppins-Bold',
+                        ),
+                        backgroundColor: const Color(0xFFFCBE4F),
+                      ),
+                      child: const Text('Log in as an Organization'),
                     ),
                     SizedBox(
                       height: 34,
