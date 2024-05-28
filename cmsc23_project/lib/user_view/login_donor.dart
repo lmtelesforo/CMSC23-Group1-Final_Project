@@ -328,12 +328,13 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                                 } 
                                 
                                 if (foundDonor == true) {
-                                  provider.resetLogIn();Navigator.pop(context);
+                                  provider.resetLogIn();
+                                  Navigator.pop(context);
                                   Navigator.pushNamed(context, "/donorHomepage", arguments: donorDetails);
 
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
-                                      content: Text('Welcome, ${donorName}!'),
+                                      content: Text('Welcome to ElbiDrive, $donorName!'),
                                     ),
                                   );
                                 } 

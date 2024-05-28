@@ -1,6 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:cmsc23_project/api/firebase_users_api.dart';
+import 'package:cmsc23_project/providers/auth_provider.dart';
+import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/firebase_provider.dart';
+import '../providers/textfield_providers.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -10,8 +19,13 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPageState extends State<LandingPage> {
+  bool showSignInErrorMessage = false;
+
   @override
   Widget build(BuildContext context) {
+    final provider = context.watch<TextfieldProviders>();
+    final firebaseUsers = context.watch<UserInfosProvider>();
+
     return Scaffold(
       body: Stack(
         children: [
@@ -136,10 +150,87 @@ class _LandingPageState extends State<LandingPage> {
                       child: const Text('Sign up as an Organization'),
                     ),
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         // Navigator.pop(context);
                         // Navigator.pushNamed(context, "/googleSignIn");
-                        signInWithGoogle();
+                        final GoogleSignIn googleSignIn = GoogleSignIn();
+                        GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+
+                        GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+                        AuthCredential credential = GoogleAuthProvider.credential(
+                          accessToken: googleAuth?.accessToken,
+                          idToken: googleAuth?.idToken
+                        );
+                        
+                        UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+
+                        print(userCredential.user?.email);
+
+                        String? googleEmail = userCredential.user?.email;
+
+                        final donorsData = await firebaseUsers.getDonors();
+
+                        var donorDetails;
+
+                        // loop through donorsData and check if user email has match in all donors
+                        String? donorName;
+                        bool foundDonor = false;
+                        for (var donorData in donorsData) {
+                          var donorEmail = donorData['email'];
+                          if (donorEmail == googleEmail) {
+                            foundDonor = true;
+                            donorName = donorData['name'];
+                            donorDetails = donorData;
+                            break;
+                          }
+                        } 
+                        
+                        if (foundDonor == true) {
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, "/donorHomepage", arguments: donorDetails);
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Welcome, ${donorName}!'),
+                            ),
+                          );
+                        } 
+                        else if (foundDonor != true) {
+                          final orgsData = await firebaseUsers.getOrgs();
+
+                          // loop through orgsData and check if user email has match in all orgs
+                          String? orgName;
+                          bool foundOrg = false;
+                          for (var orgData in orgsData) {
+                            var orgEmail = orgData['email'];
+                            if (orgEmail == googleEmail) {
+                              foundOrg = true;
+                              orgName = orgData['name'];
+                              break;
+                            }
+                          }
+
+                          if (foundOrg == true) {
+                            provider.resetLogIn();
+                            Navigator.pop(context);
+                            Navigator.pushNamed(context, "/orgHomepage");
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Welcome, ${orgName}!'),
+                              ),
+                            );
+                            provider.resetLogIn();
+                          } 
+                          else if (foundDonor != true && foundOrg != true) { // no match for either
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('You don\'t have an existing account. Please create one.'),
+                              ),
+                            );
+                          }
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(300, 35),
@@ -188,22 +279,5 @@ class _LandingPageState extends State<LandingPage> {
         ],
       ),
     );
-  }
-
-  signInWithGoogle() async {
-    final GoogleSignIn googleSignIn = GoogleSignIn();
-    GoogleSignInAccount? googleUser = await googleSignIn.signIn();
-
-
-    GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
-
-    AuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken
-    );
-
-    UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
-
-    print(userCredential.user?.displayName);
   }
 }

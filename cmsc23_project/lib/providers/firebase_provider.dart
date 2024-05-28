@@ -71,12 +71,11 @@ class UserInfosProvider with ChangeNotifier {
     notifyListeners();
   }
   
-  Map<String, dynamic> donorData(String name, String username, String email, String password, List addresses, String contactnumber, String userType){ // created a structure for easier storing
+  Map<String, dynamic> donorData(String name, String username, String email, List addresses, String contactnumber, String userType){ // created a structure for easier storing
     Map<String, dynamic> newData = {
       'name': name,
       'username': username,
       'email': email,
-      'password': password,
       'addresses': addresses,
       'contactNumber': contactnumber,
       'userType': userType // with required fields
@@ -84,12 +83,11 @@ class UserInfosProvider with ChangeNotifier {
     return newData;
   }
 
-  Map<String, dynamic> orgData(String name, String username, String email, String password, List addresses, String contactnumber, List proofs, String userType){ // created a structure for easier storing
+  Map<String, dynamic> orgData(String name, String username, String email, List addresses, String contactnumber, List proofs, String userType){ // created a structure for easier storing
     Map<String, dynamic> newData = {
       'name': name,
       'username': username,
       'email': email,
-      'password': password,
       'addresses': addresses,
       'contactNumber': contactnumber,
       'proofs': proofs,
@@ -112,7 +110,9 @@ class UserInfosProvider with ChangeNotifier {
   void getUserType() async {
     try {
       final usersSnapshot = await firebaseService.getAllUsers().first;
-      usersSnapshot.docs.forEach((doc) {
+      final refreshedDocs = await Future.wait(usersSnapshot.docs.map((doc) => doc.reference.get(GetOptions(source: Source.server))));
+
+      refreshedDocs.forEach((doc) {
         final userData = doc.data() as Map<String, dynamic>;
         final userType = userData['userType'];
         print('User Type: $userType');
@@ -122,12 +122,14 @@ class UserInfosProvider with ChangeNotifier {
     }
   }
 
+
   Future<List<Map<String, dynamic>>> getDonors() async {
     try {
       final usersSnapshot = await firebaseService.getAllUsers().first;
+      final refreshedDocs = await Future.wait(usersSnapshot.docs.map((doc) => doc.reference.get(GetOptions(source: Source.server))));
       final donorDataList = <Map<String, dynamic>>[];
 
-      usersSnapshot.docs.forEach((doc) {
+      refreshedDocs.forEach((doc) {
         final userData = doc.data() as Map<String, dynamic>;
         final userType = userData['userType'];
         if (userType == 'donor') {
@@ -146,9 +148,10 @@ class UserInfosProvider with ChangeNotifier {
   Future<List<Map<String, dynamic>>> getOrgs() async {
     try {
       final usersSnapshot = await firebaseService.getAllUsers().first;
+      final refreshedDocs = await Future.wait(usersSnapshot.docs.map((doc) => doc.reference.get(GetOptions(source: Source.server))));
       final orgDataList = <Map<String, dynamic>>[];
 
-      usersSnapshot.docs.forEach((doc) {
+      refreshedDocs.forEach((doc) {
         final userData = doc.data() as Map<String, dynamic>;
         final userType = userData['userType'];
         if (userType == 'organization') {

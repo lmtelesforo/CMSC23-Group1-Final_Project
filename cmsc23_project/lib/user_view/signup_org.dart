@@ -655,13 +655,13 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
 
                             signUpResult = (await authService.signUp(email, password))!;
 
-                            if (signUpResult == 'The account already exists for that email.') { // match error message
+                            if (signUpResult == 'The account already exists for that email.' && checkUserType(email) == true) { // match error message
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text('Account already exists!')),
                               );
                             }
                             else {
-                              final user = UserInfosProvider().orgData(name, username, email, password, addressesList, contactnumber, proofsList, userType);
+                              final user = UserInfosProvider().orgData(name, username, email, addressesList, contactnumber, proofsList, userType);
                               
                               userService.addOrgSignUpReq(user); // add to firebase
 
@@ -730,5 +730,52 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
       ),
       ),
     );
+  }
+
+  Future<bool> checkUserType(String? googleEmail) async {
+    final provider = Provider.of<TextfieldProviders>(context, listen: false);
+    final firebaseUsers = Provider.of<UserInfosProvider>(context, listen: false);
+    final donorsData = await firebaseUsers.getDonors();
+    var donorDetails;
+
+    // loop through donorsData and check if user email has match in all donors
+    String? donorName;
+    bool foundDonor = false;
+    for (var donorData in donorsData) {
+      var donorEmail = donorData['email'];
+      if (donorEmail == googleEmail) {
+        foundDonor = true;
+        donorName = donorData['name'];
+        donorDetails = donorData;
+        break;
+      }
+    } 
+    
+    if (foundDonor == true) {
+      return true;
+    } 
+    else if (foundDonor != true) {
+      final orgsData = await firebaseUsers.getOrgs();
+
+      // loop through orgsData and check if user email has match in all orgs
+      String? orgName;
+      bool foundOrg = false;
+      for (var orgData in orgsData) {
+        var orgEmail = orgData['email'];
+        if (orgEmail == googleEmail) {
+          foundOrg = true;
+          orgName = orgData['name'];
+          break;
+        }
+      }
+
+      if (foundOrg == true) {
+        return true;
+      } 
+      else if (foundDonor != true && foundOrg != true) { // no match for either
+        return false;
+      }
+    }
+    return false;
   }
 }
