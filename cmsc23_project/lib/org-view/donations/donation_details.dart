@@ -1,7 +1,8 @@
-import 'package:cmsc23_project/models/donation.dart';
 import 'package:cmsc23_project/models/donation_drive.dart';
+import 'package:cmsc23_project/models/indiv_donation.dart';
 import 'package:cmsc23_project/org-view/base_elements/base_screen/base_screen.dart';
 import 'package:cmsc23_project/org-view/base_elements/org_view_styles.dart';
+import 'package:cmsc23_project/org-view/donations/donation_info.dart';
 import 'package:cmsc23_project/providers/current_org_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +12,9 @@ class DonationDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Donation donation = ModalRoute.of(context)!.settings.arguments as Donation;
+    final List args = ModalRoute.of(context)!.settings.arguments as List;
+    final Donation donation = args[0] as Donation;
+    final String id = args[1] as String;
 
     return BaseScreen(
       body: Container(
@@ -19,11 +22,12 @@ class DonationDetails extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              Text(donation.donorUsername, style: CustomTextStyle.h1),
+              Text(donation.name, style: CustomTextStyle.h1),
               const SizedBox(height: 30),
-              _EditDonation(donation),
+              _EditDonation(donation, id),
               const SizedBox(height: 30),
-              _DonationInfo(donation),
+              DonationInfo(donation),
+              const SizedBox(height: 30),
             ],
           ),
         ),
@@ -34,8 +38,9 @@ class DonationDetails extends StatelessWidget {
 
 class _EditDonation extends StatefulWidget {
   final Donation donation;
+  final String id;
 
-  const _EditDonation(this.donation);
+  const _EditDonation(this.donation, this.id);
 
   @override
   State<_EditDonation> createState() => _EditDonationState();
@@ -52,7 +57,9 @@ class _EditDonationState extends State<_EditDonation> {
   }
 
   void saveChanges() {
-    if (!widget.donation.forPickup && qrCodeValue == null) {
+    if (widget.donation.shipping == 'Drop-off' &&
+        qrCodeValue == null &&
+        tempDonation!.status != widget.donation.status) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Please scan the QR code first'),
@@ -61,17 +68,18 @@ class _EditDonationState extends State<_EditDonation> {
       return;
     }
 
-    setState(() {
-      widget.donation.status = tempDonation!.status;
-      widget.donation.driveId = tempDonation!.driveId;
-      context.read<CurrentOrgProvider>().updateDonation(widget.donation);
+    context
+        .read<CurrentOrgProvider>()
+        .changeDonationStatus(widget.id, tempDonation!.status);
+    context
+        .read<CurrentOrgProvider>()
+        .changeDonationDrive(widget.id, tempDonation!.driveName);
 
-      Navigator.pop(context);
-    });
+    Navigator.pop(context);
   }
 
   bool shouldShowQRCode() {
-    return !widget.donation.forPickup &&
+    return widget.donation.shipping == 'Drop-off' &&
         widget.donation.status != tempDonation!.status &&
         qrCodeValue == null;
   }
@@ -131,6 +139,7 @@ class _EditDonationState extends State<_EditDonation> {
                       var value =
                           await Navigator.pushNamed(context, '/org/scan-qr');
                       setState(() {
+                        // TODO: Check if qr is correct
                         qrCodeValue = value as String?;
                       });
                     },
@@ -152,7 +161,7 @@ class _EditDonationState extends State<_EditDonation> {
   }
 
   Widget get _setStatus {
-    List<Status> statuses = widget.donation.validStatuses;
+    List<String> statuses = widget.donation.validStatuses;
 
     return DropdownMenu(
       menuHeight: 200,
@@ -184,137 +193,47 @@ class _EditDonationState extends State<_EditDonation> {
   }
 
   Widget get _setDrive {
-    List<DonationDrive> drives = context.read<CurrentOrgProvider>().drives;
+    return StreamBuilder(
+        stream: context.read<CurrentOrgProvider>().drives,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Text('An error occurred');
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          }
 
-    return DropdownMenu(
-      menuHeight: 400,
-      width: MediaQuery.of(context).size.width * 0.51,
-      initialSelection:
-          drives.indexWhere((drive) => drive.id == widget.donation.driveId),
-      dropdownMenuEntries: drives
-          .map((drive) => DropdownMenuEntry(
-                value: drives.indexOf(drive),
-                label: drive.name,
-                style: ButtonStyle(
-                    textStyle: MaterialStateProperty.all(CustomTextStyle.body)),
-              ))
-          .toList(),
-      onSelected: (drive) {
-        setState(() {
-          tempDonation!.driveId = drives[drive!].id;
-        });
-      },
-      inputDecorationTheme: InputDecorationTheme(
-        fillColor: Colors.white,
-        filled: true,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide.none,
-        ),
-      ),
-      textStyle: CustomTextStyle.body,
-    );
-  }
-}
+          List<DonationDrive> drives = snapshot.data!.docs
+              .map((drive) =>
+                  DonationDrive.fromJson(drive.data() as Map<String, dynamic>))
+              .toList();
 
-class _DonationInfo extends StatelessWidget {
-  final Donation donation;
-  const _DonationInfo(this.donation);
-
-  @override
-  Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.symmetric(horizontal: 50),
-        child: Card(
-          surfaceTintColor: Colors.white,
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            child: Table(
-              columnWidths: const {
-                0: FlexColumnWidth(1),
-                1: FlexColumnWidth(2),
-              },
-              children: [
-                categories(),
-                weight(),
-                forPickup(),
-                address(),
-                date(),
-              ],
+          return DropdownMenu(
+            menuHeight: 400,
+            width: MediaQuery.of(context).size.width * 0.51,
+            initialSelection: drives
+                .indexWhere((drive) => drive.name == widget.donation.driveName),
+            dropdownMenuEntries: drives
+                .map((drive) => DropdownMenuEntry(
+                      value: drives.indexOf(drive),
+                      label: drive.name,
+                      style: ButtonStyle(
+                          textStyle:
+                              MaterialStateProperty.all(CustomTextStyle.body)),
+                    ))
+                .toList(),
+            onSelected: (drive) {
+              tempDonation!.driveName = drives[drive!].name;
+            },
+            inputDecorationTheme: InputDecorationTheme(
+              fillColor: Colors.white,
+              filled: true,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide.none,
+              ),
             ),
-          ),
-        ),
-      );
-
-  TableRow date() {
-    DateTime date = donation.scheduledDate;
-
-    return TableRow(
-      children: [
-        const Icon(Icons.calendar_today, color: CustomColors.primary),
-        Text(
-          '${date.month}/${date.day}/${date.year}',
-          style: CustomTextStyle.body,
-        ),
-      ],
-    );
-  }
-
-  TableRow address() {
-    return TableRow(
-      children: [
-        const Icon(Icons.location_on, color: CustomColors.primary),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 30),
-          child: Text(
-            donation.address,
-            style: CustomTextStyle.body,
-          ),
-        ),
-      ],
-    );
-  }
-
-  TableRow forPickup() {
-    return TableRow(
-      children: [
-        const Icon(Icons.local_shipping, color: CustomColors.primary),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 30),
-          child: donation.forPickup
-              ? const Text('For Pickup', style: CustomTextStyle.body)
-              : const Text('For Drop-off', style: CustomTextStyle.body),
-        ),
-      ],
-    );
-  }
-
-  TableRow weight() {
-    return TableRow(
-      children: [
-        const Icon(Icons.scale, color: CustomColors.primary),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 30),
-          child: Text(
-            '${donation.weight} kg',
-            style: CustomTextStyle.body,
-          ),
-        ),
-      ],
-    );
-  }
-
-  TableRow categories() {
-    return TableRow(
-      children: [
-        const Icon(Icons.archive, color: CustomColors.primary),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 30),
-          child: Text(
-            donation.categories.join(', '),
-            style: CustomTextStyle.body,
-          ),
-        ),
-      ],
-    );
+            textStyle: CustomTextStyle.body,
+          );
+        });
   }
 }

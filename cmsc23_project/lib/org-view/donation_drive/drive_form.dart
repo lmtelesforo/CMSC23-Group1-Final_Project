@@ -155,18 +155,22 @@ class Submit extends StatelessWidget {
 
           if (drive == null) {
             context.read<CurrentOrgProvider>().addDrive(
-                  name: _nameController.text,
-                  desc: _descController.text,
+                  _nameController.text,
+                  _descController.text,
                 );
-          } else {
-            context.read<CurrentOrgProvider>().updateDrive(
-                  id: drive!.id,
-                  name: _nameController.text,
-                  desc: _descController.text,
-                );
-          }
 
-          Navigator.pop(context);
+            Navigator.pop(context);
+          } else {
+            context.read<CurrentOrgProvider>().editDrive(
+                  drive!.name,
+                  newName: _nameController.text,
+                  description: _descController.text,
+                );
+
+            Navigator.pop(context);
+            Navigator.pushReplacementNamed(context, '/org/drives/details',
+                arguments: _nameController.text);
+          }
         },
         child: Text('Submit',
             style: CustomTextStyle.body.apply(color: CustomColors.secondary)),

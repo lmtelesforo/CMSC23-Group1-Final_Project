@@ -1,4 +1,4 @@
-import 'package:cmsc23_project/models/donations.dart';
+import 'package:cmsc23_project/models/indiv_donation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +15,7 @@ class IndivViewAllDonations extends StatefulWidget {
 
 class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
   List<Donation> donations = [
-    Donation (
+    Donation(
       category: 'Clothes',
       shipping: 'Pickup',
       weight: '0.2 kg',
@@ -24,7 +24,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
       addresses: ['Address 1'],
       contactNumber: '1234567890',
     ),
-    Donation (
+    Donation(
       category: 'Cash',
       shipping: 'Pickup',
       weight: '0.2 kg',
@@ -33,7 +33,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
       addresses: ['Address 1', 'Address 2'],
       contactNumber: '1234567890',
     ),
-    Donation (
+    Donation(
       category: 'Food',
       shipping: 'Pickup',
       weight: '0.2 kg',
@@ -52,7 +52,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
     return Scaffold(
       body: Stack(
         children: [
-          Positioned (
+          Positioned(
             top: 0,
             left: 0,
             right: 0,
@@ -61,14 +61,15 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
               height: MediaQuery.of(context).size.height,
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('lib/user_view/assets/cmsc23_background.png'),
+                  image:
+                      AssetImage('lib/user_view/assets/cmsc23_background.png'),
                   fit: BoxFit.cover,
                 ),
               ),
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.045, 
+            top: MediaQuery.of(context).size.height * 0.045,
             left: 0,
             right: 0,
             child: Container(
@@ -88,9 +89,9 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                 Navigator.pushNamed(context, "/viewAllDonations");
               },
               icon: Image.asset(
-                'lib/user_view/assets/back.png', 
-                width: 34, 
-                height: 34, 
+                'lib/user_view/assets/back.png',
+                width: 34,
+                height: 34,
               ),
               label: const Text(
                 'Back',
@@ -103,13 +104,13 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
               style: TextButton.styleFrom(
                 foregroundColor: const Color(0xFF373D66),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(32), 
+                  borderRadius: BorderRadius.circular(32),
                 ),
               ),
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.14, 
+            top: MediaQuery.of(context).size.height * 0.14,
             left: 0,
             right: 0,
             child: const Padding(
@@ -130,15 +131,15 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
             left: 0,
             right: 0,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30), 
+              padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Container(
                 decoration: BoxDecoration(
                   color: const Color(0xFFFFFFFF),
-                  borderRadius: BorderRadius.circular(15), 
+                  borderRadius: BorderRadius.circular(15),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(10), 
-                  child: Expanded (
+                  padding: const EdgeInsets.all(10),
+                  child: Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -289,8 +290,8 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                               ],
                             ),
                             (donations[widget.index].addresses.length > 1)
-                            ? newAddressLine() // if true
-                            : const SizedBox.shrink(), // if false
+                                ? newAddressLine() // if true
+                                : const SizedBox.shrink(), // if false
                           ],
                         ),
                         const SizedBox(height: 7),
@@ -328,7 +329,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
       ),
     );
   }
-  
+
   Widget newAddressLine() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -336,7 +337,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
         donations[widget.index].addresses.length - 1,
         (index) {
           return Padding(
-            padding: const EdgeInsets.only(left: 106), 
+            padding: const EdgeInsets.only(left: 106),
             child: Text(
               donations[widget.index].addresses[index + 1],
               style: const TextStyle(

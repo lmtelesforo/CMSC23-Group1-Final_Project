@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cmsc23_project/models/donation_drive.dart';
 import 'package:cmsc23_project/org-view/base_elements/base_screen/base_screen.dart';
 import 'package:cmsc23_project/org-view/donation_drive/donation_drive_card.dart';
@@ -11,15 +12,12 @@ class ManageDonationDrives extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<DonationDrive> donationDrives =
-        context.watch<CurrentOrgProvider>().drives;
-
     return BaseScreen(
       body: Center(
         child: Column(
           children: [
             _title(),
-            _cards(donationDrives),
+            _cards(context),
           ],
         ),
       ),
@@ -36,17 +34,30 @@ class ManageDonationDrives extends StatelessWidget {
     );
   }
 
-  Wrap _cards(List<DonationDrive> donationDrives) {
-    return Wrap(
-      children: [
-        ...donationDrives.map(
-          (donationDrive) {
-            return DonationDriveCard(drive: donationDrive);
-          },
-        ),
-        const AddDonationDrive(),
-      ],
-    );
+  Widget _cards(BuildContext context) {
+    Stream<QuerySnapshot> drives = context.read<CurrentOrgProvider>().drives;
+
+    return StreamBuilder(
+        stream: drives,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Text('An error occurred');
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          }
+
+          List<DonationDrive> drives = snapshot.data!.docs
+              .map((doc) =>
+                  DonationDrive.fromJson(doc.data() as Map<String, dynamic>))
+              .toList();
+
+          return Wrap(
+            children: [
+              ...drives.map((drive) => DonationDriveCard(drive.name)),
+              const AddDonationDrive(),
+            ],
+          );
+        });
   }
 }
 

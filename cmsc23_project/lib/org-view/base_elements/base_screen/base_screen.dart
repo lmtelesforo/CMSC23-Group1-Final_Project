@@ -1,4 +1,5 @@
-import 'package:cmsc23_project/models/organization.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cmsc23_project/models/org_signup.dart';
 import 'package:cmsc23_project/org-view/base_elements/base_screen/app_bar.dart';
 import 'package:cmsc23_project/org-view/base_elements/base_screen/drawer.dart';
 import 'package:cmsc23_project/providers/current_org_provider.dart';
@@ -50,29 +51,43 @@ class BaseScreen extends StatelessWidget {
 class _Avatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Organization org = Provider.of<CurrentOrgProvider>(context).currentOrg;
+    Stream<QuerySnapshot> org = context.read<CurrentOrgProvider>().currentOrg;
 
-    return InkWell(
-      onTap: () {
-        // Don't push the profile screen if it's already open
-        if (ModalRoute.of(context)!.settings.name != "/org/profile") {
-          Navigator.pushNamed(context, "/org/profile");
+    return StreamBuilder(
+      stream: org,
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return const Text('Error');
+        } else if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
         }
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(
-            color: Colors.white,
-            width: 2,
+
+        Org org =
+            Org.fromJson(snapshot.data!.docs[0].data() as Map<String, dynamic>);
+
+        return InkWell(
+          onTap: () {
+            // Don't push the profile screen if it's already open
+            if (ModalRoute.of(context)!.settings.name != "/org/profile") {
+              Navigator.pushNamed(context, "/org/profile");
+            }
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: Colors.white,
+                width: 2,
+              ),
+            ),
+            child: CircleAvatar(
+              backgroundImage: NetworkImage(org.profilePic!),
+              backgroundColor: Colors.white,
+              radius: 20,
+            ),
           ),
-        ),
-        child: CircleAvatar(
-          backgroundImage: org.profilePic,
-          backgroundColor: Colors.white,
-          radius: 20,
-        ),
-      ),
+        );
+      },
     );
   }
 }

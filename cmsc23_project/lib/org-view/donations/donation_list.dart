@@ -1,14 +1,15 @@
-import 'package:cmsc23_project/models/donation.dart';
+import 'package:cmsc23_project/models/indiv_donation.dart';
 import 'package:cmsc23_project/org-view/base_elements/org_view_styles.dart';
 import 'package:cmsc23_project/providers/current_org_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DonationList extends StatefulWidget {
-  // Lists all donations made to the organization
-  final int? driveId;
+  // Lists all donations made to the organization (or optionally, drive)
+  final String? orgUsername;
+  final String? driveName;
 
-  const DonationList({this.driveId, super.key});
+  const DonationList({this.orgUsername, this.driveName, super.key});
 
   @override
   State<DonationList> createState() => _DonationListState();
@@ -53,42 +54,83 @@ class _DonationListState extends State<DonationList> {
       );
 
   Widget get _donationTiles {
-    List<Donation> donations =
-        context.watch<CurrentOrgProvider>().donations(driveId: widget.driveId);
+    bool isDrive = widget.driveName != null;
 
-    donations.sort((a, b) => a.status.index.compareTo(b.status.index));
+    // Used to sort donations by status/progress
+    List<String> statusSort = [
+      'Pending',
+      'Confirmed',
+      'Scheduled for Pickup',
+      'Completed',
+      'Cancelled',
+    ];
 
-    List<Donation> filteredDonations = donations.where((donation) {
-      return (donation.donorUsername + donation.status.name)
+    bool matchesQuery(Donation donation) {
+      return (donation.name + donation.status)
           .toLowerCase()
           .contains(_searchQuery.toLowerCase());
-    }).toList();
+    }
 
     return Expanded(
-      child: ListView.builder(
-        itemCount: filteredDonations.length,
-        itemBuilder: (context, index) {
-          return Card(
-            color: _getTileColor(filteredDonations[index].status),
-            child: InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, "/org/donation",
-                    arguments: filteredDonations[index]);
-              },
-              child: ListTile(
-                leading: statusIcon(filteredDonations[index].status),
-                title: Text(filteredDonations[index].donorUsername),
-                trailing: Text(filteredDonations[index].status.name),
-              ),
-            ),
+      child: StreamBuilder(
+        // Check if the list of donations is for a specific drive or all donations
+        stream: isDrive
+            ? context
+                .read<CurrentOrgProvider>()
+                .donationsByDrive(widget.driveName)
+            : context.read<CurrentOrgProvider>().donations,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Text('An error occurred');
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          // Filter donations based on search query
+
+          Map<Donation, String> donations = Map.fromEntries(snapshot.data!.docs
+              .map((doc) => MapEntry(
+                  Donation.fromJson(doc.data() as Map<String, dynamic>),
+                  doc.id))
+              .where((entry) => matchesQuery(entry.key)));
+
+          // Sort donations by status
+          List<Donation> filteredDonations = donations.keys.toList()
+            ..sort((a, b) => statusSort
+                .indexOf(a.status)
+                .compareTo(statusSort.indexOf(b.status)));
+
+          return ListView.builder(
+            itemCount: filteredDonations.length,
+            itemBuilder: (context, index) {
+              return _tile(filteredDonations[index],
+                  donations[filteredDonations[index]]!);
+            },
           );
         },
       ),
     );
   }
 
-  Color _getTileColor(Status status) {
-    return status == Status.cancelled || status == Status.complete
+  Card _tile(Donation donation, String id) {
+    return Card(
+      color: _getTileColor(donation.status),
+      child: InkWell(
+        onTap: () {
+          Navigator.pushNamed(context, '/org/donation',
+              arguments: [donation, id]);
+        },
+        child: ListTile(
+          leading: statusIcon(donation.status),
+          title: Text(donation.name),
+          trailing: Text(donation.status),
+        ),
+      ),
+    );
+  }
+
+  Color _getTileColor(String status) {
+    return status == 'Cancelled' || status == 'Complete'
         ? Colors.grey
         : CustomColors.secondary;
   }

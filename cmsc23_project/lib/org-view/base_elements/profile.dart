@@ -1,4 +1,5 @@
-import 'package:cmsc23_project/models/organization.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cmsc23_project/models/org_signup.dart';
 import 'package:cmsc23_project/org-view/base_elements/base_screen/base_screen.dart';
 import 'package:cmsc23_project/org-view/base_elements/org_view_styles.dart';
 import 'package:cmsc23_project/providers/current_org_provider.dart';
@@ -10,24 +11,38 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Organization org = context.read<CurrentOrgProvider>().currentOrg;
+    Stream<QuerySnapshot> org = context.read<CurrentOrgProvider>().currentOrg;
 
     return BaseScreen(
       body: Center(
-        child: Column(
-          children: [
-            _bigAvatar(org),
-            Container(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Text(org.name, style: CustomTextStyle.h1)),
-            _about(org),
-          ],
+        child: StreamBuilder(
+          stream: org,
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return const Text('Error');
+            } else if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            }
+
+            Org org = Org.fromJson(
+                snapshot.data!.docs.first.data() as Map<String, dynamic>);
+
+            return Column(
+              children: [
+                _bigAvatar(org),
+                Container(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Text(org.name, style: CustomTextStyle.h1)),
+                _about(org),
+              ],
+            );
+          },
         ),
       ),
     );
   }
 
-  Widget _bigAvatar(org) => Stack(
+  Widget _bigAvatar(Org org) => Stack(
         children: [
           Container(
             decoration: BoxDecoration(
@@ -38,7 +53,7 @@ class Profile extends StatelessWidget {
               ),
             ),
             child: CircleAvatar(
-              backgroundImage: org.profilePic,
+              backgroundImage: NetworkImage(org.profilePic!),
               radius: 50,
               backgroundColor: Colors.white,
             ),
@@ -63,7 +78,7 @@ class Profile extends StatelessWidget {
         ],
       );
 
-  Widget _about(org) => Container(
+  Widget _about(Org org) => Container(
         padding: const EdgeInsets.all(20),
         child: Stack(
           children: [
@@ -82,7 +97,7 @@ class Profile extends StatelessWidget {
                         right: 20,
                         bottom: 10,
                       ),
-                      child: Text(org.about, style: CustomTextStyle.body),
+                      child: Text(org.about!, style: CustomTextStyle.body),
                     ),
                     Container(
                       padding: const EdgeInsets.only(

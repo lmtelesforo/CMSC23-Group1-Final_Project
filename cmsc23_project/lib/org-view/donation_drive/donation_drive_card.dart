@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cmsc23_project/models/donation_drive.dart';
 import 'package:cmsc23_project/org-view/base_elements/org_view_styles.dart';
 import 'package:cmsc23_project/providers/current_org_provider.dart';
@@ -6,37 +7,50 @@ import 'package:provider/provider.dart';
 
 class DonationDriveCard extends StatelessWidget {
   // Represents a donation drive card on the homepage and donation drive list
-  final DonationDrive drive;
+  final String name;
 
-  const DonationDriveCard({
-    super.key,
-    required this.drive,
-  });
+  const DonationDriveCard(this.name, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        SizedBox(
-          height: 150,
-          width: 180,
-          child: Card(
-            child: InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, '/org/drives/details',
-                    arguments: drive);
-              },
-              child: _CardContent(drive),
-            ),
-          ),
-        ),
-        Visibility(
-          visible: context.read<CurrentOrgProvider>().isFavorite(drive.id),
-          child: _FavoriteIcon(),
-        ),
-      ],
-    );
+    Stream<QuerySnapshot> drive =
+        context.read<CurrentOrgProvider>().drive(name);
+
+    return StreamBuilder(
+        stream: drive,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Text('An error occurred');
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          }
+
+          DonationDrive drive = DonationDrive.fromJson(
+              snapshot.data!.docs.first.data() as Map<String, dynamic>);
+
+          return Stack(
+            clipBehavior: Clip.none,
+            children: [
+              SizedBox(
+                height: 150,
+                width: 180,
+                child: Card(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/org/drives/details',
+                          arguments: name);
+                    },
+                    child: _CardContent(drive),
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: drive.isFavorite,
+                child: _FavoriteIcon(),
+              ),
+            ],
+          );
+        });
   }
 }
 
@@ -66,22 +80,28 @@ class _CardContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final donationCount = context
-        .watch<CurrentOrgProvider>()
-        .donations()
-        .where((donation) => donation.driveId == drive.id)
-        .length;
+    return StreamBuilder(
+        stream: context.read<CurrentOrgProvider>().donationsByDrive(drive.name),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Text('An error occurred');
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          }
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _driveName(),
-        _driveInfo(donationCount),
-      ],
-    );
+          int donationCount = snapshot.data!.docs.length;
+
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _driveName(),
+              _driveInfo(donationCount),
+            ],
+          );
+        });
   }
 
-  Table _driveInfo(int donationCount) {
+  Widget _driveInfo(int donationCount) {
     return Table(
       columnWidths: const {
         0: FlexColumnWidth(1),

@@ -76,40 +76,52 @@ class Favorites extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<DonationDrive> favorites =
-        context.watch<CurrentOrgProvider>().favorites;
-
     // Favorites are centered using row if they can fit in the parent container
     // Otherwise, they are built with a horizontal, scrollable listview
-    return Visibility(
-      visible: favorites.isNotEmpty,
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          final totalWidth = favorites.length * 200;
+    return StreamBuilder(
+        stream: context.read<CurrentOrgProvider>().favoriteDrives,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Text('An error occurred');
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-          return Container(
-            height: 150,
-            padding: const EdgeInsets.only(bottom: 10),
-            child: totalWidth < constraints.maxWidth
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: favorites.map((favorite) {
-                      return DonationDriveCard(drive: favorite);
-                    }).toList(),
-                  )
-                : ListView.builder(
-                    itemCount: favorites.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: DonationDriveCard(drive: favorites[index]),
-                      );
-                    },
-                  ),
+          final favorites = snapshot.data!.docs
+              .map((doc) =>
+                  DonationDrive.fromJson(doc.data() as Map<String, dynamic>))
+              .toList();
+
+          return Visibility(
+            visible: favorites.isNotEmpty,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final totalWidth = favorites.length * 200;
+
+                return Container(
+                  height: 150,
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: totalWidth < constraints.maxWidth
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: favorites.map((favorite) {
+                            return DonationDriveCard(favorite.name);
+                          }).toList(),
+                        )
+                      : ListView.builder(
+                          itemCount: favorites.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: DonationDriveCard(favorites[index].name),
+                            );
+                          },
+                        ),
+                );
+              },
+            ),
           );
-        },
-      ),
-    );
+        });
   }
 }
