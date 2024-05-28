@@ -151,9 +151,8 @@ class _LandingPageState extends State<LandingPage> {
                     ),
                     ElevatedButton(
                       onPressed: () async {
-                        // Navigator.pop(context);
-                        // Navigator.pushNamed(context, "/googleSignIn");
                         final GoogleSignIn googleSignIn = GoogleSignIn();
+                        await googleSignIn.signOut(); // sign out any current gmails
                         GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
                         GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;

@@ -110,7 +110,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
               child: const Padding(
                 padding: EdgeInsets.only(left: 16, right: 16),
                 child: Text(
-                  "Log in your donor account.",
+                  "Log in your account.",
                   style: TextStyle(
                     fontSize: 12,
                     fontFamily: 'Poppins-Reg',
@@ -301,7 +301,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                             setState(() async {
                               if (message != null && message.isNotEmpty) {
                                 showSignInErrorMessage = true;
-                                    ScaffoldMessenger.of(context).showSnackBar(
+                                ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text('Invalid email or password'),
                                   ),
