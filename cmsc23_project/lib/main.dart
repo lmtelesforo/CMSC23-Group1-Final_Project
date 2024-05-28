@@ -14,7 +14,7 @@ import 'package:cmsc23_project/providers/donation_providers.dart';
 import 'package:cmsc23_project/providers/donation_storage_provider.dart';
 import 'package:cmsc23_project/user_view/landing_page.dart';
 import 'package:cmsc23_project/user_view/login_donor.dart';
-import 'package:cmsc23_project/user_view/login_org.dart';
+import 'package:cmsc23_project/user_view/google_signin.dart';
 import 'package:cmsc23_project/user_view/signup_donor.dart';
 import 'package:cmsc23_project/user_view/signup_org.dart';
 import 'package:flutter/material.dart';
@@ -78,7 +78,7 @@ class RootWidget extends StatelessWidget {
       routes: {
         "/": (context) => const LandingPage(),
         "/loginDonor": (context) => const LogInDonorPage(),
-        "/loginOrg": (context) => const LogInOrgPage(),
+        "/googleSignIn": (context) => const GoogleSignIn(),
         "/loginAdmin": (context) => const LogInAdminPage(),
         "/signupDonor": (context) => const SignUpDonorPage(),
         "/signupOrg": (context) => const SignUpOrgPage(),

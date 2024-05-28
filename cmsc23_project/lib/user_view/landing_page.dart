@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -135,8 +137,9 @@ class _LandingPageState extends State<LandingPage> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.pushNamed(context, "/loginOrg");
+                        // Navigator.pop(context);
+                        // Navigator.pushNamed(context, "/googleSignIn");
+                        signInWithGoogle();
                       },
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(300, 35),
@@ -147,7 +150,18 @@ class _LandingPageState extends State<LandingPage> {
                         ),
                         backgroundColor: const Color(0xFFFCBE4F),
                       ),
-                      child: const Text('Log in as an Organization'),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Image.asset(
+                            'lib/user_view/assets/google.png', 
+                            height: 20.0,
+                            width: 20.0,
+                          ),
+                          const SizedBox(width: 8.0), 
+                          const Text('Sign in with Google'),
+                        ],
+                      ),
                     ),
                     SizedBox(
                       height: 34,
@@ -174,5 +188,22 @@ class _LandingPageState extends State<LandingPage> {
         ],
       ),
     );
+  }
+
+  signInWithGoogle() async {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+
+
+    GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+    AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken
+    );
+
+    UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+
+    print(userCredential.user?.displayName);
   }
 }

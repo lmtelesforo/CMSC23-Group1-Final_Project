@@ -5,14 +5,14 @@ import '../providers/auth_provider.dart';
 import '../providers/firebase_provider.dart';
 import '../providers/textfield_providers.dart';
 
-class LogInOrgPage extends StatefulWidget {
-  const LogInOrgPage({super.key});
+class GoogleSignIn extends StatefulWidget {
+  const GoogleSignIn({super.key});
 
   @override
-  State<LogInOrgPage> createState() => _LogInOrgPageState();
+  State<GoogleSignIn> createState() => _GoogleSignInState();
 }
 
-class _LogInOrgPageState extends State<LogInOrgPage> {
+class _GoogleSignInState extends State<GoogleSignIn> {
   final _formKey = GlobalKey<FormState>(); 
   bool showSignInErrorMessage = false;
 
