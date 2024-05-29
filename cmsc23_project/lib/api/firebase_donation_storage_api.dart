@@ -36,12 +36,23 @@ class FirebaseDonationStorageAPI {
   Future<String> updateDonationStatus(
       String donationId, String newStatus) async {
     try {
+      DocumentSnapshot doc =
+          await db.collection('donations').doc(donationId).get();
+
+      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      String date = data['date'];
+      String email = data['email'];
+
+      String newQrCode = '$newStatus|$date|$email';
+
       await db.collection('donations').doc(donationId).update({
         'status': newStatus,
+        'qrcode': newQrCode,
       });
-      return ('Donation status updated successfully');
+
+      return 'Donation status updated successfully';
     } catch (e) {
-      return ('Error updating donation status: $e');
+      return 'Error updating donation status: $e';
     }
   }
 
