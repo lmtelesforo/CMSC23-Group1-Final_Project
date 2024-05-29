@@ -43,6 +43,7 @@ class RootWidget extends StatelessWidget {
       routes: {
         '/org': (context) => const OrgHomePage(),
         '/org/profile': (context) => const Profile(),
+        '/org/profile/edit': (context) => const ProfileEditor(),
         '/org/drives': (context) => const ManageDonationDrives(),
         '/org/drives/details': (context) => const DonationDriveDetails(),
         '/org/drives/add': (context) => const DriveForm(),
