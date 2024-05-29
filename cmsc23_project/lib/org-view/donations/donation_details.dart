@@ -139,8 +139,20 @@ class _EditDonationState extends State<_EditDonation> {
                       var value =
                           await Navigator.pushNamed(context, '/org/scan-qr');
                       setState(() {
-                        // TODO: Check if qr is correct
-                        qrCodeValue = value as String?;
+                        if (value == widget.donation.qrcode) {
+                          qrCodeValue = value as String?;
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('QR code scanned successfully'),
+                            ),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Invalid QR code'),
+                            ),
+                          );
+                        }
                       });
                     },
                     child: const Icon(Icons.qr_code),
