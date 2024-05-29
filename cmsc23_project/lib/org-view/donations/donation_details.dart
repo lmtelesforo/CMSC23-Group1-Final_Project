@@ -95,7 +95,7 @@ class _EditDonationState extends State<_EditDonation> {
           ElevatedButton(
             onPressed: saveChanges,
             style: const ButtonStyle(
-              surfaceTintColor: MaterialStatePropertyAll(Colors.white),
+              surfaceTintColor: WidgetStatePropertyAll(Colors.white),
             ),
             child: const Text('Save'),
           ),
@@ -172,7 +172,7 @@ class _EditDonationState extends State<_EditDonation> {
                 value: statuses.indexOf(status),
                 label: status.toString().split('.').last,
                 style: ButtonStyle(
-                    textStyle: MaterialStateProperty.all(CustomTextStyle.body)),
+                    textStyle: WidgetStateProperty.all(CustomTextStyle.body)),
               ))
           .toList(),
       onSelected: (status) {
@@ -218,7 +218,7 @@ class _EditDonationState extends State<_EditDonation> {
                       label: drive.name,
                       style: ButtonStyle(
                           textStyle:
-                              MaterialStateProperty.all(CustomTextStyle.body)),
+                              WidgetStateProperty.all(CustomTextStyle.body)),
                     ))
                 .toList(),
             onSelected: (drive) {

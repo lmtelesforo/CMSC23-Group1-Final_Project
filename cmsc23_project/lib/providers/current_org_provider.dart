@@ -17,27 +17,27 @@ class CurrentOrgProvider with ChangeNotifier {
       _firebaseOrgAPI.getOrgs(username: orgUsername);
 
   Stream<QuerySnapshot> get drives =>
-      _firebaseDriveAPI.getDrives(orgUsername: orgUsername);
+      _firebaseDriveAPI.getDrivesByOrg(orgUsername);
 
   Stream<QuerySnapshot> get donations =>
       _firebaseDonationStorageAPI.getDonationsByOrg(orgUsername);
 
-  Stream<QuerySnapshot> drive(String driveName) =>
-      _firebaseDriveAPI.getDrive(orgUsername, driveName);
+  Stream<DocumentSnapshot> drive(String id) => _firebaseDriveAPI.getDrive(id);
 
-  Stream<QuerySnapshot> donationsByDrive(driveName) =>
+  Stream<QuerySnapshot> donationsByDrive(
+          String orgUsername, String driveName) =>
       _firebaseDonationStorageAPI.getDonationsByDrive(orgUsername, driveName);
 
   Stream<QuerySnapshot> get favoriteDrives =>
       _firebaseDriveAPI.getFavoriteDrives(orgUsername);
 
-  void toggleFavorite(String driveName) {
-    _firebaseDriveAPI.toggleFavorite(orgUsername, driveName);
+  void toggleFavorite(String id) {
+    _firebaseDriveAPI.toggleFavorite(id);
     notifyListeners();
   }
 
-  void toggleStatus(String driveName) {
-    _firebaseDriveAPI.toggleStatus(orgUsername, driveName);
+  void toggleStatus(String id) {
+    _firebaseDriveAPI.toggleStatus(id);
     notifyListeners();
   }
 
@@ -46,6 +46,7 @@ class CurrentOrgProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  // TODO: change to id
   void changeDonationDrive(String donationId, String newDrive) {
     _firebaseDonationStorageAPI.updateDonationDrive(donationId, newDrive);
     notifyListeners();
@@ -62,14 +63,13 @@ class CurrentOrgProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void editDrive(String name, {String? newName, String? description}) {
-    _firebaseDriveAPI.editDrive(name,
-        newName: newName, description: description);
+  void editDrive(String id, {String? newName, String? description}) {
+    _firebaseDriveAPI.editDrive(id, newName: newName, description: description);
     notifyListeners();
   }
 
-  void deleteDrive(String driveName) {
-    _firebaseDriveAPI.deleteDrive(orgUsername, driveName);
+  void deleteDrive(String id) {
+    _firebaseDriveAPI.deleteDrive(id);
     notifyListeners();
   }
 }

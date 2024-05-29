@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cmsc23_project/models/donation_drive.dart';
 import 'package:cmsc23_project/org-view/base_elements/base_screen/base_screen.dart';
 import 'package:cmsc23_project/org-view/base_elements/org_view_styles.dart';
@@ -19,20 +20,45 @@ class _DriveFormState extends State<DriveForm> {
 
   @override
   Widget build(BuildContext context) {
-    final DonationDrive? drive =
-        ModalRoute.of(context)!.settings.arguments as DonationDrive?;
+    final String? id = ModalRoute.of(context)!.settings.arguments as String?;
 
-    nameController.text = drive?.name ?? '';
-    descController.text = drive?.description ?? '';
+    if (id != null) {
+      return StreamBuilder<DocumentSnapshot>(
+          stream: context.read<CurrentOrgProvider>().drive(id),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return const Text('An error occurred');
+            } else if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            }
 
-    return BaseScreen(
-      body: Column(
-        children: [
-          Fields(formKey, nameController, descController),
-          Submit(formKey, nameController, descController, drive),
-        ],
-      ),
-    );
+            DonationDrive? drive = snapshot.data!.data() == null
+                ? null
+                : DonationDrive.fromJson(
+                    snapshot.data!.data()! as Map<String, dynamic>);
+
+            nameController.text = drive?.name ?? '';
+            descController.text = drive?.description ?? '';
+
+            return BaseScreen(
+              body: Column(
+                children: [
+                  Fields(formKey, nameController, descController),
+                  Submit(formKey, nameController, descController, id: id),
+                ],
+              ),
+            );
+          });
+    } else {
+      return BaseScreen(
+        body: Column(
+          children: [
+            Fields(formKey, nameController, descController),
+            Submit(formKey, nameController, descController),
+          ],
+        ),
+      );
+    }
   }
 
   @override
@@ -124,13 +150,13 @@ class Submit extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final TextEditingController _nameController;
   final TextEditingController _descController;
-  final DonationDrive? drive;
+  final String? id;
 
   const Submit(
     this.formKey,
     this._nameController,
-    this._descController,
-    this.drive, {
+    this._descController, {
+    this.id,
     super.key,
   });
 
@@ -153,24 +179,20 @@ class Submit extends StatelessWidget {
             formKey.currentState!.save();
           }
 
-          if (drive == null) {
+          if (id == null) {
             context.read<CurrentOrgProvider>().addDrive(
                   _nameController.text,
                   _descController.text,
                 );
-
-            Navigator.pop(context);
           } else {
             context.read<CurrentOrgProvider>().editDrive(
-                  drive!.name,
+                  id!,
                   newName: _nameController.text,
                   description: _descController.text,
                 );
-
-            Navigator.pop(context);
-            Navigator.pushReplacementNamed(context, '/org/drives/details',
-                arguments: _nameController.text);
           }
+
+          Navigator.pop(context);
         },
         child: Text('Submit',
             style: CustomTextStyle.body.apply(color: CustomColors.secondary)),

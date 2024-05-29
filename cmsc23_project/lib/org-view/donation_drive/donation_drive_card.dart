@@ -7,17 +7,14 @@ import 'package:provider/provider.dart';
 
 class DonationDriveCard extends StatelessWidget {
   // Represents a donation drive card on the homepage and donation drive list
-  final String name;
+  final String id;
 
-  const DonationDriveCard(this.name, {super.key});
+  const DonationDriveCard(this.id, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    Stream<QuerySnapshot> drive =
-        context.read<CurrentOrgProvider>().drive(name);
-
-    return StreamBuilder(
-        stream: drive,
+    return StreamBuilder<DocumentSnapshot>(
+        stream: context.read<CurrentOrgProvider>().drive(id),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return const Text('An error occurred');
@@ -26,7 +23,7 @@ class DonationDriveCard extends StatelessWidget {
           }
 
           DonationDrive drive = DonationDrive.fromJson(
-              snapshot.data!.docs.first.data() as Map<String, dynamic>);
+              snapshot.data!.data()! as Map<String, dynamic>);
 
           return Stack(
             clipBehavior: Clip.none,
@@ -38,7 +35,7 @@ class DonationDriveCard extends StatelessWidget {
                   child: InkWell(
                     onTap: () {
                       Navigator.pushNamed(context, '/org/drives/details',
-                          arguments: name);
+                          arguments: id);
                     },
                     child: _CardContent(drive),
                   ),
@@ -81,7 +78,9 @@ class _CardContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: context.read<CurrentOrgProvider>().donationsByDrive(drive.name),
+        stream: context
+            .read<CurrentOrgProvider>()
+            .donationsByDrive(drive.orgUsername, drive.name),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return const Text('An error occurred');

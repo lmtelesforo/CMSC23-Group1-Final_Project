@@ -12,38 +12,23 @@ class DonationDriveDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String name = ModalRoute.of(context)!.settings.arguments as String;
+    final String id = ModalRoute.of(context)!.settings.arguments as String;
 
     return BaseScreen(
-      body: StreamBuilder(
-        stream: context.read<CurrentOrgProvider>().drive(name),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return const Text('An error occurred');
-          } else if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator();
-          }
-
-          DonationDrive drive = DonationDrive.fromJson(
-              snapshot.data!.docs.first.data() as Map<String, dynamic>);
-
-          return Column(
-            children: [
-              ExpandedDriveCard(drive),
-              DonationList(
-                  orgUsername: drive.orgUsername, driveName: drive.name),
-            ],
-          );
-        },
+      body: Column(
+        children: [
+          ExpandedDriveCard(id),
+          DonationList(id: id),
+        ],
       ),
     );
   }
 }
 
 class ExpandedDriveCard extends StatelessWidget {
-  final DonationDrive drive;
+  final String id;
 
-  const ExpandedDriveCard(this.drive, {super.key});
+  const ExpandedDriveCard(this.id, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -51,49 +36,64 @@ class ExpandedDriveCard extends StatelessWidget {
       children: [
         Container(
           padding: const EdgeInsets.all(20),
-          child: _DriveCard(drive),
+          child: _DriveCard(id),
         ),
-        _driveActions(drive, context),
+        _driveActions(id, context),
       ],
     );
   }
 
-  Widget _driveActions(DonationDrive drive, BuildContext context) {
+  Widget _driveActions(String id, BuildContext context) {
     return Positioned(
       top: 13,
       right: 20,
-      child: Row(
-        children: [
-          _buildActionIcon(
-            icon: drive.isFavorite ? Icons.favorite : Icons.favorite_border,
-            onTap: () {
-              _toggleFavorite(context);
-            },
-          ),
-          const SizedBox(width: 5),
-          _buildActionIcon(
-            icon: drive.isOngoing ? Icons.close : Icons.more_horiz,
-            onTap: () {
-              _toggleStatus(context);
-            },
-          ),
-          const SizedBox(width: 5),
-          _buildActionIcon(
-            icon: Icons.edit,
-            onTap: () => {
-              Navigator.pushNamed(context, '/org/drives/edit', arguments: drive)
-            },
-          ),
-          const SizedBox(width: 5),
-          _buildActionIcon(
-            icon: Icons.delete,
-            onTap: () {
-              Navigator.pop(context);
-              _deleteDrive(context);
-            },
-          ),
-        ],
-      ),
+      child: StreamBuilder<DocumentSnapshot>(
+          stream: context.read<CurrentOrgProvider>().drive(id),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return const Text('Error loading drive');
+            } else if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            }
+
+            DonationDrive drive = DonationDrive.fromJson(
+                snapshot.data!.data()! as Map<String, dynamic>);
+
+            return Row(
+              children: [
+                _buildActionIcon(
+                  icon:
+                      drive.isFavorite ? Icons.favorite : Icons.favorite_border,
+                  onTap: () {
+                    context.read<CurrentOrgProvider>().toggleFavorite(id);
+                  },
+                ),
+                const SizedBox(width: 5),
+                _buildActionIcon(
+                  icon: drive.isOngoing ? Icons.close : Icons.more_horiz,
+                  onTap: () {
+                    context.read<CurrentOrgProvider>().toggleStatus(id);
+                  },
+                ),
+                const SizedBox(width: 5),
+                _buildActionIcon(
+                  icon: Icons.edit,
+                  onTap: () => {
+                    Navigator.pushNamed(context, '/org/drives/edit',
+                        arguments: id)
+                  },
+                ),
+                const SizedBox(width: 5),
+                _buildActionIcon(
+                  icon: Icons.delete,
+                  onTap: () {
+                    Navigator.pop(context);
+                    context.read<CurrentOrgProvider>().deleteDrive(id);
+                  },
+                ),
+              ],
+            );
+          }),
     );
   }
 
@@ -111,38 +111,40 @@ class ExpandedDriveCard extends StatelessWidget {
       ),
     );
   }
-
-  void _toggleFavorite(BuildContext context) {
-    context.read<CurrentOrgProvider>().toggleFavorite(drive.name);
-  }
-
-  void _toggleStatus(BuildContext context) {
-    context.read<CurrentOrgProvider>().toggleStatus(drive.name);
-  }
-
-  void _deleteDrive(BuildContext context) {
-    context.read<CurrentOrgProvider>().deleteDrive(drive.name);
-  }
 }
 
 class _DriveCard extends StatelessWidget {
-  final DonationDrive drive;
+  final String id;
 
-  const _DriveCard(this.drive);
+  const _DriveCard(this.id);
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 30),
-        child: Column(
-          children: [
-            _name(drive.name),
-            const SizedBox(height: 5),
-            _statusInfo(drive, context),
-            const SizedBox(height: 20),
-            _description(drive.description),
-          ],
+        child: StreamBuilder<DocumentSnapshot>(
+          stream: context.read<CurrentOrgProvider>().drive(id),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return const Text('Error loading drive');
+            } else if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            }
+
+            DonationDrive drive = DonationDrive.fromJson(
+                snapshot.data!.data()! as Map<String, dynamic>);
+
+            return Column(
+              children: [
+                _name(drive.name),
+                const SizedBox(height: 5),
+                _statusInfo(drive, context),
+                const SizedBox(height: 20),
+                _description(drive.description),
+              ],
+            );
+          },
         ),
       ),
     );
@@ -189,7 +191,7 @@ class _DriveCard extends StatelessWidget {
 
   Widget _donationCount(String orgUsername, String name, BuildContext context) {
     Stream<QuerySnapshot> donations =
-        context.read<CurrentOrgProvider>().donationsByDrive(name);
+        context.read<CurrentOrgProvider>().donationsByDrive(orgUsername, name);
 
     return StreamBuilder(
         stream: donations,

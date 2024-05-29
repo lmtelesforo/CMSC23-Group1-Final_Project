@@ -3,22 +3,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class FirebaseDriveAPI {
   static final FirebaseFirestore db = FirebaseFirestore.instance;
 
-  Stream<QuerySnapshot> getDrives({String? orgUsername}) {
-    Query query = db.collection('drives');
+  Stream<QuerySnapshot> get drives => db.collection('drives').snapshots();
 
-    if (orgUsername != null) {
-      query = query.where('orgUsername', isEqualTo: orgUsername);
-    }
+  Stream<DocumentSnapshot> getDrive(String id) =>
+      db.collection('drives').doc(id).snapshots();
 
-    return query.snapshots();
-  }
-
-  // TODO: Get/update drives by id. error+conflict pag ganito implementation
-  Stream<QuerySnapshot> getDrive(String orgUsername, String driveName) {
+  Stream<QuerySnapshot> getDrivesByOrg(String orgUsername) {
     return db
         .collection('drives')
         .where('orgUsername', isEqualTo: orgUsername)
-        .where('name', isEqualTo: driveName)
         .snapshots();
   }
 
@@ -40,17 +33,14 @@ class FirebaseDriveAPI {
     }
   }
 
-  Future<String> editDrive(String name,
+  Future<String> editDrive(String id,
       {String? newName, String? description}) async {
     try {
-      QuerySnapshot drives =
-          await db.collection('drives').where('name', isEqualTo: name).get();
+      DocumentSnapshot drive = await db.collection('drives').doc(id).get();
 
-      if (drives.docs.isEmpty) {
+      if (!drive.exists) {
         return 'Drive not found';
       }
-
-      DocumentSnapshot drive = drives.docs.first;
       await db.collection('drives').doc(drive.id).update({
         'name': newName ?? drive['name'],
         'description': description ?? drive['description'],
@@ -62,19 +52,13 @@ class FirebaseDriveAPI {
     }
   }
 
-  Future<String> toggleFavorite(String orgUsername, String driveName) async {
+  Future<String> toggleFavorite(String id) async {
     try {
-      QuerySnapshot drives = await db
-          .collection('drives')
-          .where('orgUsername', isEqualTo: orgUsername)
-          .where('name', isEqualTo: driveName)
-          .get();
+      DocumentSnapshot drive = await db.collection('drives').doc(id).get();
 
-      if (drives.docs.isEmpty) {
+      if (!drive.exists) {
         return 'Drive not found';
       }
-
-      DocumentSnapshot drive = drives.docs.first;
 
       await db.collection('drives').doc(drive.id).update({
         'isFavorite': !drive['isFavorite'],
@@ -86,19 +70,13 @@ class FirebaseDriveAPI {
     }
   }
 
-  Future<String> toggleStatus(String orgUsername, String driveName) async {
+  Future<String> toggleStatus(String id) async {
     try {
-      QuerySnapshot drives = await db
-          .collection('drives')
-          .where('orgUsername', isEqualTo: orgUsername)
-          .where('name', isEqualTo: driveName)
-          .get();
+      DocumentSnapshot drive = await db.collection('drives').doc(id).get();
 
-      if (drives.docs.isEmpty) {
+      if (!drive.exists) {
         return 'Drive not found';
       }
-
-      DocumentSnapshot drive = drives.docs.first;
 
       await db.collection('drives').doc(drive.id).update({
         'isOngoing': !drive['isOngoing'],
@@ -110,19 +88,14 @@ class FirebaseDriveAPI {
     }
   }
 
-  Future<String> deleteDrive(String orgUsername, String driveName) async {
+  Future<String> deleteDrive(String id) async {
     try {
-      QuerySnapshot drives = await db
-          .collection('drives')
-          .where('orgUsername', isEqualTo: orgUsername)
-          .where('name', isEqualTo: driveName)
-          .get();
+      DocumentSnapshot drive = await db.collection('drives').doc(id).get();
 
-      if (drives.docs.isEmpty) {
+      if (!drive.exists) {
         return 'Drive not found';
       }
 
-      DocumentSnapshot drive = drives.docs.first;
       await db.collection('drives').doc(drive.id).delete();
 
       return 'Successfully deleted';

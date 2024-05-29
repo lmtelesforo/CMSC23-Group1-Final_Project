@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cmsc23_project/models/donation_drive.dart';
 import 'package:cmsc23_project/models/indiv_donation.dart';
 import 'package:cmsc23_project/org-view/base_elements/org_view_styles.dart';
 import 'package:cmsc23_project/providers/current_org_provider.dart';
@@ -6,10 +8,9 @@ import 'package:provider/provider.dart';
 
 class DonationList extends StatefulWidget {
   // Lists all donations made to the organization (or optionally, drive)
-  final String? orgUsername;
-  final String? driveName;
+  final String? id;
 
-  const DonationList({this.orgUsername, this.driveName, super.key});
+  const DonationList({this.id, super.key});
 
   @override
   State<DonationList> createState() => _DonationListState();
@@ -54,7 +55,7 @@ class _DonationListState extends State<DonationList> {
       );
 
   Widget get _donationTiles {
-    bool isDrive = widget.driveName != null;
+    bool isDrive = widget.id != null;
 
     // Used to sort donations by status/progress
     List<String> statusSort = [
@@ -71,44 +72,92 @@ class _DonationListState extends State<DonationList> {
           .contains(_searchQuery.toLowerCase());
     }
 
+    // TODO: AAAAAAAAAAAAAAAAA
     return Expanded(
-      child: StreamBuilder(
-        // Check if the list of donations is for a specific drive or all donations
-        stream: isDrive
-            ? context
-                .read<CurrentOrgProvider>()
-                .donationsByDrive(widget.driveName)
-            : context.read<CurrentOrgProvider>().donations,
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return const Text('An error occurred');
-          } else if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
+      child: isDrive
+          ? StreamBuilder<DocumentSnapshot>(
+              stream: context.read<CurrentOrgProvider>().drive(widget.id!),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return const Text('An error occurred');
+                } else if (snapshot.connectionState ==
+                    ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
 
-          // Filter donations based on search query
+                DonationDrive drive = DonationDrive.fromJson(
+                    snapshot.data!.data() as Map<String, dynamic>);
 
-          Map<Donation, String> donations = Map.fromEntries(snapshot.data!.docs
-              .map((doc) => MapEntry(
-                  Donation.fromJson(doc.data() as Map<String, dynamic>),
-                  doc.id))
-              .where((entry) => matchesQuery(entry.key)));
+                return StreamBuilder<QuerySnapshot>(
+                  stream: context
+                      .read<CurrentOrgProvider>()
+                      .donationsByDrive(drive.orgUsername, drive.name),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return const Text('An error occurred');
+                    } else if (snapshot.connectionState ==
+                        ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
 
-          // Sort donations by status
-          List<Donation> filteredDonations = donations.keys.toList()
-            ..sort((a, b) => statusSort
-                .indexOf(a.status)
-                .compareTo(statusSort.indexOf(b.status)));
+                    Map<Donation, String> donations = Map.fromEntries(snapshot
+                        .data!.docs
+                        .map((doc) => MapEntry(
+                            Donation.fromJson(
+                                doc.data() as Map<String, dynamic>),
+                            doc.id))
+                        .where((entry) => matchesQuery(entry.key)));
 
-          return ListView.builder(
-            itemCount: filteredDonations.length,
-            itemBuilder: (context, index) {
-              return _tile(filteredDonations[index],
-                  donations[filteredDonations[index]]!);
-            },
-          );
-        },
-      ),
+                    List<Donation> filteredDonations = donations.keys.toList()
+                      ..sort((a, b) => statusSort
+                          .indexOf(a.status)
+                          .compareTo(statusSort.indexOf(b.status)));
+
+                    return ListView.builder(
+                      itemCount: filteredDonations.length,
+                      itemBuilder: (context, index) {
+                        return _tile(filteredDonations[index],
+                            donations[filteredDonations[index]]!);
+                      },
+                    );
+                  },
+                );
+              })
+          : StreamBuilder<QuerySnapshot>(
+              // Check if the list of donations is for a specific drive or all donations
+              stream: context.read<CurrentOrgProvider>().donations,
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return const Text('An error occurred');
+                } else if (snapshot.connectionState ==
+                    ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                // Filter donations based on search query
+
+                Map<Donation, String> donations = Map.fromEntries(snapshot
+                    .data!.docs
+                    .map((doc) => MapEntry(
+                        Donation.fromJson(doc.data() as Map<String, dynamic>),
+                        doc.id))
+                    .where((entry) => matchesQuery(entry.key)));
+
+                // Sort donations by status
+                List<Donation> filteredDonations = donations.keys.toList()
+                  ..sort((a, b) => statusSort
+                      .indexOf(a.status)
+                      .compareTo(statusSort.indexOf(b.status)));
+
+                return ListView.builder(
+                  itemCount: filteredDonations.length,
+                  itemBuilder: (context, index) {
+                    return _tile(filteredDonations[index],
+                        donations[filteredDonations[index]]!);
+                  },
+                );
+              },
+            ),
     );
   }
 

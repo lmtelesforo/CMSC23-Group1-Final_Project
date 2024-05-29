@@ -1,4 +1,4 @@
-import 'package:cmsc23_project/models/donation_drive.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cmsc23_project/org-view/base_elements/base_screen/base_screen.dart';
 import 'package:cmsc23_project/org-view/donation_drive/donation_drive_card.dart';
 import 'package:cmsc23_project/org-view/donations/donation_list.dart';
@@ -71,14 +71,11 @@ class MainAction extends StatelessWidget {
 }
 
 class Favorites extends StatelessWidget {
-  // List of favorited donation drives
   const Favorites({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Favorites are centered using row if they can fit in the parent container
-    // Otherwise, they are built with a horizontal, scrollable listview
-    return StreamBuilder(
+    return StreamBuilder<QuerySnapshot>(
         stream: context.read<CurrentOrgProvider>().favoriteDrives,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
@@ -87,10 +84,7 @@ class Favorites extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
 
-          final favorites = snapshot.data!.docs
-              .map((doc) =>
-                  DonationDrive.fromJson(doc.data() as Map<String, dynamic>))
-              .toList();
+          final favorites = snapshot.data!.docs;
 
           return Visibility(
             visible: favorites.isNotEmpty,
@@ -101,11 +95,13 @@ class Favorites extends StatelessWidget {
                 return Container(
                   height: 150,
                   padding: const EdgeInsets.only(bottom: 10),
+                  // if the cards can fit in the screen, display them in a row
+                  // otherwise, display them in a horizontal list
                   child: totalWidth < constraints.maxWidth
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: favorites.map((favorite) {
-                            return DonationDriveCard(favorite.name);
+                            return DonationDriveCard(favorite.id);
                           }).toList(),
                         )
                       : ListView.builder(
@@ -114,7 +110,7 @@ class Favorites extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return Padding(
                               padding: const EdgeInsets.only(left: 10),
-                              child: DonationDriveCard(favorites[index].name),
+                              child: DonationDriveCard(favorites[index].id),
                             );
                           },
                         ),

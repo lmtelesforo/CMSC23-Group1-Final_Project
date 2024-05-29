@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cmsc23_project/models/donation_drive.dart';
 import 'package:cmsc23_project/org-view/base_elements/base_screen/base_screen.dart';
 import 'package:cmsc23_project/org-view/donation_drive/donation_drive_card.dart';
 import 'package:cmsc23_project/org-view/base_elements/org_view_styles.dart';
@@ -46,14 +45,11 @@ class ManageDonationDrives extends StatelessWidget {
             return const CircularProgressIndicator();
           }
 
-          List<DonationDrive> drives = snapshot.data!.docs
-              .map((doc) =>
-                  DonationDrive.fromJson(doc.data() as Map<String, dynamic>))
-              .toList();
+          List<QueryDocumentSnapshot> drives = snapshot.data!.docs;
 
           return Wrap(
             children: [
-              ...drives.map((drive) => DonationDriveCard(drive.name)),
+              ...drives.map((drive) => DonationDriveCard(drive.id)),
               const AddDonationDrive(),
             ],
           );
