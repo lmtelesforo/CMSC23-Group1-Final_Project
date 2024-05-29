@@ -179,7 +179,7 @@ class _DonationListState extends State<DonationList> {
   }
 
   Color _getTileColor(String status) {
-    return status == 'Cancelled' || status == 'Complete'
+    return status == 'Cancelled' || status == 'Completed'
         ? Colors.grey
         : CustomColors.secondary;
   }
