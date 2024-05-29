@@ -22,6 +22,7 @@ class DonationInfo extends StatelessWidget {
                 name(),
                 donation.shipping == 'Pick up' ? address() : blank(),
                 donation.shipping == 'Pick up' ? number() : blank(),
+                donation.image != null ? images() : blank(),
                 categories(),
                 weight(),
                 forPickup(),
@@ -31,6 +32,29 @@ class DonationInfo extends StatelessWidget {
           ),
         ),
       );
+
+  TableRow images() {
+    return TableRow(
+      children: [
+        const Icon(Icons.image, color: CustomColors.primary),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 30),
+          child: ListView.builder(
+            itemCount: donation.image!.length,
+            itemBuilder: (context, index) {
+              return Image.network(donation.image![index],
+                  errorBuilder: (context, error, stackTrace) {
+                return const Text('Image not found',
+                    style: CustomTextStyle.body);
+              });
+            },
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+          ),
+        ),
+      ],
+    );
+  }
 
   TableRow address() {
     return TableRow(
