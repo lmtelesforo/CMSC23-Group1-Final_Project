@@ -46,6 +46,7 @@ class ManageDonationDrives extends StatelessWidget {
           }
 
           List<QueryDocumentSnapshot> drives = snapshot.data!.docs;
+          drives.sort((a, b) => a['isOngoing'] ? -1 : 1);
 
           return Wrap(
             children: [
