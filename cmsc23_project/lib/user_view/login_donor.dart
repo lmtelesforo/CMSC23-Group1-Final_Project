@@ -382,7 +382,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                                     provider.resetLogIn();
                                     Navigator.pop(context);
                                     Navigator.pushNamed(
-                                        context, "/orgHomepage");
+                                        context, "/org");
 
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
