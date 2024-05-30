@@ -7,6 +7,15 @@ class ImageUrlDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<String> formattedUrls = imageUrls.map((url) {
+      int endIndex = url.indexOf('.jpg');
+      int startIndex = endIndex - 13; 
+      if (startIndex < 0) {
+        startIndex = 0;
+      }
+      return url.substring(startIndex, endIndex + 4); 
+    }).toList();
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,7 +41,6 @@ class ImageUrlDisplay extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 0),
                 child: GestureDetector(
                   onTap: () {
-                    // Navigate to the image when tapped
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -41,7 +49,7 @@ class ImageUrlDisplay extends StatelessWidget {
                     );
                   },
                   child: Text(
-                    imageUrls[index],
+                    formattedUrls[index],
                     style: TextStyle(
                       fontSize: 12,
                       fontFamily: 'Poppins-Reg',
@@ -88,4 +96,5 @@ class ImageDetailPage extends StatelessWidget {
       ),
     );
   }
+  
 }

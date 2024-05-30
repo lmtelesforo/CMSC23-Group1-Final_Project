@@ -1,3 +1,4 @@
+import 'package:cmsc23_project/donor-view/donation_page/profile_page.dart';
 import 'package:cmsc23_project/providers/donation_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -67,7 +68,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
               ),
             ),
             child: CircleAvatar(
-              backgroundImage: AssetImage("images/profile.jpg"),
+              backgroundImage: AssetImage("assets/images/profile_pic.jpg"),
               radius: 30.0,
             ),
           ),
@@ -111,7 +112,10 @@ class _DonorHomepageState extends State<DonorHomepage> {
                 ),
               ),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfilePage(),)
+                );
               },
             ),
             ListTile(

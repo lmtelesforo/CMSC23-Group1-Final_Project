@@ -29,7 +29,7 @@ class _DonorPageState extends State<DonorPage> {
   String qrcodeinput = "";
   bool datetimepicked = false;
   List<String> addressesList = [];
-  List<String> imageUrls = []; // Add imageUrls list here
+  List<String> imageUrls = []; 
   late Map<String, dynamic> donorDetails;
 
   bool isNumeric(String str) {
@@ -48,6 +48,7 @@ class _DonorPageState extends State<DonorPage> {
 
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
     var donationProvider = context.watch<DonationProvider>();
     final provider = context.watch<TextfieldProviders>();
 
@@ -110,13 +111,13 @@ class _DonorPageState extends State<DonorPage> {
               ),
             ),
             Positioned(
-              top: 20,
-              left: 30,
-              right: 30,
-              bottom: 20,
+              top: screenSize.height * 0.03,
+              left: screenSize.width * 0.04,
+              right: screenSize.width * 0.04,
+              bottom: screenSize.height * 0.04,
               child: Center(
                 child: Container(
-                  width: 320,
+                  width: screenSize.width * 0.8,
                   child: ListView(
                     shrinkWrap: true,
                     children: [
@@ -143,7 +144,7 @@ class _DonorPageState extends State<DonorPage> {
                           ],
                         ),
                       ),
-                      SizedBox(height: 15),
+                      SizedBox(height: screenSize.height * 0.015),
                       Column(
                         children: donationProvider.donationItems.map((item) {
                           return DonationCheckbox(
@@ -159,11 +160,11 @@ class _DonorPageState extends State<DonorPage> {
                           );
                         }).toList(),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: screenSize.height * 0.01),
                       Text("Select if the items are for pickup or drop-off"),
-                      SizedBox(height: 10),
+                      SizedBox(height: screenSize.height * 0.01),
                       DropdownMenuExample(),
-                      SizedBox(height: 10),
+                      SizedBox(height: screenSize.height * 0.01),
                       TextFormField(
                         controller: provider.controller4,
                         onChanged: provider.updateWeight,
@@ -184,18 +185,23 @@ class _DonorPageState extends State<DonorPage> {
                           return null;
                         },
                       ),
+                      SizedBox(height: screenSize.height * 0.01),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           IconButton(
                             icon: Icon(Icons.camera_alt),
+                            color: Color(0xFF373D66),
+                            iconSize: 30,
                             onPressed: () {
                               _openCamera(context);
                             },
                           ),
-                          SizedBox(width: 16),
+                          SizedBox(width: screenSize.width * 0.04),
                           IconButton(
                             icon: Icon(Icons.photo_library),
+                            color: Color(0xFF373D66),
+                            iconSize: 30,
                             onPressed: () {
                               _openGallery(context);
                             },
@@ -203,7 +209,7 @@ class _DonorPageState extends State<DonorPage> {
                         ],
                       ),
                       ImageUrlDisplay(imageUrls: imageUrls),
-                      SizedBox(height: 8),
+                      SizedBox(height: screenSize.height * 0.005),
                       DateTimePicker(),
                       provider.datetimepicked == true
                           ? showDateTimePicked(provider.dateTime)
@@ -232,6 +238,7 @@ class _DonorPageState extends State<DonorPage> {
   }
 
   Widget forPickUpInputs(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
     final provider = context.watch<TextfieldProviders>();
     generate = false;
 
@@ -255,7 +262,7 @@ class _DonorPageState extends State<DonorPage> {
           thickness: 1,
           color: const Color(0xFFFCBE4F),
         ),
-        SizedBox(height: 10),
+        SizedBox(height: screenSize.height * 0.01),
         TextFormField(
           controller: provider.controller5,
           onChanged: provider.updateAddresses,
@@ -303,14 +310,14 @@ class _DonorPageState extends State<DonorPage> {
             labelText: 'Please enter the contact number for pickup',
           ),
         ),
-        SizedBox(height: 30),
+        SizedBox(height: screenSize.height * 0.015),
         ElevatedButton(
           onPressed: () {
             if (_formKey.currentState!.validate()) {
               final donorName = donorDetails['name'];
               final weight = provider.controller4.text;
               final addressesUnsplit = provider.controller5.text;
-              final contactnumber = provider.controller6.text;
+              final contactNumber = provider.controller6.text;
               final donorEmail = donorDetails['email'];
               final status = 'Pending';
 
@@ -349,7 +356,7 @@ class _DonorPageState extends State<DonorPage> {
                     weight,
                     imageUrls);
 
-                donationService.addDonation(donation); // add to firebase
+                donationService.addDonation(donation, imageUrls); // add to firebase
 
                 Navigator.pop(context);
                 Navigator.pushNamed(context, "/donorHomepage",
@@ -365,7 +372,24 @@ class _DonorPageState extends State<DonorPage> {
             }
             ;
           },
-          child: Text('Send Donation'),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color.fromRGBO(55, 61, 102, 1),
+            textStyle: TextStyle(
+              fontSize: 16,
+            ),
+            padding: EdgeInsets.symmetric(horizontal: screenSize.width * 0.2, vertical: screenSize.height * 0.01), // Adjusted padding
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(40),
+            ),
+          ),
+          child: Text(
+            'Send Donation', 
+            style: TextStyle(
+              color: const Color.fromRGBO(252, 190, 79, 1), 
+              fontFamily: "Montserrat",
+              fontWeight: FontWeight.bold
+            ),
+          ),
         ),
       ],
     );
@@ -381,12 +405,13 @@ class _DonorPageState extends State<DonorPage> {
   }
 
   Widget submitDropOff(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
     final provider = context.watch<TextfieldProviders>();
     final dateOfDropOff = provider.date;
 
     return Column(
       children: [
-        SizedBox(height: 20),
+        SizedBox(height: screenSize.height * 0.02),
         ElevatedButton(
           onPressed: () {
             if (_formKey.currentState!.validate()) {
@@ -418,7 +443,7 @@ class _DonorPageState extends State<DonorPage> {
                     weight,
                     imageUrls);
 
-                donationService.addDonation(donation); // add to firebase
+                donationService.addDonation(donation, imageUrls); // add to firebase
 
                 Navigator.pop(context);
                 Navigator.pushNamed(context, "/donorHomepage",
@@ -433,7 +458,24 @@ class _DonorPageState extends State<DonorPage> {
               }
             }
           },
-          child: Text('Send Donation'),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color.fromRGBO(55, 61, 102, 1),
+            textStyle: TextStyle(
+              fontSize: 16,
+            ),
+            padding: EdgeInsets.symmetric(horizontal: screenSize.width * 0.2, vertical: screenSize.height * 0.015), // Adjusted padding
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(40),
+            ),
+          ),
+          child: Text(
+            'Send Donation', 
+            style: TextStyle(
+              color: const Color.fromRGBO(252, 190, 79, 1), 
+              fontFamily: "Montserrat",
+              fontWeight: FontWeight.bold
+            ),
+          ),
         ),
       ],
     );
@@ -442,7 +484,12 @@ class _DonorPageState extends State<DonorPage> {
   Widget ifDropOff(BuildContext context) {
     final provider = context.watch<TextfieldProviders>();
     if (provider.datetimepicked != true) {
-      return Text('Select date for drop-off first.');
+      return Text('Select date for drop-off first.',
+      style: 
+      TextStyle(
+        color: Color(0xFF373D66),
+        ),
+      );
     } else {
       final dateOfDropOff = provider.date;
 

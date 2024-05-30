@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 
 class OrgDetailsPage extends StatelessWidget {
   final String organization;
-  final Map<String, String>
-      organizationDetails; // New field for organization details
+  final Map<String, String> organizationDetails;
   final Map<String, dynamic> donorDetails;
 
   OrgDetailsPage(
@@ -14,43 +13,31 @@ class OrgDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
     String allDetails = organizationDetails.values.join('\n');
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        elevation: 0, // Removes the shadow
-        title: const Text(
-          'Organization Details',
-          style: TextStyle(
-            color:
-                Color.fromRGBO(55, 61, 102, 1), // Ensure the title is visible
-            fontFamily: 'Montserrat',
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        iconTheme: const IconThemeData(
-            color: Color.fromRGBO(
-                55, 61, 102, 1)), // Ensure back button is visible
+        elevation: 0,
+        iconTheme: IconThemeData(color: const Color.fromRGBO(55, 61, 102, 1)),
       ),
-      extendBodyBehindAppBar: true, // Extends the body behind the AppBar
+      extendBodyBehindAppBar: true,
       body: Stack(
         children: [
           Column(
             children: [
               Image.asset(
-                'images/$organization.jpg',
+                'images/organization.jpg',
                 fit: BoxFit.cover,
                 width: double.infinity,
-                height: 380, // Increased height to occupy more space
+                height: screenSize.height * 0.40, // Adjusted height
               ),
-              const SizedBox(
-                  height: 80), // Adjusted for spacing of the container
+              SizedBox(height: screenSize.height * 0.1),
             ],
           ),
-          Positioned(
-            top: 340, // Adjust the value to control overlap
+          Positioned.fill(
+            top: screenSize.height * 0.35, // Adjusted position
             left: 0,
             right: 0,
             child: Container(
@@ -66,7 +53,8 @@ class OrgDetailsPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 20),
+                    SizedBox(
+                        height: screenSize.height * 0.01), // Adjusted height
                     Text(
                       organization,
                       style: const TextStyle(
@@ -75,7 +63,8 @@ class OrgDetailsPage extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(
+                        height: screenSize.height * 0.04), // Adjusted height
                     Text(
                       allDetails,
                       style: const TextStyle(
@@ -90,16 +79,16 @@ class OrgDetailsPage extends StatelessWidget {
             ),
           ),
           Positioned(
-            bottom: 120,
-            left: 100,
-            right: 100,
+            bottom: screenSize.height * 0.2, // Adjusted position
+            left: screenSize.width * 0.18, // Adjusted position
+            right: screenSize.width * 0.18, // Adjusted position
             child: GestureDetector(
               onTap: () {
                 // Handle onTap
               },
               child: Container(
-                height: 175,
-                width: 100, // Adjusted width for better fit
+                height: screenSize.height * 0.25, // Adjusted height
+                width: screenSize.width * 0.3, // Adjusted width
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
@@ -116,24 +105,21 @@ class OrgDetailsPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      margin: const EdgeInsets.all(
-                          10), // Add margin to the container holding the image
+                      margin: EdgeInsets.all(10),
                       child: ClipRRect(
-                        borderRadius:
-                            BorderRadius.circular(15), // Adjusted borderRadius
+                        borderRadius: BorderRadius.circular(15),
                         child: Image.asset(
-                          'assets/images/donation_drive.jpg', // Replace with your donation image
-                          fit: BoxFit.cover, // Adjusted fit property
-                          width: double
-                              .infinity, // Ensures the image fills the width
+                          'assets/images/donation_drive.jpg',
+                          fit: BoxFit.contain,
+                          width: double.infinity,
                         ),
                       ),
                     ),
-                    const SizedBox(height: 1), // Adjusted spacing
-                    const Text(
+                    SizedBox(height: 1),
+                    Text(
                       'Donation Drive 1',
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 16,
                         fontFamily: "Montserrat",
                       ),
                     ),
@@ -142,11 +128,11 @@ class OrgDetailsPage extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 16), // Added space between image and button
+          SizedBox(height: screenSize.height * 0.04), // Adjusted height
           Positioned(
-            bottom: 20,
-            left: 25,
-            right: 25,
+            bottom: screenSize.height * 0.02, // Adjusted position
+            left: screenSize.width * 0.1, // Adjusted position
+            right: screenSize.width * 0.1, // Adjusted position
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -162,8 +148,9 @@ class OrgDetailsPage extends StatelessWidget {
                 textStyle: const TextStyle(
                   fontSize: 16,
                 ),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                padding: EdgeInsets.symmetric(
+                    horizontal: screenSize.width * 0.2,
+                    vertical: screenSize.height * 0.01), // Adjusted padding
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(40),
                 ),
@@ -171,9 +158,9 @@ class OrgDetailsPage extends StatelessWidget {
               child: const Text(
                 'Send Donation',
                 style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: "Montserrat",
-                ),
+                    color: Colors.white,
+                    fontFamily: "Montserrat",
+                    fontWeight: FontWeight.bold),
               ),
             ),
           ),
