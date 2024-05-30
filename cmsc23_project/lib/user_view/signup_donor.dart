@@ -627,6 +627,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                                     '$name signed up! Log in to experience ElbiDrive.'),
                               ),
                             );
+                            provider.resetSignUp();
                             Navigator.pop(context);
                             Navigator.pushNamed(context, "/");
                           }

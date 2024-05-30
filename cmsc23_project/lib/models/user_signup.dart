@@ -7,7 +7,7 @@ class User {
   String username;
   String email;
   List addresses;
-  String contactNo;
+  String contactNumber;
   String? id;
   ImageProvider? profilePic;
   String userType;
@@ -18,7 +18,7 @@ class User {
     required this.username,
     required this.email, 
     required this.addresses, 
-    required this.contactNo, 
+    required this.contactNumber, 
     required this.userType,
     this.profilePic
   });
@@ -30,7 +30,7 @@ class User {
       username: json['username'],
       email: json['email'],
       addresses: json['addresses'],
-      contactNo: json['contactNumber'],
+      contactNumber: json['contactNumber'],
       userType: json['userType'],
     );
   }
@@ -46,7 +46,7 @@ class User {
       'username': user.username,
       'email': user.email,
       'addresses': user.addresses,
-      'contactNo': user.contactNo,
+      'contactNumber': user.contactNumber,
       'userType': user.userType,
     };
   }

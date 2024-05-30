@@ -725,6 +725,7 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                                       'Awaiting sign up request approval...'),
                                 ),
                               );
+                              provider.resetSignUp();
                               Navigator.pop(context);
                               Navigator.pushNamed(context, "/");
                             }

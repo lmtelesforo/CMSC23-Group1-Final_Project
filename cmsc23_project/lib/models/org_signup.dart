@@ -7,7 +7,7 @@ class Org {
   String username;
   String email;
   List addresses;
-  String contactNo;
+  String contactNumber;
   List proofs;
   String? id;
   String userType;
@@ -35,7 +35,7 @@ class Org {
       username: json['username'],
       email: json['email'],
       addresses: json['addresses'],
-      contactNo: json['contactNo'],
+      contactNumber: json['contactNumber'],
       userType: json['userType'],
       proofs: json['proofs'],
       openForDonations: json['openForDonations'],
@@ -55,7 +55,7 @@ class Org {
       'username': org.username,
       'email': org.email,
       'addresses': org.addresses,
-      'contactNo': org.contactNo,
+      'contactNumber': org.contactNumber,
       'userType': org.userType,
       'proofs': org.proofs,
       'openForDonations': org.openForDonations,
