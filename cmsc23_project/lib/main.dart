@@ -1,15 +1,17 @@
 import 'package:cmsc23_project/admin_view/admin_dashboard.dart';
 import 'package:cmsc23_project/admin_view/approve_signups.dart';
 import 'package:cmsc23_project/admin_view/login_admin.dart';
+import 'package:cmsc23_project/admin_view/user_view_own_donations.dart';
 import 'package:cmsc23_project/admin_view/view_all_donations.dart';
 import 'package:cmsc23_project/admin_view/view_all_donors.dart';
 import 'package:cmsc23_project/admin_view/view_all_organizations.dart';
 import 'package:cmsc23_project/providers/current_org_provider.dart';
 import 'package:cmsc23_project/donor-view/donation_page/donor_homepage.dart';
 import 'package:cmsc23_project/providers/donation_providers.dart';
+import 'package:cmsc23_project/providers/donation_storage_provider.dart';
 import 'package:cmsc23_project/user_view/landing_page.dart';
 import 'package:cmsc23_project/user_view/login_donor.dart';
-import 'package:cmsc23_project/user_view/login_org.dart';
+import 'package:cmsc23_project/user_view/google_signin.dart';
 import 'package:cmsc23_project/user_view/signup_donor.dart';
 import 'package:cmsc23_project/user_view/signup_org.dart';
 import 'package:cmsc23_project/org-view/org_view.dart';
@@ -39,6 +41,9 @@ Future<void> main() async {
           create: (context) => DonationProvider(),
         ),
         ChangeNotifierProvider(create: (context) => CurrentOrgProvider())
+        ChangeNotifierProvider(
+          create: (context) => DonationStorageProvider(),
+        ),
       ],
       child: const RootWidget(),
     ),
@@ -66,7 +71,7 @@ class RootWidget extends StatelessWidget {
       routes: {
         "/": (context) => const LandingPage(),
         "/loginDonor": (context) => const LogInDonorPage(),
-        "/loginOrg": (context) => const LogInOrgPage(),
+        "/googleSignIn": (context) => const GoogleSignIn(),
         "/loginAdmin": (context) => const LogInAdminPage(),
         "/signupDonor": (context) => const SignUpDonorPage(),
         "/signupOrg": (context) => const SignUpOrgPage(),

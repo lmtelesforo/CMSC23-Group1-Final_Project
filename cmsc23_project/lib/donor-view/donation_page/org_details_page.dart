@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 class OrgDetailsPage extends StatelessWidget {
   final String organization;
   final Map<String, String> organizationDetails; // New field for organization details
-  
-  const OrgDetailsPage({super.key, required this.organization, required this.organizationDetails});
+  final Map<String, dynamic> donorDetails;
+
+  const OrgDetailsPage({super.key, required this.organization, required this.organizationDetails, required this.donorDetails});
 
   @override
   Widget build(BuildContext context) {
@@ -139,7 +140,7 @@ class OrgDetailsPage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => DonorPage(organization: organization)),
+                  MaterialPageRoute(builder: (context) => DonorPage(organization: organization, donorDetails: donorDetails)),
                 );
               },
               style: ElevatedButton.styleFrom(

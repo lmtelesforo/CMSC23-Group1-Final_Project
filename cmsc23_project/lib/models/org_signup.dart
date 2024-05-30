@@ -3,7 +3,6 @@ import 'dart:convert';
 class Org {
   String name;
   String username;
-  String password;
   String email;
   List addresses;
   String contactNumber;
@@ -15,7 +14,6 @@ class Org {
     this.id, 
     required this.name, 
     required this.username,
-    required this.password,
     required this.email, 
     required this.addresses, 
     required this.contactNumber, 
@@ -27,7 +25,6 @@ class Org {
     return Org(
       name: json['name'],
       username: json['username'],
-      password: json['password'],
       email: json['email'],
       addresses: json['addresses'],
       contactNumber: json['contactNumber'],
@@ -45,7 +42,6 @@ class Org {
     return {
       'name': org.name,
       'username': org.username,
-      'password': org.password,
       'email': org.email,
       'addresses': org.addresses,
       'contactNumber': org.contactNumber,

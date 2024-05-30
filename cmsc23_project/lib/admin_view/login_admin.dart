@@ -124,7 +124,7 @@ class _LogInAdminPageState extends State<LogInAdminPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 4),
+                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.145, bottom: 4),
                           child: const Text(
                             "Username",
                             style: TextStyle(
@@ -188,7 +188,7 @@ class _LogInAdminPageState extends State<LogInAdminPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.133, bottom: 4),
+                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.145, bottom: 4),
                           child: const Text(
                             "Password",
                             style: TextStyle(

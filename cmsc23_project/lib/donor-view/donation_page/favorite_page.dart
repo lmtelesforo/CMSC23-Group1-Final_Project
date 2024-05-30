@@ -6,8 +6,11 @@ import 'donor_page.dart';
 class FavoritePage extends StatelessWidget {
   const FavoritePage({super.key});
 
+   
   @override
   Widget build(BuildContext context) {
+    final Map<String, dynamic> donorDetails = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -51,7 +54,7 @@ class FavoritePage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => DonorPage(organization: org),
+                      builder: (context) => DonorPage(organization: org, donorDetails: donorDetails),
                     ),
                   );
                 },

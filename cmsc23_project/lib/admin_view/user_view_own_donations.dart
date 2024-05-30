@@ -6,16 +6,26 @@ import 'package:provider/provider.dart';
 
 import '../models/indiv_donation.dart';
 import '../providers/textfield_providers.dart';
+import 'indiv_view_user_donations.dart';
 
-class AdminViewAllDonations extends StatefulWidget {
-  const AdminViewAllDonations({super.key});
+class UserViewAllDonations extends StatefulWidget {
+  final Map<String, dynamic> donorDetails;
+  const UserViewAllDonations({super.key, required this.donorDetails});
 
   @override
-  State<AdminViewAllDonations> createState() => _AdminViewAllDonationsState();
+  State<UserViewAllDonations> createState() => _AdminViewAllDonationsState();
 }
 
-class _AdminViewAllDonationsState extends State<AdminViewAllDonations> {
+class _AdminViewAllDonationsState extends State<UserViewAllDonations> {
   final _formKey = GlobalKey<FormState>(); 
+  late Map<String, dynamic> donorDetails;
+  late Donations donation;
+  
+  @override
+  void initState() {
+    super.initState();
+    donorDetails = widget.donorDetails;
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -63,7 +73,7 @@ class _AdminViewAllDonationsState extends State<AdminViewAllDonations> {
               child: TextButton.icon(
                 onPressed: () {
                   Navigator.pop(context);
-                  Navigator.pushNamed(context, "/adminDashboard");
+                  Navigator.pushNamed(context, "/donorHomepage", arguments: donorDetails);
                 },
                 icon: Image.asset(
                   'lib/user_view/assets/back.png', 
@@ -132,7 +142,10 @@ class _AdminViewAllDonationsState extends State<AdminViewAllDonations> {
                               ); // display loading circle until it succeeds
                             } 
                           
-                          List<DocumentSnapshot> donationDetails = snapshot.data?.docs ?? [];
+                          List<DocumentSnapshot> donationDetails = (snapshot.data as QuerySnapshot)
+                            .docs
+                            .where((donation) => (donation.data() as Map<String, dynamic>)['email'] == donorDetails['email']) 
+                            .toList();
 
                           if (donationDetails.isEmpty) { // if no donationDetails, display message
                             return const Center(
@@ -186,7 +199,7 @@ class _AdminViewAllDonationsState extends State<AdminViewAllDonations> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => IndivViewAllDonations(donationDetails: donationDetails[index]),
+                                          builder: (context) => UserIndivViewDonation(donationDetails: donationDetails[index], donorDetails: donorDetails),
                                         ),
                                       );
                                     },
