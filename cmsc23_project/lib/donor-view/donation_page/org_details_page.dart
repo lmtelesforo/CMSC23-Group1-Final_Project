@@ -1,171 +1,167 @@
-import 'package:cmsc23_project/donor-view/donation_page/donor_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class OrgDetailsPage extends StatelessWidget {
-  final String organization;
-  final Map<String, String> organizationDetails;
-  final Map<String, dynamic> donorDetails;
+class OrgDetailsPageWidget extends StatefulWidget {
+  final String orgName;
+  final String orgUsername;
 
-  OrgDetailsPage(
-      {required this.organization,
-      required this.organizationDetails,
-      required this.donorDetails});
+  OrgDetailsPageWidget({
+    required this.orgName,
+    required this.orgUsername,
+  });
+
+  @override
+  _OrgDetailsPageWidgetState createState() => _OrgDetailsPageWidgetState();
+}
+
+class _OrgDetailsPageWidgetState extends State<OrgDetailsPageWidget> {
+  Org? orgDetails;
+  List<DonationDrive> ongoingDrives = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchOrgDetails(widget.orgUsername);
+    fetchOngoingDonationDrives(widget.orgUsername);
+  }
+
+  Future<void> fetchOrgDetails(String orgUsername) async {
+    try {
+      final QuerySnapshot snapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .where('username', isEqualTo: orgUsername)
+          .where('userType', isEqualTo: 'organization')
+          .limit(1)
+          .get();
+
+      if (snapshot.docs.isNotEmpty) {
+        setState(() {
+          orgDetails = Org.fromSnapshot(snapshot.docs.first);
+        });
+      }
+    } catch (e) {
+      print('Error fetching organization details: $e');
+      // Handle error
+    }
+  }
+
+  Future<void> fetchOngoingDonationDrives(String orgUsername) async {
+    try {
+      final QuerySnapshot snapshot = await FirebaseFirestore.instance
+          .collection('drives')
+          .where('orgUsername', isEqualTo: orgUsername)
+          .where('isOngoing', isEqualTo: true)
+          .get();
+
+      setState(() {
+        ongoingDrives =
+            snapshot.docs.map((doc) => DonationDrive.fromSnapshot(doc)).toList();
+      });
+    } catch (e) {
+      print('Error fetching ongoing donation drives: $e');
+      // Handle error
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    final Size screenSize = MediaQuery.of(context).size;
-    String allDetails = organizationDetails.values.join('\n');
-
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        iconTheme: IconThemeData(color: const Color.fromRGBO(55, 61, 102, 1)),
+      appBar: orgDetails != null ? AppBar(
+        title: Text(orgDetails!.name),
+      ) : null, // Don't show AppBar if orgDetails is not initialized
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (orgDetails != null) 
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'About:',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    orgDetails!.about ?? 'No information available',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    'Ongoing Donation Drivers:',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  if (ongoingDrives.isNotEmpty)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: ongoingDrives
+                          .map((drive) => Text('- ${drive.name}', style: TextStyle(fontSize: 16)))
+                          .toList(),
+                    )
+                  else
+                    Text(
+                      'No ongoing donation drives found.',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                ],
+              ),
+          ],
+        ),
       ),
-      extendBodyBehindAppBar: true,
-      body: Stack(
-        children: [
-          Column(
-            children: [
-              Image.asset(
-                'images/organization.jpg',
-                fit: BoxFit.cover,
-                width: double.infinity,
-                height: screenSize.height * 0.40, // Adjusted height
-              ),
-              SizedBox(height: screenSize.height * 0.1),
-            ],
-          ),
-          Positioned.fill(
-            top: screenSize.height * 0.35,
-            left: 0,
-            right: 0,
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30),
-                  topRight: Radius.circular(30),
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(25.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                        height: screenSize.height * 0.01), 
-                    Text(
-                      organization,
-                      style: const TextStyle(
-                        fontFamily: "Montserrat",
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(
-                        height: screenSize.height * 0.04), 
-                    Text(
-                      allDetails,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontFamily: "Montserrat",
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: screenSize.height * 0.2, // Adjusted position
-            left: screenSize.width * 0.18, // Adjusted position
-            right: screenSize.width * 0.18, // Adjusted position
-            child: GestureDetector(
-              onTap: () {
-                // Handle onTap
-              },
-              child: Container(
-                height: screenSize.height * 0.25, // Adjusted height
-                width: screenSize.width * 0.3, // Adjusted width
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 2,
-                      blurRadius: 7,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.all(10),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: Image.asset(
-                          'assets/images/donation_drive.jpg',
-                          fit: BoxFit.contain,
-                          width: double.infinity,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 1),
-                    Text(
-                      'Donation Drive 1',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: "Montserrat",
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: screenSize.height * 0.04), // Adjusted height
-          Positioned(
-            bottom: screenSize.height * 0.02, // Adjusted position
-            left: screenSize.width * 0.1, // Adjusted position
-            right: screenSize.width * 0.1, // Adjusted position
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => DonorPage(
-                          organization: organization,
-                          donorDetails: donorDetails)),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromRGBO(252, 190, 79, 1),
-                textStyle: const TextStyle(
-                  fontSize: 16,
-                ),
-                padding: EdgeInsets.symmetric(
-                    horizontal: screenSize.width * 0.2,
-                    vertical: screenSize.height * 0.01), // Adjusted padding
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(40),
-                ),
-              ),
-              child: const Text(
-                'Send Donation',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: "Montserrat",
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
-        ],
-      ),
+    );
+  }
+}
+
+class Org {
+  final String name;
+  final String? about;
+
+  Org({
+    required this.name,
+    this.about,
+  });
+
+  factory Org.fromSnapshot(DocumentSnapshot doc) {
+    final data = doc.data() as Map<String, dynamic>;
+    return Org(
+      name: data['name'],
+      about: data['about'],
+    );
+  }
+}
+
+class DonationDrive {
+  final String orgUsername;
+  final String name;
+  final String description;
+  final bool isOngoing;
+  final bool isFavorite;
+
+  DonationDrive({
+    required this.orgUsername,
+    required this.name,
+    required this.description,
+    required this.isOngoing,
+    required this.isFavorite,
+  });
+
+  factory DonationDrive.fromSnapshot(DocumentSnapshot doc) {
+    final data = doc.data() as Map<String, dynamic>;
+    return DonationDrive(
+      orgUsername: data['orgUsername'],
+      name: data['name'],
+      description: data['description'],
+      isOngoing: data['isOngoing'],
+      isFavorite: data['isFavorite'],
     );
   }
 }

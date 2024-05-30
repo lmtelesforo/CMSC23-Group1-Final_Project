@@ -44,7 +44,7 @@ dependencies:
   mobile_scanner: ^5.1.1
   qr_flutter: ^4.1.0
   omni_datetime_picker: ^1.1.0
-  screenshot: ^3.0.0
+  screenshot: 2.5.0
   google_sign_in: ^6.2.1
   firebase_storage: ^11.7.6
 
