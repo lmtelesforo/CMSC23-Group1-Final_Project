@@ -30,7 +30,8 @@ class _DonorHomepageState extends State<DonorHomepage> {
   Future<void> fetchOrganizations() async {
     try {
       final orgs = await userInfosProvider.getOrgs();
-      final orgNames = orgs.map((org) => org['name'] as String).toList();
+      final filteredOrgs = orgs.where((org) => org['openForDonations'] == true).toList();
+      final orgNames = filteredOrgs.map((org) => org['name'] as String).toList();
       setState(() {
         organizations = orgNames;
       });
@@ -38,6 +39,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
       print('Error fetching organizations: $error');
     }
   }
+
 
   void filterOrganizations(String query) {
     setState(() {
@@ -311,11 +313,11 @@ class _DonorHomepageState extends State<DonorHomepage> {
                         for (String org in organizations)
                         GestureDetector(
                           onTap: () {
-                            // Retrieve the organization details from Firestore to get the username
                             FirebaseFirestore.instance
                                 .collection('users')
                                 .where('name', isEqualTo: org)
                                 .where('userType', isEqualTo: 'organization')
+                                .where('openForDonations', isEqualTo: true) // Include condition for openForDonations
                                 .limit(1)
                                 .get()
                                 .then((snapshot) {
