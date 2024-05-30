@@ -11,7 +11,11 @@ class CurrentOrgProvider with ChangeNotifier {
   final FirebaseDonationStorageAPI _firebaseDonationStorageAPI =
       FirebaseDonationStorageAPI();
 
-  final String orgUsername = 'secant';
+  late String orgUsername;
+
+  void setOrg(String username) {
+    orgUsername = username;
+  }
 
   Stream<QuerySnapshot> get currentOrg =>
       _firebaseOrgAPI.getOrgs(username: orgUsername);

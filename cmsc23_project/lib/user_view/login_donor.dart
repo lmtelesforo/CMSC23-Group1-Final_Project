@@ -1,5 +1,6 @@
 import 'package:cmsc23_project/api/firebase_users_api.dart';
 import 'package:cmsc23_project/providers/auth_provider.dart';
+import 'package:cmsc23_project/providers/current_org_provider.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -368,12 +369,14 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
 
                                   // loop through orgsData and check if user email has match in all orgs
                                   String? orgName;
+                                  String? orgUsername;
                                   bool foundOrg = false;
                                   for (var orgData in orgsData) {
                                     var orgEmail = orgData['email'];
                                     if (orgEmail == email) {
                                       foundOrg = true;
                                       orgName = orgData['name'];
+                                      orgUsername = orgData['username'];
                                       break;
                                     }
                                   }
@@ -381,8 +384,10 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                                   if (foundOrg == true) {
                                     provider.resetLogIn();
                                     Navigator.pop(context);
-                                    Navigator.pushNamed(
-                                        context, "/org");
+                                    context
+                                        .read<CurrentOrgProvider>()
+                                        .setOrg(orgUsername!);
+                                    Navigator.pushNamed(context, "/org");
 
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
