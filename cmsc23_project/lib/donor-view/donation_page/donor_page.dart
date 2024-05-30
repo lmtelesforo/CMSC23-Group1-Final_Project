@@ -61,23 +61,23 @@ class _DonorPageState extends State<DonorPage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: false,
-        iconTheme: IconThemeData(color: Colors.white, size: 30),
+        iconTheme: const IconThemeData(color: Colors.white, size: 30),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Expanded(
+            const Expanded(
               child: Text(
                 "Donation Details",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: "Montserrat",
-                  color: const Color.fromRGBO(55, 61, 102, 1),
+                  color: Color.fromRGBO(55, 61, 102, 1),
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
                 ),
               ),
             ),
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
             SizedBox(
               width: 40,
               height: 40,
@@ -150,8 +150,10 @@ class _DonorPageState extends State<DonorPage> {
                             itemName: item.itemName,
                             isChecked: item.isChecked,
                             onChanged: (isChecked) {
-                              donationProvider.toggleItemCheck(item, isChecked!);
-                              provider.category = donationProvider.getCheckedItems();
+                              donationProvider.toggleItemCheck(
+                                  item, isChecked!);
+                              provider.category =
+                                  donationProvider.getCheckedItems();
                               print(provider.category);
                             },
                           );
@@ -166,7 +168,8 @@ class _DonorPageState extends State<DonorPage> {
                         controller: provider.controller4,
                         onChanged: provider.updateWeight,
                         decoration: InputDecoration(
-                          labelText: 'Weight of items (indicate if in kg or lbs)',
+                          labelText:
+                              'Weight of items (indicate if in kg or lbs)',
                         ),
                         validator: (val) {
                           if (val!.isEmpty) {
@@ -202,15 +205,21 @@ class _DonorPageState extends State<DonorPage> {
                       ImageUrlDisplay(imageUrls: imageUrls),
                       SizedBox(height: 8),
                       DateTimePicker(),
-                      provider.datetimepicked == true ? showDateTimePicked(provider.dateTime) : const SizedBox.shrink(),
+                      provider.datetimepicked == true
+                          ? showDateTimePicked(provider.dateTime)
+                          : const SizedBox.shrink(),
                       provider.shippingOpt == 'Pick up'
                           ? forPickUpInputs(context)
                           : const SizedBox.shrink(),
                       provider.shippingOpt == 'Drop-off'
                           ? ifDropOff(context)
                           : const SizedBox.shrink(),
-                      generate ? qrCodeImage(qrcodeinput) : const SizedBox.shrink(),
-                      generate ? submitDropOff(context) : const SizedBox.shrink(),
+                      generate
+                          ? qrCodeImage(qrcodeinput)
+                          : const SizedBox.shrink(),
+                      generate
+                          ? submitDropOff(context)
+                          : const SizedBox.shrink(),
                     ],
                   ),
                 ),
@@ -308,13 +317,17 @@ class _DonorPageState extends State<DonorPage> {
               bool multipleAddresses = addressesUnsplit.contains(';');
 
               if (multipleAddresses == true) {
-                addressesList =
-                    addressesUnsplit.split(';').map((address) => address.trim()).toList();
+                addressesList = addressesUnsplit
+                    .split(';')
+                    .map((address) => address.trim())
+                    .toList();
               } else {
                 addressesList = [addressesUnsplit];
               }
 
-              final donationService = Provider.of<DonationStorageProvider>(context, listen: false).firebaseService;
+              final donationService =
+                  Provider.of<DonationStorageProvider>(context, listen: false)
+                      .firebaseService;
 
               if (provider.category.length == 0) {
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -324,13 +337,23 @@ class _DonorPageState extends State<DonorPage> {
                 );
               } else {
                 final donation = DonationStorageProvider().donationDataPickUp(
-                    donorName, donorEmail, provider.date, provider.time, addressesList,
-                    provider.contactNumber, status, provider.category, provider.shippingOpt, weight, imageUrls);
+                    donorName,
+                    donorEmail,
+                    provider.date,
+                    provider.time,
+                    addressesList,
+                    provider.contactNumber,
+                    status,
+                    provider.category,
+                    provider.shippingOpt,
+                    weight,
+                    imageUrls);
 
                 donationService.addDonation(donation); // add to firebase
 
                 Navigator.pop(context);
-                Navigator.pushNamed(context, "/donorHomepage", arguments: donorDetails);
+                Navigator.pushNamed(context, "/donorHomepage",
+                    arguments: donorDetails);
 
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
@@ -339,7 +362,8 @@ class _DonorPageState extends State<DonorPage> {
                   ),
                 );
               }
-            };
+            }
+            ;
           },
           child: Text('Send Donation'),
         ),
@@ -372,7 +396,8 @@ class _DonorPageState extends State<DonorPage> {
               final status = 'Pending';
 
               final donationService =
-                  Provider.of<DonationStorageProvider>(context, listen: false).firebaseService;
+                  Provider.of<DonationStorageProvider>(context, listen: false)
+                      .firebaseService;
 
               if (provider.category.length == 0) {
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -382,13 +407,22 @@ class _DonorPageState extends State<DonorPage> {
                 );
               } else {
                 final donation = DonationStorageProvider().donationDataDropOff(
-                    donorName, donorEmail, provider.date, provider.time, status,
-                    provider.category, provider.shippingOpt, provider.qrcodeinput, weight, imageUrls);
+                    donorName,
+                    donorEmail,
+                    provider.date,
+                    provider.time,
+                    status,
+                    provider.category,
+                    provider.shippingOpt,
+                    provider.qrcodeinput,
+                    weight,
+                    imageUrls);
 
                 donationService.addDonation(donation); // add to firebase
 
                 Navigator.pop(context);
-                Navigator.pushNamed(context, "/donorHomepage", arguments: donorDetails);
+                Navigator.pushNamed(context, "/donorHomepage",
+                    arguments: donorDetails);
 
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
@@ -493,4 +527,3 @@ class _DonorPageState extends State<DonorPage> {
     }
   }
 }
-

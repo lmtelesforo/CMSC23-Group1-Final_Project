@@ -13,7 +13,7 @@ class FirebaseOrgAPI {
       about:
           'The Philippine Red Cross is a humanitarian organization that provides services to uplift the lives of the underprivileged in the country.',
       openForDonations: true,
-      favorites: [],
+      favorites: [1],
     ),
     Organization(
       name: 'UNICEF',
@@ -30,4 +30,10 @@ class FirebaseOrgAPI {
   ];
 
   List<Organization> get orgs => _orgs;
+
+  void update(Organization org) {
+    final index =
+        _orgs.indexWhere((element) => element.username == org.username);
+    _orgs[index] = org;
+  }
 }

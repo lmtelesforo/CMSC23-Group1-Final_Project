@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/org_signup.dart';
-import '../models/user_signup.dart';
 import '../providers/firebase_provider.dart';
 import '../providers/textfield_providers.dart';
 
 class OrgRequestPage extends StatefulWidget {
   final DocumentSnapshot orgDetails;
 
-  const OrgRequestPage({Key? key, required this.orgDetails}) : super(key: key);
+  const OrgRequestPage({super.key, required this.orgDetails});
 
   @override
   State<OrgRequestPage> createState() => _OrgRequestPageState();
@@ -140,7 +139,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                               Expanded(
                                 child: Text(
                                   org.name,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 16,
                                     fontFamily: 'Poppins-Reg',
                                     color: Color(0xFF373D66),
@@ -164,7 +163,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                               Expanded(
                                 child: Text(
                                   org.username,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 16,
                                     fontFamily: 'Poppins-Reg',
                                     color: Color(0xFF373D66),
@@ -191,7 +190,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                                   Expanded(
                                     child: Text(
                                       org.addresses.first,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 16,
                                         fontFamily: 'Poppins-Reg',
                                         color: Color(0xFF373D66),
@@ -220,7 +219,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                               Expanded(
                                 child: Text(
                                   org.contactNumber,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 16,
                                     fontFamily: 'Poppins-Reg',
                                     color: Color(0xFF373D66),
@@ -246,8 +245,8 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                                   const SizedBox(width: 5),
                                   Expanded(
                                     child: Text(
-                                      org.proofs?.first,
-                                      style: TextStyle(
+                                      org.proofs.first,
+                                      style: const TextStyle(
                                         fontSize: 16,
                                         fontFamily: 'Poppins-Reg',
                                         color: Color(0xFF373D66),
@@ -256,7 +255,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                                   ),
                                 ],
                               ),
-                              (org.proofs!.length > 1)
+                              (org.proofs.length > 1)
                               ? newLine() // if true
                               : const SizedBox.shrink(), // if false
                             ],
@@ -374,7 +373,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
             padding: const EdgeInsets.only(left: 106), 
             child: Text(
               org.addresses[index + 1],
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 fontFamily: 'Poppins-Reg',
                 color: Color(0xFF373D66),
@@ -390,13 +389,13 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: List.generate(
-        org.proofs!.length - 1,
+        org.proofs.length - 1,
         (index) {
           return Padding(
             padding: const EdgeInsets.only(left: 70), 
             child: Text(
-              org.proofs![index + 1],
-              style: TextStyle(
+              org.proofs[index + 1],
+              style: const TextStyle(
                 fontSize: 16,
                 fontFamily: 'Poppins-Reg',
                 color: Color(0xFF373D66),
