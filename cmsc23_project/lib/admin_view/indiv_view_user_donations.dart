@@ -13,20 +13,23 @@ class UserIndivViewDonation extends StatefulWidget {
   final DocumentSnapshot donationDetails;
   final Map<String, dynamic> donorDetails;
 
-  const UserIndivViewDonation({Key? key, required this.donationDetails, required this.donorDetails}) : super(key: key);
+  const UserIndivViewDonation(
+      {Key? key, required this.donationDetails, required this.donorDetails})
+      : super(key: key);
 
   @override
   State<UserIndivViewDonation> createState() => _IndivViewAllDonationsState();
 }
 
 class _IndivViewAllDonationsState extends State<UserIndivViewDonation> {
-  late Donations donation;
+  late Donation donation;
   late Map<String, dynamic> donorDetails;
 
   @override
   void initState() {
     super.initState();
-    donation = Donations.fromJson(widget.donationDetails.data() as Map<String, dynamic>);
+    donation = Donation.fromJson(
+        widget.donationDetails.data() as Map<String, dynamic>);
     donation.id = widget.donationDetails.id;
     donorDetails = widget.donorDetails;
   }
@@ -39,7 +42,7 @@ class _IndivViewAllDonationsState extends State<UserIndivViewDonation> {
     return Scaffold(
       body: Stack(
         children: [
-          Positioned (
+          Positioned(
             top: 0,
             left: 0,
             right: 0,
@@ -48,14 +51,15 @@ class _IndivViewAllDonationsState extends State<UserIndivViewDonation> {
               height: MediaQuery.of(context).size.height,
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('lib/user_view/assets/cmsc23_background.png'),
+                  image:
+                      AssetImage('lib/user_view/assets/cmsc23_background.png'),
                   fit: BoxFit.cover,
                 ),
               ),
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.045, 
+            top: MediaQuery.of(context).size.height * 0.045,
             left: 0,
             right: 0,
             child: Container(
@@ -76,15 +80,15 @@ class _IndivViewAllDonationsState extends State<UserIndivViewDonation> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => UserViewAllDonations(
-                      donorDetails: donorDetails),
+                    builder: (context) =>
+                        UserViewAllDonations(donorDetails: donorDetails),
                   ),
                 );
               },
               icon: Image.asset(
-                'lib/user_view/assets/back.png', 
-                width: 34, 
-                height: 34, 
+                'lib/user_view/assets/back.png',
+                width: 34,
+                height: 34,
               ),
               label: const Text(
                 'Back',
@@ -97,13 +101,13 @@ class _IndivViewAllDonationsState extends State<UserIndivViewDonation> {
               style: TextButton.styleFrom(
                 foregroundColor: const Color(0xFF373D66),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(32), 
+                  borderRadius: BorderRadius.circular(32),
                 ),
               ),
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.14, 
+            top: MediaQuery.of(context).size.height * 0.14,
             left: 0,
             right: 0,
             child: const Padding(
@@ -124,15 +128,15 @@ class _IndivViewAllDonationsState extends State<UserIndivViewDonation> {
             left: 0,
             right: 0,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30), 
+              padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Container(
                 decoration: BoxDecoration(
                   color: const Color(0xFFFFFFFF),
-                  borderRadius: BorderRadius.circular(15), 
+                  borderRadius: BorderRadius.circular(15),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(10), 
-                  child: Expanded (
+                  padding: const EdgeInsets.all(10),
+                  child: Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -160,8 +164,8 @@ class _IndivViewAllDonationsState extends State<UserIndivViewDonation> {
                           ],
                         ),
                         (donation.category.length > 1)
-                        ? newCategoryLine() // if true
-                        : const SizedBox.shrink(), // if false
+                            ? newCategoryLine() // if true
+                            : const SizedBox.shrink(), // if false
                         const SizedBox(height: 7),
                         Row(
                           children: [
@@ -281,10 +285,16 @@ class _IndivViewAllDonationsState extends State<UserIndivViewDonation> {
                           ],
                         ),
                         const SizedBox(height: 7),
-                        donation.shipping == 'Pick up' ? showAddressandContact() : const SizedBox.shrink(),
-                        donation.shipping == 'Drop-off' ? showGeneratedQR() : const SizedBox.shrink(),
+                        donation.shipping == 'Pick up'
+                            ? showAddressandContact()
+                            : const SizedBox.shrink(),
+                        donation.shipping == 'Drop-off'
+                            ? showGeneratedQR()
+                            : const SizedBox.shrink(),
                         SizedBox(height: 20),
-                        donation.status != 'Cancelled' ? showCancelButton() : const SizedBox.shrink(),
+                        donation.status != 'Cancelled'
+                            ? showCancelButton()
+                            : const SizedBox.shrink(),
                       ],
                     ),
                   ),
@@ -301,9 +311,13 @@ class _IndivViewAllDonationsState extends State<UserIndivViewDonation> {
     return Center(
       child: ElevatedButton.icon(
         onPressed: () {
-          final donationService = Provider.of<DonationStorageProvider>(context, listen: false).firebaseService;
-          donationService.updateDonationStatus(donation.id!, 'Cancelled'); // only delete request
-          String newQRCode = 'Cancelled' + "|" + donation.date + "|" + donation.email;
+          final donationService =
+              Provider.of<DonationStorageProvider>(context, listen: false)
+                  .firebaseService;
+          donationService.updateDonationStatus(
+              donation.id!, 'Cancelled'); // only delete request
+          String newQRCode =
+              'Cancelled' + "|" + donation.date + "|" + donation.email;
           donationService.updateQRDetails(donation.id!, newQRCode);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -314,8 +328,8 @@ class _IndivViewAllDonationsState extends State<UserIndivViewDonation> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => UserViewAllDonations(
-                donorDetails: donorDetails),
+              builder: (context) =>
+                  UserViewAllDonations(donorDetails: donorDetails),
             ),
           );
         },
@@ -373,8 +387,8 @@ class _IndivViewAllDonationsState extends State<UserIndivViewDonation> {
               ],
             ),
             (donation.addresses!.length > 1)
-            ? newAddressLine() // if true
-            : const SizedBox.shrink(), // if false
+                ? newAddressLine() // if true
+                : const SizedBox.shrink(), // if false
           ],
         ),
         const SizedBox(height: 7),
@@ -412,7 +426,7 @@ class _IndivViewAllDonationsState extends State<UserIndivViewDonation> {
         donation.category.length - 1,
         (index) {
           return Padding(
-            padding: const EdgeInsets.only(left: 120), 
+            padding: const EdgeInsets.only(left: 120),
             child: Text(
               donation.category[index + 1],
               style: const TextStyle(
@@ -426,7 +440,7 @@ class _IndivViewAllDonationsState extends State<UserIndivViewDonation> {
       ),
     );
   }
-  
+
   Widget newAddressLine() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -434,7 +448,7 @@ class _IndivViewAllDonationsState extends State<UserIndivViewDonation> {
         donation.addresses!.length - 1,
         (index) {
           return Padding(
-            padding: const EdgeInsets.only(left: 106), 
+            padding: const EdgeInsets.only(left: 106),
             child: Text(
               donation.addresses![index + 1],
               style: const TextStyle(
@@ -458,24 +472,22 @@ class _IndivViewAllDonationsState extends State<UserIndivViewDonation> {
         borderRadius: BorderRadius.circular(8.0),
         color: Colors.white,
       ),
-      child: Column ( 
-        children: [
-          const Text(
-            'QR Code (contains Status and Date Time of Order):',
-            style: TextStyle(
-              fontSize: 16,
-              fontFamily: 'Poppins-Bold',
-              color: Color(0xFF373D66),
-            ),
-            textAlign: TextAlign.center,
+      child: Column(children: [
+        const Text(
+          'QR Code (contains Status and Date Time of Order):',
+          style: TextStyle(
+            fontSize: 16,
+            fontFamily: 'Poppins-Bold',
+            color: Color(0xFF373D66),
           ),
-          QrImageView(
-            data: donation.qrcode!,
-            version: QrVersions.auto,
-            size: 200.0,
-          ),
-        ] 
-      ),
+          textAlign: TextAlign.center,
+        ),
+        QrImageView(
+          data: donation.qrcode!,
+          version: QrVersions.auto,
+          size: 200.0,
+        ),
+      ]),
     );
   }
 }

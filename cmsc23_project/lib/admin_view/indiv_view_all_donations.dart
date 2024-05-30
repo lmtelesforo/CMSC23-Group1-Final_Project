@@ -10,19 +10,21 @@ import '../providers/textfield_providers.dart';
 class IndivViewAllDonations extends StatefulWidget {
   final DocumentSnapshot donationDetails;
 
-  const IndivViewAllDonations({Key? key, required this.donationDetails}) : super(key: key);
+  const IndivViewAllDonations({Key? key, required this.donationDetails})
+      : super(key: key);
 
   @override
   State<IndivViewAllDonations> createState() => _IndivViewAllDonationsState();
 }
 
 class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
-  late Donations donation;
+  late Donation donation;
 
   @override
   void initState() {
     super.initState();
-    donation = Donations.fromJson(widget.donationDetails.data() as Map<String, dynamic>);
+    donation = Donation.fromJson(
+        widget.donationDetails.data() as Map<String, dynamic>);
     donation.id = widget.donationDetails.id;
   }
 
@@ -34,7 +36,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
     return Scaffold(
       body: Stack(
         children: [
-          Positioned (
+          Positioned(
             top: 0,
             left: 0,
             right: 0,
@@ -43,14 +45,15 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
               height: MediaQuery.of(context).size.height,
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('lib/user_view/assets/cmsc23_background.png'),
+                  image:
+                      AssetImage('lib/user_view/assets/cmsc23_background.png'),
                   fit: BoxFit.cover,
                 ),
               ),
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.045, 
+            top: MediaQuery.of(context).size.height * 0.045,
             left: 0,
             right: 0,
             child: Container(
@@ -70,9 +73,9 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                 Navigator.pushNamed(context, "/viewAllDonations");
               },
               icon: Image.asset(
-                'lib/user_view/assets/back.png', 
-                width: 34, 
-                height: 34, 
+                'lib/user_view/assets/back.png',
+                width: 34,
+                height: 34,
               ),
               label: const Text(
                 'Back',
@@ -85,13 +88,13 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
               style: TextButton.styleFrom(
                 foregroundColor: const Color(0xFF373D66),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(32), 
+                  borderRadius: BorderRadius.circular(32),
                 ),
               ),
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.14, 
+            top: MediaQuery.of(context).size.height * 0.14,
             left: 0,
             right: 0,
             child: const Padding(
@@ -112,15 +115,15 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
             left: 0,
             right: 0,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30), 
+              padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Container(
                 decoration: BoxDecoration(
                   color: const Color(0xFFFFFFFF),
-                  borderRadius: BorderRadius.circular(15), 
+                  borderRadius: BorderRadius.circular(15),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(10), 
-                  child: Expanded (
+                  padding: const EdgeInsets.all(10),
+                  child: Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -148,8 +151,8 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                           ],
                         ),
                         (donation.category.length > 1)
-                        ? newCategoryLine() // if true
-                        : const SizedBox.shrink(), // if false
+                            ? newCategoryLine() // if true
+                            : const SizedBox.shrink(), // if false
                         const SizedBox(height: 7),
                         Row(
                           children: [
@@ -269,8 +272,12 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                           ],
                         ),
                         const SizedBox(height: 7),
-                        donation.shipping == 'Pick up' ? showAddressandContact() : const SizedBox.shrink(),
-                        donation.shipping == 'Drop-off' ? showGeneratedQR() : const SizedBox.shrink(),
+                        donation.shipping == 'Pick up'
+                            ? showAddressandContact()
+                            : const SizedBox.shrink(),
+                        donation.shipping == 'Drop-off'
+                            ? showGeneratedQR()
+                            : const SizedBox.shrink(),
                       ],
                     ),
                   ),
@@ -313,8 +320,8 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
               ],
             ),
             (donation.addresses!.length > 1)
-            ? newAddressLine() // if true
-            : const SizedBox.shrink(), // if false
+                ? newAddressLine() // if true
+                : const SizedBox.shrink(), // if false
           ],
         ),
         const SizedBox(height: 7),
@@ -352,7 +359,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
         donation.category.length - 1,
         (index) {
           return Padding(
-            padding: const EdgeInsets.only(left: 120), 
+            padding: const EdgeInsets.only(left: 120),
             child: Text(
               donation.category[index + 1],
               style: const TextStyle(
@@ -366,7 +373,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
       ),
     );
   }
-  
+
   Widget newAddressLine() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -374,7 +381,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
         donation.addresses!.length - 1,
         (index) {
           return Padding(
-            padding: const EdgeInsets.only(left: 106), 
+            padding: const EdgeInsets.only(left: 106),
             child: Text(
               donation.addresses![index + 1],
               style: const TextStyle(
@@ -398,24 +405,22 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
         borderRadius: BorderRadius.circular(8.0),
         color: Colors.white,
       ),
-      child: Column ( 
-        children: [
-          const Text(
-            'QR Code (contains Status and Date Time of Order):',
-            style: TextStyle(
-              fontSize: 16,
-              fontFamily: 'Poppins-Bold',
-              color: Color(0xFF373D66),
-            ),
-            textAlign: TextAlign.center,
+      child: Column(children: [
+        const Text(
+          'QR Code (contains Status and Date Time of Order):',
+          style: TextStyle(
+            fontSize: 16,
+            fontFamily: 'Poppins-Bold',
+            color: Color(0xFF373D66),
           ),
-          QrImageView(
-            data: donation.qrcode!,
-            version: QrVersions.auto,
-            size: 200.0,
-          ),
-        ] 
-      ),
+          textAlign: TextAlign.center,
+        ),
+        QrImageView(
+          data: donation.qrcode!,
+          version: QrVersions.auto,
+          size: 200.0,
+        ),
+      ]),
     );
   }
 }

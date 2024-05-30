@@ -1,26 +1,71 @@
-import 'package:cmsc23_project/org-view/base_elements/base_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cmsc23_project/models/donation_drive.dart';
+import 'package:cmsc23_project/org-view/base_elements/base_screen/base_screen.dart';
 import 'package:cmsc23_project/org-view/base_elements/org_view_styles.dart';
 import 'package:cmsc23_project/providers/current_org_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AddADrive extends StatelessWidget {
-  const AddADrive({super.key});
+class DriveForm extends StatefulWidget {
+  const DriveForm({super.key});
+
+  @override
+  State<DriveForm> createState() => _DriveFormState();
+}
+
+class _DriveFormState extends State<DriveForm> {
+  final formKey = GlobalKey<FormState>();
+  final nameController = TextEditingController();
+  final descController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final formKey = GlobalKey<FormState>();
-    final nameController = TextEditingController();
-    final descController = TextEditingController();
+    final String? id = ModalRoute.of(context)!.settings.arguments as String?;
 
-    return BaseScreen(
-      body: Column(
-        children: [
-          Fields(formKey, nameController, descController),
-          Submit(formKey, nameController, descController),
-        ],
-      ),
-    );
+    if (id != null) {
+      return StreamBuilder<DocumentSnapshot>(
+          stream: context.read<CurrentOrgProvider>().drive(id),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return const Text('An error occurred');
+            } else if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            }
+
+            DonationDrive? drive = snapshot.data!.data() == null
+                ? null
+                : DonationDrive.fromJson(
+                    snapshot.data!.data()! as Map<String, dynamic>);
+
+            nameController.text = drive?.name ?? '';
+            descController.text = drive?.description ?? '';
+
+            return BaseScreen(
+              body: Column(
+                children: [
+                  Fields(formKey, nameController, descController),
+                  Submit(formKey, nameController, descController, id: id),
+                ],
+              ),
+            );
+          });
+    } else {
+      return BaseScreen(
+        body: Column(
+          children: [
+            Fields(formKey, nameController, descController),
+            Submit(formKey, nameController, descController),
+          ],
+        ),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    descController.dispose();
+    super.dispose();
   }
 }
 
@@ -42,7 +87,7 @@ class Fields extends StatelessWidget {
           child: Form(
             key: _formKey,
             child: Column(
-              children: [_uploadImage, _enterName, _enterDesc],
+              children: [_enterName, _enterDesc],
             ),
           ),
         ),
@@ -50,22 +95,14 @@ class Fields extends StatelessWidget {
     );
   }
 
-  Widget get _uploadImage => Container(
-        height: 200,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: CustomColors.prompt,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: const Icon(Icons.add_a_photo, color: CustomColors.primary),
-      );
-
   Widget get _enterName => Container(
         padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
         child: TextFormField(
           controller: _nameController,
           style: CustomTextStyle.h1,
           textAlign: TextAlign.center,
+          minLines: 1,
+          maxLines: null,
           decoration: const InputDecoration(
             border: InputBorder.none,
             hintText: 'Enter name of drive',
@@ -86,6 +123,7 @@ class Fields extends StatelessWidget {
   Widget get _enterDesc => Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: TextFormField(
+          controller: _descController,
           style: CustomTextStyle.body,
           textAlign: TextAlign.center,
           minLines: 1,
@@ -112,8 +150,15 @@ class Submit extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final TextEditingController _nameController;
   final TextEditingController _descController;
-  const Submit(this.formKey, this._nameController, this._descController,
-      {super.key});
+  final String? id;
+
+  const Submit(
+    this.formKey,
+    this._nameController,
+    this._descController, {
+    this.id,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -134,10 +179,18 @@ class Submit extends StatelessWidget {
             formKey.currentState!.save();
           }
 
-          context.read<CurrentOrgProvider>().addDrive(
-                name: _nameController.text,
-                desc: _descController.text,
-              );
+          if (id == null) {
+            context.read<CurrentOrgProvider>().addDrive(
+                  _nameController.text,
+                  _descController.text,
+                );
+          } else {
+            context.read<CurrentOrgProvider>().editDrive(
+                  id!,
+                  newName: _nameController.text,
+                  description: _descController.text,
+                );
+          }
 
           Navigator.pop(context);
         },

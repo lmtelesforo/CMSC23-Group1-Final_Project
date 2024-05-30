@@ -1,14 +1,16 @@
-import 'package:cmsc23_project/models/donation.dart';
-import 'package:cmsc23_project/org-view/donations/donation_details.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cmsc23_project/models/donation_drive.dart';
+import 'package:cmsc23_project/models/indiv_donation.dart';
 import 'package:cmsc23_project/org-view/base_elements/org_view_styles.dart';
 import 'package:cmsc23_project/providers/current_org_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DonationList extends StatefulWidget {
-  // Lists all donations made to the organization
-  final int? driveId;
-  const DonationList({this.driveId, super.key});
+  // Lists all donations made to the organization (or optionally, drive)
+  final String? id;
+
+  const DonationList({this.id, super.key});
 
   @override
   State<DonationList> createState() => _DonationListState();
@@ -20,7 +22,7 @@ class _DonationListState extends State<DonationList> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: SizedBox(
         height: 300,
         child: Card(
@@ -29,6 +31,7 @@ class _DonationListState extends State<DonationList> {
             child: Column(
               children: [
                 _searchBar,
+                const SizedBox(height: 8),
                 _donationTiles,
               ],
             ),
@@ -52,44 +55,132 @@ class _DonationListState extends State<DonationList> {
       );
 
   Widget get _donationTiles {
-    List<Donation> donations =
-        context.watch<CurrentOrgProvider>().donations(driveId: widget.driveId);
+    bool isDrive = widget.id != null;
 
-    List<Donation> filteredDonations = donations.where((donation) {
-      return (donation.donorUsername + donation.status.name)
+    // Used to sort donations by status/progress
+    List<String> statusSort = [
+      'Pending',
+      'Confirmed',
+      'Scheduled for Pickup',
+      'Completed',
+      'Cancelled',
+    ];
+
+    bool matchesQuery(Donation donation) {
+      return (donation.name + donation.status)
           .toLowerCase()
           .contains(_searchQuery.toLowerCase());
-    }).toList();
+    }
 
+    // TODO: AAAAAAAAAAAAAAAAA
     return Expanded(
-      child: Container(
-        padding: const EdgeInsets.only(top: 8),
-        child: ListView.builder(
-          itemCount: filteredDonations.length,
-          itemBuilder: (context, index) {
-            return Card(
-              color: CustomColors.secondary,
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DonationDetails(
-                        donation: filteredDonations[index],
-                      ),
-                    ),
-                  );
-                },
-                child: ListTile(
-                  leading: statusIcon(filteredDonations[index].status),
-                  title: Text(filteredDonations[index].donorUsername),
-                  trailing: Text(filteredDonations[index].status.name),
-                ),
-              ),
-            );
-          },
+      child: isDrive
+          ? StreamBuilder<DocumentSnapshot>(
+              stream: context.read<CurrentOrgProvider>().drive(widget.id!),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return const Text('An error occurred');
+                } else if (snapshot.connectionState ==
+                    ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                DonationDrive drive = DonationDrive.fromJson(
+                    snapshot.data!.data() as Map<String, dynamic>);
+
+                return StreamBuilder<QuerySnapshot>(
+                  stream: context
+                      .read<CurrentOrgProvider>()
+                      .donationsByDrive(drive.orgUsername, drive.name),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return const Text('An error occurred');
+                    } else if (snapshot.connectionState ==
+                        ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+
+                    Map<Donation, String> donations = Map.fromEntries(snapshot
+                        .data!.docs
+                        .map((doc) => MapEntry(
+                            Donation.fromJson(
+                                doc.data() as Map<String, dynamic>),
+                            doc.id))
+                        .where((entry) => matchesQuery(entry.key)));
+
+                    List<Donation> filteredDonations = donations.keys.toList()
+                      ..sort((a, b) => statusSort
+                          .indexOf(a.status)
+                          .compareTo(statusSort.indexOf(b.status)));
+
+                    return ListView.builder(
+                      itemCount: filteredDonations.length,
+                      itemBuilder: (context, index) {
+                        return _tile(filteredDonations[index],
+                            donations[filteredDonations[index]]!);
+                      },
+                    );
+                  },
+                );
+              })
+          : StreamBuilder<QuerySnapshot>(
+              // Check if the list of donations is for a specific drive or all donations
+              stream: context.read<CurrentOrgProvider>().donations,
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return const Text('An error occurred');
+                } else if (snapshot.connectionState ==
+                    ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                // Filter donations based on search query
+
+                Map<Donation, String> donations = Map.fromEntries(snapshot
+                    .data!.docs
+                    .map((doc) => MapEntry(
+                        Donation.fromJson(doc.data() as Map<String, dynamic>),
+                        doc.id))
+                    .where((entry) => matchesQuery(entry.key)));
+
+                // Sort donations by status
+                List<Donation> filteredDonations = donations.keys.toList()
+                  ..sort((a, b) => statusSort
+                      .indexOf(a.status)
+                      .compareTo(statusSort.indexOf(b.status)));
+
+                return ListView.builder(
+                  itemCount: filteredDonations.length,
+                  itemBuilder: (context, index) {
+                    return _tile(filteredDonations[index],
+                        donations[filteredDonations[index]]!);
+                  },
+                );
+              },
+            ),
+    );
+  }
+
+  Card _tile(Donation donation, String id) {
+    return Card(
+      color: _getTileColor(donation.status),
+      child: InkWell(
+        onTap: () {
+          Navigator.pushNamed(context, '/org/donation',
+              arguments: [donation, id]);
+        },
+        child: ListTile(
+          leading: statusIcon(donation.status),
+          title: Text(donation.name),
+          trailing: Text(donation.status),
         ),
       ),
     );
+  }
+
+  Color _getTileColor(String status) {
+    return status == 'Cancelled' || status == 'Completed'
+        ? Colors.grey
+        : CustomColors.secondary;
   }
 }
