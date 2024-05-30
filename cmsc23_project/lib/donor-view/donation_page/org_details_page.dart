@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 
 class OrgDetailsPage extends StatelessWidget {
   final String organization;
-  final Map<String, String> organizationDetails; 
+  final Map<String, String> organizationDetails;
   final Map<String, dynamic> donorDetails;
 
-  const OrgDetailsPage({super.key, required this.organization, required this.organizationDetails, required this.donorDetails});
+  OrgDetailsPage(
+      {required this.organization,
+      required this.organizationDetails,
+      required this.donorDetails});
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +19,10 @@ class OrgDetailsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        elevation: 0,  
-        iconTheme: IconThemeData(color: const Color.fromRGBO(55, 61, 102, 1)),  
+        elevation: 0,
+        iconTheme: IconThemeData(color: const Color.fromRGBO(55, 61, 102, 1)),
       ),
-      extendBodyBehindAppBar: true,  
+      extendBodyBehindAppBar: true,
       body: Stack(
         children: [
           Column(
@@ -30,11 +33,11 @@ class OrgDetailsPage extends StatelessWidget {
                 width: double.infinity,
                 height: screenSize.height * 0.40, // Adjusted height
               ),
-              SizedBox(height: screenSize.height * 0.1),  
+              SizedBox(height: screenSize.height * 0.1),
             ],
           ),
           Positioned.fill(
-            top: screenSize.height * 0.35,  // Adjusted position
+            top: screenSize.height * 0.35,
             left: 0,
             right: 0,
             child: Container(
@@ -50,7 +53,8 @@ class OrgDetailsPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: screenSize.height * 0.01),
+                    SizedBox(
+                        height: screenSize.height * 0.01), 
                     Text(
                       organization,
                       style: const TextStyle(
@@ -59,7 +63,8 @@ class OrgDetailsPage extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: screenSize.height * 0.04),
+                    SizedBox(
+                        height: screenSize.height * 0.04), 
                     Text(
                       allDetails,
                       style: const TextStyle(
@@ -100,13 +105,13 @@ class OrgDetailsPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      margin: EdgeInsets.all(10), 
+                      margin: EdgeInsets.all(10),
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(15), 
+                        borderRadius: BorderRadius.circular(15),
                         child: Image.asset(
-                          'assets/images/donation_drive.jpg', 
-                          fit: BoxFit.contain, 
-                          width: double.infinity, 
+                          'assets/images/donation_drive.jpg',
+                          fit: BoxFit.contain,
+                          width: double.infinity,
                         ),
                       ),
                     ),
@@ -123,16 +128,19 @@ class OrgDetailsPage extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: screenSize.height * 0.04),  
+          SizedBox(height: screenSize.height * 0.04), // Adjusted height
           Positioned(
-            bottom: screenSize.height * 0.02,  
-            left: screenSize.width * 0.1,  
-            right: screenSize.width * 0.1,  
+            bottom: screenSize.height * 0.02, // Adjusted position
+            left: screenSize.width * 0.1, // Adjusted position
+            right: screenSize.width * 0.1, // Adjusted position
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => DonorPage(organization: organization, donorDetails: donorDetails)),
+                  MaterialPageRoute(
+                      builder: (context) => DonorPage(
+                          organization: organization,
+                          donorDetails: donorDetails)),
                 );
               },
               style: ElevatedButton.styleFrom(
@@ -140,18 +148,19 @@ class OrgDetailsPage extends StatelessWidget {
                 textStyle: const TextStyle(
                   fontSize: 16,
                 ),
-                padding: EdgeInsets.symmetric(horizontal: screenSize.width * 0.2, vertical: screenSize.height * 0.01),
+                padding: EdgeInsets.symmetric(
+                    horizontal: screenSize.width * 0.2,
+                    vertical: screenSize.height * 0.01), // Adjusted padding
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(40),
                 ),
               ),
               child: const Text(
-                'Send Donation', 
+                'Send Donation',
                 style: TextStyle(
-                  color: Colors.white, 
-                  fontFamily: "Montserrat",
-                  fontWeight: FontWeight.bold
-                ),
+                    color: Colors.white,
+                    fontFamily: "Montserrat",
+                    fontWeight: FontWeight.bold),
               ),
             ),
           ),

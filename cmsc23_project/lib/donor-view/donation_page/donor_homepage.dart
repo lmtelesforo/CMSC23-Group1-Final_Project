@@ -16,7 +16,7 @@ class DonorHomepage extends StatefulWidget {
 
 class _DonorHomepageState extends State<DonorHomepage> {
   List<String> filteredOrganizations = [];
-  final DonationProvider _donationProvider = DonationProvider();
+  DonationProvider _donationProvider = DonationProvider();
   late Map<String, dynamic> donorDetails;
 
   @override
@@ -36,7 +36,8 @@ class _DonorHomepageState extends State<DonorHomepage> {
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, dynamic> donorDetails = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final Map<String, dynamic> donorDetails =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
@@ -46,15 +47,17 @@ class _DonorHomepageState extends State<DonorHomepage> {
           "Donor Homepage",
           style: TextStyle(
             fontFamily: "Montserrat",
-            color: const Color.fromRGBO(55, 61, 102, 1), 
+            color: const Color.fromRGBO(
+                55, 61, 102, 1), 
             fontWeight: FontWeight.bold,
             fontSize: 20,
           ),
         ),
-         backgroundColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
         elevation: 0.0,
         centerTitle: true,
-        iconTheme: IconThemeData(color: const Color.fromRGBO(55, 61, 102, 1), size: 30),
+        iconTheme: IconThemeData(
+            color: const Color.fromRGBO(55, 61, 102, 1), size: 30),
         actions: [
           Container(
             decoration: BoxDecoration(
@@ -84,15 +87,17 @@ class _DonorHomepageState extends State<DonorHomepage> {
                 "Menu",
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 24, 
+                  fontSize: 24,
                 ),
               ),
             ),
             ListTile(
               title: Text(
                 "Home",
-                style: TextStyle(fontSize: 20,
-                fontFamily: 'Poppins',),
+                style: TextStyle(
+                  fontSize: 20,
+                  fontFamily: 'Poppins',
+                ),
               ),
               onTap: () {
                 Navigator.pop(context);
@@ -101,8 +106,10 @@ class _DonorHomepageState extends State<DonorHomepage> {
             ListTile(
               title: Text(
                 "Profile",
-                style: TextStyle(fontSize: 20,
-                fontFamily: 'Poppins',),
+                style: TextStyle(
+                  fontSize: 20,
+                  fontFamily: 'Poppins',
+                ),
               ),
               onTap: () {
                 Navigator.push(
@@ -114,30 +121,32 @@ class _DonorHomepageState extends State<DonorHomepage> {
             ListTile(
               title: const Text(
                 "Favorite",
-                style: TextStyle(fontSize: 20,
-                fontFamily: 'Poppins',),
+                style: TextStyle(
+                  fontSize: 20,
+                  fontFamily: 'Poppins',
+                ),
               ),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => FavoritePage(),
-                  settings: RouteSettings(arguments: donorDetails)),
+                  MaterialPageRoute(
+                      builder: (context) => FavoritePage(),
+                      settings: RouteSettings(arguments: donorDetails)),
                 );
               },
             ),
             ListTile(
               title: Text(
                 "View All Donations",
-                style: TextStyle(fontSize: 20,
-                  fontFamily: 'Poppins'),
+                style: TextStyle(fontSize: 20, fontFamily: 'Poppins'),
               ),
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => UserViewAllDonations(
-                      donorDetails: donorDetails),
+                    builder: (context) =>
+                        UserViewAllDonations(donorDetails: donorDetails),
                   ),
                 );
               },
@@ -145,8 +154,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
             ListTile(
               title: const Text(
                 "Log Out",
-                style: TextStyle(fontSize: 20,
-                  fontFamily: 'Poppins'),
+                style: TextStyle(fontSize: 20, fontFamily: 'Poppins'),
               ),
               onTap: () {
                 Navigator.pop(context);
@@ -188,7 +196,8 @@ class _DonorHomepageState extends State<DonorHomepage> {
                     hintText: "Search...",
                     hintStyle: const TextStyle(fontSize: 16),
                     prefixIcon: const Icon(Icons.search),
-                    contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 8.0, horizontal: 16.0),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(screenHeight * 0.03),
                       borderSide: BorderSide(
@@ -209,7 +218,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
                 Container(
                   height: screenHeight * 0.2,
                   decoration: BoxDecoration(
-                    color: const Color.fromRGBO(55, 61, 102, 1), 
+                    color: const Color.fromRGBO(55, 61, 102, 1),
                     borderRadius: BorderRadius.circular(screenHeight * 0.03),
                     boxShadow: [
                       BoxShadow(
@@ -232,7 +241,9 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                 "images/icon.png",
                                 fit: BoxFit.scaleDown,
                               ),
-                              SizedBox(width: screenWidth * 0.02), // Adjusted spacing
+                              SizedBox(
+                                  width:
+                                      screenWidth * 0.02), // Adjusted spacing
                               Expanded(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -248,17 +259,21 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                       style: TextStyle(
                                         fontSize: screenHeight * 0.033,
                                         fontWeight: FontWeight.bold,
-                                        color: const Color.fromRGBO(252, 190, 79, 1), 
+                                        color: const Color.fromRGBO(
+                                            252, 190, 79, 1),
                                         fontFamily: "Montserrat",
                                       ),
                                     ),
-                                    SizedBox(height: screenHeight * 0.005), // Adjusted spacing
+                                    SizedBox(
+                                        height: screenHeight *
+                                            0.005), // Adjusted spacing
                                     Text(
                                       "Now!",
                                       style: TextStyle(
                                         fontSize: screenHeight * 0.033,
                                         fontWeight: FontWeight.bold,
-                                        color: const Color.fromRGBO(252, 190, 79, 1), 
+                                        color: const Color.fromRGBO(
+                                            252, 190, 79, 1),
                                         fontFamily: "Montserrat",
                                       ),
                                     ),
@@ -282,17 +297,25 @@ class _DonorHomepageState extends State<DonorHomepage> {
                         for (String org in filteredOrganizations)
                           GestureDetector(
                             onTap: () {
-                              context.read<DonationProvider>().setOrganization(org);
-                              Map<String, List<String>> organizationDetails = context.read<DonationProvider>().organizationDetails;
-                              String details = organizationDetails[org]?.join('\n') ?? '';
-                              Map<String, String> detailsMap = {'Details': details};
+                              context
+                                  .read<DonationProvider>()
+                                  .setOrganization(org);
+                              Map<String, List<String>> organizationDetails =
+                                  context
+                                      .read<DonationProvider>()
+                                      .organizationDetails;
+                              String details =
+                                  organizationDetails[org]?.join('\n') ?? '';
+                              Map<String, String> detailsMap = {
+                                'Details': details
+                              };
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => OrgDetailsPage(
-                                    organization: org,
-                                    organizationDetails: detailsMap,
-                                    donorDetails: donorDetails),
+                                      organization: org,
+                                      organizationDetails: detailsMap,
+                                      donorDetails: donorDetails),
                                 ),
                               );
                             },
@@ -303,7 +326,8 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                   width: screenWidth * 0.395,
                                   decoration: BoxDecoration(
                                     color: Colors.white,
-                                    borderRadius: BorderRadius.circular(screenHeight * 0.03),
+                                    borderRadius: BorderRadius.circular(
+                                        screenHeight * 0.03),
                                     boxShadow: [
                                       BoxShadow(
                                         color: Colors.grey.withOpacity(0.5),
@@ -314,13 +338,17 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                     ],
                                   ),
                                   child: Padding(
-                                    padding: EdgeInsets.all(screenHeight * 0.01),
+                                    padding:
+                                        EdgeInsets.all(screenHeight * 0.01),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
                                         ClipRRect(
-                                          borderRadius: BorderRadius.circular(screenHeight * 0.02),
+                                          borderRadius: BorderRadius.circular(
+                                              screenHeight * 0.02),
                                           child: Image.asset(
                                             "images/$org.jpg",
                                             width: screenWidth * 0.5,
@@ -330,8 +358,10 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                         ),
                                         SizedBox(height: screenHeight * 0.01),
                                         Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
                                           children: [
                                             Text(
                                               org,
@@ -353,23 +383,30 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                   right: screenHeight * 0.005,
                                   child: GestureDetector(
                                     onTap: () {
-                                      Provider.of<DonationProvider>(context, listen: false).toggleFavorite(org);
+                                      Provider.of<DonationProvider>(context,
+                                              listen: false)
+                                          .toggleFavorite(org);
                                     },
                                     child: Container(
                                       width: screenHeight * 0.033,
                                       height: screenHeight * 0.033,
                                       decoration: BoxDecoration(
-                                        color: const Color.fromRGBO(55, 61, 102, 1),
-                                        borderRadius: BorderRadius.circular(screenHeight * 0.05),
+                                        color: const Color.fromRGBO(
+                                            55, 61, 102, 1),
+                                        borderRadius: BorderRadius.circular(
+                                            screenHeight * 0.05),
                                       ),
                                       child: Center(
                                         child: Consumer<DonationProvider>(
                                           builder: (context, provider, _) {
                                             return Icon(
                                               Icons.favorite,
-                                              color: provider.isOrganizationFavorite(org)
-                                                  ? const Color.fromRGBO(252, 190, 79, 1) 
-                                                  : Colors.transparent,
+                                              color:
+                                                  provider.isOrganizationFavorite(
+                                                          org)
+                                                      ? const Color.fromRGBO(
+                                                          252, 190, 79, 1)
+                                                      : Colors.transparent,
                                             );
                                           },
                                         ),

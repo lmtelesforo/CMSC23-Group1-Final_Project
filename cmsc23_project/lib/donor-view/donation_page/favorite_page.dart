@@ -9,8 +9,9 @@ class FavoritePage extends StatelessWidget {
    
   @override
   Widget build(BuildContext context) {
-    final Map<String, dynamic> donorDetails = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    
+    final Map<String, dynamic> donorDetails =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -35,7 +36,8 @@ class FavoritePage extends StatelessWidget {
       ),
       body: Consumer<DonationProvider>(
         builder: (context, donationProvider, child) {
-          final favoriteOrganizations = donationProvider.getFavoriteOrganizations();
+          final favoriteOrganizations =
+              donationProvider.getFavoriteOrganizations();
 
           if (favoriteOrganizations.isEmpty) {
             return const Center(
@@ -60,7 +62,8 @@ class FavoritePage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => DonorPage(organization: org, donorDetails: donorDetails),
+                      builder: (context) => DonorPage(
+                          organization: org, donorDetails: donorDetails),
                     ),
                   );
                 },

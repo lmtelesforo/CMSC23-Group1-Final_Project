@@ -53,11 +53,11 @@ class _AddDriveTile extends StatelessWidget {
     return ListTile(
       title: const Text('Add a Drive'),
       onTap: () {
-        if (ModalRoute.of(context)!.settings.name == '/org/add-a-drive') {
+        if (ModalRoute.of(context)!.settings.name == '/org/drives/add') {
           Navigator.pop(context);
         } else {
           Navigator.pop(context);
-          Navigator.pushNamed(context, '/org/add-a-drive');
+          Navigator.pushNamed(context, '/org/drives/add');
         }
       },
     );

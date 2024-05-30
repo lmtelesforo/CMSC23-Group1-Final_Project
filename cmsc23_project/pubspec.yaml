@@ -41,6 +41,7 @@ dependencies:
   cloud_firestore: ^4.17.4
   intl: ^0.17.0
   image_picker: ^0.8.1
+  mobile_scanner: ^5.1.1
   qr_flutter: ^4.1.0
   omni_datetime_picker: ^1.1.0
   screenshot: ^3.0.0

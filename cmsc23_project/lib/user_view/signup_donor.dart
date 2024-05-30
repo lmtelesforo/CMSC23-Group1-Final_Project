@@ -14,7 +14,7 @@ class SignUpDonorPage extends StatefulWidget {
 }
 
 class _SignUpDonorPageState extends State<SignUpDonorPage> {
-  final _formKey = GlobalKey<FormState>(); 
+  final _formKey = GlobalKey<FormState>();
   late String signUpResult;
 
   @override
@@ -22,7 +22,8 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
     final provider = context.watch<TextfieldProviders>();
     List<String> addressesList = [];
 
-    bool isNumeric(String str) { // check if input is a contact number
+    bool isNumeric(String str) {
+      // check if input is a contact number
       return double.tryParse(str) != null;
     }
 
@@ -570,100 +571,120 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                             final userType = 'donor';
                             bool multipleAddresses = addressesUnsplit.contains(';');
 
-                            if (multipleAddresses == true) {
-                              addressesList = addressesUnsplit.split(';').map((address) => address.trim()).toList();
-                            }
-                            else {
-                              addressesList = [addressesUnsplit];
-                            }
-                            
-                            final authService = Provider.of<UserAuthProvider>(context, listen: false).authService;
-                            final userService = Provider.of<UserInfosProvider>(context, listen: false).firebaseService;
+                          if (multipleAddresses == true) {
+                            addressesList = addressesUnsplit
+                                .split(';')
+                                .map((address) => address.trim())
+                                .toList();
+                          } else {
+                            addressesList = [addressesUnsplit];
+                          }
 
-                            signUpResult = (await authService.signUp(email, password))!;
-                            
-                            final bool found = await checkUserType(email);
-                            print(found);   
-                            if (signUpResult == 'The account already exists for that email.' && found != false) { // match error message
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('An account already exists under this email. Log in instead.')),
-                              );
-                            }
-                            else if (found != false) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('An account already exists under this email. Log in instead.')),
-                              );
-                            }
-                            else {
-                              final user = UserInfosProvider().donorData(name, username, email, addressesList, contactnumber, userType);
-                              
-                              userService.addUser(user); // add to firebase
+                          final authService = Provider.of<UserAuthProvider>(
+                                  context,
+                                  listen: false)
+                              .authService;
+                          final userService = Provider.of<UserInfosProvider>(
+                                  context,
+                                  listen: false)
+                              .firebaseService;
 
-                              provider.resetSignUp();
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text('$name signed up! Log in to experience ElbiDrive.'),
-                                ),
-                              );
-                              Navigator.pop(context);
-                              Navigator.pushNamed(context, "/");
-                            }
-                          } 
-                        },
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(320, 40),
-                          foregroundColor:  const Color(0xFFFCBE4F),
-                          textStyle: const TextStyle(
-                            fontSize: 14,
-                            fontFamily: 'Poppins-Bold',
+                          signUpResult =
+                              (await authService.signUp(email, password))!;
+
+                          final bool found = await checkUserType(email);
+                          print(found);
+                          if (signUpResult ==
+                                  'The account already exists for that email.' &&
+                              found != false) {
+                            // match error message
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                  content: Text(
+                                      'An account already exists under this email. Log in instead.')),
+                            );
+                          } else if (found != false) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                  content: Text(
+                                      'An account already exists under this email. Log in instead.')),
+                            );
+                          } else {
+                            final user = UserInfosProvider().donorData(
+                                name,
+                                username,
+                                email,
+                                addressesList,
+                                contactnumber,
+                                userType);
+
+                            userService.addUser(user); // add to firebase
+
+                            provider.resetSignUp();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                    '$name signed up! Log in to experience ElbiDrive.'),
+                              ),
+                            );
+                            Navigator.pop(context);
+                            Navigator.pushNamed(context, "/");
+                          }
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(320, 40),
+                        foregroundColor: const Color(0xFFFCBE4F),
+                        textStyle: const TextStyle(
+                          fontSize: 14,
+                          fontFamily: 'Poppins-Bold',
+                        ),
+                        backgroundColor: const Color(0xFF373D66),
+                      ),
+                      child: const Text('Sign up as a Donor'),
+                    ),
+                    Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            "Already have an account?",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontFamily: 'Poppins-Reg',
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xFF373D66),
+                            ),
                           ),
-                          backgroundColor: const Color(0xFF373D66),
-                        ),
-                        child: const Text('Sign up as a Donor'),
-                      ),
-                      Center (
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
-                              "Already have an account?",
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontFamily: 'Poppins-Reg',
-                                fontWeight: FontWeight.w500,
-                                color: Color(0xFF373D66),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 34,
-                              child: TextButton(
-                                onPressed: () {
-                                  provider.resetSignUp();
-                                  Navigator.pop(context);
-                                  Navigator.pushNamed(context, "/loginDonor");
-                                },
-                                child: const Text(
-                                  "Log in",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontFamily: 'Poppins-Bold',
-                                    color: Color(0xFF373D66),
-                                  ),
+                          SizedBox(
+                            height: 34,
+                            child: TextButton(
+                              onPressed: () {
+                                provider.resetSignUp();
+                                Navigator.pop(context);
+                                Navigator.pushNamed(context, "/loginDonor");
+                              },
+                              child: const Text(
+                                "Log in",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontFamily: 'Poppins-Bold',
+                                  color: Color(0xFF373D66),
                                 ),
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
-          ],
-        ),
-      )
-    );
+          ),
+        ],
+      ),
+    ));
   }
 
   Future<bool> checkUserType(String? googleEmail) async {
@@ -672,7 +693,8 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
     final orgsData = await firebaseUsers.getOrgs();
 
     // check if it matches any existing email
-    final foundDonor = donorsData.any((donorData) => donorData['email'] == googleEmail);
+    final foundDonor =
+        donorsData.any((donorData) => donorData['email'] == googleEmail);
 
     // check if it matches any emails
     final foundOrg = orgsData.any((orgData) => orgData['email'] == googleEmail);

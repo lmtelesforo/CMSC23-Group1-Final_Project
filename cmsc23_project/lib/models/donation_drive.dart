@@ -1,19 +1,25 @@
-import 'package:flutter/material.dart';
-
 class DonationDrive {
-  int id;
   String orgUsername;
   String name;
   String description;
-  ImageProvider image;
   bool isOngoing;
+  bool isFavorite;
 
   DonationDrive({
-    required this.id,
     required this.orgUsername,
     required this.name,
     required this.description,
-    required this.image,
     required this.isOngoing,
+    required this.isFavorite,
   });
+
+  factory DonationDrive.fromJson(Map<String, dynamic> json) {
+    return DonationDrive(
+      orgUsername: json['orgUsername'],
+      name: json['name'],
+      description: json['description'],
+      isOngoing: json['isOngoing'],
+      isFavorite: json['isFavorite'],
+    );
+  }
 }
