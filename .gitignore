@@ -1,3 +1,6 @@
 .vscode/
 cmsc23_project/windows/flutter/generated_plugin_registrant.cc
 cmsc23_project/windows/flutter/generated_plugins.cmake
+cmsc23_project/macos/Flutter/GeneratedPluginRegistrant.swift
+cmsc23_project/windows/flutter/generated_plugin_registrant.cc
+cmsc23_project/windows/flutter/generated_plugins.cmake
