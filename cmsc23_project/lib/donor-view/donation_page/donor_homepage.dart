@@ -335,9 +335,9 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                           children: [
                                             Text(
                                               org,
-                                              style: const TextStyle(
+                                              style: TextStyle(
                                                 fontFamily: "Poppins",
-                                                fontSize: screenHeight * 0.016,
+                                                fontSize: MediaQuery.of(context).size.height * 0.016,
                                                 color: Colors.black,
                                               ),
                                               textAlign: TextAlign.center,
