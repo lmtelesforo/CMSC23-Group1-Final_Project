@@ -1,12 +1,15 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+
 class User {
   String name;
   String username;
   String email;
   List addresses;
-  String contactNumber;
+  String contactNo;
   String? id;
+  ImageProvider? profilePic;
   String userType;
 
   User ({
@@ -15,8 +18,9 @@ class User {
     required this.username,
     required this.email, 
     required this.addresses, 
-    required this.contactNumber, 
+    required this.contactNo, 
     required this.userType,
+    this.profilePic
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -26,7 +30,7 @@ class User {
       username: json['username'],
       email: json['email'],
       addresses: json['addresses'],
-      contactNumber: json['contactNumber'],
+      contactNo: json['contactNumber'],
       userType: json['userType'],
     );
   }
@@ -42,7 +46,7 @@ class User {
       'username': user.username,
       'email': user.email,
       'addresses': user.addresses,
-      'contactNumber': user.contactNumber,
+      'contactNo': user.contactNo,
       'userType': user.userType,
     };
   }

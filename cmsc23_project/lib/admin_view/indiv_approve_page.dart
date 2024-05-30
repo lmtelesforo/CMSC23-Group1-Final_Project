@@ -219,7 +219,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                               const SizedBox(width: 5),
                               Expanded(
                                 child: Text(
-                                  org.contactNumber,
+                                  org.contactNo,
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontFamily: 'Poppins-Reg',

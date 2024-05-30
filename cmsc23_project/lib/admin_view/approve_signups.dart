@@ -175,7 +175,7 @@ class _ApproveOrgSignupsState extends State<ApproveOrgSignups> {
                                   ),
                                 ),
                                 subtitle: Text(
-                                  org.contactNumber,
+                                  org.contactNo,
                                   style: TextStyle(
                                     fontSize: 12,
                                     color: Colors.grey,

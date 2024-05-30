@@ -176,7 +176,7 @@ class _AdminViewAllDonorsState extends State<AdminViewAllDonors> {
                                   ),
                                 ),
                                 subtitle: Text(
-                                  user.contactNumber,
+                                  user.contactNo,
                                   style: TextStyle(
                                     fontSize: 12,
                                     color: Colors.grey,

@@ -215,7 +215,7 @@ class _IndivViewAllDonorsState extends State<IndivViewAllDonors> {
                             const SizedBox(width: 5),
                             Expanded(
                               child: Text(
-                                user.contactNumber,
+                                user.contactNo,
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontFamily: 'Poppins-Reg',

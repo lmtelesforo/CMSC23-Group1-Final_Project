@@ -176,7 +176,7 @@ class _AdminViewAllOrgsState extends State<AdminViewAllOrgs> {
                                   ),
                                 ),
                                 subtitle: Text(
-                                  org.contactNumber,
+                                  org.contactNo,
                                   style: TextStyle(
                                     fontSize: 12,
                                     color: Colors.grey,

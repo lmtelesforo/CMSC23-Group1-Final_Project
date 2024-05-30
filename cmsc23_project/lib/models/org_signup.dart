@@ -1,14 +1,20 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+
 class Org {
   String name;
   String username;
   String email;
   List addresses;
-  String contactNumber;
+  String contactNo;
   List proofs;
   String? id;
   String userType;
+  bool isApproved;
+  String about;
+  bool openForDonations;
+  ImageProvider? profilePic;
 
   Org ({
     this.id, 
@@ -16,9 +22,12 @@ class Org {
     required this.username,
     required this.email, 
     required this.addresses, 
-    required this.contactNumber, 
+    required this.contactNo, 
     required this.userType,
-    required this.proofs 
+    required this.proofs, 
+    required this.isApproved,
+    required this.about,
+    required this.openForDonations,
   });
 
   factory Org.fromJson(Map<String, dynamic> json) {
@@ -27,9 +36,12 @@ class Org {
       username: json['username'],
       email: json['email'],
       addresses: json['addresses'],
-      contactNumber: json['contactNumber'],
+      contactNo: json['contactNo'],
       userType: json['userType'],
-      proofs: json['proofs']
+      proofs: json['proofs'],
+      isApproved: json['isApproved'],
+      about: json['about'],
+      openForDonations: json['openForDonations']
     );
   }
 
@@ -44,9 +56,12 @@ class Org {
       'username': org.username,
       'email': org.email,
       'addresses': org.addresses,
-      'contactNumber': org.contactNumber,
+      'contactNo': org.contactNo,
       'userType': org.userType,
-      'proofs': org.proofs
+      'proofs': org.proofs,
+      'isApproved': org.isApproved,
+      'about': org.about,
+      'openForDonations': org.openForDonations,
     };
   }
 }
