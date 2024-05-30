@@ -45,6 +45,7 @@ dependencies:
   omni_datetime_picker: ^1.1.0
   screenshot: ^3.0.0
   google_sign_in: ^6.2.1
+  firebase_storage: ^11.7.6
 
 dev_dependencies:
   flutter_test:
@@ -87,7 +88,7 @@ flutter:
     - images/Research Institutions.jpg
     - images/Social Justice and Advocacy Groups.jpg
     - images/Health Organization.jpg
-    - images/profile.jpg
+    - images/organization.jpg
     - images/icon.png
     - images/logo.png
     - images/wallpaper.jpg
