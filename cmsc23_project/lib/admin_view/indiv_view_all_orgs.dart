@@ -183,7 +183,7 @@ class _IndivViewAllOrgsState extends State<IndivViewAllOrgs> {
                             const SizedBox(width: 5),
                             Expanded(
                               child: Text(
-                                org.contactNumber,
+                                org.email,
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontFamily: 'Poppins-Reg',
