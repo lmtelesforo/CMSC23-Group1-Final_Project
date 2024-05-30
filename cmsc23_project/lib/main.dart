@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
 }
 
 class RootWidget extends StatelessWidget {
-  const RootWidget({super.key, Key? key});
+  const RootWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
