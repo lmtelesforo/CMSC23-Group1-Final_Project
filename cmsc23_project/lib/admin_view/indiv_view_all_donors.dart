@@ -170,6 +170,30 @@ class _IndivViewAllDonorsState extends State<IndivViewAllDonors> {
                           ],
                         ),
                         const SizedBox(height: 7),
+                        Row(
+                          children: [
+                            const Text(
+                              'Email:',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: 'Poppins-Bold',
+                                color: Color(0xFF373D66),
+                              ),
+                            ),
+                            const SizedBox(width: 5),
+                            Expanded(
+                              child: Text(
+                                user.email,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: 'Poppins-Reg',
+                                  color: Color(0xFF373D66),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 7),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

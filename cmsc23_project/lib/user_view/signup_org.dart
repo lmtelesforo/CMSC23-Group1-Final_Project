@@ -651,6 +651,7 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                             final addressesUnsplit = provider.controller5.text;
                             final contactnumber = provider.controller6.text;
                             final proofsUnsplit = provider.controller7.text;
+                            final openForDonations = false;
                             final userType = 'organization';
                             bool multipleAddresses =
                                 addressesUnsplit.contains(';');
@@ -711,7 +712,8 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                                   addressesList,
                                   contactnumber,
                                   proofsList,
-                                  userType);
+                                  userType, 
+                                  openForDonations);
 
                               userService
                                   .addOrgSignUpReq(user); // add to firebase

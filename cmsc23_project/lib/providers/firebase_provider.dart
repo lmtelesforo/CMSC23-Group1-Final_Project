@@ -89,7 +89,7 @@ class UserInfosProvider with ChangeNotifier {
     return newData;
   }
 
-  Map<String, dynamic> orgData(String name, String username, String email, List addresses, String contactnumber, List proofs, String userType){ // created a structure for easier storing
+  Map<String, dynamic> orgData(String name, String username, String email, List addresses, String contactnumber, List proofs, String userType, bool openForDonations){ // created a structure for easier storing
     Map<String, dynamic> newData = {
       'name': name,
       'username': username,
@@ -97,7 +97,8 @@ class UserInfosProvider with ChangeNotifier {
       'addresses': addresses,
       'contactNumber': contactnumber,
       'proofs': proofs,
-      'userType': userType // with required fields
+      'userType': userType,
+      'openForDonations': openForDonations // with required fields
     };
     return newData;
   }

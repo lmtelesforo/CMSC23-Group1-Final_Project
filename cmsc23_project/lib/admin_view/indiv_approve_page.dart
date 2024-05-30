@@ -208,6 +208,30 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                           Row(
                             children: [
                               const Text(
+                                'Email:',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: 'Poppins-Bold',
+                                  color: Color(0xFF373D66),
+                                ),
+                              ),
+                              const SizedBox(width: 5),
+                              Expanded(
+                                child: Text(
+                                  org.email,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: 'Poppins-Reg',
+                                    color: Color(0xFF373D66),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 7),
+                          Row(
+                            children: [
+                              const Text(
                                 'Contact Number:',
                                 style: TextStyle(
                                   fontSize: 16,
