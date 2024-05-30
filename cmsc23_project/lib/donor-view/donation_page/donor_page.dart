@@ -59,23 +59,23 @@ class _DonorPageState extends State<DonorPage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: false,
-        iconTheme: const IconThemeData(color: Colors.white, size: 30),
+        iconTheme: IconThemeData(color: Colors.white, size: 30),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            const Expanded(
+            Expanded(
               child: Text(
                 "Donation Details",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: "Montserrat",
-                  color: Color.fromRGBO(55, 61, 102, 1),
+                  color: const Color.fromRGBO(55, 61, 102, 1),
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
                 ),
               ),
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: 8),
             SizedBox(
               width: 40,
               height: 40,
@@ -428,87 +428,6 @@ class _DonorPageState extends State<DonorPage> {
             spreadRadius: 5,
             blurRadius: 7,
             offset: Offset(0, 3), // changes position of shadow
-      body: Stack(
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("images/wallpaper.jpg"),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          Positioned(
-            top: AppBar().preferredSize.height + 50,
-            left: 30,
-            right: 30,
-            bottom: 20,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.5),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Center(
-                        child: Text(
-                          organization,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "Montserrat",
-                            color: Color.fromRGBO(55, 61, 102, 1),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 15),
-                Column(
-                  children: donationProvider.donationItems.map((item) {
-                    return DonationCheckbox( 
-                      itemName: item.itemName,
-                      isChecked: item.isChecked,
-                      onChanged: (isChecked) {
-                        donationProvider.toggleItemCheck(item, isChecked!);
-                      },
-                    );
-                  }).toList(),
-                ),
-                const SizedBox(height: 10),
-                const Text("Select if the items are for pickup or drop-off"),
-                const SizedBox(height: 10),
-                const DropdownMenuExample(),
-                const SizedBox(height: 10),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Weight of items (kg/lbs)',
-                  ),
-                  keyboardType: TextInputType.number,
-                  onChanged: (value) {},
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    _openCamera(context);
-                  },
-                  child: const Text('Take Photo'),
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    _openGallery(context);
-                  },
-                  child: const Text('Upload Photo'),
-                ),
-              ],
-            ),
           ),
         ],
       ),

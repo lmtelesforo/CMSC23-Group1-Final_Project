@@ -40,7 +40,7 @@ Future<void> main() async {
         ChangeNotifierProvider(
           create: (context) => DonationProvider(),
         ),
-        ChangeNotifierProvider(create: (context) => CurrentOrgProvider())
+        ChangeNotifierProvider(create: (context) => CurrentOrgProvider()),
         ChangeNotifierProvider(
           create: (context) => DonationStorageProvider(),
         ),
