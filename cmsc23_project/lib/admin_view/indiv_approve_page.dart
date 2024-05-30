@@ -1,53 +1,32 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/org_signup.dart';
 import '../models/user_signup.dart';
+import '../providers/firebase_provider.dart';
 import '../providers/textfield_providers.dart';
 
 class OrgRequestPage extends StatefulWidget {
-  final int index;
+  final DocumentSnapshot orgDetails;
 
-  const OrgRequestPage({Key? key, required this.index}) : super(key: key);
+  const OrgRequestPage({Key? key, required this.orgDetails}) : super(key: key);
 
   @override
   State<OrgRequestPage> createState() => _OrgRequestPageState();
 }
 
 class _OrgRequestPageState extends State<OrgRequestPage> {
-  List<User> requests = [
-    User(
-      name: 'Org 1',
-      username: 'org1_username',
-      password: 'password1',
-      addresses: ['Address 1', 'Address 2'],
-      contactNumber: '1234567890',
-      proofs: ['Proofs for Organization 1'],
-    ),
-    User(
-      name: 'Org 2',
-      username: 'org2_username',
-      password: 'password2',
-      addresses: ['Address 3', 'Address 4'],
-      contactNumber: '0987654321',
-      proofs: ['gfgdf', '7979'],
-    ),
-    User(
-      name: 'Org 3',
-      username: 'org3_username',
-      password: 'password3',
-      addresses: ['Address 5', 'Address 6'],
-      contactNumber: '9876543210',
-      proofs: ['Proofs for Organization 3'],
-    ),
-    User(
-      name: 'Org 3',
-      username: 'org3_username',
-      password: 'password3',
-      addresses: ['Address 5', 'Address 6'],
-      contactNumber: '9876543210',
-      proofs: ['Proofs for Organization 3'],
-    ),
-  ];
+  late Org org; 
+  late Map<String, dynamic> orgMap;
+
+  @override
+  void initState() {
+    super.initState();
+    org = Org.fromJson(widget.orgDetails.data() as Map<String, dynamic>);
+    orgMap = org.toJson(org);
+    org.id = widget.orgDetails.id;
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -97,7 +76,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                   width: 34, 
                   height: 34, 
                 ),
-                label: Text(
+                label: const Text(
                   'Back',
                   style: TextStyle(
                     fontSize: 16,
@@ -106,7 +85,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                   ),
                 ),
                 style: TextButton.styleFrom(
-                  foregroundColor: Color(0xFF373D66),
+                  foregroundColor: const Color(0xFF373D66),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(32), 
                   ),
@@ -117,7 +96,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
               top: MediaQuery.of(context).size.height * 0.12, 
               left: 0,
               right: 0,
-              child: Padding(
+              child: const Padding(
                 padding: EdgeInsets.all(17),
                 child: Text(
                   "Organization Request",
@@ -135,21 +114,21 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
               left: 0,
               right: 0,
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30), 
+                padding: const EdgeInsets.symmetric(horizontal: 30), 
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Color(0xFFFFFFFF),
+                    color: const Color(0xFFFFFFFF),
                     borderRadius: BorderRadius.circular(15), 
                   ),
                   child: Padding(
-                    padding: EdgeInsets.all(10), 
+                    padding: const EdgeInsets.all(10), 
                     child: Expanded (
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
                             children: [
-                              Text(
+                              const Text(
                                 'Name:',
                                 style: TextStyle(
                                   fontSize: 16,
@@ -157,10 +136,10 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                                   color: Color(0xFF373D66),
                                 ),
                               ),
-                              SizedBox(width: 5),
+                              const SizedBox(width: 5),
                               Expanded(
                                 child: Text(
-                                  requests[widget.index].name,
+                                  org.name,
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontFamily: 'Poppins-Reg',
@@ -170,10 +149,10 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 7),
+                          const SizedBox(height: 7),
                           Row(
                             children: [
-                              Text(
+                              const Text(
                                 'Username:',
                                 style: TextStyle(
                                   fontSize: 16,
@@ -181,10 +160,10 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                                   color: Color(0xFF373D66),
                                 ),
                               ),
-                              SizedBox(width: 5),
+                              const SizedBox(width: 5),
                               Expanded(
                                 child: Text(
-                                  requests[widget.index].username,
+                                  org.username,
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontFamily: 'Poppins-Reg',
@@ -194,13 +173,13 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 7),
+                          const SizedBox(height: 7),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Address/es:',
                                     style: TextStyle(
                                       fontSize: 16,
@@ -208,10 +187,10 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                                       color: Color(0xFF373D66),
                                     ),
                                   ),
-                                  SizedBox(width: 5),
+                                  const SizedBox(width: 5),
                                   Expanded(
                                     child: Text(
-                                      requests[widget.index].addresses.first,
+                                      org.addresses.first,
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontFamily: 'Poppins-Reg',
@@ -221,15 +200,15 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                                   ),
                                 ],
                               ),
-                              (requests[widget.index].addresses.length > 1)
+                              (org.addresses.length > 1)
                               ? newAddressLine() // if true
-                              : SizedBox.shrink(), // if false
+                              : const SizedBox.shrink(), // if false
                             ],
                           ),
-                          SizedBox(height: 7),
+                          const SizedBox(height: 7),
                           Row(
                             children: [
-                              Text(
+                              const Text(
                                 'Contact Number:',
                                 style: TextStyle(
                                   fontSize: 16,
@@ -237,10 +216,10 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                                   color: Color(0xFF373D66),
                                 ),
                               ),
-                              SizedBox(width: 5),
+                              const SizedBox(width: 5),
                               Expanded(
                                 child: Text(
-                                  requests[widget.index].contactNumber,
+                                  org.contactNumber,
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontFamily: 'Poppins-Reg',
@@ -250,13 +229,13 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 7),
+                          const SizedBox(height: 7),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Proof/s:',
                                     style: TextStyle(
                                       fontSize: 16,
@@ -264,10 +243,10 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                                       color: Color(0xFF373D66),
                                     ),
                                   ),
-                                  SizedBox(width: 5),
+                                  const SizedBox(width: 5),
                                   Expanded(
                                     child: Text(
-                                      requests[widget.index].proofs?.first,
+                                      org.proofs?.first,
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontFamily: 'Poppins-Reg',
@@ -277,9 +256,9 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                                   ),
                                 ],
                               ),
-                              (requests[widget.index].proofs!.length > 1)
+                              (org.proofs!.length > 1)
                               ? newLine() // if true
-                              : SizedBox.shrink(), // if false
+                              : const SizedBox.shrink(), // if false
                             ],
                           ),
                         ],
@@ -294,20 +273,28 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
             left: 0,
             right: 0,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30),
+              padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   ElevatedButton.icon(
                     onPressed: () {
+                      final userService = Provider.of<UserInfosProvider>(context, listen: false).firebaseService;
+                      userService.addOrg(orgMap);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('${org.name} sign up request approved!'),
+                        ),
+                      );
+                      userService.deleteSignUpReq(org.id);
                       Navigator.pop(context);
                       Navigator.pushNamed(context, "/adminApprove");
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.check,
                       color: Color.fromARGB(255, 68, 183, 39),
                     ),
-                    label: Text(
+                    label: const Text(
                       'Approve',
                       style: TextStyle(
                         fontSize: 14,
@@ -321,20 +308,27 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                         fontSize: 14,
                         fontFamily: 'Poppins-Bold',
                       ),
-                      backgroundColor: Color(0xFF373D66),
+                      backgroundColor: const Color(0xFF373D66),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   ElevatedButton.icon(
                     onPressed: () {
+                      final userService = Provider.of<UserInfosProvider>(context, listen: false).firebaseService;
+                      userService.deleteSignUpReq(org.id); // only delete request
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('${org.name} sign up request disapproved!'),
+                        ),
+                      );
                       Navigator.pop(context);
                       Navigator.pushNamed(context, "/adminApprove");
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.clear,
-                      color: const Color.fromARGB(255, 181, 19, 19),
+                      color: Color.fromARGB(255, 181, 19, 19),
                     ),
-                    label: Text(
+                    label: const Text(
                       'Disapprove',
                       style: TextStyle(
                         fontSize: 14,
@@ -348,7 +342,7 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
                         fontSize: 14,
                         fontFamily: 'Poppins-Bold',
                       ),
-                      backgroundColor: Color(0xFFFCBE4F),
+                      backgroundColor: const Color(0xFFFCBE4F),
                     ),
                   ),
                 ],
@@ -364,12 +358,12 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: List.generate(
-        requests[widget.index].addresses.length - 1,
+        org.addresses.length - 1,
         (index) {
           return Padding(
-            padding: EdgeInsets.only(left: 106), 
+            padding: const EdgeInsets.only(left: 106), 
             child: Text(
-              requests[widget.index].addresses[index + 1],
+              org.addresses[index + 1],
               style: TextStyle(
                 fontSize: 16,
                 fontFamily: 'Poppins-Reg',
@@ -386,12 +380,12 @@ class _OrgRequestPageState extends State<OrgRequestPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: List.generate(
-        requests[widget.index].proofs!.length - 1,
+        org.proofs!.length - 1,
         (index) {
           return Padding(
-            padding: EdgeInsets.only(left: 70), 
+            padding: const EdgeInsets.only(left: 70), 
             child: Text(
-              requests[widget.index].proofs![index + 1],
+              org.proofs![index + 1],
               style: TextStyle(
                 fontSize: 16,
                 fontFamily: 'Poppins-Reg',

@@ -1,19 +1,18 @@
-import 'package:cmsc23_project/models/user.dart';
+import 'package:cmsc23_project/models/organization.dart';
 import 'package:cmsc23_project/org-view/drawer.dart';
 import 'package:cmsc23_project/org-view/org_view_styles.dart';
+import 'package:cmsc23_project/providers/current_org_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BaseScreen extends StatelessWidget {
   // Represents the base screen of the org view (appbar + background image)
-
-  final User sampleUser = User(
-    name: 'Sample User',
-    profilePic: const AssetImage('assets/images/profile_pic.jpg'),
-  );
+  // Needs a body widget which is the main content of the screen
+  // Can have a floating action button
   final Widget body;
   final FloatingActionButton? floatingActionButton;
 
-  BaseScreen({super.key, required this.body, this.floatingActionButton});
+  const BaseScreen({super.key, required this.body, this.floatingActionButton});
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +20,7 @@ class BaseScreen extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
       drawer: !Navigator.canPop(context) ? const OrgDrawer() : null,
-      appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: Color.fromARGB(255, 7, 30, 176),
-        ),
-        backgroundColor: Colors.transparent,
-        title: _logo,
-        centerTitle: true,
-        actions: [_Avatar(sampleUser: sampleUser)],
-      ),
+      appBar: _appBar,
       floatingActionButton: floatingActionButton,
       body: Stack(
         children: [
@@ -43,6 +34,16 @@ class BaseScreen extends StatelessWidget {
       ),
     );
   }
+
+  AppBar get _appBar => AppBar(
+        iconTheme: const IconThemeData(
+          color: CustomColors.primary,
+        ),
+        backgroundColor: Colors.transparent,
+        title: _logo,
+        centerTitle: true,
+        actions: [_Avatar()],
+      );
 
   Widget get _logo => const Image(
         image: AssetImage('assets/images/cmsc23_logo1.png'),
@@ -61,14 +62,11 @@ class BaseScreen extends StatelessWidget {
 }
 
 class _Avatar extends StatelessWidget {
-  const _Avatar({
-    required this.sampleUser,
-  });
-
-  final User sampleUser;
-
   @override
   Widget build(BuildContext context) {
+    Organization sampleUser =
+        Provider.of<CurrentOrgProvider>(context).currentOrg;
+
     return InkWell(
       onTap: () {
         // Don't push the profile screen if it's already open

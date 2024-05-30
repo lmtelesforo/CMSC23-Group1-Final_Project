@@ -4,19 +4,21 @@ class User {
   String name;
   String username;
   String password;
+  String email;
   List addresses;
   String contactNumber;
-  List? proofs;
   String? id;
+  String userType;
 
   User ({
     this.id, 
     required this.name, 
     required this.username,
-    required this.password, 
+    required this.password,
+    required this.email, 
     required this.addresses, 
     required this.contactNumber, 
-    this.proofs 
+    required this.userType,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -25,9 +27,10 @@ class User {
       name: json['name'],
       username: json['username'],
       password: json['password'],
+      email: json['email'],
       addresses: json['addresses'],
       contactNumber: json['contactNumber'],
-      proofs: json['proofs']
+      userType: json['userType'],
     );
   }
 
@@ -36,15 +39,15 @@ class User {
     return data.map<User>((dynamic d) => User.fromJson(d)).toList();
   }
 
-  Map<String, dynamic> toJson(User User) {
-    return {
-      'id': User.id,
-      'name': User.name,
-      'username': User.username,
-      'password': User.password,
-      'addresses': User.addresses,
-      'contactNumber': User.contactNumber,
-      'proofs': User.proofs
+  Map<String, dynamic> toJson(User user) {
+    return { // removed id mapping 
+      'name': user.name,
+      'username': user.username,
+      'password': user.password,
+      'email': user.email,
+      'addresses': user.addresses,
+      'contactNumber': user.contactNumber,
+      'userType': user.userType,
     };
   }
 }

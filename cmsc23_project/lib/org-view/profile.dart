@@ -1,34 +1,33 @@
 import 'package:cmsc23_project/models/organization.dart';
 import 'package:cmsc23_project/org-view/base_screen.dart';
 import 'package:cmsc23_project/org-view/org_view_styles.dart';
+import 'package:cmsc23_project/providers/current_org_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Profile extends StatelessWidget {
-  final Organization org = Organization(
-    name: 'Sample Org',
-    profilePic: const AssetImage('assets/images/profile_pic.jpg'),
-  );
-
-  Profile({super.key});
+  const Profile({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Organization org = context.read<CurrentOrgProvider>().currentOrg;
+
     return BaseScreen(
       body: Center(
         child: Column(
           children: [
-            _bigAvatar,
+            _bigAvatar(org),
             Container(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Text(org.name, style: CustomTextStyle.h1)),
-            _about,
+            _about(org),
           ],
         ),
       ),
     );
   }
 
-  Widget get _bigAvatar => Stack(
+  Widget _bigAvatar(org) => Stack(
         children: [
           Container(
             decoration: BoxDecoration(
@@ -38,8 +37,8 @@ class Profile extends StatelessWidget {
                 width: 7,
               ),
             ),
-            child: const CircleAvatar(
-              backgroundImage: AssetImage('assets/images/profile_pic.jpg'),
+            child: CircleAvatar(
+              backgroundImage: org.profilePic,
               radius: 50,
               backgroundColor: Colors.white,
             ),
@@ -64,7 +63,7 @@ class Profile extends StatelessWidget {
         ],
       );
 
-  Widget get _about => Container(
+  Widget _about(org) => Container(
         padding: const EdgeInsets.all(20),
         child: Stack(
           children: [

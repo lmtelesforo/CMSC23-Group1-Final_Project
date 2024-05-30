@@ -1,14 +1,17 @@
 import 'package:cmsc23_project/admin_view/admin_dashboard.dart';
 import 'package:cmsc23_project/admin_view/approve_signups.dart';
 import 'package:cmsc23_project/admin_view/login_admin.dart';
+import 'package:cmsc23_project/admin_view/user_view_own_donations.dart';
 import 'package:cmsc23_project/admin_view/view_all_donations.dart';
 import 'package:cmsc23_project/admin_view/view_all_donors.dart';
 import 'package:cmsc23_project/admin_view/view_all_organizations.dart';
+import 'package:cmsc23_project/providers/current_org_provider.dart';
 import 'package:cmsc23_project/donor-view/donation_page/donor_homepage.dart';
 import 'package:cmsc23_project/org-view/donation_drive/add_a_drive.dart';
 import 'package:cmsc23_project/org-view/org_homepage.dart';
 import 'package:cmsc23_project/org-view/profile.dart';
 import 'package:cmsc23_project/providers/donation_providers.dart';
+import 'package:cmsc23_project/providers/donation_storage_provider.dart';
 import 'package:cmsc23_project/user_view/landing_page.dart';
 import 'package:cmsc23_project/user_view/login_donor.dart';
 import 'package:cmsc23_project/user_view/login_org.dart';
@@ -16,13 +19,42 @@ import 'package:cmsc23_project/user_view/signup_donor.dart';
 import 'package:cmsc23_project/user_view/signup_org.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'admin_view/view_all_donations.dart';
+import 'providers/auth_provider.dart';
+import 'providers/firebase_provider.dart';
+import 'providers/textfield_providers.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+  options: DefaultFirebaseOptions.currentPlatform,
+  );
 
-void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => DonationProvider(),
-      child: MyApp(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => TextfieldProviders(),
+        ),
+        ChangeNotifierProvider(
+          create: ((context) => UserAuthProvider())
+        ),
+        ChangeNotifierProvider(
+          create: ((context) => UserInfosProvider())
+        ),
+        ChangeNotifierProvider(
+          create: (context) => DonationProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CurrentOrgProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => DonationStorageProvider(),
+        ),
+      ],
+      child: const RootWidget(),
     ),
   );
 }
@@ -45,17 +77,17 @@ class RootWidget extends StatelessWidget {
       initialRoute: "/",
       routes: {
         "/": (context) => const LandingPage(),
-        "/loginDonor": (context) => LogInDonorPage(),
-        "/loginOrg": (context) => LogInOrgPage(),
-        "/loginAdmin": (context) => LogInAdminPage(),
-        "/signupDonor": (context) => SignUpDonorPage(),
-        "/signupOrg": (context) => SignUpOrgPage(),
-        "/adminApprove": (context) => ApproveOrgSignups(),
-        "/viewAllOrgs": (context) => AdminViewAllOrgs(),
-        "/viewAllDonations": (context) => AdminViewAllDonations(),
-        "/viewAllDonors": (context) => AdminViewAllDonors(),
-        "/adminDashboard": (context) => AdminDashboard(),
-        "/donorHomepage": (context) => DonorHomepage(),
+        "/loginDonor": (context) => const LogInDonorPage(),
+        "/loginOrg": (context) => const LogInOrgPage(),
+        "/loginAdmin": (context) => const LogInAdminPage(),
+        "/signupDonor": (context) => const SignUpDonorPage(),
+        "/signupOrg": (context) => const SignUpOrgPage(),
+        "/adminApprove": (context) => const ApproveOrgSignups(),
+        "/viewAllOrgs": (context) => const AdminViewAllOrgs(),
+        "/viewAllDonations": (context) => const AdminViewAllDonations(),
+        "/viewAllDonors": (context) => const AdminViewAllDonors(),
+        "/adminDashboard": (context) => const AdminDashboard(),
+        "/donorHomepage": (context) => const DonorHomepage(),
         "/orgHomepage": (context) => const OrgHomePage(),
         "/add-a-drive": (context) => const AddADrive(),
         "/orgProfile": (context) => Profile(),
@@ -64,3 +96,4 @@ class RootWidget extends StatelessWidget {
     );
   }
 }
+

@@ -1,21 +1,24 @@
 import 'package:cmsc23_project/models/donation_drive.dart';
-import 'package:cmsc23_project/models/user.dart';
+import 'package:cmsc23_project/models/donor.dart';
+import 'package:flutter/material.dart';
 
-class Organization extends User {
-  List<DonationDrive> donationDrives;
-  List<DonationDrive> favorites = [];
-  String about =
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vitae ultrices enim. Nunc elementum nisl metus, quis iaculis tortor posuere ac.";
-  bool openForDonations = true;
+class Organization extends Donor {
+  ImageProvider? proof;
+  bool isApproved;
+  String about;
+  bool openForDonations;
+  List<DonationDrive>? favorites;
 
   Organization({
-    required super.profilePic,
     required super.name,
-    this.donationDrives = const [],
+    required super.username,
+    required super.addresses,
+    required super.contactNo,
+    required super.profilePic,
+    this.proof,
+    required this.isApproved,
+    required this.about,
+    required this.openForDonations,
+    this.favorites,
   });
-
-  void favorite(DonationDrive drive) {
-    drive.isFavorite = true;
-    favorites.add(drive);
-  }
 }

@@ -1,12 +1,10 @@
-import 'package:cmsc23_project/admin_view/indiv_approve_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models/user_signup.dart';
 import '../providers/textfield_providers.dart';
 
 class AdminDashboard extends StatefulWidget {
-  const AdminDashboard({Key? key}) : super(key: key);
+  const AdminDashboard({super.key});
 
   @override
   State<AdminDashboard> createState() => _AdminDashboardState();
@@ -55,7 +53,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
             child: TextButton.icon(
               onPressed: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
+                  const SnackBar(
                     content: Text('Admin Abi logged out!'),
                   ),
                 );
@@ -67,7 +65,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 width: 34,
                 height: 34,
               ),
-              label: Text(
+              label: const Text(
                 'Log out',
                 style: TextStyle(
                   fontSize: 16,
@@ -76,7 +74,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 ),
               ),
               style: TextButton.styleFrom(
-                foregroundColor: Color(0xFF373D66),
+                foregroundColor: const Color(0xFF373D66),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(32),
                 ),
@@ -87,7 +85,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
             top: MediaQuery.of(context).size.height * 0.12,
             left: 0,
             right: 0,
-            child: Padding(
+            child: const Padding(
               padding: EdgeInsets.all(17),
               child: Text(
                 "Admin Dashboard",
@@ -106,7 +104,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
             right: 0,
             child: Container(
               width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.symmetric(horizontal: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(
                 children: [
                   Row(
@@ -119,6 +117,12 @@ class _AdminDashboardState extends State<AdminDashboard> {
                             Navigator.pop(context);
                             Navigator.pushNamed(context, "/adminApprove");
                           },
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10), 
+                          ),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -127,8 +131,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                 width: 135, 
                                 height: 100, 
                               ), 
-                              SizedBox(height: 10),
-                              Text(
+                              const SizedBox(height: 10),
+                              const Text(
                                 'Sign Up Requests',
                                 style: TextStyle(
                                   fontSize: 14,
@@ -139,15 +143,9 @@ class _AdminDashboardState extends State<AdminDashboard> {
                               ),
                             ],
                           ),
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            padding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10), 
-                          ),
                         ),
                       ),
-                      SizedBox(width: 20),
+                      const SizedBox(width: 20),
                       SizedBox(
                         width: 145, 
                         child: ElevatedButton(
@@ -155,6 +153,12 @@ class _AdminDashboardState extends State<AdminDashboard> {
                             Navigator.pop(context);
                             Navigator.pushNamed(context, "/viewAllDonors");
                           },
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10), 
+                          ),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -163,8 +167,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                 width: 135, 
                                 height: 100, 
                               ), 
-                              SizedBox(height: 10),
-                              Text(
+                              const SizedBox(height: 10),
+                              const Text(
                                 'View All Donors',
                                 style: TextStyle(
                                   fontSize: 14,
@@ -175,17 +179,11 @@ class _AdminDashboardState extends State<AdminDashboard> {
                               ),
                             ],
                           ),
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            padding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10), 
-                          ),
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -196,6 +194,12 @@ class _AdminDashboardState extends State<AdminDashboard> {
                             Navigator.pop(context);
                             Navigator.pushNamed(context, "/viewAllDonations");
                           },
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10), 
+                          ),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -204,8 +208,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                 width: 135, 
                                 height: 100, 
                               ), 
-                              SizedBox(height: 10),
-                              Text(
+                              const SizedBox(height: 10),
+                              const Text(
                                 'View All Donations',
                                 style: TextStyle(
                                   fontSize: 14,
@@ -216,15 +220,9 @@ class _AdminDashboardState extends State<AdminDashboard> {
                               ),
                             ],
                           ),
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            padding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10), 
-                          ),
                         ),
                       ),
-                      SizedBox(width: 20),
+                      const SizedBox(width: 20),
                       SizedBox(
                         width: 145, 
                         child: ElevatedButton(
@@ -232,6 +230,12 @@ class _AdminDashboardState extends State<AdminDashboard> {
                             Navigator.pop(context);
                             Navigator.pushNamed(context, "/viewAllOrgs");
                           },
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10), 
+                          ),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -240,8 +244,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                 width: 135, 
                                 height: 100, 
                               ), 
-                              SizedBox(height: 10),
-                              Text(
+                              const SizedBox(height: 10),
+                              const Text(
                                 'View All Organizations',
                                 style: TextStyle(
                                   fontSize: 14,
@@ -251,12 +255,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                 textAlign: TextAlign.center,
                               ),
                             ],
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            padding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10), 
                           ),
                         ),
                       ),

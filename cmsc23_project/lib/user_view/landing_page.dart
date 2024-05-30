@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class LandingPage extends StatefulWidget {
-  const LandingPage({Key? key}) : super(key: key);
+  const LandingPage({super.key});
 
   @override
   State<LandingPage> createState() => _LandingPageState();
@@ -54,117 +54,120 @@ class _LandingPageState extends State<LandingPage> {
             left: 0,
             right: 0,
             child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16, right: 16, bottom: 12),
-                    child: Text(
-                      "For the People, by the People.",
-                      style: TextStyle(
-                        fontSize: 13,
-                        fontFamily: 'Poppins-Reg',
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF373D66),
+              child: Container (
+                width: 320,
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(left: 16, right: 16, bottom: 12),
+                      child: Text(
+                        "For the People, by the People.",
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontFamily: 'Poppins-Reg',
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF373D66),
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
                     ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, "/loginDonor");
-                    },
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(300, 35),
-                      foregroundColor: Color(0xFFFCBE4F),
-                      textStyle: const TextStyle(
-                        fontSize: 14,
-                        fontFamily: 'Poppins-Bold',
-                      ),
-                      backgroundColor: Color(0xFF373D66),
-                    ),
-                    child: const Text('Log In'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, "/signupDonor");
-                    },
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(300, 35),
-                      foregroundColor: Color(0xFFFCBE4F),
-                      textStyle: const TextStyle(
-                        fontSize: 14,
-                        fontFamily: 'Poppins-Bold',
-                      ),
-                      backgroundColor: Color(0xFF373D66),
-                    ),
-                    child: const Text('Sign Up'),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 16, right: 16, top: 17, bottom: 5),
-                    child: Text(
-                      "Accepting donations?",
-                      style: TextStyle(
-                        fontSize: 13,
-                        fontFamily: 'Poppins-Reg',
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF373D66), 
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, "/loginOrg");
-                    },
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(300, 35),
-                      foregroundColor: Color(0xFF373D66),
-                      textStyle: const TextStyle(
-                        fontSize: 14,
-                        fontFamily: 'Poppins-Bold',
-                      ),
-                      backgroundColor: Color(0xFFFCBE4F),
-                    ),
-                    child: const Text('Log in as an Organization'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, "/signupOrg");
-                    },
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(300, 35),
-                      foregroundColor: Color(0xFF373D66),
-                      textStyle: const TextStyle(
-                        fontSize: 14,
-                        fontFamily: 'Poppins-Bold',
-                      ),
-                      backgroundColor: Color(0xFFFCBE4F),
-                    ),
-                    child: const Text('Sign up as an Organization'),
-                  ),
-                  SizedBox(
-                    height: 34,
-                    child: TextButton(
+                    ElevatedButton(
                       onPressed: () {
                         Navigator.pop(context);
-                        Navigator.pushNamed(context, "/loginAdmin");
+                        Navigator.pushNamed(context, "/loginDonor");
                       },
-                      child: Text(
-                        "Log in as Admin",
-                        style: TextStyle(
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(300, 35),
+                        foregroundColor: const Color(0xFFFCBE4F),
+                        textStyle: const TextStyle(
                           fontSize: 14,
                           fontFamily: 'Poppins-Bold',
-                          color: Color(0xFF373D66),
+                        ),
+                        backgroundColor: const Color(0xFF373D66),
+                      ),
+                      child: const Text('Log In'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.pushNamed(context, "/signupDonor");
+                      },
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(300, 35),
+                        foregroundColor: const Color(0xFFFCBE4F),
+                        textStyle: const TextStyle(
+                          fontSize: 14,
+                          fontFamily: 'Poppins-Bold',
+                        ),
+                        backgroundColor: const Color(0xFF373D66),
+                      ),
+                      child: const Text('Sign Up'),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 16, right: 16, top: 17, bottom: 5),
+                      child: Text(
+                        "Accepting donations?",
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontFamily: 'Poppins-Reg',
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF373D66), 
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.pushNamed(context, "/loginOrg");
+                      },
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(300, 35),
+                        foregroundColor: const Color(0xFF373D66),
+                        textStyle: const TextStyle(
+                          fontSize: 14,
+                          fontFamily: 'Poppins-Bold',
+                        ),
+                        backgroundColor: const Color(0xFFFCBE4F),
+                      ),
+                      child: const Text('Log in as an Organization'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.pushNamed(context, "/signupOrg");
+                      },
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(300, 35),
+                        foregroundColor: const Color(0xFF373D66),
+                        textStyle: const TextStyle(
+                          fontSize: 14,
+                          fontFamily: 'Poppins-Bold',
+                        ),
+                        backgroundColor: const Color(0xFFFCBE4F),
+                      ),
+                      child: const Text('Sign up as an Organization'),
+                    ),
+                    SizedBox(
+                      height: 34,
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, "/loginAdmin");
+                        },
+                        child: const Text(
+                          "Log in as Admin",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontFamily: 'Poppins-Bold',
+                            color: Color(0xFF373D66),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

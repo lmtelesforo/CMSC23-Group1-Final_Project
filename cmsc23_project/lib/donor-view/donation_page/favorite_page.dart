@@ -4,8 +4,11 @@ import 'package:cmsc23_project/providers/donation_providers.dart';
 import 'donor_page.dart';
 
 class FavoritePage extends StatelessWidget {
+   
   @override
   Widget build(BuildContext context) {
+    final Map<String, dynamic> donorDetails = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -20,7 +23,13 @@ class FavoritePage extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         centerTitle: true,
-        iconTheme: IconThemeData(color: Colors.white, size: 30),
+        iconTheme: IconThemeData(color: const Color.fromRGBO(55, 61, 102, 1)),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+          Navigator.pop(context);
+          },
+        ),
       ),
       body: Consumer<DonationProvider>(
         builder: (context, donationProvider, child) {
@@ -49,7 +58,7 @@ class FavoritePage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => DonorPage(organization: org),
+                      builder: (context) => DonorPage(organization: org, donorDetails: donorDetails),
                     ),
                   );
                 },
