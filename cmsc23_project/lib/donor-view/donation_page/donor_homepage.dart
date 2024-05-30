@@ -243,7 +243,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
                               ),
                               SizedBox(
                                   width:
-                                      screenWidth * 0.02), // Adjusted spacing
+                                      screenWidth * 0.02),
                               Expanded(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -266,7 +266,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                     ),
                                     SizedBox(
                                         height: screenHeight *
-                                            0.005), // Adjusted spacing
+                                            0.005), 
                                     Text(
                                       "Now!",
                                       style: TextStyle(
@@ -402,11 +402,11 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                             return Icon(
                                               Icons.favorite,
                                               color:
-                                                  provider.isOrganizationFavorite(
-                                                          org)
-                                                      ? const Color.fromRGBO(
-                                                          252, 190, 79, 1)
-                                                      : Colors.transparent,
+                                                provider.isOrganizationFavorite(
+                                                    org)
+                                                ? const Color.fromRGBO(
+                                                    252, 190, 79, 1)
+                                                : Colors.transparent,
                                             );
                                           },
                                         ),
