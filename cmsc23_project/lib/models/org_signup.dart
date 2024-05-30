@@ -11,24 +11,23 @@ class Org {
   List proofs;
   String? id;
   String userType;
-  bool isApproved;
-  String about;
   bool openForDonations;
-  ImageProvider? profilePic;
+  String? profilePic;
+  String? about;
 
-  Org ({
-    this.id, 
-    required this.name, 
-    required this.username,
-    required this.email, 
-    required this.addresses, 
-    required this.contactNo, 
-    required this.userType,
-    required this.proofs, 
-    required this.isApproved,
-    required this.about,
-    required this.openForDonations,
-  });
+  Org(
+      {this.id,
+      required this.name,
+      required this.username,
+      required this.email,
+      required this.addresses,
+      required this.contactNumber,
+      required this.userType,
+      required this.proofs,
+      this.openForDonations = true,
+      this.profilePic =
+          'https://i.guim.co.uk/img/media/365305a402b261465a0105ea9f8b0c98478e6f42/0_448_6720_4032/master/6720.jpg?width=1200&height=900&quality=85&auto=format&fit=crop&s=ec0bb7aed96eba1ca9fcebf4dbfffe82',
+      this.about = ''});
 
   factory Org.fromJson(Map<String, dynamic> json) {
     return Org(
@@ -39,9 +38,9 @@ class Org {
       contactNo: json['contactNo'],
       userType: json['userType'],
       proofs: json['proofs'],
-      isApproved: json['isApproved'],
+      openForDonations: json['openForDonations'],
+      profilePic: json['profilePic'],
       about: json['about'],
-      openForDonations: json['openForDonations']
     );
   }
 
@@ -59,13 +58,8 @@ class Org {
       'contactNo': org.contactNo,
       'userType': org.userType,
       'proofs': org.proofs,
-      'isApproved': org.isApproved,
-      'about': org.about,
       'openForDonations': org.openForDonations,
+      'profilePicture': org.profilePic
     };
   }
 }
-
-
-
-

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cmsc23_project/admin_view/indiv_approve_page.dart';
 import 'package:cmsc23_project/admin_view/indiv_view_all_donors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -7,7 +6,6 @@ import 'package:provider/provider.dart';
 import '../models/user_signup.dart';
 import '../providers/firebase_provider.dart';
 import '../providers/textfield_providers.dart';
-import 'indiv_view_all_donors.dart';
 
 class AdminViewAllDonors extends StatefulWidget {
   const AdminViewAllDonors({super.key});
@@ -109,12 +107,12 @@ class _AdminViewAllDonorsState extends State<AdminViewAllDonors> {
               right: 0,
               bottom: MediaQuery.of(context).size.height * 0.057,
               child: SingleChildScrollView(
-                child: Container(
+                child: SizedBox(
                 height: MediaQuery.of(context).size.height * 0.7, 
                 width: MediaQuery.of(context).size.width*0.8,
                   child: Column(
                     children: [
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Expanded(
                         child: StreamBuilder<QuerySnapshot>(
                         stream: userStream,
@@ -127,7 +125,7 @@ class _AdminViewAllDonorsState extends State<AdminViewAllDonors> {
                           } 
                           else if (snapshot.connectionState == ConnectionState.waiting) {
                             context.read<UserInfosProvider>().fetchUsers(); // reload snapshots
-                            return Center(
+                            return const Center(
                               child: CircularProgressIndicator(),
                             ); // display loading circle until it succeeds
                           } 
@@ -152,7 +150,7 @@ class _AdminViewAllDonorsState extends State<AdminViewAllDonors> {
                         return ListView.builder(
                           padding: EdgeInsets.zero,
                           shrinkWrap: true,
-                          physics: AlwaysScrollableScrollPhysics(),
+                          physics: const AlwaysScrollableScrollPhysics(),
                           itemCount: userDetails.length,
                           itemBuilder: (context, index) {
                             print('Request at index $index: ${userDetails[index].data()}'); 
@@ -161,23 +159,23 @@ class _AdminViewAllDonorsState extends State<AdminViewAllDonors> {
 
                             return Container(
                               decoration: BoxDecoration(
-                                color: Color(0xFFFFFFFF),
+                                color: const Color(0xFFFFFFFF),
                                 borderRadius: BorderRadius.circular(15),
                               ),
-                              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 28),
+                              margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 28),
                               child: ListTile(
-                                contentPadding: EdgeInsets.only(top: 2, left: 10, bottom: 2, right: 13),
+                                contentPadding: const EdgeInsets.only(top: 2, left: 10, bottom: 2, right: 13),
                                 title: Text(
                                   user.name, 
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 18,
                                     fontFamily: 'Poppins-Bold',
                                     color: Color(0xFF373D66),
                                   ),
                                 ),
                                 subtitle: Text(
-                                  user.contactNo,
-                                  style: TextStyle(
+                                  user.contactNumber,
+                                  style: const TextStyle(
                                     fontSize: 12,
                                     color: Colors.grey,
                                     fontFamily: 'Poppins-Reg',
@@ -194,12 +192,12 @@ class _AdminViewAllDonorsState extends State<AdminViewAllDonors> {
                                   },
                                   style: ElevatedButton.styleFrom(
                                     minimumSize: const Size(57, 50),
-                                    foregroundColor: Color(0xFF373D66),
+                                    foregroundColor: const Color(0xFF373D66),
                                     textStyle: const TextStyle(
                                       fontSize: 14,
                                       fontFamily: 'Poppins-Bold',
                                     ),
-                                    backgroundColor: Color(0xFFFCBE4F),
+                                    backgroundColor: const Color(0xFFFCBE4F),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15),
                                     ),

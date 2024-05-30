@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/org_signup.dart';
-import '../models/user_signup.dart';
 import '../providers/firebase_provider.dart';
 import '../providers/textfield_providers.dart';
 
@@ -108,12 +107,12 @@ class _ApproveOrgSignupsState extends State<ApproveOrgSignups> {
               right: 0,
               bottom: MediaQuery.of(context).size.height * 0.057,
               child: SingleChildScrollView(
-                child: Container(
+                child: SizedBox(
                 height: MediaQuery.of(context).size.height * 0.7, 
                 width: MediaQuery.of(context).size.width*0.8,
                   child: Column(
                     children: [
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Expanded(
                         child: StreamBuilder<QuerySnapshot>(
                         stream: userStream,
@@ -126,7 +125,7 @@ class _ApproveOrgSignupsState extends State<ApproveOrgSignups> {
                           } 
                           else if (snapshot.connectionState == ConnectionState.waiting) {
                             context.read<UserInfosProvider>().fetchSignUpRequests(); // reload snapshots
-                            return Center(
+                            return const Center(
                               child: CircularProgressIndicator(),
                             ); // display loading circle until it succeeds
                           } 
@@ -151,7 +150,7 @@ class _ApproveOrgSignupsState extends State<ApproveOrgSignups> {
                         return ListView.builder(
                           padding: EdgeInsets.zero,
                           shrinkWrap: true,
-                          physics: AlwaysScrollableScrollPhysics(),
+                          physics: const AlwaysScrollableScrollPhysics(),
                           itemCount: orgDetails.length,
                           itemBuilder: (context, index) {
                             print('Request at index $index: ${orgDetails[index].data()}'); 
@@ -160,23 +159,23 @@ class _ApproveOrgSignupsState extends State<ApproveOrgSignups> {
 
                             return Container(
                               decoration: BoxDecoration(
-                                color: Color(0xFFFFFFFF),
+                                color: const Color(0xFFFFFFFF),
                                 borderRadius: BorderRadius.circular(15),
                               ),
-                              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 28),
+                              margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 28),
                               child: ListTile(
-                                contentPadding: EdgeInsets.only(top: 2, left: 10, bottom: 2, right: 13),
+                                contentPadding: const EdgeInsets.only(top: 2, left: 10, bottom: 2, right: 13),
                                 title: Text(
                                   org.name, 
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 18,
                                     fontFamily: 'Poppins-Bold',
                                     color: Color(0xFF373D66),
                                   ),
                                 ),
                                 subtitle: Text(
-                                  org.contactNo,
-                                  style: TextStyle(
+                                  org.contactNumber,
+                                  style: const TextStyle(
                                     fontSize: 12,
                                     color: Colors.grey,
                                     fontFamily: 'Poppins-Reg',
@@ -193,12 +192,12 @@ class _ApproveOrgSignupsState extends State<ApproveOrgSignups> {
                                   },
                                   style: ElevatedButton.styleFrom(
                                     minimumSize: const Size(57, 50),
-                                    foregroundColor: Color(0xFF373D66),
+                                    foregroundColor: const Color(0xFF373D66),
                                     textStyle: const TextStyle(
                                       fontSize: 14,
                                       fontFamily: 'Poppins-Bold',
                                     ),
-                                    backgroundColor: Color(0xFFFCBE4F),
+                                    backgroundColor: const Color(0xFFFCBE4F),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15),
                                     ),

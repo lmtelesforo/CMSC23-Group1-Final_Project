@@ -9,7 +9,7 @@ import '../providers/textfield_providers.dart';
 class IndivViewAllDonors extends StatefulWidget {
   final DocumentSnapshot userDetails;
 
-  const IndivViewAllDonors({Key? key, required this.userDetails}) : super(key: key);
+  const IndivViewAllDonors({super.key, required this.userDetails});
 
   @override
   State<IndivViewAllDonors> createState() => _IndivViewAllDonorsState();
@@ -136,7 +136,7 @@ class _IndivViewAllDonorsState extends State<IndivViewAllDonors> {
                             Expanded(
                               child: Text(
                                 user.name,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 16,
                                   fontFamily: 'Poppins-Reg',
                                   color: Color(0xFF373D66),
@@ -160,7 +160,31 @@ class _IndivViewAllDonorsState extends State<IndivViewAllDonors> {
                             Expanded(
                               child: Text(
                                 user.username,
-                                style: TextStyle(
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: 'Poppins-Reg',
+                                  color: Color(0xFF373D66),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 7),
+                        Row(
+                          children: [
+                            const Text(
+                              'Email:',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: 'Poppins-Bold',
+                                color: Color(0xFF373D66),
+                              ),
+                            ),
+                            const SizedBox(width: 5),
+                            Expanded(
+                              child: Text(
+                                user.email,
+                                style: const TextStyle(
                                   fontSize: 16,
                                   fontFamily: 'Poppins-Reg',
                                   color: Color(0xFF373D66),
@@ -187,7 +211,7 @@ class _IndivViewAllDonorsState extends State<IndivViewAllDonors> {
                                 Expanded(
                                   child: Text(
                                     user.addresses.first,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 16,
                                       fontFamily: 'Poppins-Reg',
                                       color: Color(0xFF373D66),
@@ -215,8 +239,8 @@ class _IndivViewAllDonorsState extends State<IndivViewAllDonors> {
                             const SizedBox(width: 5),
                             Expanded(
                               child: Text(
-                                user.contactNo,
-                                style: TextStyle(
+                                user.contactNumber,
+                                style: const TextStyle(
                                   fontSize: 16,
                                   fontFamily: 'Poppins-Reg',
                                   color: Color(0xFF373D66),
@@ -249,11 +273,11 @@ class _IndivViewAllDonorsState extends State<IndivViewAllDonors> {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, "/viewAllDonors");
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.clear,
                 color: Color(0xFFFCBE4F),
               ),
-              label: Text(
+              label: const Text(
                 'Delete Donor',
                 style: TextStyle(
                   fontSize: 16,
@@ -267,7 +291,7 @@ class _IndivViewAllDonorsState extends State<IndivViewAllDonors> {
                   fontSize: 14,
                   fontFamily: 'Poppins-Bold',
                 ),
-                backgroundColor: Color.fromARGB(255, 190, 58, 58),
+                backgroundColor: const Color.fromARGB(255, 190, 58, 58),
               ),
             ),
           ),
@@ -286,7 +310,7 @@ class _IndivViewAllDonorsState extends State<IndivViewAllDonors> {
             padding: const EdgeInsets.only(left: 106), 
             child: Text(
               user.addresses[index + 1],
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 fontFamily: 'Poppins-Reg',
                 color: Color(0xFF373D66),

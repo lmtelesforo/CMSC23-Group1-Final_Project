@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/org_signup.dart';
-import '../models/user_signup.dart';
 import '../providers/firebase_provider.dart';
 import '../providers/textfield_providers.dart';
 
 class IndivViewAllOrgs extends StatefulWidget {
   final DocumentSnapshot orgDetails;
 
-  const IndivViewAllOrgs({Key? key, required this.orgDetails}) : super(key: key);
+  const IndivViewAllOrgs({super.key, required this.orgDetails});
 
   @override
   State<IndivViewAllOrgs> createState() => _IndivViewAllOrgsState();
@@ -138,7 +137,7 @@ class _IndivViewAllOrgsState extends State<IndivViewAllOrgs> {
                             Expanded(
                               child: Text(
                                 org.name,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 16,
                                   fontFamily: 'Poppins-Reg',
                                   color: Color(0xFF373D66),
@@ -162,7 +161,7 @@ class _IndivViewAllOrgsState extends State<IndivViewAllOrgs> {
                             Expanded(
                               child: Text(
                                 org.username,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 16,
                                   fontFamily: 'Poppins-Reg',
                                   color: Color(0xFF373D66),
@@ -189,7 +188,7 @@ class _IndivViewAllOrgsState extends State<IndivViewAllOrgs> {
                                 Expanded(
                                   child: Text(
                                     org.addresses.first,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 16,
                                       fontFamily: 'Poppins-Reg',
                                       color: Color(0xFF373D66),
@@ -217,8 +216,8 @@ class _IndivViewAllOrgsState extends State<IndivViewAllOrgs> {
                             const SizedBox(width: 5),
                             Expanded(
                               child: Text(
-                                org.contactNo,
-                                style: TextStyle(
+                                org.contactNumber,
+                                style: const TextStyle(
                                   fontSize: 16,
                                   fontFamily: 'Poppins-Reg',
                                   color: Color(0xFF373D66),
@@ -244,8 +243,8 @@ class _IndivViewAllOrgsState extends State<IndivViewAllOrgs> {
                                 const SizedBox(width: 5),
                                 Expanded(
                                   child: Text(
-                                    org.proofs?.first,
-                                    style: TextStyle(
+                                    org.proofs.first,
+                                    style: const TextStyle(
                                       fontSize: 16,
                                       fontFamily: 'Poppins-Reg',
                                       color: Color(0xFF373D66),
@@ -254,7 +253,7 @@ class _IndivViewAllOrgsState extends State<IndivViewAllOrgs> {
                                 ),
                               ],
                             ),
-                            (org.proofs!.length > 1)
+                            (org.proofs.length > 1)
                             ? newLine() // if true
                             : const SizedBox.shrink(), // if false
                           ],
@@ -283,11 +282,11 @@ class _IndivViewAllOrgsState extends State<IndivViewAllOrgs> {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, "/viewAllOrgs");
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.clear,
                 color: Color(0xFFFCBE4F),
               ),
-              label: Text(
+              label: const Text(
                 'Delete Organization',
                 style: TextStyle(
                   fontSize: 16,
@@ -301,7 +300,7 @@ class _IndivViewAllOrgsState extends State<IndivViewAllOrgs> {
                   fontSize: 14,
                   fontFamily: 'Poppins-Bold',
                 ),
-                backgroundColor: Color.fromARGB(255, 190, 58, 58),
+                backgroundColor: const Color.fromARGB(255, 190, 58, 58),
               ),
             ),
           ),
@@ -320,7 +319,7 @@ class _IndivViewAllOrgsState extends State<IndivViewAllOrgs> {
             padding: const EdgeInsets.only(left: 106), 
             child: Text(
               org.addresses[index + 1],
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 fontFamily: 'Poppins-Reg',
                 color: Color(0xFF373D66),
@@ -336,13 +335,13 @@ class _IndivViewAllOrgsState extends State<IndivViewAllOrgs> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: List.generate(
-        org.proofs!.length - 1,
+        org.proofs.length - 1,
         (index) {
           return Padding(
             padding: const EdgeInsets.only(left: 70), 
             child: Text(
-              org.proofs![index + 1],
-              style: TextStyle(
+              org.proofs[index + 1],
+              style: const TextStyle(
                 fontSize: 16,
                 fontFamily: 'Poppins-Reg',
                 color: Color(0xFF373D66),

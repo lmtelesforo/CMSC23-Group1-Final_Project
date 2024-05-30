@@ -1,7 +1,6 @@
 import 'package:cmsc23_project/api/firebase_users_api.dart';
 import 'package:cmsc23_project/providers/auth_provider.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,11 +15,11 @@ class LogInDonorPage extends StatefulWidget {
 }
 
 class _LogInDonorPageState extends State<LogInDonorPage> {
-  final _formKey = GlobalKey<FormState>(); 
+  final _formKey = GlobalKey<FormState>();
   bool showSignInErrorMessage = false;
 
   @override
-  Widget build(BuildContext context) {    
+  Widget build(BuildContext context) {
     final provider = context.watch<TextfieldProviders>();
     final firebaseUsers = context.watch<UserInfosProvider>();
 
@@ -28,10 +27,10 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
 
     return Scaffold(
       body: Form(
-        key: _formKey, 
+        key: _formKey,
         child: Stack(
           children: [
-            Positioned (
+            Positioned(
               top: 0,
               left: 0,
               right: 0,
@@ -40,7 +39,8 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                 height: MediaQuery.of(context).size.height,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('lib/user_view/assets/cmsc23_background.png'),
+                    image: AssetImage(
+                        'lib/user_view/assets/cmsc23_background.png'),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -56,9 +56,9 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                   Navigator.pushNamed(context, "/");
                 },
                 icon: Image.asset(
-                  'lib/user_view/assets/back.png', 
-                  width: 34, 
-                  height: 34, 
+                  'lib/user_view/assets/back.png',
+                  width: 34,
+                  height: 34,
                 ),
                 label: const Text(
                   'Back',
@@ -70,13 +70,13 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                 style: TextButton.styleFrom(
                   foregroundColor: const Color(0xFF373D66),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(32), 
+                    borderRadius: BorderRadius.circular(32),
                   ),
                 ),
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.165, 
+              top: MediaQuery.of(context).size.height * 0.165,
               left: 0,
               right: 0,
               child: Container(
@@ -88,7 +88,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.345, 
+              top: MediaQuery.of(context).size.height * 0.345,
               left: 0,
               right: 0,
               child: const Text(
@@ -104,7 +104,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.43, 
+              top: MediaQuery.of(context).size.height * 0.43,
               left: 0,
               right: 0,
               child: const Padding(
@@ -122,12 +122,12 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.415, 
+              top: MediaQuery.of(context).size.height * 0.415,
               left: 0,
               right: 0,
               bottom: 0,
               child: Center(
-                child: Container (
+                child: Container(
                   width: 320,
                   child: ListView(
                     shrinkWrap: true,
@@ -136,7 +136,9 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.041, bottom: 4),
+                            padding: EdgeInsets.only(
+                                left: MediaQuery.of(context).size.width * 0.041,
+                                bottom: 4),
                             child: Text(
                               "Email",
                               style: TextStyle(
@@ -152,18 +154,18 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                       SizedBox(
                         width: 320,
                         height: 60,
-                        child: Stack (
+                        child: Stack(
                           children: [
-                            Container (
+                            Container(
                               width: 320,
                               height: 40,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(32),
-                                  color: const Color(0xFFFFFFFF).withOpacity(0.7),
-                                ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(32),
+                                color: const Color(0xFFFFFFFF).withOpacity(0.7),
                               ),
+                            ),
                             TextFormField(
-                              controller: provider.controller1, 
+                              controller: provider.controller1,
                               onChanged: provider.updateName,
                               validator: (val) {
                                 if (val!.isEmpty) {
@@ -181,18 +183,19 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
                                   fontFamily: 'Poppins-Reg',
-                                  color: Color(0xFF373D66)
-                              ),
+                                  color: Color(0xFF373D66)),
                               decoration: InputDecoration(
                                 hintText: 'Enter your email',
                                 hintStyle: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
                                   fontFamily: 'Poppins-Reg',
-                                  color: const Color(0xFF373D66).withOpacity(0.9),
+                                  color:
+                                      const Color(0xFF373D66).withOpacity(0.9),
                                 ),
                                 border: InputBorder.none,
-                                contentPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 7),
+                                contentPadding: const EdgeInsets.only(
+                                    left: 16, right: 16, bottom: 7),
                               ),
                             ),
                           ],
@@ -203,7 +206,9 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.041, bottom: 4),
+                            padding: EdgeInsets.only(
+                                left: MediaQuery.of(context).size.width * 0.041,
+                                bottom: 4),
                             child: const Text(
                               "Password",
                               style: TextStyle(
@@ -219,19 +224,19 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                       SizedBox(
                         width: 320,
                         height: 60,
-                        child: Stack (
+                        child: Stack(
                           children: [
-                            Container (
+                            Container(
                               width: 320,
                               height: 40,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(32),
-                                  color: const Color(0xFFFFFFFF).withOpacity(0.7),
-                                ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(32),
+                                color: const Color(0xFFFFFFFF).withOpacity(0.7),
                               ),
+                            ),
                             TextFormField(
                               obscureText: true,
-                              controller: provider.controller2, 
+                              controller: provider.controller2,
                               onChanged: provider.updatePassword,
                               validator: (val) {
                                 if (val!.isEmpty) {
@@ -249,18 +254,19 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
                                   fontFamily: 'Poppins-Reg',
-                                  color: Color(0xFF373D66)
-                              ),
+                                  color: Color(0xFF373D66)),
                               decoration: InputDecoration(
                                 hintText: 'Enter your password',
                                 hintStyle: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
                                   fontFamily: 'Poppins-Reg',
-                                  color: const Color(0xFF373D66).withOpacity(0.9),
+                                  color:
+                                      const Color(0xFF373D66).withOpacity(0.9),
                                 ),
                                 border: InputBorder.none,
-                                contentPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 7),
+                                contentPadding: const EdgeInsets.only(
+                                    left: 16, right: 16, bottom: 7),
                               ),
                             ),
                           ],
@@ -291,39 +297,43 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                             String password = provider.controller2.text;
 
                             String? message = await context
-                            .read<UserAuthProvider>()
-                            .authService
-                            .signIn(email!, password!);
+                                .read<UserAuthProvider>()
+                                .authService
+                                .signIn(email!, password!);
 
                             print(message);
                             print(showSignInErrorMessage);
 
                             setState(() async {
                               final bool found = await checkUserType(email);
-                              print(found);    
+                              print(found);
                               // ignore: unrelated_type_equality_checks
-                              if (message != null && message.isNotEmpty && found != false) {
+                              if (message != null &&
+                                  message.isNotEmpty &&
+                                  found != false) {
                                 print(found);
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                    content: Text('Invalid email or password. Check your credentials or try signing in with Google.'),
+                                    content: Text(
+                                        'Invalid email or password. Check your credentials or try signing in with Google.'),
                                   ),
                                 );
                               }
                               // ignore: unrelated_type_equality_checks
                               else if (found != true) {
-                                 print(found);
+                                print(found);
                                 showSignInErrorMessage = true;
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                    content: Text('No existing account. Create one?'),
+                                    content: Text(
+                                        'No existing account. Create one?'),
                                   ),
                                 );
-                              } 
-                              else {
+                              } else {
                                 showSignInErrorMessage = false;
 
-                                final donorsData = await firebaseUsers.getDonors();
+                                final donorsData =
+                                    await firebaseUsers.getDonors();
 
                                 var donorDetails;
 
@@ -338,21 +348,23 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                                     donorDetails = donorData;
                                     break;
                                   }
-                                } 
-                                
+                                }
+
                                 if (foundDonor == true) {
                                   provider.resetLogIn();
                                   Navigator.pop(context);
-                                  Navigator.pushNamed(context, "/donorHomepage", arguments: donorDetails);
+                                  Navigator.pushNamed(context, "/donorHomepage",
+                                      arguments: donorDetails);
 
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
-                                      content: Text('Welcome to ElbiDrive, $donorName!'),
+                                      content: Text(
+                                          'Welcome to ElbiDrive, $donorName!'),
                                     ),
                                   );
-                                } 
-                                else if (foundDonor != true) {
-                                  final orgsData = await firebaseUsers.getOrgs();
+                                } else if (foundDonor != true) {
+                                  final orgsData =
+                                      await firebaseUsers.getOrgs();
 
                                   // loop through orgsData and check if user email has match in all orgs
                                   String? orgName;
@@ -369,7 +381,8 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                                   if (foundOrg == true) {
                                     provider.resetLogIn();
                                     Navigator.pop(context);
-                                    Navigator.pushNamed(context, "/orgHomepage");
+                                    Navigator.pushNamed(
+                                        context, "/org");
 
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
@@ -377,25 +390,24 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                                       ),
                                     );
                                     provider.resetLogIn();
-                                  } 
-                                  else if (foundDonor != true && foundOrg != true) { // no match for either
+                                  } else if (foundDonor != true &&
+                                      foundOrg != true) {
+                                    // no match for either
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
-                                        content: Text('You don\'t have an existing account. Create one?'),
+                                        content: Text(
+                                            'You don\'t have an existing account. Create one?'),
                                       ),
                                     );
                                   }
                                 }
                               }
                             });
-                          } 
-                          else {
-                            
-                          }
+                          } else {}
                         },
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(320, 40),
-                          foregroundColor:  const Color(0xFFFCBE4F),
+                          foregroundColor: const Color(0xFFFCBE4F),
                           textStyle: const TextStyle(
                             fontSize: 14,
                             fontFamily: 'Poppins-Bold',
@@ -404,7 +416,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                         ),
                         child: const Text('Log in'),
                       ),
-                      Center (
+                      Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -443,12 +455,13 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                 ),
               ),
             ),
-            Positioned (
+            Positioned(
               bottom: MediaQuery.of(context).size.height * 0.035,
               left: 0,
               right: 0,
-              child: Center (
-                child: showSignInErrorMessage ? signInErrorMessage : Container(),
+              child: Center(
+                child:
+                    showSignInErrorMessage ? signInErrorMessage : Container(),
               ),
             ),
           ],
@@ -456,16 +469,17 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
       ),
     );
   }
+
   Widget get signInErrorMessage => const Padding(
-    padding: EdgeInsets.only(bottom: 30),
-    child: Text(
-      "Invalid email or password",
-      style: TextStyle(
-        color: Color.fromARGB(255, 179, 42, 32),
-        fontFamily: 'Poppins',
-        fontSize: 15),
-    ),
-  );
+        padding: EdgeInsets.only(bottom: 30),
+        child: Text(
+          "Invalid email or password",
+          style: TextStyle(
+              color: Color.fromARGB(255, 179, 42, 32),
+              fontFamily: 'Poppins',
+              fontSize: 15),
+        ),
+      );
 
   Future<bool> checkUserType(String? googleEmail) async {
     final firebaseUsers = context.read<UserInfosProvider>();
@@ -473,7 +487,8 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
     final orgsData = await firebaseUsers.getOrgs();
 
     // check if it matches any existing email
-    final foundDonor = donorsData.any((donorData) => donorData['email'] == googleEmail);
+    final foundDonor =
+        donorsData.any((donorData) => donorData['email'] == googleEmail);
 
     // check if it matches any emails
     final foundOrg = orgsData.any((orgData) => orgData['email'] == googleEmail);
