@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:cmsc23_project/donor-view/donation_page/favorite_page.dart';
 import 'package:cmsc23_project/donor-view/donation_page/org_details_page.dart';
 
-import '../../admin_view/user_view_own_donations.dart';
+import 'user_view_own_donations.dart';
 
 class DonorHomepage extends StatefulWidget {
   const DonorHomepage({super.key});

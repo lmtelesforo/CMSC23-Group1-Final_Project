@@ -5,8 +5,8 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-import '../providers/donation_storage_provider.dart';
-import '../providers/textfield_providers.dart';
+import '../../providers/donation_storage_provider.dart';
+import '../../providers/textfield_providers.dart';
 import 'user_view_own_donations.dart';
 
 class UserIndivViewDonation extends StatefulWidget {

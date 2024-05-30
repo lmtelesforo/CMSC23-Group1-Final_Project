@@ -4,8 +4,8 @@ import 'package:cmsc23_project/providers/donation_storage_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models/indiv_donation.dart';
-import '../providers/textfield_providers.dart';
+import '../../models/indiv_donation.dart';
+import '../../providers/textfield_providers.dart';
 import 'indiv_view_user_donations.dart';
 
 class UserViewAllDonations extends StatefulWidget {
