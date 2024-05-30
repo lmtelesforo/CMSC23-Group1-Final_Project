@@ -1,12 +1,14 @@
+import 'dart:io';
 import 'package:cmsc23_project/donor-view/donation_buttons/donation_checkbox.dart';
+import 'package:cmsc23_project/donor-view/donation_buttons/donation_dropdown.dart';
+import 'package:cmsc23_project/donor-view/donation_buttons/image_url_display.dart';
 import 'package:cmsc23_project/providers/donation_storage_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cmsc23_project/providers/donation_providers.dart';
-import 'package:cmsc23_project/donor-view/donation_buttons/donation_dropdown.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-
 import '../../providers/textfield_providers.dart';
 import '../donation_buttons/dateTimePicker.dart';
 
@@ -22,15 +24,16 @@ class DonorPage extends StatefulWidget {
 
 class _DonorPageState extends State<DonorPage> {
   final _formKey = GlobalKey<FormState>();
-  late String organization; 
+  late String organization;
   bool generate = false;
   String qrcodeinput = "";
   bool datetimepicked = false;
   List<String> addressesList = [];
+  List<String> imageUrls = []; // Add imageUrls list here
   late Map<String, dynamic> donorDetails;
 
-  bool isNumeric(String str) { // check if input is a contact number
-    if(str == null) {
+  bool isNumeric(String str) {
+    if (str == null) {
       return false;
     }
     return double.tryParse(str) != null;
@@ -42,17 +45,16 @@ class _DonorPageState extends State<DonorPage> {
     organization = widget.organization;
     donorDetails = widget.donorDetails;
   }
-  
+
   @override
   Widget build(BuildContext context) {
     var donationProvider = context.watch<DonationProvider>();
     final provider = context.watch<TextfieldProviders>();
 
     bool containsWeight(String weight) {
-      RegExp regex = RegExp(r'\d+(\.\d+)?\s*(kg|lbs)'); 
+      RegExp regex = RegExp(r'\d+(\.\d+)?\s*(kg|lbs)');
       return regex.hasMatch(weight);
     }
-
 
     return Scaffold(
       appBar: AppBar(
@@ -82,14 +84,14 @@ class _DonorPageState extends State<DonorPage> {
               child: Image.asset('images/logo.png'),
             ),
           ],
-        ), 
+        ),
         leading: IconButton(
-          icon: Icon(Icons.home,
-          color: const Color.fromRGBO(55, 61, 102, 1)),
+          icon: Icon(Icons.home, color: const Color.fromRGBO(55, 61, 102, 1)),
           onPressed: () {
             provider.controller4.clear();
             Navigator.pop(context);
-            Navigator.pushNamed(context, "/donorHomepage", arguments: donorDetails);
+            Navigator.pushNamed(context, "/donorHomepage",
+                arguments: donorDetails);
           },
         ),
         actions: [],
@@ -108,12 +110,12 @@ class _DonorPageState extends State<DonorPage> {
               ),
             ),
             Positioned(
-              top: AppBar().preferredSize.height + 50,
+              top: 20,
               left: 30,
               right: 30,
               bottom: 20,
-               child: Center(
-                child: Container (
+              child: Center(
+                child: Container(
                   width: 320,
                   child: ListView(
                     shrinkWrap: true,
@@ -161,7 +163,7 @@ class _DonorPageState extends State<DonorPage> {
                       DropdownMenuExample(),
                       SizedBox(height: 10),
                       TextFormField(
-                        controller: provider.controller4, 
+                        controller: provider.controller4,
                         onChanged: provider.updateWeight,
                         decoration: InputDecoration(
                           labelText: 'Weight of items (indicate if in kg or lbs)',
@@ -179,23 +181,34 @@ class _DonorPageState extends State<DonorPage> {
                           return null;
                         },
                       ),
-                      SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: () {
-                          _openCamera(context);
-                        },
-                        child: Text('Take Photo'),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.camera_alt),
+                            onPressed: () {
+                              _openCamera(context);
+                            },
+                          ),
+                          SizedBox(width: 16),
+                          IconButton(
+                            icon: Icon(Icons.photo_library),
+                            onPressed: () {
+                              _openGallery(context);
+                            },
+                          ),
+                        ],
                       ),
-                      ElevatedButton(
-                        onPressed: () {
-                          _openGallery(context);
-                        },
-                        child: Text('Upload Photo'),
-                      ),
+                      ImageUrlDisplay(imageUrls: imageUrls),
+                      SizedBox(height: 8),
                       DateTimePicker(),
                       provider.datetimepicked == true ? showDateTimePicked(provider.dateTime) : const SizedBox.shrink(),
-                      provider.shippingOpt == 'Pick up' ? forPickUpInputs(context) : const SizedBox.shrink(),
-                      provider.shippingOpt == 'Drop-off' ? ifDropOff(context) : const SizedBox.shrink(),
+                      provider.shippingOpt == 'Pick up'
+                          ? forPickUpInputs(context)
+                          : const SizedBox.shrink(),
+                      provider.shippingOpt == 'Drop-off'
+                          ? ifDropOff(context)
+                          : const SizedBox.shrink(),
                       generate ? qrCodeImage(qrcodeinput) : const SizedBox.shrink(),
                       generate ? submitDropOff(context) : const SizedBox.shrink(),
                     ],
@@ -213,10 +226,10 @@ class _DonorPageState extends State<DonorPage> {
     final provider = context.watch<TextfieldProviders>();
     generate = false;
 
-    return Column (
+    return Column(
       children: [
         Divider(
-          thickness: 1, 
+          thickness: 1,
           color: const Color(0xFFFCBE4F),
         ),
         Text(
@@ -230,8 +243,8 @@ class _DonorPageState extends State<DonorPage> {
           textAlign: TextAlign.center,
         ),
         Divider(
-          thickness: 1, 
-          color: const Color(0xFFFCBE4F), 
+          thickness: 1,
+          color: const Color(0xFFFCBE4F),
         ),
         SizedBox(height: 10),
         TextFormField(
@@ -260,7 +273,7 @@ class _DonorPageState extends State<DonorPage> {
           controller: provider.controller6,
           onChanged: provider.updateContactNumber,
           validator: (val) {
-             if (val!.isEmpty) {
+            if (val!.isEmpty) {
               return "Please enter your contact number";
             }
             if (val.trim().isEmpty) {
@@ -295,9 +308,9 @@ class _DonorPageState extends State<DonorPage> {
               bool multipleAddresses = addressesUnsplit.contains(';');
 
               if (multipleAddresses == true) {
-                addressesList = addressesUnsplit.split(';').map((address) => address.trim()).toList();
-              }
-              else {
+                addressesList =
+                    addressesUnsplit.split(';').map((address) => address.trim()).toList();
+              } else {
                 addressesList = [addressesUnsplit];
               }
 
@@ -308,10 +321,11 @@ class _DonorPageState extends State<DonorPage> {
                   SnackBar(
                     content: Text('Please add at least one donation category.'),
                   ),
-                ); 
-              }
-              else {
-                final donation = DonationStorageProvider().donationDataPickUp(donorName, donorEmail, provider.date, provider.time, addressesList, provider.contactNumber, status, provider.category, provider.shippingOpt, weight);
+                );
+              } else {
+                final donation = DonationStorageProvider().donationDataPickUp(
+                    donorName, donorEmail, provider.date, provider.time, addressesList,
+                    provider.contactNumber, status, provider.category, provider.shippingOpt, weight, imageUrls);
 
                 donationService.addDonation(donation); // add to firebase
 
@@ -320,9 +334,10 @@ class _DonorPageState extends State<DonorPage> {
 
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text('Thank you for your donation request! Check back regularly for your donation status updates.'),
+                    content: Text(
+                        'Thank you for your donation request! Check back regularly for your donation status updates.'),
                   ),
-                );  
+                );
               }
             };
           },
@@ -345,7 +360,7 @@ class _DonorPageState extends State<DonorPage> {
     final provider = context.watch<TextfieldProviders>();
     final dateOfDropOff = provider.date;
 
-    return Column (
+    return Column(
       children: [
         SizedBox(height: 20),
         ElevatedButton(
@@ -356,28 +371,31 @@ class _DonorPageState extends State<DonorPage> {
               final donorName = donorDetails['name'];
               final status = 'Pending';
 
-              final donationService = Provider.of<DonationStorageProvider>(context, listen: false).firebaseService;
+              final donationService =
+                  Provider.of<DonationStorageProvider>(context, listen: false).firebaseService;
 
               if (provider.category.length == 0) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text('Please add at least one donation category.'),
                   ),
-                ); 
-              }
-              else {
-                final donation = DonationStorageProvider().donationDataDropOff(donorName, donorEmail, provider.date, provider.time, status, provider.category, provider.shippingOpt, provider.qrcodeinput, weight);
+                );
+              } else {
+                final donation = DonationStorageProvider().donationDataDropOff(
+                    donorName, donorEmail, provider.date, provider.time, status,
+                    provider.category, provider.shippingOpt, provider.qrcodeinput, weight, imageUrls);
 
-              donationService.addDonation(donation); // add to firebase
+                donationService.addDonation(donation); // add to firebase
 
-              Navigator.pop(context);
-              Navigator.pushNamed(context, "/donorHomepage", arguments: donorDetails);
+                Navigator.pop(context);
+                Navigator.pushNamed(context, "/donorHomepage", arguments: donorDetails);
 
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('Thank you for your donation request! Check back regularly for your donation status updates.'),
-                ),
-              );  
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                        'Thank you for your donation request! Check back regularly for your donation status updates.'),
+                  ),
+                );
               }
             }
           },
@@ -391,11 +409,10 @@ class _DonorPageState extends State<DonorPage> {
     final provider = context.watch<TextfieldProviders>();
     if (provider.datetimepicked != true) {
       return Text('Select date for drop-off first.');
-    }
-    else {
+    } else {
       final dateOfDropOff = provider.date;
 
-      return Column (
+      return Column(
         children: [
           ElevatedButton(
             onPressed: () {
@@ -431,7 +448,7 @@ class _DonorPageState extends State<DonorPage> {
           ),
         ],
       ),
-      child: Center( // Center widget added here
+      child: Center(
         child: QrImageView(
           data: dateandstatus,
           version: QrVersions.auto,
@@ -446,7 +463,8 @@ class _DonorPageState extends State<DonorPage> {
     final pickedImage = await picker.pickImage(source: ImageSource.camera);
 
     if (pickedImage != null) {
-      // Handle the picked image
+      File imageFile = File(pickedImage.path);
+      uploadImage(imageFile);
     }
   }
 
@@ -455,7 +473,24 @@ class _DonorPageState extends State<DonorPage> {
     final pickedImage = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedImage != null) {
-      // Handle the picked image
+      File imageFile = File(pickedImage.path);
+      uploadImage(imageFile);
+    }
+  }
+
+  void uploadImage(File imageFile) async {
+    try {
+      String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+      Reference firebaseStorageRef =
+          FirebaseStorage.instance.ref().child('donation_images/$fileName.jpg');
+      await firebaseStorageRef.putFile(imageFile);
+      String imageUrl = await firebaseStorageRef.getDownloadURL();
+      setState(() {
+        imageUrls.add(imageUrl);
+      });
+    } catch (e) {
+      print("Error uploading image: $e");
     }
   }
 }
+

@@ -5,6 +5,7 @@ class Donations {
   String shipping;
   String weight;
   List? photo;
+  List? imageUrls;
   List? addresses;
   String? contactNumber;
   String? qrcode;
@@ -30,7 +31,8 @@ class Donations {
     required this.date,
     required this.time,
     this.qrcode,
-    this.photo
+    this.photo,
+    this.imageUrls,
   });
 
   factory Donations.fromJson(Map<String, dynamic> json) {
@@ -47,6 +49,7 @@ class Donations {
       addresses: json['addresses'],
       contactNumber: json['contactNumber'],
       photo: json['photo'],
+      imageUrls: json['imageUrls'],
       qrcode: json['qrcode'],
       status: json['status']
     );
@@ -67,6 +70,7 @@ class Donations {
       'addresses': Donation.addresses,
       'contactNumber': Donation.contactNumber,
       'photo': Donation.photo,
+      'imageUrls': Donation.imageUrls,
       'status': Donation.status,
       'qrcode': Donation.qrcode
     };
