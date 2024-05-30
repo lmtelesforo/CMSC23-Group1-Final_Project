@@ -14,12 +14,10 @@ class FirebaseDonationStorageAPI {
         .snapshots();
   }
 
-  Stream<QuerySnapshot> getDonationsByDrive(
-      String orgUsername, String driveName) {
+  Stream<QuerySnapshot> getDonationsByDrive(String id) {
     return db
-        .collection('donations')
-        .where('orgUsername', isEqualTo: orgUsername)
-        .where('driveName', isEqualTo: driveName)
+        .collection("donations")
+        .where("driveId", isEqualTo: id)
         .snapshots();
   }
 
@@ -60,7 +58,7 @@ class FirebaseDonationStorageAPI {
   Future<String> updateDonationDrive(String donationId, String newDrive) async {
     try {
       await db.collection('donations').doc(donationId).update({
-        'driveName': newDrive,
+        'driveId': newDrive,
       });
       return ('Donation drive updated successfully');
     } catch (e) {

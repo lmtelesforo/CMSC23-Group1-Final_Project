@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class Donation {
   String? id;
   String orgUsername;
-  String driveName;
+  String driveId;
 
   List category;
   String shipping;
@@ -24,7 +24,7 @@ class Donation {
   Donation({
     this.id,
     required this.orgUsername,
-    required this.driveName,
+    required this.driveId,
     required this.category,
     required this.shipping,
     required this.weight,
@@ -44,7 +44,7 @@ class Donation {
     return Donation(
       id: json['id'],
       orgUsername: json['orgUsername'],
-      driveName: json['driveName'],
+      driveId: json['driveId'],
       category: json['category'],
       shipping: json['shipping'],
       weight: json['weight'],
@@ -70,7 +70,7 @@ class Donation {
     return {
       'id': donation.id,
       'orgUsername': donation.orgUsername,
-      'driveName': donation.driveName,
+      'driveId': donation.driveId,
       'category': donation.category,
       'name': donation.name,
       'weight': donation.weight,
@@ -88,7 +88,7 @@ class Donation {
     return Donation(
         id: id,
         orgUsername: orgUsername,
-        driveName: driveName,
+        driveId: driveId,
         name: name,
         email: email,
         category: category,

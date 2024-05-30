@@ -28,9 +28,8 @@ class CurrentOrgProvider with ChangeNotifier {
 
   Stream<DocumentSnapshot> drive(String id) => _firebaseDriveAPI.getDrive(id);
 
-  Stream<QuerySnapshot> donationsByDrive(
-          String orgUsername, String driveName) =>
-      _firebaseDonationStorageAPI.getDonationsByDrive(orgUsername, driveName);
+  Stream<QuerySnapshot> donationsByDrive(String driveId) =>
+      _firebaseDonationStorageAPI.getDonationsByDrive(driveId);
 
   Stream<QuerySnapshot> get favoriteDrives =>
       _firebaseDriveAPI.getFavoriteDrives(orgUsername);

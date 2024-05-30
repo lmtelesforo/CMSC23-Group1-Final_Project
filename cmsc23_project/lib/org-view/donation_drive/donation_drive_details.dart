@@ -168,7 +168,7 @@ class _DriveCard extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         _status(drive.isOngoing),
-        _donationCount(drive.orgUsername, drive.name, context),
+        _donationCount(id, context),
       ],
     );
   }
@@ -189,9 +189,9 @@ class _DriveCard extends StatelessWidget {
     );
   }
 
-  Widget _donationCount(String orgUsername, String name, BuildContext context) {
+  Widget _donationCount(String id, BuildContext context) {
     Stream<QuerySnapshot> donations =
-        context.read<CurrentOrgProvider>().donationsByDrive(orgUsername, name);
+        context.read<CurrentOrgProvider>().donationsByDrive(id);
 
     return StreamBuilder(
         stream: donations,

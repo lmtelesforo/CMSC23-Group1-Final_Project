@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cmsc23_project/models/donation_drive.dart';
 import 'package:cmsc23_project/models/indiv_donation.dart';
 import 'package:cmsc23_project/org-view/base_elements/org_view_styles.dart';
 import 'package:cmsc23_project/providers/current_org_provider.dart';
@@ -85,13 +84,10 @@ class _DonationListState extends State<DonationList> {
                   return const Center(child: CircularProgressIndicator());
                 }
 
-                DonationDrive drive = DonationDrive.fromJson(
-                    snapshot.data!.data() as Map<String, dynamic>);
-
                 return StreamBuilder<QuerySnapshot>(
                   stream: context
                       .read<CurrentOrgProvider>()
-                      .donationsByDrive(drive.orgUsername, drive.name),
+                      .donationsByDrive(widget.id!),
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
                       return const Text('An error occurred');

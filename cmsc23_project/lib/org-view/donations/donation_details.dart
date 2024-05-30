@@ -58,7 +58,7 @@ class _EditDonationState extends State<_EditDonation> {
 
   void saveChanges() {
     bool changedStatus = tempDonation!.status != widget.donation.status;
-    bool changedDrive = tempDonation!.driveName != widget.donation.driveName;
+    bool changedDrive = tempDonation!.driveId != widget.donation.driveId;
 
     if (widget.donation.shipping == 'Drop-off' &&
         qrCodeValue == null &&
@@ -83,7 +83,7 @@ class _EditDonationState extends State<_EditDonation> {
         .changeDonationStatus(widget.id, tempDonation!.status);
     context
         .read<CurrentOrgProvider>()
-        .changeDonationDrive(widget.id, tempDonation!.driveName);
+        .changeDonationDrive(widget.id, tempDonation!.driveId);
 
     Navigator.pop(context);
   }
@@ -229,11 +229,13 @@ class _EditDonationState extends State<_EditDonation> {
                   DonationDrive.fromJson(drive.data() as Map<String, dynamic>))
               .toList();
 
+          List<String> ids =
+              snapshot.data!.docs.map((drive) => drive.id).toList();
+
           return DropdownMenu(
             menuHeight: 400,
             width: MediaQuery.of(context).size.width * 0.51,
-            initialSelection: drives
-                .indexWhere((drive) => drive.name == widget.donation.driveName),
+            initialSelection: ids.indexOf(widget.donation.driveId),
             dropdownMenuEntries: drives
                 .map((drive) => DropdownMenuEntry(
                       value: drives.indexOf(drive),
@@ -244,7 +246,7 @@ class _EditDonationState extends State<_EditDonation> {
                     ))
                 .toList(),
             onSelected: (drive) {
-              tempDonation!.driveName = drives[drive!].name;
+              tempDonation!.driveId = ids[drive!];
             },
             inputDecorationTheme: InputDecorationTheme(
               fillColor: Colors.white,
