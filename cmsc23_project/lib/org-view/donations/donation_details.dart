@@ -57,12 +57,22 @@ class _EditDonationState extends State<_EditDonation> {
   }
 
   void saveChanges() {
+    bool changedStatus = tempDonation!.status != widget.donation.status;
+    bool changedDrive = tempDonation!.driveName != widget.donation.driveName;
+
     if (widget.donation.shipping == 'Drop-off' &&
         qrCodeValue == null &&
-        tempDonation!.status != widget.donation.status) {
+        changedStatus) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please scan the QR code first')),
+      );
+      return;
+    }
+
+    if (widget.donation.status == 'Pending' && changedDrive) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Please scan the QR code first'),
+          content: Text('Cannot change drive until the donation is confirmed.'),
         ),
       );
       return;
@@ -76,12 +86,6 @@ class _EditDonationState extends State<_EditDonation> {
         .changeDonationDrive(widget.id, tempDonation!.driveName);
 
     Navigator.pop(context);
-  }
-
-  bool shouldShowQRCode() {
-    return widget.donation.shipping == 'Drop-off' &&
-        widget.donation.status != tempDonation!.status &&
-        qrCodeValue == null;
   }
 
   @override
@@ -105,6 +109,12 @@ class _EditDonationState extends State<_EditDonation> {
   }
 
   Table _form(BuildContext context) {
+    bool shouldShowQRCode() {
+      return widget.donation.shipping == 'Drop-off' &&
+          widget.donation.status != tempDonation!.status &&
+          qrCodeValue == null;
+    }
+
     return Table(
       columnWidths: const {
         0: FlexColumnWidth(1),
@@ -139,7 +149,7 @@ class _EditDonationState extends State<_EditDonation> {
                       var value =
                           await Navigator.pushNamed(context, '/org/scan-qr');
                       setState(() {
-                        if (value == widget.donation.qrcode) {
+                        if (value == widget.id) {
                           qrCodeValue = value as String?;
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(

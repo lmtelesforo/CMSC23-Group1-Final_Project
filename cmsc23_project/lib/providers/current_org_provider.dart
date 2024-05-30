@@ -50,7 +50,6 @@ class CurrentOrgProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // TODO: change to id
   void changeDonationDrive(String donationId, String newDrive) {
     _firebaseDonationStorageAPI.updateDonationDrive(donationId, newDrive);
     notifyListeners();
