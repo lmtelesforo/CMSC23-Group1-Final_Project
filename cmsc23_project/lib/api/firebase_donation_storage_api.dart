@@ -8,7 +8,7 @@ class FirebaseDonationStorageAPI {
     return db.collection("donations").snapshots();
   }
 
-  Future<String> addDonation(Map<String, dynamic> donation) async {
+  Future<String> addDonation(Map<String, dynamic> donation, List<String> imageUrls) async {
     try {
       await db.collection("donations").add(donation);
 

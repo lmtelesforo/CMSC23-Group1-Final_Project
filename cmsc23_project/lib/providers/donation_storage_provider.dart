@@ -21,12 +21,11 @@ class DonationStorageProvider with ChangeNotifier {
   }
 
   Future<void> addDonation(Map<String, dynamic> donation, List<String> imageUrls) async {
-    donation['photo'] = imageUrls; // Assuming 'photo' field is used to store image URLs
-    String? message = await firebaseService.addDonation(donation);
+    donation['image'] = imageUrls; // Assuming 'image' field is used to store image URLs
+    String? message = await firebaseService.addDonation(donation, imageUrls);
     print(message); 
     notifyListeners(); 
   }
-
 
   Future<void> updateDonationStatus(String donationId, String newStatus) async {
     String? message = await firebaseService.updateDonationStatus(donationId, newStatus);
@@ -53,7 +52,7 @@ class DonationStorageProvider with ChangeNotifier {
     }
   }
 
-  Map<String, dynamic> donationDataPickUp(String name, String email, String date, String time, List addresses, String contactnumber, String status, List category, String shipping, String weight, List photo){ // created a structure for easier storing
+  Map<String, dynamic> donationDataPickUp(String name, String email, String date, String time, List addresses, String contactnumber, String status, List category, String shipping, String weight, List imageUrls){ // created a structure for easier storing
     Map<String, dynamic> newData = {
       'name': name,
       'email': email,
@@ -66,11 +65,11 @@ class DonationStorageProvider with ChangeNotifier {
       'category': category,
       'shipping': shipping,
       'weight': weight,
-      'photo': photo,
+      'image': imageUrls,
     };
     return newData;
   }
-  Map<String, dynamic> donationDataDropOff(String name, String email, String date, String time, String status, List category, String shipping, String qrCode, String weight, List photo){ // created a structure for easier storing
+  Map<String, dynamic> donationDataDropOff(String name, String email, String date, String time, String status, List category, String shipping, String qrCode, String weight, List imageUrls){ // created a structure for easier storing
     Map<String, dynamic> newData = {
       'name': name,
       'email': email,
@@ -81,7 +80,7 @@ class DonationStorageProvider with ChangeNotifier {
       'qrcode': qrCode,
       'category': category,
       'weight': weight,
-      'photo': photo,
+      'image': imageUrls,
     };
     return newData;
   }

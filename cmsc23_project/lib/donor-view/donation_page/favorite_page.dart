@@ -23,7 +23,13 @@ class FavoritePage extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         centerTitle: true,
-        iconTheme: IconThemeData(color: Colors.white, size: 30),
+        iconTheme: IconThemeData(color: const Color.fromRGBO(55, 61, 102, 1)),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+          Navigator.pop(context);
+          },
+        ),
       ),
       body: Consumer<DonationProvider>(
         builder: (context, donationProvider, child) {
