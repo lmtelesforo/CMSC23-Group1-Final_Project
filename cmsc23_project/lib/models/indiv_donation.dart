@@ -6,13 +6,12 @@ class Donation {
   String? id;
   String organization;
   String driveName;
-
   List category;
   String shipping;
   String weight;
   List? photo;
   List? image;
-  List? addresses;
+  String? address;
   String? contactNumber;
   String? qrcode;
   String status;
@@ -29,7 +28,7 @@ class Donation {
     required this.category,
     required this.shipping,
     required this.weight,
-    this.addresses,
+    this.address,
     required this.driveId,
     this.contactNumber,
     required this.status,
@@ -49,6 +48,12 @@ class Donation {
       }
     });
 
+    final imageJson = json['image'];
+    final image =
+        imageJson is List<dynamic> ? List<String>.from(imageJson) : [imageJson];
+    print(imageJson);
+    print(image.toList());
+
     return Donation(
       id: json['id'] as String?,
       organization: json['organization'] ?? '',
@@ -56,7 +61,7 @@ class Donation {
       category: json['category'] ?? [],
       shipping: json['shipping'] ?? '',
       weight: json['weight'] ?? '',
-      addresses: json['addresses'] ?? [],
+      address: json['address'] ?? '',
       contactNumber: json['contactNumber'] ?? '',
       image: json['image'] is List<dynamic> ? json['image'] : [json['image']],
       driveId: json['driveId'],
@@ -83,10 +88,10 @@ class Donation {
       'name': donation.name,
       'weight': donation.weight,
       'shipping': donation.shipping,
-      'addresses': donation.addresses,
+      'address': donation.address,
       'contactNumber': donation.contactNumber,
       'photo': donation.photo,
-      'image': donation.image,
+      'image': donation.image != null ? donation.image!.join(',') : null,
       'status': donation.status,
       'qrcode': donation.qrcode,
       'driveId': donation.driveId,
@@ -106,7 +111,7 @@ class Donation {
         date: date,
         driveId: driveId,
         time: time,
-        addresses: addresses,
+        address: address,
         contactNumber: contactNumber,
         photo: photo,
         image: image,

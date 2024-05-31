@@ -63,7 +63,7 @@ class DonationInfo extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(bottom: 30),
           child: Text(
-            donation.addresses!.first,
+            donation.address!,
             style: CustomTextStyle.body,
           ),
         ),
