@@ -1,14 +1,18 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:cmsc23_project/donor-view/donation_buttons/donation_checkbox.dart';
 import 'package:cmsc23_project/donor-view/donation_buttons/donation_dropdown.dart';
 import 'package:cmsc23_project/donor-view/donation_buttons/image_url_display.dart';
 import 'package:cmsc23_project/providers/donation_storage_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:gallery_saver/gallery_saver.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:cmsc23_project/providers/donation_providers.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:screenshot/screenshot.dart';
 import '../../providers/textfield_providers.dart';
 import '../donation_buttons/dateTimePicker.dart';
 
@@ -31,6 +35,7 @@ class _DonorPageState extends State<DonorPage> {
   List<String> addressesList = [];
   List<String> imageUrls = []; 
   late Map<String, dynamic> donorDetails;
+  final ScreenshotController screenshotController = ScreenshotController();
 
   bool isNumeric(String str) {
     if (str == null) {
@@ -224,6 +229,9 @@ class _DonorPageState extends State<DonorPage> {
                       generate
                           ? qrCodeImage(qrcodeinput)
                           : const SizedBox.shrink(),
+                      // generate
+                      //     ? saveQR(context)
+                      //     : const SizedBox.shrink(),
                       generate
                           ? submitDropOff(context)
                           : const SizedBox.shrink(),
@@ -233,6 +241,35 @@ class _DonorPageState extends State<DonorPage> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget saveQR(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+    return ElevatedButton(
+      onPressed: () async {
+        String url = 'https://images.unsplash.com/photo-1575936123452-b67c3203c357?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D';
+
+        await GallerySaver.saveImage(url);
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: const Color.fromRGBO(55, 61, 102, 1),
+        textStyle: TextStyle(
+          fontSize: 15,
+        ),
+        padding: EdgeInsets.symmetric(horizontal: screenSize.width * 0.23, vertical: screenSize.height * 0.018), // Adjusted padding
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(40),
+        ),
+      ),
+      child: Text(
+        'Save QR to Gallery', 
+        style: TextStyle(
+          color: const Color.fromRGBO(252, 190, 79, 1), 
+          fontFamily: "Montserrat",
+          fontWeight: FontWeight.bold
         ),
       ),
     );
@@ -550,13 +587,25 @@ class _DonorPageState extends State<DonorPage> {
         ],
       ),
       child: Center(
-        child: QrImageView(
-          data: dateandstatus,
-          version: QrVersions.auto,
-          size: 200.0,
+        child: Screenshot(
+          controller: screenshotController,
+          child: QrImageView(
+            data: dateandstatus,
+            version: QrVersions.auto,
+            size: 200.0,
+          ),
         ),
+        
       ),
     );
+  }
+
+  Future<void> captureImage() async {
+    final Uint8List? uint8list = await screenshotController.capture();
+
+    if(uint8list != null) {
+      final PermissionStatus status = await Permission.storage.request();
+    }
   }
 
   void _openCamera(BuildContext context) async {
