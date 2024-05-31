@@ -148,7 +148,8 @@ class _EditDonationState extends State<_EditDonation> {
                       var value =
                           await Navigator.pushNamed(context, '/org/scan-qr');
                       setState(() {
-                        if (value == widget.id) {
+                        if (value ==
+                            "${widget.donation.status}|${widget.donation.date}|${widget.id}") {
                           qrCodeValue = value as String?;
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
