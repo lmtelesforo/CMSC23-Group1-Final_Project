@@ -44,6 +44,7 @@ class _DonorPageState extends State<DonorPage> {
     super.initState();
     organization = widget.organization;
     donorDetails = widget.donorDetails;
+    context.read<DonationProvider>().fetchOrganizations();
   }
 
   @override
@@ -78,7 +79,7 @@ class _DonorPageState extends State<DonorPage> {
                 ),
               ),
             ),
-            SizedBox(width: 8),
+            SizedBox(width: screenSize.height * 0.02),
             SizedBox(
               width: 40,
               height: 40,
@@ -354,10 +355,16 @@ class _DonorPageState extends State<DonorPage> {
                     provider.category,
                     provider.shippingOpt,
                     weight,
-                    imageUrls);
+                    imageUrls,
+                    organization,
+                    "driveName",
+                    "driveId",
+                    );
 
                 donationService.addDonation(donation, imageUrls); // add to firebase
 
+                provider.resetDonationInputs();
+                
                 Navigator.pop(context);
                 Navigator.pushNamed(context, "/donorHomepage",
                     arguments: donorDetails);
@@ -406,7 +413,7 @@ class _DonorPageState extends State<DonorPage> {
 
   Widget submitDropOff(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
-    final provider = context.watch<TextfieldProviders>();
+    final provider = context.read<TextfieldProviders>();
     final dateOfDropOff = provider.date;
 
     return Column(
@@ -441,9 +448,15 @@ class _DonorPageState extends State<DonorPage> {
                     provider.shippingOpt,
                     provider.qrcodeinput,
                     weight,
-                    imageUrls);
+                    imageUrls,
+                    organization,
+                    'driveName',
+                    'driveId',
+                    );
 
                 donationService.addDonation(donation, imageUrls); // add to firebase
+
+                provider.resetDonationInputs();
 
                 Navigator.pop(context);
                 Navigator.pushNamed(context, "/donorHomepage",
@@ -497,10 +510,10 @@ class _DonorPageState extends State<DonorPage> {
         children: [
           ElevatedButton(
             onPressed: () {
-              setState(() {
-                qrcodeinput = dateOfDropOff;
-                generate = true;
-              });
+                setState(() {
+                  qrcodeinput = dateOfDropOff;
+                  generate = true;
+                });
             },
             child: Text('Generate QR Code'),
           ),

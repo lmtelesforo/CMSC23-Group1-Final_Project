@@ -4,7 +4,6 @@ import 'package:cmsc23_project/providers/firebase_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cmsc23_project/providers/donation_providers.dart';
-import 'package:cmsc23_project/donor-view/donation_page/favorite_page.dart';
 import 'package:cmsc23_project/donor-view/donation_page/org_details_page.dart';
 import 'profile_page.dart';
 
@@ -73,17 +72,27 @@ class _DonorHomepageState extends State<DonorHomepage> {
         iconTheme:
             IconThemeData(color: const Color.fromRGBO(55, 61, 102, 1), size: 30),
         actions: [
-          Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: Colors.white,
-                width: 3.0,
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProfilePage(),
+                ),
+              );
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: Colors.white,
+                  width: 3.0,
+                ),
               ),
-            ),
-            child: CircleAvatar(
-              backgroundImage: AssetImage("assets/images/profile_pic.jpg"),
-              radius: 30.0,
+              child: CircleAvatar(
+                backgroundImage: AssetImage("assets/images/profile_pic.jpg"),
+                radius: 30.0,
+              ),
             ),
           ),
           SizedBox(width: 16),
@@ -131,23 +140,6 @@ class _DonorHomepageState extends State<DonorHomepage> {
                   MaterialPageRoute(
                     builder: (context) => ProfilePage(),
                   ),
-                );
-              },
-            ),
-            ListTile(
-              title: Text(
-                "Favorite",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontFamily: 'Poppins',
-                ),
-              ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => FavoritePage(),
-                    settings: RouteSettings(arguments: donorDetails)),
                 );
               },
             ),
@@ -328,6 +320,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                   MaterialPageRoute(
                                     builder: (context) => OrgDetailsPageWidget(
                                       orgName: org,
+                                      donorDetails: donorDetails,
                                       orgUsername: orgUsername, 
                                     ),
                                   ),

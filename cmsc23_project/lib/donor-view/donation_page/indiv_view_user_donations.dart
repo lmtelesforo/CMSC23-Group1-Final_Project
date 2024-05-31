@@ -308,53 +308,57 @@ class _IndivViewAllDonationsState extends State<UserIndivViewDonation> {
   }
 
   Widget showCancelButton() {
-    return Center(
-      child: ElevatedButton.icon(
-        onPressed: () {
-          final donationService =
-              Provider.of<DonationStorageProvider>(context, listen: false)
-                  .firebaseService;
-          donationService.updateDonationStatus(
-              donation.id!, 'Cancelled'); // only delete request
-          String newQRCode =
-              'Cancelled' + "|" + donation.date + "|" + donation.email;
-          donationService.updateQRDetails(donation.id!, newQRCode);
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Donation cancelled.'),
+    if (donation.status == 'Pending') {
+      return Center(
+        child: ElevatedButton.icon(
+          onPressed: () {
+            final donationService =
+                Provider.of<DonationStorageProvider>(context, listen: false)
+                    .firebaseService;
+            donationService.updateDonationStatus(
+                donation.id!, 'Cancelled'); // only delete request
+            String newQRCode =
+                'Cancelled' + "|" + donation.date + "|" + donation.email;
+            donationService.updateQRDetails(donation.id!, newQRCode);
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Donation cancelled.'),
+              ),
+            );
+            Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    UserViewAllDonations(donorDetails: donorDetails),
+              ),
+            );
+          },
+          icon: const Icon(
+            Icons.clear,
+            color: Color.fromARGB(255, 181, 19, 19),
+          ),
+          label: const Text(
+            'Cancel Donation',
+            style: TextStyle(
+              fontSize: 14,
+              fontFamily: 'Poppins-Bold',
+              color: Color(0xFF373D66),
             ),
-          );
-          Navigator.pop(context);
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  UserViewAllDonations(donorDetails: donorDetails),
+          ),
+          style: ElevatedButton.styleFrom(
+            minimumSize: const Size(300, 35),
+            textStyle: const TextStyle(
+              fontSize: 14,
+              fontFamily: 'Poppins-Bold',
             ),
-          );
-        },
-        icon: const Icon(
-          Icons.clear,
-          color: Color.fromARGB(255, 181, 19, 19),
-        ),
-        label: const Text(
-          'Cancel Donation',
-          style: TextStyle(
-            fontSize: 14,
-            fontFamily: 'Poppins-Bold',
-            color: Color(0xFF373D66),
+            backgroundColor: const Color(0xFFFCBE4F),
           ),
         ),
-        style: ElevatedButton.styleFrom(
-          minimumSize: const Size(300, 35),
-          textStyle: const TextStyle(
-            fontSize: 14,
-            fontFamily: 'Poppins-Bold',
-          ),
-          backgroundColor: const Color(0xFFFCBE4F),
-        ),
-      ),
-    );
+      );
+    } else {
+      return Container();
+    }
   }
 
   Widget showAddressandContact() {

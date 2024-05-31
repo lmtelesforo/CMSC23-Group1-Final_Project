@@ -184,7 +184,7 @@ class _AdminViewAllDonationsState extends State<AdminViewAllDonations> {
                                   donationDetails[index].data()
                                       as Map<String, dynamic>);
                               donation.id = donationDetails[index].id;
-                              String subtitle = '\n' + 'Org: ' + donation.orgUsername + '\n' + 'Donor: ' + donation.email + '\n' + 'Status: '+ donation.status;
+                              String subtitle = '\n' + 'Org: ' + donation.driveName + '\n' + 'Donor: ' + donation.email + '\n' + 'Status: '+ donation.status;
 
                               return Container(
                                 decoration: BoxDecoration(
