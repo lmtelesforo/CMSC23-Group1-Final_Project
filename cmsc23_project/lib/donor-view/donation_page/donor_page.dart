@@ -336,22 +336,11 @@ class _DonorPageState extends State<DonorPage> {
             if (_formKey.currentState!.validate()) {
               final donorName = donorDetails['name'];
               final weight = provider.controller4.text;
-              final addressesUnsplit = provider.controller5.text;
+              final address = provider.controller5.text;
               final contactNumber = provider.controller6.text;
               final donorEmail = donorDetails['email'];
               final status = 'Pending';
               print(donorDetails);
-
-              bool multipleAddresses = addressesUnsplit.contains(';');
-
-              if (multipleAddresses == true) {
-                addressesList = addressesUnsplit
-                    .split(';')
-                    .map((address) => address.trim())
-                    .toList();
-              } else {
-                addressesList = [addressesUnsplit];
-              }
 
               final donationService =
                   Provider.of<DonationStorageProvider>(context, listen: false)
@@ -369,7 +358,7 @@ class _DonorPageState extends State<DonorPage> {
                     donorEmail,
                     provider.date,
                     provider.time,
-                    addressesList,
+                    address,
                     provider.contactNumber,
                     status,
                     provider.category,
