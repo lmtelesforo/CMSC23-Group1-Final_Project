@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+
 class User {
   String name;
   String username;
@@ -7,6 +9,7 @@ class User {
   List addresses;
   String contactNumber;
   String? id;
+  ImageProvider? profilePic;
   String userType;
 
   User ({
@@ -17,6 +20,7 @@ class User {
     required this.addresses, 
     required this.contactNumber, 
     required this.userType,
+    this.profilePic
   });
 
   factory User.fromJson(Map<String, dynamic> json) {

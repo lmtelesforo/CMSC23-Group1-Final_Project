@@ -25,9 +25,9 @@ class ImageUrlDisplay extends StatelessWidget {
             child: Text(
               'Uploaded Image URLs:',
               style: TextStyle(
-                fontSize: 14,
+                fontSize: 16,
                 fontWeight: FontWeight.bold,
-                fontFamily: 'Poppins-Reg',
+                fontFamily: 'Montserrat',
                 color: Color(0xFF373D66),
               ),
             ),

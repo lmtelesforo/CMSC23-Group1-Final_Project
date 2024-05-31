@@ -16,11 +16,11 @@ class SignUpDonorPage extends StatefulWidget {
 class _SignUpDonorPageState extends State<SignUpDonorPage> {
   final _formKey = GlobalKey<FormState>();
   late String signUpResult;
+  List<String> addressesList = [];
 
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<TextfieldProviders>();
-    List<String> addressesList = [];
 
     bool isNumeric(String str) {
       // check if input is a contact number
@@ -398,7 +398,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                         color: const Color(0xFFFCBE4F),
                       ),
                       Text(
-                        "Separate multiple entries with semi-colons. Leave no space in between (e.g. Address 1;Address 2)",
+                        "Click 'Add Address' for every new address",
                         style: TextStyle(
                           fontSize: 14,
                           fontFamily: 'Poppins-Reg',
@@ -443,14 +443,17 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                                 ),
                               ),
                             TextFormField(
+
                               controller: provider.controller5, 
-                              onChanged: provider.updateAddresses,
                               validator: (val) {
                                 if (val!.isEmpty) {
                                   return "Please enter your address/es";
                                 }
                                 if (val.trim().isEmpty) {
                                   return "Please enter your address/es";
+                                }
+                                if (provider.addressList.length == 0) {
+                                  return "Please add your address";
                                 }
                                 return null;
                               },
@@ -475,6 +478,53 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                           ],
                         ),
                       ),
+                      ElevatedButton(
+                        onPressed: () async {
+                          final address = provider.controller5.text;
+
+                          if (address!.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Please input an address.'),
+                            ),
+                          );
+                          return;
+                          }
+                          if (address.trim().isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Please input an address.'),
+                            ),
+                          );
+                          return;
+                          }
+
+                          addressesList.add(address);
+
+                          provider.updateAddresses(addressesList);
+
+                          print(addressesList);
+
+                          print(provider.addressList);
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Address added!'),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(270, 40),
+                          foregroundColor: const Color(0xFF373D66),
+                          textStyle: const TextStyle(
+                            fontSize: 14,
+                            fontFamily: 'Poppins-Bold',
+                          ),
+                          backgroundColor: const Color(0xFFFCBE4F),
+                        ),
+                        child: const Text('Add Address'),
+                      ),
+                      SizedBox(height: 10),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -566,19 +616,9 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                             final username = provider.controller2.text;
                             final email = provider.controller3.text;
                             final password = provider.controller4.text;
-                            final addressesUnsplit = provider.controller5.text;
+                            final addresses = provider.addressList;
                             final contactnumber = provider.controller6.text;
                             final userType = 'donor';
-                            bool multipleAddresses = addressesUnsplit.contains(';');
-
-                          if (multipleAddresses == true) {
-                            addressesList = addressesUnsplit
-                                .split(';')
-                                .map((address) => address.trim())
-                                .toList();
-                          } else {
-                            addressesList = [addressesUnsplit];
-                          }
 
                           final authService = Provider.of<UserAuthProvider>(
                                   context,
@@ -594,27 +634,30 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
 
                           final bool found = await checkUserType(email);
                           print(found);
+                          final bool found1 = await checkUsername(username);
+                          print("-------------");
+                          print(found1);
                           if (signUpResult ==
                                   'The account already exists for that email.' &&
-                              found != false) {
+                              found != false || found1 != false) {
                             // match error message
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                   content: Text(
-                                      'An account already exists under this email. Log in instead.')),
+                                      'An account already exists under this username/email. Log in instead.')),
                             );
-                          } else if (found != false) {
+                          } else if (found != false || found1 != false) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                   content: Text(
-                                      'An account already exists under this email. Log in instead.')),
+                                      'An account already exists under this username/email. Log in instead.')),
                             );
                           } else {
                             final user = UserInfosProvider().donorData(
                                 name,
                                 username,
                                 email,
-                                addressesList,
+                                provider.addressList,
                                 contactnumber,
                                 userType);
 
@@ -627,6 +670,7 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
                                     '$name signed up! Log in to experience ElbiDrive.'),
                               ),
                             );
+                            provider.resetSignUp();
                             Navigator.pop(context);
                             Navigator.pushNamed(context, "/");
                           }
@@ -699,6 +743,24 @@ class _SignUpDonorPageState extends State<SignUpDonorPage> {
     // check if it matches any emails
     final foundOrg = orgsData.any((orgData) => orgData['email'] == googleEmail);
 
+    // true if it matched with any email
+    return foundDonor || foundOrg;
+  }
+
+  Future<bool> checkUsername(String? uname) async {
+    final firebaseUsers = context.read<UserInfosProvider>();
+    final donorsData = await firebaseUsers.getDonors();
+    final orgsData = await firebaseUsers.getOrgs();
+    print(uname);
+    // check if it matches any existing email
+    final foundDonor =
+        donorsData.any((donorData) => donorData['username'] == uname);
+
+    print(foundDonor);
+    // check if it matches any emails
+    final foundOrg = orgsData.any((orgData) => orgData['username'] == uname);
+
+    print(foundOrg);
     // true if it matched with any email
     return foundDonor || foundOrg;
   }

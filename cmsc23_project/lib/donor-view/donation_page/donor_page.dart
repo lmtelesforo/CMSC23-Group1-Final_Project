@@ -89,7 +89,8 @@ class _DonorPageState extends State<DonorPage> {
         leading: IconButton(
           icon: Icon(Icons.home, color: const Color.fromRGBO(55, 61, 102, 1)),
           onPressed: () {
-            provider.controller4.clear();
+            provider.resetSignUp();
+            provider.datetimepicked = false;
             Navigator.pop(context);
             Navigator.pushNamed(context, "/donorHomepage",
                 arguments: donorDetails);
@@ -244,28 +245,9 @@ class _DonorPageState extends State<DonorPage> {
 
     return Column(
       children: [
-        Divider(
-          thickness: 1,
-          color: const Color(0xFFFCBE4F),
-        ),
-        Text(
-          "Separate multiple entries with semi-colons. Leave no space in between (e.g. Address 1;Address 2)",
-          style: TextStyle(
-            fontSize: 14,
-            fontFamily: 'Poppins-Reg',
-            fontWeight: FontWeight.w600,
-            color: Color(0xFF373D66),
-          ),
-          textAlign: TextAlign.center,
-        ),
-        Divider(
-          thickness: 1,
-          color: const Color(0xFFFCBE4F),
-        ),
         SizedBox(height: screenSize.height * 0.01),
         TextFormField(
           controller: provider.controller5,
-          onChanged: provider.updateAddresses,
           validator: (val) {
             if (val!.isEmpty) {
               return "Please enter a valid address or addresses";
@@ -278,7 +260,7 @@ class _DonorPageState extends State<DonorPage> {
           style: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,
-            fontFamily: 'Poppins-Reg',
+            fontFamily: 'Montserrat',
             color: Color(0xFF373D66),
           ),
           decoration: InputDecoration(
@@ -303,7 +285,7 @@ class _DonorPageState extends State<DonorPage> {
           style: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,
-            fontFamily: 'Poppins-Reg',
+            fontFamily: 'Montserrat',
             color: Color(0xFF373D66),
           ),
           decoration: InputDecoration(
@@ -320,6 +302,7 @@ class _DonorPageState extends State<DonorPage> {
               final contactNumber = provider.controller6.text;
               final donorEmail = donorDetails['email'];
               final status = 'Pending';
+              print(donorDetails);
 
               bool multipleAddresses = addressesUnsplit.contains(';');
 
@@ -357,6 +340,9 @@ class _DonorPageState extends State<DonorPage> {
                     imageUrls);
 
                 donationService.addDonation(donation, imageUrls); // add to firebase
+                
+                provider.resetSignUp();
+                provider.datetimepicked = false;
 
                 Navigator.pop(context);
                 Navigator.pushNamed(context, "/donorHomepage",
@@ -398,8 +384,10 @@ class _DonorPageState extends State<DonorPage> {
   Widget showDateTimePicked(DateTime dateandtime) {
     return Container(
       padding: const EdgeInsets.all(16.0),
-      child: Text(
-        dateandtime.toString(),
+      child: Center (
+        child: Text(
+          dateandtime.toString(),
+        ),
       ),
     );
   }
@@ -419,6 +407,7 @@ class _DonorPageState extends State<DonorPage> {
               final donorEmail = donorDetails['email'];
               final donorName = donorDetails['name'];
               final status = 'Pending';
+              print(donorDetails);
 
               final donationService =
                   Provider.of<DonationStorageProvider>(context, listen: false)
@@ -441,9 +430,12 @@ class _DonorPageState extends State<DonorPage> {
                     provider.shippingOpt,
                     provider.qrcodeinput,
                     weight,
-                    imageUrls);
+                    imageUrls,
+                    );
 
                 donationService.addDonation(donation, imageUrls); // add to firebase
+                provider.resetSignUp();
+                provider.datetimepicked = false;
 
                 Navigator.pop(context);
                 Navigator.pushNamed(context, "/donorHomepage",
@@ -484,25 +476,50 @@ class _DonorPageState extends State<DonorPage> {
   Widget ifDropOff(BuildContext context) {
     final provider = context.watch<TextfieldProviders>();
     if (provider.datetimepicked != true) {
-      return Text('Select date for drop-off first.',
-      style: 
-      TextStyle(
-        color: Color(0xFF373D66),
+      return Container(
+        child: Center(
+          child: Text('Select date for drop-off first.',
+          style: 
+          TextStyle(
+            color: Color(0xFF373D66),
+            fontFamily: "Montserrat",
+            fontSize: 15,
+            fontWeight: FontWeight.w600
+            ),
+          ),
         ),
       );
     } else {
       final dateOfDropOff = provider.date;
+      final Size screenSize = MediaQuery.of(context).size;
 
       return Column(
         children: [
           ElevatedButton(
+              style: ElevatedButton.styleFrom(
+              backgroundColor: const Color.fromRGBO(252, 190, 79, 1),
+              textStyle: TextStyle(
+                fontSize: 16,
+              ),
+              padding: EdgeInsets.symmetric(horizontal: screenSize.width * 0.1, vertical: screenSize.height * 0.01), // Adjusted padding
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(40),
+              ),
+            ),
             onPressed: () {
               setState(() {
                 qrcodeinput = dateOfDropOff;
                 generate = true;
               });
             },
-            child: Text('Generate QR Code'),
+            child: Text(
+              'Generate QR Code', 
+              style: TextStyle(
+                color: const Color.fromRGBO(55, 61, 102, 1),
+                fontFamily: "Montserrat",
+                fontWeight: FontWeight.bold
+              ),
+            ),
           ),
         ],
       );
@@ -510,10 +527,13 @@ class _DonorPageState extends State<DonorPage> {
   }
 
   Widget qrCodeImage(String qrcodeinput) {
-    final donorEmail = donorDetails['email'];
-    String dateandstatus = 'Pending' + "|" + qrcodeinput + "|" + donorEmail;
     final provider = context.watch<TextfieldProviders>();
+    final donorEmail = donorDetails['email'];
+    final donorID = donorDetails['id'];
+    String dateandstatus = 'Pending' + "|" + qrcodeinput + "|" + donorID;
     provider.updateQRCodeInput(dateandstatus);
+    print(dateandstatus);
+    print(donorID);
 
     return Container(
       padding: const EdgeInsets.all(16.0),

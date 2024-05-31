@@ -1,1 +1,3 @@
 flutter/ephemeral
+*.swift
+cmsc23_project/pubspec.lock
