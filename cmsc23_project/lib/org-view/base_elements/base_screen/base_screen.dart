@@ -65,25 +65,28 @@ class _Avatar extends StatelessWidget {
         Org org =
             Org.fromJson(snapshot.data!.docs[0].data() as Map<String, dynamic>);
 
-        return InkWell(
-          onTap: () {
-            // Don't push the profile screen if it's already open
-            if (ModalRoute.of(context)!.settings.name != "/org/profile") {
-              Navigator.pushNamed(context, "/org/profile");
-            }
-          },
-          child: Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: Colors.white,
-                width: 2,
+        return Padding(
+          padding: const EdgeInsets.only(right: 10),
+          child: InkWell(
+            onTap: () {
+              // Don't push the profile screen if it's already open
+              if (ModalRoute.of(context)!.settings.name != "/org/profile") {
+                Navigator.pushNamed(context, "/org/profile");
+              }
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: Colors.white,
+                  width: 4,
+                ),
               ),
-            ),
-            child: CircleAvatar(
-              backgroundImage: NetworkImage(org.profilePic!),
-              backgroundColor: Colors.white,
-              radius: 20,
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(org.profilePic!),
+                backgroundColor: Colors.white,
+                radius: 20,
+              ),
             ),
           ),
         );
