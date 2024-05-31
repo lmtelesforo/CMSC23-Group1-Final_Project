@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cmsc23_project/models/org_signup.dart';
 import 'package:cmsc23_project/org-view/base_elements/base_screen/app_bar.dart';
 import 'package:cmsc23_project/org-view/base_elements/base_screen/drawer.dart';
 import 'package:cmsc23_project/providers/current_org_provider.dart';
@@ -62,9 +61,6 @@ class _Avatar extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
 
-        Org org =
-            Org.fromJson(snapshot.data!.docs[0].data() as Map<String, dynamic>);
-
         return Padding(
           padding: const EdgeInsets.only(right: 10),
           child: InkWell(
@@ -82,8 +78,8 @@ class _Avatar extends StatelessWidget {
                   width: 4,
                 ),
               ),
-              child: CircleAvatar(
-                backgroundImage: NetworkImage(org.profilePic!),
+              child: const CircleAvatar(
+                backgroundImage: AssetImage('assets/images/cats_of_uplb.jpg'),
                 backgroundColor: Colors.white,
                 radius: 20,
               ),

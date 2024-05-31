@@ -60,8 +60,8 @@ class Profile extends StatelessWidget {
             width: 7,
           ),
         ),
-        child: CircleAvatar(
-          backgroundImage: NetworkImage(org.profilePic!),
+        child: const CircleAvatar(
+          backgroundImage: AssetImage('assets/images/cats_of_uplb.jpg'),
           radius: 50,
           backgroundColor: Colors.white,
         ),
