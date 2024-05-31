@@ -687,22 +687,24 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                             signUpResult =
                                 (await authService.signUp(email, password))!;
                             final bool found = await checkUserType(email);
-                            print(found);
-
-                            if (signUpResult ==
-                                    'The account already exists for that email.' &&
-                                found != false) {
-                              // match error message
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                    content: Text(
-                                        'An account already exists under this email. Log in instead.')),
-                              );
-                            } else if (found != false) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                    content: Text(
-                                        'An account already exists under this email. Log in instead.')),
+                          print(found);
+                          final bool found1 = await checkUsername(username);
+                          print("-------------");
+                          print(found1);
+                          if (signUpResult ==
+                                  'The account already exists for that email.' &&
+                              found != false || found1 != false) {
+                            // match error message
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                  content: Text(
+                                      'An account already exists under this username/email. Log in instead.')),
+                            );
+                          } else if (found != false || found1 != false) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                  content: Text(
+                                      'An account already exists under this username/email. Log in instead.')),
                               );
                             } else {
                               final user = UserInfosProvider().orgData(
@@ -799,6 +801,24 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
     // check if it matches any emails
     final foundOrg = orgsData.any((orgData) => orgData['email'] == googleEmail);
 
+    // true if it matched with any email
+    return foundDonor || foundOrg;
+  }
+
+  Future<bool> checkUsername(String? uname) async {
+    final firebaseUsers = context.read<UserInfosProvider>();
+    final donorsData = await firebaseUsers.getDonors();
+    final orgsData = await firebaseUsers.getOrgs();
+    print(uname);
+    // check if it matches any existing email
+    final foundDonor =
+        donorsData.any((donorData) => donorData['username'] == uname);
+
+    print(foundDonor);
+    // check if it matches any emails
+    final foundOrg = orgsData.any((orgData) => orgData['username'] == uname);
+
+    print(foundOrg);
     // true if it matched with any email
     return foundDonor || foundOrg;
   }
