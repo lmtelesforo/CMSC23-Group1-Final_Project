@@ -14,12 +14,55 @@ class FirebaseOrgAPI {
     return query.snapshots();
   }
 
-  Future<String> editOrg(String id,
-      {String? name, String? about, bool? openForDonations}) async {
+  Future<String> updateName(String username, String name) async {
     try {
-      await db.collection('users').doc(id).update(
-          {'name': name, 'about': about, 'openForDonations': openForDonations});
-      return 'success';
+      await db
+          .collection('users')
+          .where('username', isEqualTo: username)
+          .get()
+          .then((value) {
+        for (var element in value.docs) {
+          db.collection('users').doc(element.id).update({'name': name});
+        }
+      });
+      return 'Success';
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  Future<String> updateAbout(String username, String about) async {
+    try {
+      await db
+          .collection('users')
+          .where('username', isEqualTo: username)
+          .get()
+          .then((value) {
+        for (var element in value.docs) {
+          db.collection('users').doc(element.id).update({'about': about});
+        }
+      });
+      return 'Success';
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  Future<String> toggleStatus(String username) async {
+    try {
+      await db
+          .collection('users')
+          .where('username', isEqualTo: username)
+          .get()
+          .then((value) {
+        for (var element in value.docs) {
+          db
+              .collection('users')
+              .doc(element.id)
+              .update({'status': !element.data()['status']});
+        }
+      });
+      return 'Success';
     } catch (e) {
       return e.toString();
     }
