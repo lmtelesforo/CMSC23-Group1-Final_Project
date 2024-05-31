@@ -172,12 +172,20 @@ class _EditDonationState extends State<_EditDonation> {
             ),
           ],
         ),
-        TableRow(
-          children: [
-            const Icon(Icons.route, color: CustomColors.primary),
-            _setDrive,
-          ],
-        ),
+        // Only show drive selection if the donation is not cancelled
+        tempDonation!.status != 'Cancelled'
+            ? TableRow(
+                children: [
+                  const Icon(Icons.route, color: CustomColors.primary),
+                  _setDrive,
+                ],
+              )
+            : const TableRow(
+                children: [
+                  SizedBox(),
+                  SizedBox(),
+                ],
+              )
       ],
     );
   }

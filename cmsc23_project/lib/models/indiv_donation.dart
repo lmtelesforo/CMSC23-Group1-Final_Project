@@ -124,9 +124,16 @@ class Donation {
     ];
 
     if (shipping != 'Pick up') {
+      // Remove 'Scheduled for Pickup' if shipping is not 'Pick up'
       allStatuses.remove('Scheduled for Pickup');
     }
 
+    if (status == 'Completed' || status == 'Cancelled') {
+      // If status is 'Completed' or 'Cancelled', return only that status
+      return [status];
+    }
+
+    // Else, return all statuses starting from the current status
     int index = allStatuses.indexOf(status);
     return index != -1 ? allStatuses.sublist(index) : allStatuses;
   }
