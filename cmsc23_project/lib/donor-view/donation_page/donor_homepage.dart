@@ -47,8 +47,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
           "Donor Homepage",
           style: TextStyle(
             fontFamily: "Montserrat",
-            color: const Color.fromRGBO(
-                55, 61, 102, 1), 
+            color: const Color.fromRGBO(55, 61, 102, 1),
             fontWeight: FontWeight.bold,
             fontSize: 20,
           ),
@@ -113,9 +112,10 @@ class _DonorHomepageState extends State<DonorHomepage> {
               ),
               onTap: () {
                 Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ProfilePage(),)
-                );
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProfilePage(),
+                    ));
               },
             ),
             ListTile(
@@ -157,6 +157,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
                 style: TextStyle(fontSize: 20, fontFamily: 'Poppins'),
               ),
               onTap: () {
+                Navigator.pop(context);
                 Navigator.pop(context);
                 Navigator.pushNamed(context, "/");
               },
@@ -241,9 +242,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                 "images/icon.png",
                                 fit: BoxFit.scaleDown,
                               ),
-                              SizedBox(
-                                  width:
-                                      screenWidth * 0.02),
+                              SizedBox(width: screenWidth * 0.02),
                               Expanded(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -264,9 +263,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                         fontFamily: "Montserrat",
                                       ),
                                     ),
-                                    SizedBox(
-                                        height: screenHeight *
-                                            0.005), 
+                                    SizedBox(height: screenHeight * 0.005),
                                     Text(
                                       "Now!",
                                       style: TextStyle(
@@ -367,7 +364,10 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                               org,
                                               style: TextStyle(
                                                 fontFamily: "Poppins",
-                                                fontSize: MediaQuery.of(context).size.height * 0.016,
+                                                fontSize: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.016,
                                                 color: Colors.black,
                                               ),
                                               textAlign: TextAlign.center,
@@ -402,11 +402,11 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                             return Icon(
                                               Icons.favorite,
                                               color:
-                                                provider.isOrganizationFavorite(
-                                                    org)
-                                                ? const Color.fromRGBO(
-                                                    252, 190, 79, 1)
-                                                : Colors.transparent,
+                                                  provider.isOrganizationFavorite(
+                                                          org)
+                                                      ? const Color.fromRGBO(
+                                                          252, 190, 79, 1)
+                                                      : Colors.transparent,
                                             );
                                           },
                                         ),
