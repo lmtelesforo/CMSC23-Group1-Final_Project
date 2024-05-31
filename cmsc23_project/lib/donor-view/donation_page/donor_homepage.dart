@@ -168,9 +168,8 @@ class _DonorHomepageState extends State<DonorHomepage> {
                 style: TextStyle(fontSize: 20, fontFamily: 'Poppins'),
               ),
               onTap: () {
-                Navigator.pop(context);
-                Navigator.pop(context);
-                Navigator.pushNamed(context, "/");
+                Navigator.pushNamedAndRemoveUntil(
+                    context, "/", (route) => false);
               },
             ),
           ],
