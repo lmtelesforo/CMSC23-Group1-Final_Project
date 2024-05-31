@@ -376,7 +376,7 @@ class _IndivViewAllDonationsState extends State<UserIndivViewDonation> {
                 const SizedBox(width: 5),
                 Expanded(
                   child: Text(
-                    donation.addresses?.first,
+                    donation.address!,
                     style: const TextStyle(
                       fontSize: 16,
                       fontFamily: 'Poppins-Reg',
@@ -386,9 +386,6 @@ class _IndivViewAllDonationsState extends State<UserIndivViewDonation> {
                 ),
               ],
             ),
-            (donation.addresses!.length > 1)
-                ? newAddressLine() // if true
-                : const SizedBox.shrink(), // if false
           ],
         ),
         const SizedBox(height: 7),
@@ -429,28 +426,6 @@ class _IndivViewAllDonationsState extends State<UserIndivViewDonation> {
             padding: const EdgeInsets.only(left: 120),
             child: Text(
               donation.category[index + 1],
-              style: const TextStyle(
-                fontSize: 16,
-                fontFamily: 'Poppins-Reg',
-                color: Color(0xFF373D66),
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  Widget newAddressLine() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: List.generate(
-        donation.addresses!.length - 1,
-        (index) {
-          return Padding(
-            padding: const EdgeInsets.only(left: 106),
-            child: Text(
-              donation.addresses![index + 1],
               style: const TextStyle(
                 fontSize: 16,
                 fontFamily: 'Poppins-Reg',
