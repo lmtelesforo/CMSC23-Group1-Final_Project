@@ -38,6 +38,7 @@ class _IndivViewAllDonationsState extends State<UserIndivViewDonation> {
   Widget build(BuildContext context) {
     final provider = context.watch<TextfieldProviders>();
     final int index;
+    print("Donation Status: ${donation.status}");
 
     return Scaffold(
       body: Stack(
@@ -448,6 +449,9 @@ class _IndivViewAllDonationsState extends State<UserIndivViewDonation> {
                       ? showGeneratedQR()
                       : const SizedBox.shrink(),
                   donation.image?.isEmpty == 0 ? showPhotos(donation) : const SizedBox.shrink(),
+                  donation.status.contains("Pending")
+                    ? showCancelButton(donation)
+                    : const SizedBox.shrink(),
                 ],
               ),
             ),
@@ -458,59 +462,58 @@ class _IndivViewAllDonationsState extends State<UserIndivViewDonation> {
     );
   }
 
-  // Widget showCancelButton() {
-  //   if (donation.status == 'Pending') {
-  //     return Center(
-  //       child: ElevatedButton.icon(
-  //         onPressed: () {
-  //           final donationService =
-  //               Provider.of<DonationStorageProvider>(context, listen: false)
-  //                   .firebaseService;
-  //           donationService.updateDonationStatus(
-  //               donation.id!, 'Cancelled'); // only delete request
-  //           String newQRCode =
-  //               'Cancelled' + "|" + donation.date + "|" + donation.email;
-  //           donationService.updateQRDetails(donation.id!, newQRCode);
-  //           ScaffoldMessenger.of(context).showSnackBar(
-  //             SnackBar(
-  //               content: Text('Donation cancelled.'),
-  //             ),
-  //           );
-  //           Navigator.pop(context);
-  //           Navigator.push(
-  //             context,
-  //             MaterialPageRoute(
-  //               builder: (context) =>
-  //                   UserViewAllDonations(donorDetails: donorDetails),
-  //             ),
-  //           );
-  //         },
-  //         icon: const Icon(
-  //           Icons.clear,
-  //           color: Color.fromARGB(255, 181, 19, 19),
-  //         ),
-  //         label: const Text(
-  //           'Cancel Donation',
-  //           style: TextStyle(
-  //             fontSize: 14,
-  //             fontFamily: 'Poppins-Bold',
-  //             color: Color(0xFF373D66),
-  //           ),
-  //         ),
-  //         style: ElevatedButton.styleFrom(
-  //           minimumSize: const Size(300, 35),
-  //           textStyle: const TextStyle(
-  //             fontSize: 14,
-  //             fontFamily: 'Poppins-Bold',
-  //           ),
-  //           backgroundColor: const Color(0xFFFCBE4F),
-  //         ),
-  //       ),
-  //     );
-  //   } else {
-  //     return Container();
-  //   }
-  // }
+  Widget showCancelButton(donation) {
+    return Center(
+      child: ElevatedButton.icon(
+        onPressed: () {
+          final donationService =
+              Provider.of<DonationStorageProvider>(context, listen: false)
+                  .firebaseService;
+          donationService.updateDonationStatus(
+              donation.id!, 'Cancelled'); // only delete request
+          if (donation.shipping == 'Drop-off') {
+            String newQRCode =
+              'Cancelled' + "|" + donation.date + "|" + donation.id!;
+              donationService.updateQRDetails(donation.id!, newQRCode);
+          }
+          
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Donation cancelled.'),
+            ),
+          );
+          Navigator.pop(context);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  UserViewAllDonations(donorDetails: donorDetails),
+            ),
+          );
+        },
+        icon: const Icon(
+          Icons.clear,
+          color: Color.fromARGB(255, 181, 19, 19),
+        ),
+        label: const Text(
+          'Cancel Donation',
+          style: TextStyle(
+            fontSize: 14,
+            fontFamily: 'Poppins-Bold',
+            color: Color(0xFF373D66),
+          ),
+        ),
+        style: ElevatedButton.styleFrom(
+          minimumSize: const Size(300, 35),
+          textStyle: const TextStyle(
+            fontSize: 14,
+            fontFamily: 'Poppins-Bold',
+          ),
+          backgroundColor: const Color(0xFFFCBE4F),
+        ),
+      ),
+    );
+  }
 
   Widget showAddressandContact() {
     return Column(
@@ -567,9 +570,6 @@ class _IndivViewAllDonationsState extends State<UserIndivViewDonation> {
             ),
           ],
         ),
-        donation.status == 'Pending'
-          ? showCancelButton()
-          : const SizedBox.shrink(),
       ],
     );
   }
@@ -657,53 +657,53 @@ class _IndivViewAllDonationsState extends State<UserIndivViewDonation> {
     );
   }
 
-  Widget showCancelButton() {
-    return Center(
-      child: ElevatedButton.icon(
-        onPressed: () {
-          final donationService =
-              Provider.of<DonationStorageProvider>(context, listen: false)
-                  .firebaseService;
-          donationService.updateDonationStatus(
-              donation.id!, 'Cancelled'); // only delete request
-          String newQRCode =
-              'Cancelled' + "|" + donation.date + "|" + donation.id!;
-          donationService.updateQRDetails(donation.id!, newQRCode);
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Donation cancelled.'),
-            ),
-          );
-          Navigator.pop(context);
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  UserViewAllDonations(donorDetails: donorDetails),
-            ),
-          );
-        },
-        icon: const Icon(
-          Icons.clear,
-          color: Color.fromARGB(255, 181, 19, 19),
-        ),
-        label: const Text(
-          'Cancel Donation',
-          style: TextStyle(
-            fontSize: 14,
-            fontFamily: 'Poppins-Bold',
-            color: Color(0xFF373D66),
-          ),
-        ),
-        style: ElevatedButton.styleFrom(
-          minimumSize: const Size(300, 35),
-          textStyle: const TextStyle(
-            fontSize: 14,
-            fontFamily: 'Poppins-Bold',
-          ),
-          backgroundColor: const Color(0xFFFCBE4F),
-        ),
-      ),
-    );
-  }
+//   Widget showCancelButton() {
+//     return Center(
+//       child: ElevatedButton.icon(
+//         onPressed: () {
+//           final donationService =
+//               Provider.of<DonationStorageProvider>(context, listen: false)
+//                   .firebaseService;
+//           donationService.updateDonationStatus(
+//               donation.id!, 'Cancelled'); // only delete request
+//           String newQRCode =
+//               'Cancelled' + "|" + donation.date + "|" + donation.id!;
+//           donationService.updateQRDetails(donation.id!, newQRCode);
+//           ScaffoldMessenger.of(context).showSnackBar(
+//             SnackBar(
+//               content: Text('Donation cancelled.'),
+//             ),
+//           );
+//           Navigator.pop(context);
+//           Navigator.push(
+//             context,
+//             MaterialPageRoute(
+//               builder: (context) =>
+//                   UserViewAllDonations(donorDetails: donorDetails),
+//             ),
+//           );
+//         },
+//         icon: const Icon(
+//           Icons.clear,
+//           color: Color.fromARGB(255, 181, 19, 19),
+//         ),
+//         label: const Text(
+//           'Cancel Donation',
+//           style: TextStyle(
+//             fontSize: 14,
+//             fontFamily: 'Poppins-Bold',
+//             color: Color(0xFF373D66),
+//           ),
+//         ),
+//         style: ElevatedButton.styleFrom(
+//           minimumSize: const Size(300, 35),
+//           textStyle: const TextStyle(
+//             fontSize: 14,
+//             fontFamily: 'Poppins-Bold',
+//           ),
+//           backgroundColor: const Color(0xFFFCBE4F),
+//         ),
+//       ),
+//     );
+//   }
 }
