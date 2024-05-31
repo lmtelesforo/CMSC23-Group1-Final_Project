@@ -11,9 +11,11 @@ class CurrentOrgProvider with ChangeNotifier {
       FirebaseDonationStorageAPI();
 
   late String orgUsername;
+  late String name;
 
-  void setOrg(String username) {
+  void setOrg(String username, String name) {
     orgUsername = username;
+    this.name = name;
   }
 
   // Getters
@@ -22,7 +24,7 @@ class CurrentOrgProvider with ChangeNotifier {
   Stream<QuerySnapshot> get drives =>
       _firebaseDriveAPI.getDrivesByOrg(orgUsername);
   Stream<QuerySnapshot> get donations =>
-      _firebaseDonationStorageAPI.getDonationsByOrg(orgUsername);
+      _firebaseDonationStorageAPI.getDonationsByOrg(name);
   Stream<QuerySnapshot> get favoriteDrives =>
       _firebaseDriveAPI.getFavoriteDrives(orgUsername);
 
@@ -67,8 +69,8 @@ class CurrentOrgProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void changeDonationDrive(String donationId, String newDrive) {
-    _firebaseDonationStorageAPI.updateDonationDrive(donationId, newDrive);
+  void changeDonationDrive(String donationId, String newId, String newName) {
+    _firebaseDonationStorageAPI.updateDonationDrive(donationId, newId, newName);
     notifyListeners();
   }
 

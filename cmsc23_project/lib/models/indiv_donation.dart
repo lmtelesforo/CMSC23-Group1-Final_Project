@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 class Donation {
   String? id;
-  String orgUsername;
-  String driveId;
+  String organization;
+  String driveName;
 
   List category;
   String shipping;
@@ -19,16 +19,18 @@ class Donation {
   String email;
   String name;
   String date;
+  String driveId;
   String time;
 
   Donation({
     this.id,
-    required this.orgUsername,
-    required this.driveId,
+    required this.organization,
+    required this.driveName,
     required this.category,
     required this.shipping,
     required this.weight,
     this.addresses,
+    required this.driveId,
     this.contactNumber,
     required this.status,
     required this.name,
@@ -41,23 +43,29 @@ class Donation {
   });
 
   factory Donation.fromJson(Map<String, dynamic> json) {
+    json.forEach((key, value) {
+      if (value == null) {
+        print('Missing field: $key');
+      }
+    });
+
     return Donation(
-      id: json['id'],
-      orgUsername: json['orgUsername'],
+      id: json['id'] as String?,
+      organization: json['organization'] ?? '',
+      driveName: json['driveName'] ?? '',
+      category: json['category'] ?? [],
+      shipping: json['shipping'] ?? '',
+      weight: json['weight'] ?? '',
+      addresses: json['addresses'] ?? [],
+      contactNumber: json['contactNumber'] ?? '',
+      image: json['image'] is List<dynamic> ? json['image'] : [json['image']],
       driveId: json['driveId'],
-      category: json['category'],
-      shipping: json['shipping'],
-      weight: json['weight'],
-      addresses: json['addresses'],
-      contactNumber: json['contactNumber'],
-      photo: json['photo'],
-      image: json['image'],
-      status: json['status'],
-      qrcode: json['qrcode'],
-      name: json['name'],
-      email: json['email'],
-      date: json['date'],
-      time: json['time'],
+      status: json['status'] ?? '',
+      qrcode: json['qrcode'] ?? '',
+      name: json['name'] ?? '',
+      email: json['email'] ?? '',
+      date: json['date'] ?? '',
+      time: json['time'] ?? '',
     );
   }
 
@@ -69,8 +77,8 @@ class Donation {
   Map<String, dynamic> toJson(Donation donation) {
     return {
       'id': donation.id,
-      'orgUsername': donation.orgUsername,
-      'driveId': donation.driveId,
+      'organization': donation.organization,
+      'driveName': donation.driveName,
       'category': donation.category,
       'name': donation.name,
       'weight': donation.weight,
@@ -80,21 +88,23 @@ class Donation {
       'photo': donation.photo,
       'image': donation.image,
       'status': donation.status,
-      'qrcode': donation.qrcode
+      'qrcode': donation.qrcode,
+      'driveId': donation.driveId,
     };
   }
 
   Donation copy() {
     return Donation(
         id: id,
-        orgUsername: orgUsername,
-        driveId: driveId,
+        organization: organization,
+        driveName: driveName,
         name: name,
         email: email,
         category: category,
         shipping: shipping,
         weight: weight,
         date: date,
+        driveId: driveId,
         time: time,
         addresses: addresses,
         contactNumber: contactNumber,
@@ -104,21 +114,24 @@ class Donation {
         status: status);
   }
 
-  List<String> get validStatuses {
-    List<String> allStatuses = [
-      'Pending',
-      'Confirmed',
-      'Scheduled for Pickup',
-      'Completed',
-      'Cancelled',
-    ];
+  List<String> get validStatuses => shipping == 'Pick up'
+      ? [
+          'Pending',
+          'Confirmed',
+          'Scheduled for Pickup',
+          'Completed',
+          'Cancelled',
+        ]
+      : [
+          'Pending',
+          'Confirmed',
+          'Completed',
+          'Cancelled',
+        ];
 
-    int index = allStatuses.indexOf(status);
-
-    List<String> validStatuses =
-        index != -1 ? allStatuses.sublist(index) : allStatuses;
-
-    return validStatuses;
+  @override
+  String toString() {
+    return 'Donation(organization: $organization, driveName: $driveName, category: $category, shipping: $shipping, weight: $weight, photo: $photo, image: $image, addresses: $addresses, contactNumber: $contactNumber, qrcode: $qrcode, status: $status, email: $email, name: $name, date: $date, $time: time)';
   }
 }
 

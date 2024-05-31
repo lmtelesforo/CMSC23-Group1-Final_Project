@@ -386,7 +386,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                                     Navigator.pop(context);
                                     context
                                         .read<CurrentOrgProvider>()
-                                        .setOrg(orgUsername!);
+                                        .setOrg(orgUsername!, orgName!);
                                     Navigator.pushNamed(context, "/org");
 
                                     ScaffoldMessenger.of(context).showSnackBar(
