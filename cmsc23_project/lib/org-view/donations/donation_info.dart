@@ -62,16 +62,9 @@ class DonationInfo extends StatelessWidget {
         const Icon(Icons.location_on, color: CustomColors.primary),
         Padding(
           padding: const EdgeInsets.only(bottom: 30),
-          child: ListView.builder(
-            itemCount: donation.addresses!.length,
-            itemBuilder: (context, index) {
-              return Text(
-                donation.addresses![index],
-                style: CustomTextStyle.body,
-              );
-            },
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
+          child: Text(
+            donation.addresses!.first,
+            style: CustomTextStyle.body,
           ),
         ),
       ],

@@ -114,20 +114,22 @@ class Donation {
         status: status);
   }
 
-  List<String> get validStatuses => shipping == 'Pick up'
-      ? [
-          'Pending',
-          'Confirmed',
-          'Scheduled for Pickup',
-          'Completed',
-          'Cancelled',
-        ]
-      : [
-          'Pending',
-          'Confirmed',
-          'Completed',
-          'Cancelled',
-        ];
+  List<String> get validStatuses {
+    List<String> allStatuses = [
+      'Pending',
+      'Confirmed',
+      'Scheduled for Pickup',
+      'Completed',
+      'Cancelled',
+    ];
+
+    if (shipping != 'Pick up') {
+      allStatuses.remove('Scheduled for Pickup');
+    }
+
+    int index = allStatuses.indexOf(status);
+    return index != -1 ? allStatuses.sublist(index) : allStatuses;
+  }
 
   @override
   String toString() {
