@@ -48,12 +48,6 @@ class Donation {
       }
     });
 
-    final imageJson = json['image'];
-    final image =
-        imageJson is List<dynamic> ? List<String>.from(imageJson) : [imageJson];
-    print(imageJson);
-    print(image.toList());
-
     return Donation(
       id: json['id'] as String?,
       organization: json['organization'] ?? '',
@@ -61,7 +55,7 @@ class Donation {
       category: json['category'] ?? [],
       shipping: json['shipping'] ?? '',
       weight: json['weight'] ?? '',
-      address: json['address'] ?? '',
+      address: json['addresses'] ?? '',
       contactNumber: json['contactNumber'] ?? '',
       image: json['image'] is List<dynamic> ? json['image'] : [json['image']],
       driveId: json['driveId'],
@@ -83,7 +77,9 @@ class Donation {
     return {
       'id': donation.id,
       'organization': donation.organization,
+      'organization': donation.organization,
       'driveName': donation.driveName,
+      'driveId': driveId,
       'category': donation.category,
       'name': donation.name,
       'weight': donation.weight,

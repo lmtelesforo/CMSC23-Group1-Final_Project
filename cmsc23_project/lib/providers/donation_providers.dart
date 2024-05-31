@@ -1,56 +1,63 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class DonationProvider with ChangeNotifier {
-  List<String> organizations = [
-    "Animal Welfare Organizations",
-    "Charitable Organizations",
-    "Disaster Relief Organizations",
-    "Education Foundations",
-    "Environmental Organizations",
-    "Health Organization",
-    "Human Rights Groups",
-    "Religious Organizations",
-    "Research Institutions",
-    "Social Justice and Advocacy Groups"
-  ];
-
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  List<String> _organizations = [];
   List<DonationItem> _donationItems = [];
   String _selectedOrganization = '';
-
   final Map<String, bool> _favoriteOrganizations = {};
-
-  final Map<String, List<String>> _organizationDetails = {
-    "Animal Welfare Organizations": ["Details for Animal Welfare Organizations"],
-    "Charitable Organizations": ["Details for Charitable Organizations"],
-    "Disaster Relief Organizations": ["Details for Disaster Relief Organizations"],
-    "Education Foundations": ["Details for Education Foundations"],
-    "Environmental Organizations": ["Details for Environmental Organizations"],
-    "Health Organization": ["Details for Health Organization"],
-    "Human Rights Groups": ["Details for Human Rights Groups"],
-    "Religious Organizations": ["Details for Religious Organizations"],
-    "Research Institutions": ["Details for Research Institutions"],
-    "Social Justice and Advocacy Groups": ["Details for Social Justice and Advocacy Groups"],
-  };
-
+  final Map<String, List<String>> organizationDonations = {};
+  List<String> get organizations => _organizations;
   List<DonationItem> get donationItems => _donationItems;
   String get selectedOrganization => _selectedOrganization;
-
   Map<String, bool> get favoriteOrganizations => _favoriteOrganizations;
 
-  Map<String, List<String>> get organizationDetails => _organizationDetails;
+  Future<void> fetchOrganizations() async {
+    List<String> organizations = [];
 
-  final Map<String, List<String>> organizationDonations = {
-    "Animal Welfare Organizations": ["Food", "Clothes", "Cash", "Necessities", "Others"],
-    "Charitable Organizations": ["Food", "Clothes", "Cash", "Necessities", "Others"],
-    "Disaster Relief Organizations": ["Food", "Clothes", "Cash", "Necessities", "Others"],
-    "Education Foundations": ["Food", "Clothes", "Cash", "Necessities", "Others"],
-    "Environmental Organizations": ["Food", "Clothes", "Cash", "Necessities", "Others"],
-    "Health Organization": ["Food", "Clothes", "Cash", "Necessities", "Others"],
-    "Human Rights Groups": ["Food", "Clothes", "Cash", "Necessities", "Others"],
-    "Religious Organizations": ["Food", "Clothes", "Cash", "Necessities", "Others"],
-    "Research Institutions": ["Food", "Clothes", "Cash", "Necessities", "Others"],
-    "Social Justice and Advocacy Groups": ["Food", "Clothes", "Cash", "Necessities", "Others"],
-  };
+    try {
+      // Ensure user is authenticated
+      User? user = _auth.currentUser;
+      if (user != null) {
+        // Assuming your organizations collection has a field 'name'
+        QuerySnapshot querySnapshot = await _firestore
+            .collection('users')
+            .get();
+
+        // Extract organization names
+        querySnapshot.docs.forEach((doc) {
+          organizations.add(doc['name']); // Assuming field name is 'name'
+        });
+
+        // Clear existing organization donations
+        organizationDonations.clear();
+
+        // Populate organization donations
+        organizations.forEach((org) {
+          organizationDonations[org] = [
+            "Food",
+            "Clothes",
+            "Cash",
+            "Necessities",
+            "Others"
+          ];
+        });
+
+        // Update donation items with items for the first organization
+        if (organizations.isNotEmpty) {
+          _selectedOrganization = organizations.first;
+          _donationItems = getDonationItemsForOrganization(_selectedOrganization);
+        }
+      }
+    } catch (e) {
+      print("Error fetching organizations: $e");
+    }
+
+    notifyListeners();
+  }
 
   void setOrganization(String organization) {
     _selectedOrganization = organization;
@@ -58,26 +65,22 @@ class DonationProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  List<DonationItem> getDonationItemsForOrganization(String organization) {
+    return organizationDonations[organization]!
+        .map((itemName) => DonationItem(itemName: itemName, isChecked: false))
+        .toList();
+  }
+
   void toggleItemCheck(DonationItem item, bool isChecked) {
     item.isChecked = isChecked;
     notifyListeners();
   }
 
-  List<DonationItem> getDonationItemsForOrganization(String organization) {
-    return organizationDonations[organization]!
-      .map((itemName) => DonationItem(itemName: itemName, isChecked: false))
-      .toList();
-  }
-
   List<dynamic> getCheckedItems() {
     return _donationItems
-      .where((item) => item.isChecked)
-      .map((item) => item.itemName.toString())
-      .toList();
-  }
-
-  List<String> _getOrganizationDetails(String organization) {
-    return organizationDetails[organization] ?? [];
+        .where((item) => item.isChecked)
+        .map((item) => item.itemName.toString())
+        .toList();
   }
 
   void toggleFavorite(String organization) {

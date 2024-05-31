@@ -32,8 +32,6 @@ class DonationStorageProvider with ChangeNotifier {
     print(message); 
     notifyListeners(); 
   }
-  
-  
 
   Future<void> updateQRDetails(String donationId, String newQRCode) async {
     String? message = await firebaseService.updateQRDetails(donationId, newQRCode);
@@ -52,7 +50,7 @@ class DonationStorageProvider with ChangeNotifier {
     }
   }
 
-  Map<String, dynamic> donationDataPickUp(String name, String email, String date, String time, List addresses, String contactnumber, String status, List category, String shipping, String weight, List imageUrls){ // created a structure for easier storing
+  Map<String, dynamic> donationDataPickUp(String name, String email, String date, String time, List addresses, String contactnumber, String status, List category, String shipping, String weight, List imageUrls, String organization, String driveId, String driveName){ 
     Map<String, dynamic> newData = {
       'name': name,
       'email': email,
@@ -66,10 +64,13 @@ class DonationStorageProvider with ChangeNotifier {
       'shipping': shipping,
       'weight': weight,
       'image': imageUrls,
+      'organization' : organization,
+      'driveId' : driveId,
+      'driveName' : driveName,
     };
     return newData;
   }
-  Map<String, dynamic> donationDataDropOff(String name, String email, String date, String time, String status, List category, String shipping, String qrCode, String weight, List imageUrls){ // created a structure for easier storing
+  Map<String, dynamic> donationDataDropOff(String name, String email, String date, String time, String status, List category, String shipping, String qrCode, String weight, List imageUrls, String organization, String driveId, String driveName){ 
     Map<String, dynamic> newData = {
       'name': name,
       'email': email,
@@ -81,6 +82,9 @@ class DonationStorageProvider with ChangeNotifier {
       'category': category,
       'weight': weight,
       'image': imageUrls,
+      'organization' : organization,
+      'driveId' : driveId,
+      'driveName' : driveName,
     };
     return newData;
   }

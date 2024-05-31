@@ -1,34 +1,51 @@
-import 'package:cmsc23_project/donor-view/donation_page/profile_page.dart';
-import 'package:cmsc23_project/providers/donation_providers.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cmsc23_project/donor-view/donation_page/user_view_own_donations.dart';
+import 'package:cmsc23_project/providers/firebase_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:cmsc23_project/donor-view/donation_page/favorite_page.dart';
+import 'package:cmsc23_project/providers/donation_providers.dart';
 import 'package:cmsc23_project/donor-view/donation_page/org_details_page.dart';
-
-import 'user_view_own_donations.dart';
+import 'profile_page.dart';
 
 class DonorHomepage extends StatefulWidget {
-  const DonorHomepage({super.key});
+  const DonorHomepage({Key? key}) : super(key: key);
 
   @override
   _DonorHomepageState createState() => _DonorHomepageState();
 }
 
 class _DonorHomepageState extends State<DonorHomepage> {
-  List<String> filteredOrganizations = [];
-  DonationProvider _donationProvider = DonationProvider();
+  List<String> organizations = [];
   late Map<String, dynamic> donorDetails;
+  late UserInfosProvider userInfosProvider;
 
   @override
   void initState() {
     super.initState();
-    // Initially, set filtered organizations to all organizations
-    filteredOrganizations.addAll(_donationProvider.organizations);
+    userInfosProvider = Provider.of<UserInfosProvider>(context, listen: false);
+    fetchOrganizations();
+  }
+
+  Future<void> fetchOrganizations() async {
+    try {
+      final orgs = await userInfosProvider.getOrgs();
+      final filteredOrgs =
+          orgs.where((org) => org['openForDonations'] == true).toList();
+      final orgNames =
+          filteredOrgs.map((org) => org['name'] as String).toList();
+      setState(() {
+        organizations = orgNames;
+      });
+    } catch (error) {
+      print('Error fetching organizations: $error');
+    }
   }
 
   void filterOrganizations(String query) {
     setState(() {
-      filteredOrganizations = _donationProvider.organizations
+      organizations = context
+          .read<DonationProvider>()
+          .organizations
           .where((org) => org.toLowerCase().contains(query.toLowerCase()))
           .toList();
     });
@@ -58,17 +75,27 @@ class _DonorHomepageState extends State<DonorHomepage> {
         iconTheme: IconThemeData(
             color: const Color.fromRGBO(55, 61, 102, 1), size: 30),
         actions: [
-          Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: Colors.white,
-                width: 3.0,
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProfilePage(),
+                ),
+              );
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: Colors.white,
+                  width: 3.0,
+                ),
               ),
-            ),
-            child: CircleAvatar(
-              backgroundImage: AssetImage("assets/images/profile_pic.jpg"),
-              radius: 30.0,
+              child: CircleAvatar(
+                backgroundImage: AssetImage("assets/images/profile_pic.jpg"),
+                radius: 30.0,
+              ),
             ),
           ),
           SizedBox(width: 16),
@@ -112,26 +139,10 @@ class _DonorHomepageState extends State<DonorHomepage> {
               ),
               onTap: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ProfilePage(),
-                    ));
-              },
-            ),
-            ListTile(
-              title: const Text(
-                "Favorite",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontFamily: 'Poppins',
-                ),
-              ),
-              onTap: () {
-                Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => FavoritePage(),
-                      settings: RouteSettings(arguments: donorDetails)),
+                    builder: (context) => ProfilePage(),
+                  ),
                 );
               },
             ),
@@ -152,7 +163,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
               },
             ),
             ListTile(
-              title: const Text(
+              title: Text(
                 "Log Out",
                 style: TextStyle(fontSize: 20, fontFamily: 'Poppins'),
               ),
@@ -195,10 +206,10 @@ class _DonorHomepageState extends State<DonorHomepage> {
                     filled: true,
                     fillColor: Colors.white,
                     hintText: "Search...",
-                    hintStyle: const TextStyle(fontSize: 16),
-                    prefixIcon: const Icon(Icons.search),
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 8.0, horizontal: 16.0),
+                    hintStyle: TextStyle(fontSize: 16),
+                    prefixIcon: Icon(Icons.search),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(screenHeight * 0.03),
                       borderSide: BorderSide(
@@ -242,7 +253,9 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                 "images/icon.png",
                                 fit: BoxFit.scaleDown,
                               ),
-                              SizedBox(width: screenWidth * 0.02),
+                              SizedBox(
+                                  width:
+                                      screenWidth * 0.02), // Adjusted spacing
                               Expanded(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -263,7 +276,9 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                         fontFamily: "Montserrat",
                                       ),
                                     ),
-                                    SizedBox(height: screenHeight * 0.005),
+                                    SizedBox(
+                                        height: screenHeight *
+                                            0.005), // Adjusted spacing
                                     Text(
                                       "Now!",
                                       style: TextStyle(
@@ -291,30 +306,39 @@ class _DonorHomepageState extends State<DonorHomepage> {
                       spacing: screenWidth * 0.05,
                       runSpacing: screenHeight * 0.02,
                       children: [
-                        for (String org in filteredOrganizations)
+                        for (String org in organizations)
                           GestureDetector(
                             onTap: () {
-                              context
-                                  .read<DonationProvider>()
-                                  .setOrganization(org);
-                              Map<String, List<String>> organizationDetails =
-                                  context
-                                      .read<DonationProvider>()
-                                      .organizationDetails;
-                              String details =
-                                  organizationDetails[org]?.join('\n') ?? '';
-                              Map<String, String> detailsMap = {
-                                'Details': details
-                              };
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => OrgDetailsPage(
-                                      organization: org,
-                                      organizationDetails: detailsMap,
-                                      donorDetails: donorDetails),
-                                ),
-                              );
+                              FirebaseFirestore.instance
+                                  .collection('users')
+                                  .where('name', isEqualTo: org)
+                                  .where('userType', isEqualTo: 'organization')
+                                  .where('openForDonations',
+                                      isEqualTo:
+                                          true) // Include condition for openForDonations
+                                  .limit(1)
+                                  .get()
+                                  .then((snapshot) {
+                                if (snapshot.docs.isNotEmpty) {
+                                  String orgUsername =
+                                      snapshot.docs.first['username'];
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          OrgDetailsPageWidget(
+                                        orgName: org,
+                                        donorDetails: donorDetails,
+                                        orgUsername: orgUsername,
+                                      ),
+                                    ),
+                                  );
+                                }
+                              }).catchError((error) {
+                                print(
+                                    'Error retrieving organization details: $error');
+                                // Handle error
+                              });
                             },
                             child: Stack(
                               children: [
@@ -347,7 +371,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                           borderRadius: BorderRadius.circular(
                                               screenHeight * 0.02),
                                           child: Image.asset(
-                                            "images/$org.jpg",
+                                            "images/organization.jpg",
                                             width: screenWidth * 0.5,
                                             height: screenHeight * 0.12,
                                             fit: BoxFit.cover,
@@ -364,10 +388,7 @@ class _DonorHomepageState extends State<DonorHomepage> {
                                               org,
                                               style: TextStyle(
                                                 fontFamily: "Poppins",
-                                                fontSize: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.016,
+                                                fontSize: screenHeight * 0.016,
                                                 color: Colors.black,
                                               ),
                                               textAlign: TextAlign.center,
