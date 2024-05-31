@@ -42,7 +42,6 @@ class Donation {
 
   factory Donation.fromJson(Map<String, dynamic> json) {
     return Donation(
-      id: json['id'],
       orgUsername: json['orgUsername'],
       driveName: json['driveName'],
       category: json['category'],
@@ -50,7 +49,6 @@ class Donation {
       weight: json['weight'],
       addresses: json['addresses'],
       contactNumber: json['contactNumber'],
-      photo: json['photo'],
       image: json['image'],
       status: json['status'],
       qrcode: json['qrcode'],

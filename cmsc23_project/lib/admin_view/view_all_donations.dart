@@ -106,7 +106,24 @@ class _AdminViewAllDonationsState extends State<AdminViewAllDonations> {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.22,
+            top: MediaQuery.of(context).size.height * 0.19,
+            left: 0,
+            right: 0,
+            child: const Padding(
+              padding: EdgeInsets.all(19),
+              child: Text(
+                "See Pending, Confirmed, Scheduled, Complete, and Cancelled Donations",
+                style: TextStyle(
+                  fontSize: 15,
+                  fontFamily: 'Poppins',
+                  color: Color(0xFF373D66),
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          Positioned(
+            top: MediaQuery.of(context).size.height * 0.28,
             left: 0,
             right: 0,
             bottom: MediaQuery.of(context).size.height * 0.057,
@@ -167,6 +184,7 @@ class _AdminViewAllDonationsState extends State<AdminViewAllDonations> {
                                   donationDetails[index].data()
                                       as Map<String, dynamic>);
                               donation.id = donationDetails[index].id;
+                              String subtitle = '\n' + 'Org: ' + donation.orgUsername + '\n' + 'Donor: ' + donation.email + '\n' + 'Status: '+ donation.status;
 
                               return Container(
                                 decoration: BoxDecoration(
@@ -179,17 +197,17 @@ class _AdminViewAllDonationsState extends State<AdminViewAllDonations> {
                                   contentPadding: EdgeInsets.only(
                                       top: 2, left: 10, bottom: 2, right: 13),
                                   title: Text(
-                                    'Donated by: ${donation.name}',
+                                    'Drive: ${donation.driveName}',
                                     style: TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 17,
                                       fontFamily: 'Poppins-Bold',
                                       color: Color(0xFF373D66),
                                     ),
                                   ),
                                   subtitle: Text(
-                                    donation.shipping,
+                                    subtitle,
                                     style: TextStyle(
-                                      fontSize: 12,
+                                      fontSize: 14,
                                       color: Colors.grey,
                                       fontFamily: 'Poppins-Reg',
                                     ),
