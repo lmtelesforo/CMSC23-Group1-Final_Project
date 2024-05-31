@@ -64,7 +64,7 @@ class MainAction extends StatelessWidget {
       );
 
   Widget get _image => const Image(
-        image: AssetImage('assets/images/xmas_box.png'),
+        image: AssetImage('images/icon.png'),
         height: 80,
         width: 80,
       );
