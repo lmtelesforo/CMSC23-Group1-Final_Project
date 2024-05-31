@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class Donation {
   String? id;
   String organization;
+  String organization;
   String driveName;
   List category;
   String shipping;
@@ -19,10 +20,12 @@ class Donation {
   String name;
   String date;
   String driveId;
+  String driveId;
   String time;
 
   Donation({
     this.id,
+    required this.organization,
     required this.organization,
     required this.driveName,
     required this.category,
@@ -41,17 +44,12 @@ class Donation {
     this.image,
   });
 
-  factory Donation.fromJson(Map<String, dynamic> json) {
+   factory Donation.fromJson(Map<String, dynamic> json) {
     json.forEach((key, value) {
       if (value == null) {
         print('Missing field: $key');
       }
     });
-
-    final imageJson = json['image'];
-    final image = imageJson is List<dynamic> ? List<String>.from(imageJson) : [imageJson];
-    print(imageJson);
-    print(image.toList());
 
     return Donation(
       id: json['id'] as String?,
@@ -60,7 +58,7 @@ class Donation {
       category: json['category'] ?? [],
       shipping: json['shipping'] ?? '',
       weight: json['weight'] ?? '',
-      address: json['address'] ?? '',
+      addresses: json['addresses'] ?? [],
       contactNumber: json['contactNumber'] ?? '',
       image: json['image'] is List<dynamic> ? json['image'] : [json['image']],
       driveId: json['driveId'],
@@ -82,7 +80,9 @@ class Donation {
     return {
       'id': donation.id,
       'organization': donation.organization,
+      'organization': donation.organization,
       'driveName': donation.driveName,
+      'driveId' : driveId,
       'category': donation.category,
       'name': donation.name,
       'weight': donation.weight,
@@ -100,6 +100,7 @@ class Donation {
     return Donation(
         id: id,
         organization: organization,
+        organization: organization,
         driveName: driveName,
         name: name,
         email: email,
@@ -107,6 +108,7 @@ class Donation {
         shipping: shipping,
         weight: weight,
         date: date,
+        driveId: driveId,
         driveId: driveId,
         time: time,
         address: address,
@@ -135,7 +137,7 @@ class Donation {
         
   @override
   String toString() {
-    return 'Donation(organization: $organization, driveName: $driveName, category: $category, shipping: $shipping, weight: $weight, photo: $photo, image: $image, addresses: $address, contactNumber: $contactNumber, qrcode: $qrcode, status: $status, email: $email, name: $name, date: $date, $time: time)';
+    return 'Donation(organization: $organization, driveName: $driveName, category: $category, shipping: $shipping, weight: $weight, photo: $photo, image: $image, addresses: $addresses, contactNumber: $contactNumber, qrcode: $qrcode, status: $status, email: $email, name: $name, date: $date, $time: time)';
   }
 }
 

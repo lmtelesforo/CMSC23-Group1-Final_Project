@@ -458,24 +458,58 @@ class _IndivViewAllDonationsState extends State<UserIndivViewDonation> {
     );
   }
 
-  Widget showDonationPics(imageUrls) {
-    return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 4.0,
-        mainAxisSpacing: 4.0,
-      ),
-      itemCount: imageUrls.length,
-      itemBuilder: (context, index) {
-        return Image.network(
-          imageUrls[index],
-          fit: BoxFit.cover,
-          errorBuilder: (context, error, stackTrace) {
-            return Icon(Icons.error);
+  Widget showCancelButton() {
+    if (donation.status == 'Pending') {
+      return Center(
+        child: ElevatedButton.icon(
+          onPressed: () {
+            final donationService =
+                Provider.of<DonationStorageProvider>(context, listen: false)
+                    .firebaseService;
+            donationService.updateDonationStatus(
+                donation.id!, 'Cancelled'); // only delete request
+            String newQRCode =
+                'Cancelled' + "|" + donation.date + "|" + donation.email;
+            donationService.updateQRDetails(donation.id!, newQRCode);
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Donation cancelled.'),
+              ),
+            );
+            Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    UserViewAllDonations(donorDetails: donorDetails),
+              ),
+            );
           },
-        );
-      },
-    );
+          icon: const Icon(
+            Icons.clear,
+            color: Color.fromARGB(255, 181, 19, 19),
+          ),
+          label: const Text(
+            'Cancel Donation',
+            style: TextStyle(
+              fontSize: 14,
+              fontFamily: 'Poppins-Bold',
+              color: Color(0xFF373D66),
+            ),
+          ),
+          style: ElevatedButton.styleFrom(
+            minimumSize: const Size(300, 35),
+            textStyle: const TextStyle(
+              fontSize: 14,
+              fontFamily: 'Poppins-Bold',
+            ),
+            backgroundColor: const Color(0xFFFCBE4F),
+          ),
+        ),
+      );
+    } else {
+      return Container();
+    }
   }
 
   Widget showAddressandContact() {

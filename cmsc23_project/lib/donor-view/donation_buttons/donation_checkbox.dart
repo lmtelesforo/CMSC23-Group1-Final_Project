@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../providers/textfield_providers.dart';
+import '../../providers/donation_providers.dart'; 
 
 class DonationCheckbox extends StatefulWidget {
   final bool isChecked;
@@ -12,8 +12,8 @@ class DonationCheckbox extends StatefulWidget {
     required this.isChecked,
     required this.itemName,
     required this.onChanged,
-    super.key,
-  });
+    Key? key, 
+  }) : super(key: key);
 
   @override
   _DonationCheckboxState createState() => _DonationCheckboxState();
@@ -22,32 +22,27 @@ class DonationCheckbox extends StatefulWidget {
 class _DonationCheckboxState extends State<DonationCheckbox> {
   @override
   Widget build(BuildContext context) {
-  final provider = context.watch<TextfieldProviders>();
+    final donationProvider = context.watch<DonationProvider>(); // Update provider
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          widget.itemName,
-          style: const TextStyle(
-            fontSize: 16,
-            fontFamily: "Montserrat",
-            fontWeight: FontWeight.bold,
-            color: Color.fromRGBO(55, 61, 102, 1),
-          ),
+    return CheckboxListTile(
+      title: Text(
+        widget.itemName,
+        style: const TextStyle(
+          fontSize: 16,
+          fontFamily: "Montserrat",
+          fontWeight: FontWeight.bold,
+          color: Color.fromRGBO(55, 61, 102, 1),
         ),
-        const SizedBox(height: 30),
-        Transform.scale(
-          scale: 1.1,
-          child: Checkbox(
-            value: widget.isChecked,
-            onChanged: widget.onChanged,
-            activeColor: const Color.fromRGBO(55, 61, 102, 1),
-            checkColor: Colors.white,
-            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          ),
-        ),
-      ],
+      ),
+      value: widget.isChecked,
+      onChanged: (newValue) {
+        setState(() {
+          widget.onChanged(newValue); // Trigger the onChanged callback
+        });
+      },
+      activeColor: const Color.fromRGBO(55, 61, 102, 1),
+      checkColor: Colors.white,
+      controlAffinity: ListTileControlAffinity.trailing,
     );
   }
 }
