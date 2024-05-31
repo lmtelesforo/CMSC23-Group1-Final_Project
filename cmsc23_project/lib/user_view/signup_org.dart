@@ -687,13 +687,13 @@ class _SignUpOrgPageState extends State<SignUpOrgPage> {
                             signUpResult =
                                 (await authService.signUp(email, password))!;
                             final bool found = await checkUserType(email);
-                          print(found);
-                          final bool found1 = await checkUsername(username);
-                          print("-------------");
-                          print(found1);
-                          if (signUpResult ==
-                                  'The account already exists for that email.' &&
-                              found != false || found1 != false) {
+                            print(found);
+                            final bool found1 = await checkUsername(username);
+                            print("-------------");
+                            print(found1);
+                            if (signUpResult ==
+                                    'The account already exists for that email.' &&
+                                found != false || found1 != false) {
                             // match error message
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
