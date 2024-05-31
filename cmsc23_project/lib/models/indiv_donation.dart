@@ -6,7 +6,6 @@ class Donation {
   String? id;
   String organization;
   String driveName;
-
   List category;
   String shipping;
   String weight;
@@ -42,12 +41,17 @@ class Donation {
     this.image,
   });
 
-   factory Donation.fromJson(Map<String, dynamic> json) {
+  factory Donation.fromJson(Map<String, dynamic> json) {
     json.forEach((key, value) {
       if (value == null) {
         print('Missing field: $key');
       }
     });
+
+    final imageJson = json['image'];
+    final image = imageJson is List<dynamic> ? List<String>.from(imageJson) : [imageJson];
+    print(imageJson);
+    print(image.toList());
 
     return Donation(
       id: json['id'] as String?,
@@ -56,7 +60,7 @@ class Donation {
       category: json['category'] ?? [],
       shipping: json['shipping'] ?? '',
       weight: json['weight'] ?? '',
-      address: json['address'] ?? [],
+      address: json['address'] ?? '',
       contactNumber: json['contactNumber'] ?? '',
       image: json['image'] is List<dynamic> ? json['image'] : [json['image']],
       driveId: json['driveId'],
@@ -86,7 +90,7 @@ class Donation {
       'address': donation.address,
       'contactNumber': donation.contactNumber,
       'photo': donation.photo,
-      'image': donation.image,
+      'image': donation.image != null ? donation.image!.join(',') : null,
       'status': donation.status,
       'qrcode': donation.qrcode
     };

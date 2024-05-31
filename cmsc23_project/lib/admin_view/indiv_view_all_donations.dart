@@ -418,6 +418,27 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                             ),
                           ],
                         ),
+                        Text(
+                          'Photos of Donation:',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: 'Poppins-Bold',
+                            color: Color(0xFF373D66),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Flexible(
+                          child: ListView.builder(
+                            itemCount: donation.image?.length,
+                            itemBuilder: (context, index) {
+                              String imageUrl = donation.image?[index];
+                              return Image.network(
+                                imageUrl,
+                              );
+                            },
+                          ),
+                        ),
+
                         const SizedBox(height: 7),
                         donation.shipping == 'Pick up'
                             ? showAddressandContact()

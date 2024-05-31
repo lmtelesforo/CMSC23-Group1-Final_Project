@@ -317,7 +317,7 @@ class _IndivViewAllDonationsState extends State<UserIndivViewDonation> {
           donationService.updateDonationStatus(
               donation.id!, 'Cancelled'); // only delete request
           String newQRCode =
-              'Cancelled' + "|" + donation.date + "|" + donation.email;
+              'Cancelled' + "|" + donation.date + "|" + donation.id!;
           donationService.updateQRDetails(donation.id!, newQRCode);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(

@@ -126,7 +126,7 @@ class _AdminViewAllDonationsState extends State<AdminViewAllDonations> {
             top: MediaQuery.of(context).size.height * 0.28,
             left: 0,
             right: 0,
-            bottom: MediaQuery.of(context).size.height * 0.057,
+            bottom: MediaQuery.of(context).size.height * 0.047,
             child: SingleChildScrollView(
               child: Container(
                 height: MediaQuery.of(context).size.height * 0.7,
