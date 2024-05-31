@@ -104,20 +104,22 @@ class Donation {
         status: status);
   }
 
-  List<String> get validStatuses => shipping == 'Pick up'
-      ? [
-          'Pending',
-          'Confirmed',
-          'Scheduled for Pickup',
-          'Completed',
-          'Cancelled',
-        ]
-      : [
-          'Pending',
-          'Confirmed',
-          'Completed',
-          'Cancelled',
-        ];
+  List<String> get validStatuses {
+    List<String> allStatuses = [
+      'Pending',
+      'Confirmed',
+      'Scheduled for Pickup',
+      'Completed',
+      'Cancelled',
+    ];
+
+    int index = allStatuses.indexOf(status);
+
+    List<String> validStatuses =
+        index != -1 ? allStatuses.sublist(index) : allStatuses;
+
+    return validStatuses;
+  }
 }
 
 Widget statusIcon(String status) {
