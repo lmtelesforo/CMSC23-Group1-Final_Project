@@ -37,7 +37,7 @@ class DonationDriveCard extends StatelessWidget {
                       Navigator.pushNamed(context, '/org/drives/details',
                           arguments: id);
                     },
-                    child: _CardContent(drive),
+                    child: _CardContent(drive, id),
                   ),
                 ),
               ),
@@ -71,16 +71,15 @@ class _FavoriteIcon extends StatelessWidget {
 }
 
 class _CardContent extends StatelessWidget {
-  const _CardContent(this.drive);
-
   final DonationDrive drive;
+  final String id;
+
+  const _CardContent(this.drive, this.id);
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: context
-            .read<CurrentOrgProvider>()
-            .donationsByDrive(drive.orgUsername, drive.name),
+        stream: context.read<CurrentOrgProvider>().donationsByDrive(id),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return const Text('An error occurred');

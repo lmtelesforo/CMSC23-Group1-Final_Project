@@ -1,5 +1,6 @@
 import 'package:cmsc23_project/api/firebase_users_api.dart';
 import 'package:cmsc23_project/providers/auth_provider.dart';
+import 'package:cmsc23_project/providers/current_org_provider.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -352,8 +353,8 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                                       break;
                                     }
                                   }
-                                }
-                                else if (found == true) { // email match
+                                } else if (found == true) {
+                                  // email match
                                   for (var donorData in donorsData) {
                                     var donorEmail = donorData['email'];
                                     if (donorEmail == input) {
@@ -364,7 +365,8 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                                     }
                                   }
                                 }
-                                
+
+                                String? orgUsername;
                                 if (foundDonor == true) {
                                   provider.resetLogIn();
                                   Navigator.pop(context);
@@ -377,9 +379,8 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                                           'Welcome to ElbiDrive, $donorName!'),
                                     ),
                                   );
-                                } 
-                                
-                                else if (foundDonor != true) { // user is not a donor
+                                } else if (foundDonor != true) {
+                                  // user is not a donor
                                   final orgsData =
                                       await firebaseUsers.getOrgs();
 
@@ -390,16 +391,17 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                                       if (orgEmail == input) {
                                         foundOrg = true;
                                         orgName = orgData['name'];
+                                        orgUsername = orgData['username'];
                                         break;
                                       }
                                     }
-                                  }
-                                  else if (found == true) {
+                                  } else if (found == true) {
                                     for (var orgData in orgsData) {
                                       var orgEmail = orgData['email'];
                                       if (orgEmail == input) {
                                         foundOrg = true;
                                         orgName = orgData['name'];
+                                        orgUsername = orgData['username'];
                                         break;
                                       }
                                     }
@@ -408,8 +410,10 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                                   if (foundOrg == true) {
                                     provider.resetLogIn();
                                     Navigator.pop(context);
-                                    Navigator.pushNamed(
-                                        context, "/org");
+                                    context
+                                        .read<CurrentOrgProvider>()
+                                        .setOrg(orgUsername!, orgName!);
+                                    Navigator.pushNamed(context, "/org");
 
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(

@@ -41,7 +41,7 @@ class Donation {
     this.image,
   });
 
-   factory Donation.fromJson(Map<String, dynamic> json) {
+  factory Donation.fromJson(Map<String, dynamic> json) {
     json.forEach((key, value) {
       if (value == null) {
         print('Missing field: $key');
@@ -79,7 +79,7 @@ class Donation {
       'organization': donation.organization,
       'organization': donation.organization,
       'driveName': donation.driveName,
-      'driveId' : driveId,
+      'driveId': driveId,
       'category': donation.category,
       'name': donation.name,
       'weight': donation.weight,
@@ -89,7 +89,8 @@ class Donation {
       'photo': donation.photo,
       'image': donation.image != null ? donation.image!.join(',') : null,
       'status': donation.status,
-      'qrcode': donation.qrcode
+      'qrcode': donation.qrcode,
+      'driveId': donation.driveId,
     };
   }
 
@@ -114,22 +115,30 @@ class Donation {
         status: status);
   }
 
-  List<String> get validStatuses => shipping == 'Pick up'
-    ? [
-        'Pending',
-        'Confirmed',
-        'Scheduled for Pickup',
-        'Completed',
-        'Cancelled',
-      ]
-    : [
-        'Pending',
-        'Confirmed',
-        'Completed',
-        'Cancelled',
-      ];
+  List<String> get validStatuses {
+    List<String> allStatuses = [
+      'Pending',
+      'Confirmed',
+      'Scheduled for Pickup',
+      'Completed',
+      'Cancelled',
+    ];
 
-        
+    if (shipping != 'Pick up') {
+      // Remove 'Scheduled for Pickup' if shipping is not 'Pick up'
+      allStatuses.remove('Scheduled for Pickup');
+    }
+
+    if (status == 'Completed' || status == 'Cancelled') {
+      // If status is 'Completed' or 'Cancelled', return only that status
+      return [status];
+    }
+
+    // Else, return all statuses starting from the current status
+    int index = allStatuses.indexOf(status);
+    return index != -1 ? allStatuses.sublist(index) : allStatuses;
+  }
+
   @override
   String toString() {
     return 'Donation(organization: $organization, driveName: $driveName, category: $category, shipping: $shipping, weight: $weight, photo: $photo, image: $image, addresses: $address, contactNumber: $contactNumber, qrcode: $qrcode, status: $status, email: $email, name: $name, date: $date, $time: time)';

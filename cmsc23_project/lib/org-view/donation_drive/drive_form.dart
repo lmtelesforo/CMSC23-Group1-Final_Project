@@ -44,7 +44,7 @@ class _DriveFormState extends State<DriveForm> {
               body: Column(
                 children: [
                   Fields(formKey, nameController, descController),
-                  Submit(formKey, nameController, descController, id: id),
+                  _Submit(formKey, nameController, descController, id: id),
                 ],
               ),
             );
@@ -54,7 +54,7 @@ class _DriveFormState extends State<DriveForm> {
         body: Column(
           children: [
             Fields(formKey, nameController, descController),
-            Submit(formKey, nameController, descController),
+            _Submit(formKey, nameController, descController),
           ],
         ),
       );
@@ -131,6 +131,7 @@ class Fields extends StatelessWidget {
           decoration: InputDecoration(
             border: InputBorder.none,
             hintText: 'Enter description of drive',
+            hintMaxLines: 2,
             hintStyle: CustomTextStyle.prompt.apply(fontSizeDelta: -5),
           ),
           validator: (value) {
@@ -146,19 +147,14 @@ class Fields extends StatelessWidget {
       );
 }
 
-class Submit extends StatelessWidget {
+class _Submit extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final TextEditingController _nameController;
   final TextEditingController _descController;
   final String? id;
 
-  const Submit(
-    this.formKey,
-    this._nameController,
-    this._descController, {
-    this.id,
-    super.key,
-  });
+  const _Submit(this.formKey, this._nameController, this._descController,
+      {this.id});
 
   @override
   Widget build(BuildContext context) {

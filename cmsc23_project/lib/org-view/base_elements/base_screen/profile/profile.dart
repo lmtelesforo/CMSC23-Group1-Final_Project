@@ -33,18 +33,22 @@ class Profile extends StatelessWidget {
             Org org = Org.fromJson(
                 snapshot.data!.docs.first.data() as Map<String, dynamic>);
 
-            return Column(
-              children: [
-                _bigAvatar(org),
-                Container(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Text(org.name, style: CustomTextStyle.h1)),
-                _about(org),
-              ],
-            );
+            return profile(org);
           },
         ),
       ),
+    );
+  }
+
+  Column profile(Org org) {
+    return Column(
+      children: [
+        _bigAvatar(org),
+        Container(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Text(org.name, style: CustomTextStyle.h1)),
+        _about(org),
+      ],
     );
   }
 
@@ -56,8 +60,8 @@ class Profile extends StatelessWidget {
             width: 7,
           ),
         ),
-        child: CircleAvatar(
-          backgroundImage: NetworkImage(org.profilePic!),
+        child: const CircleAvatar(
+          backgroundImage: AssetImage('assets/images/cats_of_uplb.jpg'),
           radius: 50,
           backgroundColor: Colors.white,
         ),
@@ -65,41 +69,84 @@ class Profile extends StatelessWidget {
 
   Widget _about(Org org) => Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Card(
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                const Text("About", style: CustomTextStyle.h2),
-                const SizedBox(height: 20),
-                Text(org.about!, style: CustomTextStyle.body),
-                const SizedBox(height: 20),
-                Row(
+        child: Stack(
+          children: [
+            Card(
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                child: Column(
                   children: [
-                    if (org.openForDonations) ...[
-                      const Icon(Icons.check, color: Colors.green),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 5.0),
-                        child: Text(
-                          "Open for donations",
-                          style: TextStyle(color: Colors.green),
-                        ),
-                      ),
-                    ] else ...[
-                      const Icon(Icons.close, color: Colors.red),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 5.0),
-                        child: Text(
-                          "Closed for donations",
-                          style: TextStyle(color: Colors.red),
-                        ),
-                      ),
-                    ]
+                    const Text("About", style: CustomTextStyle.h2),
+                    const SizedBox(height: 20),
+                    Center(
+                        child: Text(org.about!, style: CustomTextStyle.body)),
+                    const SizedBox(height: 20),
+                    openForDonations(org)
                   ],
-                )
-              ],
+                ),
+              ),
             ),
-          ),
+            ToggleStatus(org: org),
+          ],
         ),
       );
+
+  Row openForDonations(Org org) {
+    return Row(
+      children: [
+        if (org.openForDonations) ...[
+          const Icon(Icons.check, color: Colors.green),
+          const Padding(
+            padding: EdgeInsets.only(left: 5.0),
+            child: Text(
+              "Open for donations",
+              style: TextStyle(color: Colors.green),
+            ),
+          ),
+        ] else ...[
+          const Icon(Icons.close, color: Colors.red),
+          const Padding(
+            padding: EdgeInsets.only(left: 5.0),
+            child: Text(
+              "Closed for donations",
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+        ]
+      ],
+    );
+  }
+}
+
+class ToggleStatus extends StatelessWidget {
+  const ToggleStatus({
+    super.key,
+    required this.org,
+  });
+
+  final Org org;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      top: 13,
+      right: 20,
+      child: Container(
+        padding: const EdgeInsets.all(5),
+        decoration: const BoxDecoration(
+          color: CustomColors.primary,
+          shape: BoxShape.circle,
+        ),
+        child: InkWell(
+          onTap: () {
+            context.read<CurrentOrgProvider>().toggleOpenForDonations();
+          },
+          child: Icon(
+            org.openForDonations ? Icons.close : Icons.check,
+            color: CustomColors.secondary,
+          ),
+        ),
+      ),
+    );
+  }
 }

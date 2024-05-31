@@ -7,19 +7,17 @@ class FirebaseDonationStorageAPI {
     return db.collection("donations").snapshots();
   }
 
-  Stream<QuerySnapshot> getDonationsByOrg(String username) {
+  Stream<QuerySnapshot> getDonationsByOrg(String name) {
     return db
         .collection("donations")
-        .where("orgUsername", isEqualTo: username)
+        .where("organization", isEqualTo: name)
         .snapshots();
   }
 
-  Stream<QuerySnapshot> getDonationsByDrive(
-      String orgUsername, String driveName) {
+  Stream<QuerySnapshot> getDonationsByDrive(String id) {
     return db
-        .collection('donations')
-        .where('orgUsername', isEqualTo: orgUsername)
-        .where('driveName', isEqualTo: driveName)
+        .collection("donations")
+        .where("driveId", isEqualTo: id)
         .snapshots();
   }
 
@@ -43,13 +41,20 @@ class FirebaseDonationStorageAPI {
       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
       String date = data['date'];
       String email = data['email'];
+      String shipping = data['shipping'];
 
-      String newQrCode = '$newStatus|$date|$email';
+      if (shipping == 'Drop-off') {
+        String newQrCode = '$newStatus|$date|$email';
 
-      await db.collection('donations').doc(donationId).update({
-        'status': newStatus,
-        'qrcode': newQrCode,
-      });
+        await db.collection('donations').doc(donationId).update({
+          'status': newStatus,
+          'qrcode': newQrCode,
+        });
+      } else {
+        await db.collection('donations').doc(donationId).update({
+          'status': newStatus,
+        });
+      }
 
       return 'Donation status updated successfully';
     } catch (e) {
@@ -57,10 +62,12 @@ class FirebaseDonationStorageAPI {
     }
   }
 
-  Future<String> updateDonationDrive(String donationId, String newDrive) async {
+  Future<String> updateDonationDrive(
+      String donationId, String newId, String newName) async {
     try {
       await db.collection('donations').doc(donationId).update({
-        'driveName': newDrive,
+        'driveId': newId,
+        'driveName': newName,
       });
       return ('Donation drive updated successfully');
     } catch (e) {

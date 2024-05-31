@@ -57,12 +57,22 @@ class _EditDonationState extends State<_EditDonation> {
   }
 
   void saveChanges() {
+    bool changedStatus = tempDonation!.status != widget.donation.status;
+    bool changedDrive = tempDonation!.driveId != widget.donation.driveId;
+
     if (widget.donation.shipping == 'Drop-off' &&
         qrCodeValue == null &&
-        tempDonation!.status != widget.donation.status) {
+        changedStatus) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please scan the QR code first')),
+      );
+      return;
+    }
+
+    if (widget.donation.status != 'Completed' && changedDrive) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Please scan the QR code first'),
+          content: Text('Cannot change drive until the donation is completed.'),
         ),
       );
       return;
@@ -71,17 +81,10 @@ class _EditDonationState extends State<_EditDonation> {
     context
         .read<CurrentOrgProvider>()
         .changeDonationStatus(widget.id, tempDonation!.status);
-    context
-        .read<CurrentOrgProvider>()
-        .changeDonationDrive(widget.id, tempDonation!.driveName);
+    context.read<CurrentOrgProvider>().changeDonationDrive(
+        widget.id, tempDonation!.driveId, tempDonation!.driveName);
 
     Navigator.pop(context);
-  }
-
-  bool shouldShowQRCode() {
-    return widget.donation.shipping == 'Drop-off' &&
-        widget.donation.status != tempDonation!.status &&
-        qrCodeValue == null;
   }
 
   @override
@@ -105,6 +108,12 @@ class _EditDonationState extends State<_EditDonation> {
   }
 
   Table _form(BuildContext context) {
+    bool shouldShowQRCode() {
+      return widget.donation.shipping == 'Drop-off' &&
+          widget.donation.status != tempDonation!.status &&
+          qrCodeValue == null;
+    }
+
     return Table(
       columnWidths: const {
         0: FlexColumnWidth(1),
@@ -139,7 +148,8 @@ class _EditDonationState extends State<_EditDonation> {
                       var value =
                           await Navigator.pushNamed(context, '/org/scan-qr');
                       setState(() {
-                        if (value == widget.donation.qrcode) {
+                        if (value ==
+                            "${widget.donation.status}|${widget.donation.date}|${widget.id}") {
                           qrCodeValue = value as String?;
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
@@ -162,12 +172,20 @@ class _EditDonationState extends State<_EditDonation> {
             ),
           ],
         ),
-        TableRow(
-          children: [
-            const Icon(Icons.route, color: CustomColors.primary),
-            _setDrive,
-          ],
-        ),
+        // Only show drive selection if the donation is not cancelled
+        tempDonation!.status != 'Cancelled'
+            ? TableRow(
+                children: [
+                  const Icon(Icons.route, color: CustomColors.primary),
+                  _setDrive,
+                ],
+              )
+            : const TableRow(
+                children: [
+                  SizedBox(),
+                  SizedBox(),
+                ],
+              )
       ],
     );
   }
@@ -219,11 +237,13 @@ class _EditDonationState extends State<_EditDonation> {
                   DonationDrive.fromJson(drive.data() as Map<String, dynamic>))
               .toList();
 
+          List<String> ids =
+              snapshot.data!.docs.map((drive) => drive.id).toList();
+
           return DropdownMenu(
             menuHeight: 400,
             width: MediaQuery.of(context).size.width * 0.51,
-            initialSelection: drives
-                .indexWhere((drive) => drive.name == widget.donation.driveName),
+            initialSelection: ids.indexOf(widget.donation.driveId),
             dropdownMenuEntries: drives
                 .map((drive) => DropdownMenuEntry(
                       value: drives.indexOf(drive),
@@ -234,7 +254,8 @@ class _EditDonationState extends State<_EditDonation> {
                     ))
                 .toList(),
             onSelected: (drive) {
-              tempDonation!.driveName = drives[drive!].name;
+              tempDonation!.driveId = ids[drive!];
+              tempDonation!.driveName = drives[drive].name;
             },
             inputDecorationTheme: InputDecorationTheme(
               fillColor: Colors.white,
