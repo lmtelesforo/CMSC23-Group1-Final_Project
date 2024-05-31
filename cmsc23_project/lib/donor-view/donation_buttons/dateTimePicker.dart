@@ -97,16 +97,35 @@ class _DateTimePickerState extends State<DateTimePicker> {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<TextfieldProviders>();
-
+    final Size screenSize = MediaQuery.of(context).size;
+    
     return Container (
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color.fromRGBO(252, 190, 79, 1),
+              textStyle: TextStyle(
+                fontSize: 16,
+              ),
+              padding: EdgeInsets.symmetric(horizontal: screenSize.width * 0.1, vertical: screenSize.height * 0.01), // Adjusted padding
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(40),
+              ),
+            ),
             onPressed: () {
               showDatePicker();
             }, 
-            child: const Text('Select Date and Time'))
+            child: Text(
+              'Select Date and Time', 
+              style: TextStyle(
+                color: const Color.fromRGBO(55, 61, 102, 1),
+                fontFamily: "Montserrat",
+                fontWeight: FontWeight.bold
+              ),
+            ),
+          ),
         ],
       )
     );
