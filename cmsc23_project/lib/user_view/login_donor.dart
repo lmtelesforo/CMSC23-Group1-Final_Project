@@ -366,6 +366,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                                   }
                                 }
 
+                                String? orgUsername;
                                 if (foundDonor == true) {
                                   provider.resetLogIn();
                                   Navigator.pop(context);
@@ -390,6 +391,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                                       if (orgEmail == input) {
                                         foundOrg = true;
                                         orgName = orgData['name'];
+                                        orgUsername = orgData['username'];
                                         break;
                                       }
                                     }
@@ -399,6 +401,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                                       if (orgEmail == input) {
                                         foundOrg = true;
                                         orgName = orgData['name'];
+                                        orgUsername = orgData['username'];
                                         break;
                                       }
                                     }
