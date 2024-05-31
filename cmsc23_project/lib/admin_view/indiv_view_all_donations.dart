@@ -32,6 +32,14 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
   Widget build(BuildContext context) {
     final provider = context.watch<TextfieldProviders>();
     final int index;
+    print(donation);
+    bool showPics = false;
+
+    @override
+    void initState() {
+      super.initState();
+      donation.image!.length > 0 ? showPics = true : showPics = false;
+    }
 
     return Scaffold(
       body: Stack(
@@ -111,207 +119,357 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.27,
-            left: 0,
-            right: 0,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: const Color(0xFFFFFFFF),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            const Text(
-                              'Category/ies:',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontFamily: 'Poppins-Bold',
-                                color: Color(0xFF373D66),
-                              ),
-                            ),
-                            const SizedBox(width: 5),
-                            Expanded(
-                              child: Text(
-                                donation.category.first,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: 'Poppins-Reg',
-                                  color: Color(0xFF373D66),
-                                ),
-                              ),
-                            ),
-                          ],
+            top: MediaQuery.of(context).size.height * 0.24,
+            left: MediaQuery.of(context).size.width * 0.07,
+            right: MediaQuery.of(context).size.width * 0.07,
+            bottom: MediaQuery.of(context).size.height * 0.04,
+            child: Container(
+              width: 320,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16.0),
+                color: Colors.white,
+              ),
+            child: Container(
+              padding: const EdgeInsets.all(16.0),
+              child: ListView(
+                shrinkWrap: true,
+                children: [
+                  Row(
+                    children: [
+                      const Text(
+                        'Category:',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Poppins-Bold',
+                          color: Color(0xFF373D66),
                         ),
-                        (donation.category.length > 1)
-                            ? newCategoryLine() // if true
-                            : const SizedBox.shrink(), // if false
-                        const SizedBox(height: 7),
-                        Row(
-                          children: [
-                            const Text(
-                              'Status:',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontFamily: 'Poppins-Bold',
-                                color: Color(0xFF373D66),
-                              ),
-                            ),
-                            const SizedBox(width: 5),
-                            Expanded(
-                              child: Text(
-                                donation.status,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: 'Poppins-Reg',
-                                  color: Color(0xFF373D66),
-                                ),
-                              ),
-                            ),
-                          ],
+                      ),
+                      const SizedBox(width: 5),
+                      Expanded(
+                        child: Text(
+                          donation.category.first,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontFamily: 'Poppins-Reg',
+                            color: Color(0xFF373D66),
+                          ),
                         ),
-                        const SizedBox(height: 7),
-                        Row(
-                          children: [
-                            const Text(
-                              'Donation Drive:',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontFamily: 'Poppins-Bold',
-                                color: Color(0xFF373D66),
-                              ),
-                            ),
-                            const SizedBox(width: 5),
-                            Expanded(
-                              child: Text(
-                                donation.driveName,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: 'Poppins-Reg',
-                                  color: Color(0xFF373D66),
-                                ),
-                              ),
-                            ),
-                          ],
+                      ),
+                    ],
+                  ),
+                  (donation.category.length > 1)
+                      ? newCategoryLine() // if true
+                      : const SizedBox.shrink(), // if false
+                  const SizedBox(height: 7),
+                  Row(
+                    children: [
+                      const Text(
+                        'Status:',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Poppins-Bold',
+                          color: Color(0xFF373D66),
                         ),
-                        const SizedBox(height: 7),
-                        Row(
-                          children: [
-                            const Text(
-                              'Shipping Option:',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontFamily: 'Poppins-Bold',
-                                color: Color(0xFF373D66),
-                              ),
-                            ),
-                            const SizedBox(width: 5),
-                            Expanded(
-                              child: Text(
-                                donation.shipping,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: 'Poppins-Reg',
-                                  color: Color(0xFF373D66),
-                                ),
-                              ),
-                            ),
-                          ],
+                      ),
+                      const SizedBox(width: 5),
+                      Expanded(
+                        child: Text(
+                          donation.status,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontFamily: 'Poppins-Reg',
+                            color: Color(0xFF373D66),
+                          ),
                         ),
-                        const SizedBox(height: 7),
-                        Row(
-                          children: [
-                            const Text(
-                              'Weight:',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontFamily: 'Poppins-Bold',
-                                color: Color(0xFF373D66),
-                              ),
-                            ),
-                            const SizedBox(width: 5),
-                            Expanded(
-                              child: Text(
-                                donation.weight,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: 'Poppins-Reg',
-                                  color: Color(0xFF373D66),
-                                ),
-                              ),
-                            ),
-                          ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 7),
+                  Row(
+                    children: [
+                      const Text(
+                        'Donation Drive:',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Poppins-Bold',
+                          color: Color(0xFF373D66),
                         ),
-                        const SizedBox(height: 7),
-                        Row(
-                          children: [
-                            const Text(
-                              'Date:',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontFamily: 'Poppins-Bold',
-                                color: Color(0xFF373D66),
-                              ),
-                            ),
-                            const SizedBox(width: 5),
-                            Expanded(
-                              child: Text(
-                                donation.date,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: 'Poppins-Reg',
-                                  color: Color(0xFF373D66),
-                                ),
-                              ),
-                            ),
-                          ],
+                      ),
+                      const SizedBox(width: 5),
+                      Expanded(
+                        child: Text(
+                          donation.driveName,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontFamily: 'Poppins-Reg',
+                            color: Color(0xFF373D66),
+                          ),
                         ),
-                        Row(
-                          children: [
-                            const Text(
-                              'Time:',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontFamily: 'Poppins-Bold',
-                                color: Color(0xFF373D66),
-                              ),
-                            ),
-                            const SizedBox(width: 5),
-                            Expanded(
-                              child: Text(
-                                donation.time,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: 'Poppins-Reg',
-                                  color: Color(0xFF373D66),
-                                ),
-                              ),
-                            ),
-                          ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 7),
+                  Row(
+                    children: [
+                      const Text(
+                        'Donated by:',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Poppins-Bold',
+                          color: Color(0xFF373D66),
                         ),
-                        const SizedBox(height: 7),
-                        donation.shipping == 'Pick up'
-                            ? showAddressandContact()
-                            : const SizedBox.shrink(),
-                        donation.shipping == 'Drop-off'
-                            ? showGeneratedQR()
-                            : const SizedBox.shrink(),
-                      ],
+                      ),
+                      const SizedBox(width: 5),
+                      Expanded(
+                        child: Text(
+                          donation.name,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontFamily: 'Poppins-Reg',
+                            color: Color(0xFF373D66),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 7),
+                  Row(
+                    children: [
+                      const Text(
+                        'Donated to:',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Poppins-Bold',
+                          color: Color(0xFF373D66),
+                        ),
+                      ),
+                      const SizedBox(width: 5),
+                      Expanded(
+                        child: Text(
+                          donation.organization,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontFamily: 'Poppins-Reg',
+                            color: Color(0xFF373D66),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                    const SizedBox(height: 7),
+                  Row(
+                    children: [
+                      const Text(
+                        'Donor Email:',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Poppins-Bold',
+                          color: Color(0xFF373D66),
+                        ),
+                      ),
+                      const SizedBox(width: 5),
+                      Expanded(
+                        child: Text(
+                          donation.email,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontFamily: 'Poppins-Reg',
+                            color: Color(0xFF373D66),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 7),
+                  Row(
+                    children: [
+                      const Text(
+                        'Shipping Option:',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Poppins-Bold',
+                          color: Color(0xFF373D66),
+                        ),
+                      ),
+                      const SizedBox(width: 5),
+                      Expanded(
+                        child: Text(
+                          donation.shipping,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontFamily: 'Poppins-Reg',
+                            color: Color(0xFF373D66),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 7),
+                  Row(
+                    children: [
+                      const Text(
+                        'Address:',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Poppins-Bold',
+                          color: Color(0xFF373D66),
+                        ),
+                      ),
+                      const SizedBox(width: 5),
+                      Expanded(
+                        child: Text(
+                          donation.address!,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontFamily: 'Poppins-Reg',
+                            color: Color(0xFF373D66),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 7),
+                  Row(
+                    children: [
+                      const Text(
+                        'Contact Number:',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Poppins-Bold',
+                          color: Color(0xFF373D66),
+                        ),
+                      ),
+                      const SizedBox(width: 5),
+                      Expanded(
+                        child: Text(
+                          donation.contactNumber!,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontFamily: 'Poppins-Reg',
+                            color: Color(0xFF373D66),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 7),
+                  Row(
+                    children: [
+                      const Text(
+                        'Weight:',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Poppins-Bold',
+                          color: Color(0xFF373D66),
+                        ),
+                      ),
+                      const SizedBox(width: 5),
+                      Expanded(
+                        child: Text(
+                          donation.weight,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontFamily: 'Poppins-Reg',
+                            color: Color(0xFF373D66),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 7),
+                  Row(
+                    children: [
+                      const Text(
+                        'Date:',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Poppins-Bold',
+                          color: Color(0xFF373D66),
+                        ),
+                      ),
+                      const SizedBox(width: 5),
+                      Expanded(
+                        child: Text(
+                          donation.date,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontFamily: 'Poppins-Reg',
+                            color: Color(0xFF373D66),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 7),
+                  Row(
+                    children: [
+                      const Text(
+                        'Time:',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Poppins-Bold',
+                          color: Color(0xFF373D66),
+                        ),
+                      ),
+                      const SizedBox(width: 5),
+                      Expanded(
+                        child: Text(
+                          donation.time,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontFamily: 'Poppins-Reg',
+                            color: Color(0xFF373D66),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 7),
+                  const Text(
+                    'Photos (if any):',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: 'Poppins-Bold',
+                      color: Color(0xFF373D66),
                     ),
                   ),
-                ),
+                  SizedBox(height: 15),
+                  donation.image?.isEmpty == false ? showPhotos(donation) : showNothing(),
+                  const SizedBox(height: 20),
+                  donation.shipping == 'Pick up'
+                      ? showAddressandContact()
+                      : const SizedBox.shrink(),
+                  donation.shipping == 'Drop-off'
+                      ? showGeneratedQR()
+                      : const SizedBox.shrink(),
+                  donation.image?.isEmpty == 0 ? showDonationPics(donation.image) : const SizedBox.shrink(),
+                ],
               ),
             ),
           ),
+          ),
         ],
       ),
+    );
+  }
+
+  Widget showDonationPics(imageUrls) {
+    return GridView.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 4.0,
+        mainAxisSpacing: 4.0,
+      ),
+      itemCount: imageUrls.length,
+      itemBuilder: (context, index) {
+        return Image.network(
+          imageUrls[index],
+          fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) {
+            return Icon(Icons.error);
+          },
+        );
+      },
     );
   }
 
@@ -324,7 +482,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
             Row(
               children: [
                 const Text(
-                  'Address/es:',
+                  'Address:',
                   style: TextStyle(
                     fontSize: 16,
                     fontFamily: 'Poppins-Bold',
@@ -334,7 +492,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                 const SizedBox(width: 5),
                 Expanded(
                   child: Text(
-                    donation.addresses?.first,
+                    donation.address!,
                     style: const TextStyle(
                       fontSize: 16,
                       fontFamily: 'Poppins-Reg',
@@ -344,9 +502,6 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                 ),
               ],
             ),
-            (donation.addresses!.length > 1)
-                ? newAddressLine() // if true
-                : const SizedBox.shrink(), // if false
           ],
         ),
         const SizedBox(height: 7),
@@ -384,7 +539,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
         donation.category.length - 1,
         (index) {
           return Padding(
-            padding: const EdgeInsets.only(left: 120),
+            padding: const EdgeInsets.only(left: 88),
             child: Text(
               donation.category[index + 1],
               style: const TextStyle(
@@ -399,24 +554,34 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
     );
   }
 
-  Widget newAddressLine() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: List.generate(
-        donation.addresses!.length - 1,
-        (index) {
+  Widget showPhotos(donation) {
+    return Flexible(
+      child: ListView.builder(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: donation.image?.length,
+        itemBuilder: (context, index) {
+          String imageUrl = donation.image?[index];
           return Padding(
-            padding: const EdgeInsets.only(left: 106),
-            child: Text(
-              donation.addresses![index + 1],
-              style: const TextStyle(
-                fontSize: 16,
-                fontFamily: 'Poppins-Reg',
-                color: Color(0xFF373D66),
-              ),
+            padding: EdgeInsets.symmetric(vertical: 8.0), 
+            child: Image.network(
+              imageUrl,
             ),
           );
         },
+      ),
+    );
+  }
+
+  Widget showNothing() {
+    return Container(
+      child: const Text(
+        'None',
+        style: TextStyle(
+          fontSize: 16,
+          fontFamily: 'Poppins-Reg',
+          color: Color(0xFF373D66),
+        ),
       ),
     );
   }
@@ -431,6 +596,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
         color: Colors.white,
       ),
       child: Column(children: [
+        SizedBox(height: 10),
         const Text(
           'QR Code (contains Status and Date Time of Order):',
           style: TextStyle(

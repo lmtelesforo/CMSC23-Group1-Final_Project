@@ -142,6 +142,7 @@ class UserInfosProvider with ChangeNotifier {
         final userType = userData['userType'];
         if (userType == 'donor') {
           donorDataList.add(userData);
+          userData['id'] = doc.id;
         }
       });
 
@@ -165,6 +166,7 @@ class UserInfosProvider with ChangeNotifier {
         final userType = userData['userType'];
         if (userType == 'organization') {
           orgDataList.add(userData);
+          userData['id'] = doc.id;
         }
       });
 

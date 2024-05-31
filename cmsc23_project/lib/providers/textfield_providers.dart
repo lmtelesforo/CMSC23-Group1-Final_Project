@@ -9,10 +9,10 @@ class TextfieldProviders extends ChangeNotifier {
   String email = '';
   String password = '';
   String addresses = '';
-  List addressesSpliced = [];
+  List addressList = [];
   String contactNumber = '';
   String proofs = '';
-  List proofsSpliced = [];
+  List proofList = [];
   String qrcodeinput = '';
   String shippingOpt = 'Pick up';
   List category = [];
@@ -50,8 +50,8 @@ class TextfieldProviders extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateAddresses(String value) {
-    addresses = value;
+  void updateAddresses(List value) {
+    addressList = value;
     notifyListeners();
   }
 
@@ -60,8 +60,8 @@ class TextfieldProviders extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateProofs(String value) {
-    proofs = value;
+  void updateProofs(List value) {
+    proofList = value;
     notifyListeners();
   }
 
@@ -111,10 +111,10 @@ class TextfieldProviders extends ChangeNotifier {
     email = '';
     password = '';
     addresses = '';
-    addressesSpliced = [];
+    addressList = [];
     contactNumber = '';
     proofs = '';
-    proofsSpliced = [];
+    proofList = [];
     controller1.clear(); // clears form field
     controller2.clear();
     controller3.clear();

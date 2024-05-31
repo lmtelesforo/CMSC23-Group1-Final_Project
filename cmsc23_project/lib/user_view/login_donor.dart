@@ -17,6 +17,10 @@ class LogInDonorPage extends StatefulWidget {
 class _LogInDonorPageState extends State<LogInDonorPage> {
   final _formKey = GlobalKey<FormState>();
   bool showSignInErrorMessage = false;
+  bool foundDonor = false;
+  bool foundOrg = false;
+  String? donorName;
+  String? orgName;
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +114,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
               child: const Padding(
                 padding: EdgeInsets.only(left: 16, right: 16),
                 child: Text(
-                  "Log in your account.",
+                  "Log in your account using email or username.",
                   style: TextStyle(
                     fontSize: 12,
                     fontFamily: 'Poppins-Reg',
@@ -140,7 +144,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                                 left: MediaQuery.of(context).size.width * 0.041,
                                 bottom: 4),
                             child: Text(
-                              "Email",
+                              "Username or Email",
                               style: TextStyle(
                                 fontSize: 15,
                                 fontFamily: 'Poppins-Reg',
@@ -169,13 +173,10 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                               onChanged: provider.updateName,
                               validator: (val) {
                                 if (val!.isEmpty) {
-                                  return "Please enter your name";
+                                  return "Please enter your username/email";
                                 }
                                 if (val.trim().isEmpty) {
-                                  return "Please enter your name";
-                                }
-                                if (EmailValidator.validate(val) != true) {
-                                  return "Invalid email";
+                                  return "Please enter your username/email";
                                 }
                                 return null;
                               },
@@ -185,7 +186,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                                   fontFamily: 'Poppins-Reg',
                                   color: Color(0xFF373D66)),
                               decoration: InputDecoration(
-                                hintText: 'Enter your email',
+                                hintText: 'Enter your username/email',
                                 hintStyle: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
@@ -293,20 +294,23 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                       ElevatedButton(
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            String email = provider.controller1.text;
+                            String input = provider.controller1.text;
                             String password = provider.controller2.text;
 
                             String? message = await context
                                 .read<UserAuthProvider>()
                                 .authService
-                                .signIn(email!, password!);
+                                .signIn(input!, password!);
 
                             print(message);
                             print(showSignInErrorMessage);
 
                             setState(() async {
-                              final bool found = await checkUserType(email);
+                              final bool found = await checkUserType(input);
                               print(found);
+                              final bool found1 = await checkUsername(input);
+                              print("-------------");
+                              print(found1);
                               // ignore: unrelated_type_equality_checks
                               if (message != null &&
                                   message.isNotEmpty &&
@@ -315,12 +319,12 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(
-                                        'Invalid email or password. Check your credentials or try signing in with Google.'),
+                                        'Invalid credentials. Check your credentials or try signing in with Google.'),
                                   ),
                                 );
                               }
                               // ignore: unrelated_type_equality_checks
-                              else if (found != true) {
+                              else if (found != true && found1 != true) {
                                 print(found);
                                 showSignInErrorMessage = true;
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -338,18 +342,29 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                                 var donorDetails;
 
                                 // loop through donorsData and check if user email has match in all donors
-                                String? donorName;
-                                bool foundDonor = false;
-                                for (var donorData in donorsData) {
-                                  var donorEmail = donorData['email'];
-                                  if (donorEmail == email) {
-                                    foundDonor = true;
-                                    donorName = donorData['name'];
-                                    donorDetails = donorData;
-                                    break;
+                                if (found1 == true) {
+                                  for (var donorData in donorsData) {
+                                    var donorEmail = donorData['username'];
+                                    if (donorEmail == input) {
+                                      foundDonor = true;
+                                      donorName = donorData['name'];
+                                      donorDetails = donorData;
+                                      break;
+                                    }
                                   }
                                 }
-
+                                else if (found == true) { // email match
+                                  for (var donorData in donorsData) {
+                                    var donorEmail = donorData['email'];
+                                    if (donorEmail == input) {
+                                      foundDonor = true;
+                                      donorName = donorData['name'];
+                                      donorDetails = donorData;
+                                      break;
+                                    }
+                                  }
+                                }
+                                
                                 if (foundDonor == true) {
                                   provider.resetLogIn();
                                   Navigator.pop(context);
@@ -362,19 +377,31 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
                                           'Welcome to ElbiDrive, $donorName!'),
                                     ),
                                   );
-                                } else if (foundDonor != true) {
+                                } 
+                                
+                                else if (foundDonor != true) { // user is not a donor
                                   final orgsData =
                                       await firebaseUsers.getOrgs();
 
                                   // loop through orgsData and check if user email has match in all orgs
-                                  String? orgName;
-                                  bool foundOrg = false;
-                                  for (var orgData in orgsData) {
-                                    var orgEmail = orgData['email'];
-                                    if (orgEmail == email) {
-                                      foundOrg = true;
-                                      orgName = orgData['name'];
-                                      break;
+                                  if (found1 == true) {
+                                    for (var orgData in orgsData) {
+                                      var orgEmail = orgData['username'];
+                                      if (orgEmail == input) {
+                                        foundOrg = true;
+                                        orgName = orgData['name'];
+                                        break;
+                                      }
+                                    }
+                                  }
+                                  else if (found == true) {
+                                    for (var orgData in orgsData) {
+                                      var orgEmail = orgData['email'];
+                                      if (orgEmail == input) {
+                                        foundOrg = true;
+                                        orgName = orgData['name'];
+                                        break;
+                                      }
                                     }
                                   }
 
@@ -473,7 +500,7 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
   Widget get signInErrorMessage => const Padding(
         padding: EdgeInsets.only(bottom: 30),
         child: Text(
-          "Invalid email or password",
+          "Invalid email, username, or password",
           style: TextStyle(
               color: Color.fromARGB(255, 179, 42, 32),
               fontFamily: 'Poppins',
@@ -501,5 +528,23 @@ class _LogInDonorPageState extends State<LogInDonorPage> {
       return true;
     }
     return false;
+  }
+
+  Future<bool> checkUsername(String? uname) async {
+    final firebaseUsers = context.read<UserInfosProvider>();
+    final donorsData = await firebaseUsers.getDonors();
+    final orgsData = await firebaseUsers.getOrgs();
+    print(uname);
+    // check if it matches any existing email
+    final foundDonor =
+        donorsData.any((donorData) => donorData['username'] == uname);
+
+    print(foundDonor);
+    // check if it matches any emails
+    final foundOrg = orgsData.any((orgData) => orgData['username'] == uname);
+
+    print(foundOrg);
+    // true if it matched with any email
+    return foundDonor || foundOrg;
   }
 }

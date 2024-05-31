@@ -125,7 +125,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(name, style: const TextStyle(
+                          Text("Name: " + name, style: const TextStyle(
                             fontSize: 20, 
                             fontFamily: 'Poppins', 
                             color: const Color.fromRGBO(55, 61, 102, 1)
@@ -136,7 +136,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(email, style: const TextStyle(
+                          Text("Email: " + email, style: const TextStyle(
                             fontSize: 20, 
                             fontFamily: 'Poppins',
                             color: const Color.fromRGBO(55, 61, 102, 1)
@@ -147,14 +147,20 @@ class _ProfilePageState extends State<ProfilePage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(contactNumber, style: const TextStyle(
+                          Text("Contact Number: " + contactNumber, style: const TextStyle(
                             fontSize: 20, 
                             fontFamily: 'Poppins',
                             color: const Color.fromRGBO(55, 61, 102, 1)
                             )),
                         ],
                       ),
-                      SizedBox(height: screenSize.height * 0.02), // Adjusted height
+                      SizedBox(height: screenSize.height * 0.02), 
+                      Center(child: Text("Address/es: " , style: const TextStyle(
+                      fontSize: 20, 
+                      fontFamily: 'Poppins',
+                      color: const Color.fromRGBO(55, 61, 102, 1)
+                      ), textAlign: TextAlign.center,
+                      ),),
                       if (addresses.isNotEmpty) ...[
                         for (var address in addresses) 
                           Row(
