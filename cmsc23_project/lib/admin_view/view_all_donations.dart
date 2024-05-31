@@ -180,11 +180,13 @@ class _AdminViewAllDonationsState extends State<AdminViewAllDonations> {
                             itemBuilder: (context, index) {
                               print(
                                   'Request at index $index: ${donationDetails[index].data()}');
+                                  
                               Donation donation = Donation.fromJson(
                                   donationDetails[index].data()
                                       as Map<String, dynamic>);
+                             
                               donation.id = donationDetails[index].id;
-                              String subtitle = '\n' + 'Org: ' + donation.orgUsername + '\n' + 'Donor: ' + donation.email + '\n' + 'Status: '+ donation.status;
+                              String subtitle = '\n' + 'Org: ' + donation.organization + '\n' + 'Donor: ' + donation.email + '\n' + 'Status: '+ donation.status;
 
                               return Container(
                                 decoration: BoxDecoration(

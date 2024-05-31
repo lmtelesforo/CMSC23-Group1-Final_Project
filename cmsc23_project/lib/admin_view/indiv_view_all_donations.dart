@@ -32,6 +32,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
   Widget build(BuildContext context) {
     final provider = context.watch<TextfieldProviders>();
     final int index;
+    print(donation);
 
     return Scaffold(
       body: Stack(
@@ -303,6 +304,7 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
                         donation.shipping == 'Drop-off'
                             ? showGeneratedQR()
                             : const SizedBox.shrink(),
+                        donation.image?.isEmpty == 0 ? showDonationPics(donation.image) : const SizedBox.shrink(),
                       ],
                     ),
                   ),
@@ -312,6 +314,26 @@ class _IndivViewAllDonationsState extends State<IndivViewAllDonations> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget showDonationPics(imageUrls) {
+    return GridView.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 4.0,
+        mainAxisSpacing: 4.0,
+      ),
+      itemCount: imageUrls.length,
+      itemBuilder: (context, index) {
+        return Image.network(
+          imageUrls[index],
+          fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) {
+            return Icon(Icons.error);
+          },
+        );
+      },
     );
   }
 
