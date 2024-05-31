@@ -69,10 +69,10 @@ class _EditDonationState extends State<_EditDonation> {
       return;
     }
 
-    if (widget.donation.status == 'Pending' && changedDrive) {
+    if (widget.donation.status != 'Completed' && changedDrive) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Cannot change drive until the donation is confirmed.'),
+          content: Text('Cannot change drive until the donation is completed.'),
         ),
       );
       return;
@@ -81,9 +81,8 @@ class _EditDonationState extends State<_EditDonation> {
     context
         .read<CurrentOrgProvider>()
         .changeDonationStatus(widget.id, tempDonation!.status);
-    context
-        .read<CurrentOrgProvider>()
-        .changeDonationDrive(widget.id, tempDonation!.driveId);
+    context.read<CurrentOrgProvider>().changeDonationDrive(
+        widget.id, tempDonation!.driveId, tempDonation!.driveName);
 
     Navigator.pop(context);
   }
@@ -247,6 +246,7 @@ class _EditDonationState extends State<_EditDonation> {
                 .toList(),
             onSelected: (drive) {
               tempDonation!.driveId = ids[drive!];
+              tempDonation!.driveName = drives[drive].name;
             },
             inputDecorationTheme: InputDecorationTheme(
               fillColor: Colors.white,
