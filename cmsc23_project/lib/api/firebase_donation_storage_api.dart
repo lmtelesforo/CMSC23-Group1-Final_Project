@@ -41,13 +41,20 @@ class FirebaseDonationStorageAPI {
       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
       String date = data['date'];
       String email = data['email'];
+      String shipping = data['shipping'];
 
-      String newQrCode = '$newStatus|$date|$email';
+      if (shipping == 'Drop-off') {
+        String newQrCode = '$newStatus|$date|$email';
 
-      await db.collection('donations').doc(donationId).update({
-        'status': newStatus,
-        'qrcode': newQrCode,
-      });
+        await db.collection('donations').doc(donationId).update({
+          'status': newStatus,
+          'qrcode': newQrCode,
+        });
+      } else {
+        await db.collection('donations').doc(donationId).update({
+          'status': newStatus,
+        });
+      }
 
       return 'Donation status updated successfully';
     } catch (e) {
