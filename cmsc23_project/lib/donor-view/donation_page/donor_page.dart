@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cmsc23_project/donor-view/donation_buttons/donation_checkbox.dart';
 import 'package:cmsc23_project/donor-view/donation_buttons/donation_dropdown.dart';
 import 'package:cmsc23_project/donor-view/donation_buttons/image_url_display.dart';
 import 'package:cmsc23_project/providers/donation_storage_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -36,6 +38,7 @@ class _DonorPageState extends State<DonorPage> {
   List<String> imageUrls = []; 
   late Map<String, dynamic> donorDetails;
   final ScreenshotController screenshotController = ScreenshotController();
+  String? selectedAddress;
 
   bool isNumeric(String str) {
     if (str == null) {
@@ -50,7 +53,32 @@ class _DonorPageState extends State<DonorPage> {
     organization = widget.organization;
     donorDetails = widget.donorDetails;
     context.read<DonationProvider>().fetchOrganizations();
+    fetchAddresses();
   }
+
+  Future<void> fetchAddresses() async {
+    try {
+      User? currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser != null) {
+        // Fetch user info from Firestore based on email
+        final snapshot = await FirebaseFirestore.instance
+            .collection('users')
+            .where('email', isEqualTo: currentUser.email)
+            .get();
+        
+        if (snapshot.docs.isNotEmpty) {
+          final userData = snapshot.docs.first.data() as Map<String, dynamic>;
+          setState(() {
+            addressesList = List<String>.from(userData['addresses'] ?? []);
+            print('Addresses fetched: $addressesList'); // Debug print
+          });
+        }
+      }
+    } catch (error) {
+      print('Error fetching addresses: $error');
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -283,27 +311,40 @@ class _DonorPageState extends State<DonorPage> {
 
     return Column(
       children: [
-        SizedBox(height: screenSize.height * 0.01),
-        TextFormField(
-          controller: provider.controller5,
+        SizedBox(height: 10),
+        Text(
+          "Input your address below:",
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            fontFamily: "Montserrat",
+            color: const Color.fromRGBO(55, 61, 102, 1),
+          ),
+        ),
+        SizedBox(height: 10),
+        DropdownButtonFormField<String>(
+          value: selectedAddress,
+          hint: Text("Select an address"),
+          onChanged: (newValue) {
+            setState(() {
+              selectedAddress = newValue;
+              provider.controller1.text = newValue!;
+            });
+          },
+          items: addressesList != null
+              ? addressesList.map((address) {
+                  return DropdownMenuItem<String>(
+                    value: address,
+                    child: Text(address),
+                  );
+                }).toList()
+              : [],
           validator: (val) {
-            if (val!.isEmpty) {
-              return "Please enter a valid address or addresses";
-            }
-            if (val.trim().isEmpty) {
-              return "Please enter a valid address or addresses";
+            if (val == null || val.isEmpty) {
+              return "Please select an address";
             }
             return null;
           },
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-            fontFamily: 'Montserrat',
-            color: Color(0xFF373D66),
-          ),
-          decoration: InputDecoration(
-            labelText: 'Please enter the address for pickup',
-          ),
         ),
         TextFormField(
           controller: provider.controller6,
@@ -465,8 +506,8 @@ class _DonorPageState extends State<DonorPage> {
                     weight,
                     imageUrls,
                     organization,
-                    'driveName',
-                    'driveId',
+                    "driveId",
+                    "driveName",
                     );
 
                 donationService.addDonation(donation, imageUrls); // add to firebase

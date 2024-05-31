@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class User {
@@ -26,12 +27,12 @@ class User {
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['id'],
-      name: json['name'],
-      username: json['username'],
-      email: json['email'],
-      addresses: json['addresses'],
-      contactNumber: json['contactNumber'],
-      userType: json['userType'],
+      name: json['name'] ?? '',
+      username: json['username'] ?? '',
+      email: json['email'] ?? '',
+      addresses: json['addresses'] != null ? List<dynamic>.from(json['addresses']) : [],
+      contactNumber: json['contactNumber'] ?? '',
+      userType: json['userType'] ?? '',
     );
   }
 
@@ -40,8 +41,14 @@ class User {
     return data.map<User>((dynamic d) => User.fromJson(d)).toList();
   }
 
+  static User fromSnapshot(DocumentSnapshot snapshot) {
+    final data = snapshot.data() as Map<String, dynamic>;
+    print('User snapshot data: $data'); // Debug print
+    return User.fromJson(data);
+  }
+
   Map<String, dynamic> toJson(User user) {
-    return { // removed id mapping 
+    return { 
       'name': user.name,
       'username': user.username,
       'email': user.email,
@@ -51,7 +58,3 @@ class User {
     };
   }
 }
-
-
-
-

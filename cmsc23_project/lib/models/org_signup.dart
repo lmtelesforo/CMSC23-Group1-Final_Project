@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Org {
@@ -62,4 +63,6 @@ class Org {
       'profilePicture': org.profilePic
     };
   }
+
+  static Org? fromSnapshot(QueryDocumentSnapshot<Object?> first) {}
 }
