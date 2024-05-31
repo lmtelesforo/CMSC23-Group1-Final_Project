@@ -33,18 +33,22 @@ class Profile extends StatelessWidget {
             Org org = Org.fromJson(
                 snapshot.data!.docs.first.data() as Map<String, dynamic>);
 
-            return Column(
-              children: [
-                _bigAvatar(org),
-                Container(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Text(org.name, style: CustomTextStyle.h1)),
-                _about(org),
-              ],
-            );
+            return profile(org);
           },
         ),
       ),
+    );
+  }
+
+  Column profile(Org org) {
+    return Column(
+      children: [
+        _bigAvatar(org),
+        Container(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Text(org.name, style: CustomTextStyle.h1)),
+        _about(org),
+      ],
     );
   }
 
@@ -72,34 +76,38 @@ class Profile extends StatelessWidget {
               children: [
                 const Text("About", style: CustomTextStyle.h2),
                 const SizedBox(height: 20),
-                Text(org.about!, style: CustomTextStyle.body),
+                Center(child: Text(org.about!, style: CustomTextStyle.body)),
                 const SizedBox(height: 20),
-                Row(
-                  children: [
-                    if (org.openForDonations) ...[
-                      const Icon(Icons.check, color: Colors.green),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 5.0),
-                        child: Text(
-                          "Open for donations",
-                          style: TextStyle(color: Colors.green),
-                        ),
-                      ),
-                    ] else ...[
-                      const Icon(Icons.close, color: Colors.red),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 5.0),
-                        child: Text(
-                          "Closed for donations",
-                          style: TextStyle(color: Colors.red),
-                        ),
-                      ),
-                    ]
-                  ],
-                )
+                openForDonations(org)
               ],
             ),
           ),
         ),
       );
+
+  Row openForDonations(Org org) {
+    return Row(
+      children: [
+        if (org.openForDonations) ...[
+          const Icon(Icons.check, color: Colors.green),
+          const Padding(
+            padding: EdgeInsets.only(left: 5.0),
+            child: Text(
+              "Open for donations",
+              style: TextStyle(color: Colors.green),
+            ),
+          ),
+        ] else ...[
+          const Icon(Icons.close, color: Colors.red),
+          const Padding(
+            padding: EdgeInsets.only(left: 5.0),
+            child: Text(
+              "Closed for donations",
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+        ]
+      ],
+    );
+  }
 }
