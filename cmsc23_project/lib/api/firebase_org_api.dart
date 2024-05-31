@@ -56,10 +56,8 @@ class FirebaseOrgAPI {
           .get()
           .then((value) {
         for (var element in value.docs) {
-          db
-              .collection('users')
-              .doc(element.id)
-              .update({'status': !element.data()['status']});
+          db.collection('users').doc(element.id).update(
+              {'openForDonations': !element.data()['openForDonations']});
         }
       });
       return 'Success';

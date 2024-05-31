@@ -69,19 +69,25 @@ class Profile extends StatelessWidget {
 
   Widget _about(Org org) => Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Card(
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                const Text("About", style: CustomTextStyle.h2),
-                const SizedBox(height: 20),
-                Center(child: Text(org.about!, style: CustomTextStyle.body)),
-                const SizedBox(height: 20),
-                openForDonations(org)
-              ],
+        child: Stack(
+          children: [
+            Card(
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    const Text("About", style: CustomTextStyle.h2),
+                    const SizedBox(height: 20),
+                    Center(
+                        child: Text(org.about!, style: CustomTextStyle.body)),
+                    const SizedBox(height: 20),
+                    openForDonations(org)
+                  ],
+                ),
+              ),
             ),
-          ),
+            ToggleStatus(org: org),
+          ],
         ),
       );
 
@@ -108,6 +114,39 @@ class Profile extends StatelessWidget {
           ),
         ]
       ],
+    );
+  }
+}
+
+class ToggleStatus extends StatelessWidget {
+  const ToggleStatus({
+    super.key,
+    required this.org,
+  });
+
+  final Org org;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      top: 13,
+      right: 20,
+      child: Container(
+        padding: const EdgeInsets.all(5),
+        decoration: const BoxDecoration(
+          color: CustomColors.primary,
+          shape: BoxShape.circle,
+        ),
+        child: InkWell(
+          onTap: () {
+            context.read<CurrentOrgProvider>().toggleOpenForDonations();
+          },
+          child: Icon(
+            org.openForDonations ? Icons.close : Icons.check,
+            color: CustomColors.secondary,
+          ),
+        ),
+      ),
     );
   }
 }

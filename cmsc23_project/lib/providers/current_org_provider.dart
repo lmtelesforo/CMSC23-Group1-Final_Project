@@ -73,18 +73,18 @@ class CurrentOrgProvider with ChangeNotifier {
   }
 
   // Org-related methods
-  void updateName(String name) {
-    _firebaseOrgAPI.updateName(orgUsername, name);
+  void updateName(String name) async {
+    await _firebaseOrgAPI.updateName(orgUsername, name);
     notifyListeners();
   }
 
-  void updateAbout(String about) {
-    _firebaseOrgAPI.updateAbout(orgUsername, about);
+  void updateAbout(String about) async {
+    await _firebaseOrgAPI.updateAbout(orgUsername, about);
     notifyListeners();
   }
 
-  void toggleOpenForDonations() {
-    _firebaseOrgAPI.toggleStatus(orgUsername);
+  void toggleOpenForDonations() async {
+    await _firebaseOrgAPI.toggleStatus(orgUsername);
     notifyListeners();
   }
 }
