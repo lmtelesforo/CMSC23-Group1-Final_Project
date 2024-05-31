@@ -114,7 +114,7 @@ class _AdminViewAllDonationsState extends State<UserViewAllDonations> {
               ),
             ),
             Positioned(
-            top: MediaQuery.of(context).size.height * 0.28,
+            top: MediaQuery.of(context).size.height * 0.20,
             left: 0,
             right: 0,
             bottom: MediaQuery.of(context).size.height * 0.047,
