@@ -248,7 +248,6 @@ class _DonorPageState extends State<DonorPage> {
         SizedBox(height: screenSize.height * 0.01),
         TextFormField(
           controller: provider.controller5,
-          onChanged: provider.updateAddresses,
           validator: (val) {
             if (val!.isEmpty) {
               return "Please enter a valid address or addresses";
