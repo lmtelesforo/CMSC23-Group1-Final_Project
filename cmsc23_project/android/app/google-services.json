@@ -12,20 +12,7 @@
           "package_name": "com.elbidrive.elbidrive"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "4395140855-i20gr3l8gdvp1if7p55foc413986qqgf.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.cmsc23_project",
-            "certificate_hash": "608e2e9e5c0943cc8da685cd8be49dce9526b578"
-          }
-        },
-        {
-          "client_id": "4395140855-2sbpa77gjmuu8v293ifunllaa540ngld.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
           "current_key": "AIzaSyA2iAwvuXoKAwsLEidQa-P4reBU1YEqbFs"
@@ -33,19 +20,7 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "4395140855-2sbpa77gjmuu8v293ifunllaa540ngld.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "4395140855-01p53vd9s1gb8kvmqkapblpdtev1226g.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.cmsc23Project"
-              }
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
